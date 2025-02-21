@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>FirstPessage</title>
+      <link href="/posts/7eff628e.html"/>
+      <url>/posts/7eff628e.html</url>
+      
+        <content type="html"><![CDATA[<h3 id="开启博客新征程"><a href="#开启博客新征程" class="headerlink" title="开启博客新征程"></a>开启博客新征程</h3><p>![屏幕截图 2025-02-21 180356](C:\Users\HP\Pictures\Screenshots\屏幕截图 2025-02-21 180356.png)</p><p>​今天，我的初创博客正式上线了。</p><p>​这是一次发文尝试，也是标志成功搭建博客。</p><p>​以下是平台的主要菜单选项，通过这些菜单，你可以快速进入不同的页面，开启追番之旅。</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">menu:</span></span><br><span class="line">  <span class="attr">Home:</span> <span class="string">/</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-home</span></span><br><span class="line">  <span class="string">追番:</span> <span class="string">/bangumis/index.html</span> <span class="string">||</span> <span class="string">fas</span> <span class="string">fa-home</span></span><br></pre></td></tr></table></figure><ol><li><p><strong>Home（首页）</strong>：链接为 <code>/</code> ，点击这个选项，你可以回到平台的首页，在这里你可以浏览到平台的最新动态、推荐内容等。图标为 <code>fas fa-home</code> ，代表着 “家” 的概念，方便你随时回到起始页面。</p></li><li><p><strong>追番</strong>：链接是 <code>/bangumis/index.html</code> ，这个页面是追番的核心区域。在这里，你可以找到各种各样的动漫作品，无论是热门新番还是经典老番，都能满足你的追番需求。同样，图标也是 <code>fas fa-home</code> ，便于你识别和点击。</p></li></ol>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 大家好，我是迷路的小朋友 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Hello World</title>
       <link href="/posts/4a17b156.html"/>
       <url>/posts/4a17b156.html</url>
