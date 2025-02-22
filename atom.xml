@@ -6,7 +6,7 @@
   <link href="https://sakjijdidji55.github.io/atom.xml" rel="self"/>
   
   <link href="https://sakjijdidji55.github.io/"/>
-  <updated>2025-02-22T13:20:32.957Z</updated>
+  <updated>2025-02-22T14:35:01.287Z</updated>
   <id>https://sakjijdidji55.github.io/</id>
   
   <author>
@@ -15,30 +15,6 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title></title>
-    <link href="https://sakjijdidji55.github.io/posts/0.html"/>
-    <id>https://sakjijdidji55.github.io/posts/0.html</id>
-    <published>2025-02-22T13:20:32.957Z</published>
-    <updated>2025-02-22T13:20:32.957Z</updated>
-    
-    <content type="html"><![CDATA[<!DOCTYPE html>        <html>        <head>            <meta charset="UTF-8">            <title>&#x5f00;&#x542f;&#x535a;&#x5ba2;&#x65b0;&#x5f81;&#x7a0b;</title>            <style>/* From extension vscode.github *//*--------------------------------------------------------------------------------------------- *  Copyright (c) Microsoft Corporation. All rights reserved. *  Licensed under the MIT License. See License.txt in the project root for license information. *--------------------------------------------------------------------------------------------*/.vscode-dark img[src$=\#gh-light-mode-only],.vscode-light img[src$=\#gh-dark-mode-only],.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {display: none;}</style>                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css"><style>            body {                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;                font-size: 14px;                line-height: 1.6;            }        </style>        <style>.task-list-item {    list-style-type: none;}.task-list-item-checkbox {    margin-left: -20px;    vertical-align: middle;    pointer-events: none;}</style><style>:root {  --color-note: #0969da;  --color-tip: #1a7f37;  --color-warning: #9a6700;  --color-severe: #bc4c00;  --color-caution: #d1242f;  --color-important: #8250df;}</style><style>@media (prefers-color-scheme: dark) {  :root {    --color-note: #2f81f7;    --color-tip: #3fb950;    --color-warning: #d29922;    --color-severe: #db6d28;    --color-caution: #f85149;    --color-important: #a371f7;  }}</style><style>.markdown-alert {  padding: 0.5rem 1rem;  margin-bottom: 16px;  color: inherit;  border-left: .25em solid #888;}.markdown-alert>:first-child {  margin-top: 0}.markdown-alert>:last-child {  margin-bottom: 0}.markdown-alert .markdown-alert-title {  display: flex;  font-weight: 500;  align-items: center;  line-height: 1}.markdown-alert .markdown-alert-title .octicon {  margin-right: 0.5rem;  display: inline-block;  overflow: visible !important;  vertical-align: text-bottom;  fill: currentColor;}.markdown-alert.markdown-alert-note {  border-left-color: var(--color-note);}.markdown-alert.markdown-alert-note .markdown-alert-title {  color: var(--color-note);}.markdown-alert.markdown-alert-important {  border-left-color: var(--color-important);}.markdown-alert.markdown-alert-important .markdown-alert-title {  color: var(--color-important);}.markdown-alert.markdown-alert-warning {  border-left-color: var(--color-warning);}.markdown-alert.markdown-alert-warning .markdown-alert-title {  color: var(--color-warning);}.markdown-alert.markdown-alert-tip {  border-left-color: var(--color-tip);}.markdown-alert.markdown-alert-tip .markdown-alert-title {  color: var(--color-tip);}.markdown-alert.markdown-alert-caution {  border-left-color: var(--color-caution);}.markdown-alert.markdown-alert-caution .markdown-alert-title {  color: var(--color-caution);}</style>                </head>        <body class="vscode-body vscode-light">            <hr><h2 id="title-firstpessagetags-大家好我是迷路的小朋友abbrlink-7eff628edate-2025-02-21-175049cover-httpsiejiaimgcn2522025022267b9a1248d360pngtop_img-httpsiejiaimgcn2522025022267b98b9a48fdbpng">title: FirstPessagetags: 大家好，我是迷路的小朋友abbrlink: 7eff628edate: 2025-02-21 17:50:49cover: <a href="https://i.ejiaimg.cn/252/2025/02/22/67b9a1248d360.png">https://i.ejiaimg.cn/252/2025/02/22/67b9a1248d360.png</a>top_img: <a href="https://i.ejiaimg.cn/252/2025/02/22/67b98b9a48fdb.png">https://i.ejiaimg.cn/252/2025/02/22/67b98b9a48fdb.png</a></h2><h3 id="开启博客新征程">开启博客新征程</h3><p>​今天，我的初创博客正式上线了。</p><p>​这是一次发文尝试，也是标志成功搭建博客。</p><p>​以下是平台的主要菜单选项，通过这些菜单，你可以快速进入不同的页面，开启追番之旅。</p><pre><code class="language-yaml"><span class="hljs-attr">menu:</span>  <span class="hljs-attr">Home:</span> <span class="hljs-string">/</span> <span class="hljs-string">||</span> <span class="hljs-string">fas</span> <span class="hljs-string">fa-home</span>  <span class="hljs-string">追番:</span> <span class="hljs-string">/bangumis/index.html</span> <span class="hljs-string">||</span> <span class="hljs-string">fas</span> <span class="hljs-string">fa-home</span></code></pre><ol><li><p><strong>Home（首页）</strong>：链接为 <code>/</code> ，点击这个选项，你可以回到平台的首页，在这里你可以浏览到平台的最新动态、推荐内容等。图标为 <code>fas fa-home</code> ，代表着 “家” 的概念，方便你随时回到起始页面。</p></li><li><p><strong>追番</strong>：链接是 <code>/bangumis/index.html</code> ，这个页面是追番的核心区域。在这里，你可以找到各种各样的动漫作品，无论是热门新番还是经典老番，都能满足你的追番需求。同样，图标也是 <code>fas fa-home</code> ，便于你识别和点击。</p></li></ol>                                </body>        </html>]]></content>
-    
-    
-      
-      
-    <summary type="html">&lt;!DOCTYPE html&gt;
-        &lt;html&gt;
-        &lt;head&gt;
-            &lt;meta charset=&quot;UTF-8&quot;&gt;
-            &lt;title&gt;&amp;#x5f00;&amp;#x542f;&amp;#x535a;&amp;#x5ba2;&amp;#x65b0;</summary>
-      
-    
-    
-    
-    
-  </entry>
   
   <entry>
     <title>python搭建抢票系统</title>
