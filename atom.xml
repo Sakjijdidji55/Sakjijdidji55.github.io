@@ -3,11 +3,11 @@
   <title>迷路的小朋友</title>
   
   <subtitle>吃好喝好, 玩好, 睡好</subtitle>
-  <link href="http://example.com/atom.xml" rel="self"/>
+  <link href="https://sakjijdidji55.github.io/atom.xml" rel="self"/>
   
-  <link href="http://example.com/"/>
-  <updated>2025-02-21T13:52:14.135Z</updated>
-  <id>http://example.com/</id>
+  <link href="https://sakjijdidji55.github.io/"/>
+  <updated>2025-02-22T07:44:10.765Z</updated>
+  <id>https://sakjijdidji55.github.io/</id>
   
   <author>
     <name>TanXin</name>
@@ -17,9 +17,22 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>python搭建抢票系统</title>
+    <link href="https://sakjijdidji55.github.io/posts/a3eb89f5.html"/>
+    <id>https://sakjijdidji55.github.io/posts/a3eb89f5.html</id>
+    <published>2025-02-22T07:28:56.000Z</published>
+    <updated>2025-02-22T07:44:10.765Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>FirstPessage</title>
-    <link href="http://example.com/posts/7eff628e.html"/>
-    <id>http://example.com/posts/7eff628e.html</id>
+    <link href="https://sakjijdidji55.github.io/posts/7eff628e.html"/>
+    <id>https://sakjijdidji55.github.io/posts/7eff628e.html</id>
     <published>2025-02-21T09:50:49.000Z</published>
     <updated>2025-02-21T13:52:14.135Z</updated>
     
@@ -35,14 +48,14 @@
     
     
     
-    <category term="大家好，我是迷路的小朋友" scheme="http://example.com/tags/%E5%A4%A7%E5%AE%B6%E5%A5%BD%EF%BC%8C%E6%88%91%E6%98%AF%E8%BF%B7%E8%B7%AF%E7%9A%84%E5%B0%8F%E6%9C%8B%E5%8F%8B/"/>
+    <category term="大家好，我是迷路的小朋友" scheme="https://sakjijdidji55.github.io/tags/%E5%A4%A7%E5%AE%B6%E5%A5%BD%EF%BC%8C%E6%88%91%E6%98%AF%E8%BF%B7%E8%B7%AF%E7%9A%84%E5%B0%8F%E6%9C%8B%E5%8F%8B/"/>
     
   </entry>
   
   <entry>
     <title>Hello World</title>
-    <link href="http://example.com/posts/4a17b156.html"/>
-    <id>http://example.com/posts/4a17b156.html</id>
+    <link href="https://sakjijdidji55.github.io/posts/4a17b156.html"/>
+    <id>https://sakjijdidji55.github.io/posts/4a17b156.html</id>
     <published>2025-02-21T03:39:38.805Z</published>
     <updated>2025-02-21T06:36:57.379Z</updated>
     
