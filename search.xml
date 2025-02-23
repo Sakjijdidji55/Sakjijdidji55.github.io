@@ -8,9 +8,15 @@
       <link href="/posts/fc1c519d.html"/>
       <url>/posts/fc1c519d.html</url>
       
-        <content type="html"><![CDATA[]]></content>
+        <content type="html"><![CDATA[<h1 id="hexo初步部署日记"><a href="#hexo初步部署日记" class="headerlink" title="hexo初步部署日记"></a>hexo初步部署日记</h1><h2 id="1-安装node-js"><a href="#1-安装node-js" class="headerlink" title="1. 安装node.js"></a>1. 安装node.js</h2><p><a href="https://nodejs.org/en/download/">下载地址</a></p><h2 id="2-安装git"><a href="#2-安装git" class="headerlink" title="2. 安装git"></a>2. 安装git</h2><p><a href="https://git-scm.com/downloads">下载地址</a></p><h2 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure><h2 id="4-初始化hexo"><a href="#4-初始化hexo" class="headerlink" title="4. 初始化hexo"></a>4. 初始化hexo</h2>]]></content>
       
       
+      
+        <tags>
+            
+            <tag> hexo, github, blog, node.js,npm,git,部署博客,hexo部署 </tag>
+            
+        </tags>
       
     </entry>
     

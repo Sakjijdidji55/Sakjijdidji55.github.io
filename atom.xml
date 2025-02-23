@@ -6,7 +6,7 @@
   <link href="https://sakjijdidji55.github.io/atom.xml" rel="self"/>
   
   <link href="https://sakjijdidji55.github.io/"/>
-  <updated>2025-02-23T07:18:54.773Z</updated>
+  <updated>2025-02-23T12:07:36.476Z</updated>
   <id>https://sakjijdidji55.github.io/</id>
   
   <author>
@@ -21,11 +21,20 @@
     <link href="https://sakjijdidji55.github.io/posts/fc1c519d.html"/>
     <id>https://sakjijdidji55.github.io/posts/fc1c519d.html</id>
     <published>2025-02-23T02:24:02.000Z</published>
-    <updated>2025-02-23T07:18:54.773Z</updated>
+    <updated>2025-02-23T12:07:36.476Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="hexo初步部署日记"><a href="#hexo初步部署日记" class="headerlink" title="hexo初步部署日记"></a>hexo初步部署日记</h1><h2 id="1-安装node-js"><a href="#1-安装node-js" class="headerlink" title="1. 安装node.js"></a>1. 安装node.js</h2><p><a href="https://nodejs.org/en/download/">下载地址</a></p><h2 id="2-安装git"><a href="#2-安装git" class="headerlink" title="2. 安装git"></a>2. 安装git</h2><p><a href="https://git-scm.com/downloads">下载地址</a></p><h2 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure><h2 id="4-初始化hexo"><a href="#4-初始化hexo" class="headerlink" title="4. 初始化hexo"></a>4. 初始化hexo</h2>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;hexo初步部署日记&quot;&gt;&lt;a href=&quot;#hexo初步部署日记&quot; class=&quot;headerlink&quot; title=&quot;hexo初步部署日记&quot;&gt;&lt;/a&gt;hexo初步部署日记&lt;/h1&gt;&lt;h2 id=&quot;1-安装node-js&quot;&gt;&lt;a href=&quot;#1-安装node-j</summary>
+      
     
     
     
     
+    <category term="hexo, github, blog, node.js,npm,git,部署博客,hexo部署" scheme="https://sakjijdidji55.github.io/tags/hexo-github-blog-node-js-npm-git-%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2-hexo%E9%83%A8%E7%BD%B2/"/>
     
   </entry>
   
