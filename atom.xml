@@ -6,7 +6,7 @@
   <link href="https://sakjijdidji55.github.io/atom.xml" rel="self"/>
   
   <link href="https://sakjijdidji55.github.io/"/>
-  <updated>2025-03-09T13:09:00.054Z</updated>
+  <updated>2025-03-10T12:53:53.208Z</updated>
   <id>https://sakjijdidji55.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>c语言学习--1</title>
+    <link href="https://sakjijdidji55.github.io/posts/6901748a.html"/>
+    <id>https://sakjijdidji55.github.io/posts/6901748a.html</id>
+    <published>2025-03-10T12:50:20.000Z</published>
+    <updated>2025-03-10T12:53:53.208Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="c语言学习—1"><a href="#c语言学习—1" class="headerlink" title="c语言学习—1"></a>c语言学习—1</h2><p>欢迎来到c语言学习，本篇是c语言学习的第一篇，主要介绍c语言的基础知识，包括c语言规范 、变量、常量、数据类型、运算符、表达式、输入输出等。</p><h3 id="c语言规范"><a href="#c语言规范" class="headerlink" title="c语言规范"></a>c语言规范</h3>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;c语言学习—1&quot;&gt;&lt;a href=&quot;#c语言学习—1&quot; class=&quot;headerlink&quot; title=&quot;c语言学习—1&quot;&gt;&lt;/a&gt;c语言学习—1&lt;/h2&gt;&lt;p&gt;欢迎来到c语言学习，本篇是c语言学习的第一篇，主要介绍c语言的基础知识，包括c语言规范 、变量、常量</summary>
+      
+    
+    
+    
+    <category term="c语言" scheme="https://sakjijdidji55.github.io/categories/c%E8%AF%AD%E8%A8%80/"/>
+    
+    
+    <category term="c语言,学习" scheme="https://sakjijdidji55.github.io/tags/c%E8%AF%AD%E8%A8%80-%E5%AD%A6%E4%B9%A0/"/>
+    
+  </entry>
   
   <entry>
     <title>力扣重刷篇--2</title>
