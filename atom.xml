@@ -6,7 +6,7 @@
   <link href="https://sakjijdidji55.github.io/atom.xml" rel="self"/>
   
   <link href="https://sakjijdidji55.github.io/"/>
-  <updated>2025-04-05T13:23:53.284Z</updated>
+  <updated>2025-04-16T13:48:49.925Z</updated>
   <id>https://sakjijdidji55.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>树状数组的原理</title>
+    <link href="https://sakjijdidji55.github.io/posts/b83b8c5f.html"/>
+    <id>https://sakjijdidji55.github.io/posts/b83b8c5f.html</id>
+    <published>2025-04-16T13:42:35.000Z</published>
+    <updated>2025-04-16T13:48:49.925Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="树状数组的原理"><a href="#树状数组的原理" class="headerlink" title="树状数组的原理"></a>树状数组的原理</h1><h2 id="树状数组"><a href="#树状数组" class="headerlink" title="树状数组"></a>树状数组</h2><p>树状数组是一种可以高效进行前缀和查询和更新的数据结构。它可以在O(logn)的时间复杂度内完成前缀和查询和更新操作，非常适合处理频繁的查询和更新操作。</p><p>树状数组的基本思想是将数组划分为若干个区间，每个区间对应一个节点，节点之间的父子关系形成一棵树。通过树状数组，可以在O(logn)的时间复杂度内完成前缀和查询和更新操作。</p><p>树状数组的主要操作包括：初始化、查询前缀和、更新元素。</p><h2 id="树状数组的初始化"><a href="#树状数组的初始化" class="headerlink" title="树状数组的初始化"></a>树状数组的初始化</h2><p>树状数组的初始化操作是将数组中的每个元素初始化为0。初始化操作的时间复杂度为O(n)。</p><h2 id="树状数组的查询前缀和"><a href="#树状数组的查询前缀和" class="headerlink" title="树状数组的查询前缀和"></a>树状数组的查询前缀和</h2><p>树状数组的查询前缀和操作是通过树状数组中的节点来实现的。具体来说，查询前缀和的操作是从树状数组的根节点开始，沿着树状数组中的路径向下遍历，直到到达查询的位置。在遍历的过程中，将路径上的所有节点的值累加起来，得到查询位置的前缀和。</p><p>查询前缀和操作的时间复杂度为O(logn)。</p><h2 id="树状数组的更新元素"><a href="#树状数组的更新元素" class="headerlink" title="树状数组的更新元素"></a>树状数组的更新元素</h2><p>树状数组的更新元素操作是通过树状数组中的节点来实现的。具体来说，更新元素的操作用于更新指定位置的元素值，并将路径上的所有节点的值进行相应的调整。</p><p>更新元素操作的时间复杂度为O(logn)。</p><h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>x &amp; -x 得到 x 的二进制表示中最低位的1及其后面的0构成的数。<br>x &amp; (x - 1) 得到 x 的二进制表示中最低位的1前面的0构成的数(去掉最后一位)。</p><h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Tree</span>&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">vector&lt;<span class="type">int</span>&gt; tr;</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">Tree</span>(<span class="type">int</span> _n) &#123;</span><br><span class="line">        n = _n;</span><br><span class="line">        tr.<span class="built_in">resize</span>(n + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> x, <span class="type">int</span> v)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (; x &lt;= n; x += x &amp; -x) tr[x] += v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">query</span><span class="params">(<span class="type">int</span> x)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (; x; x -= x &amp; -x) res += tr[x];</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    </span><br></pre></td></tr></table></figure><p><img src="https://img.picgo.net/2025/04/16/bg1ac9b756bdd19699.md.png" alt=""></p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h1 id=&quot;树状数组的原理&quot;&gt;&lt;a href=&quot;#树状数组的原理&quot; class=&quot;headerlink&quot; title=&quot;树状数组的原理&quot;&gt;&lt;/a&gt;树状数组的原理&lt;/h1&gt;&lt;h2 id=&quot;树状数组&quot;&gt;&lt;a href=&quot;#树状数组&quot; class=&quot;headerlink&quot; titl</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>c语言学习-3</title>
