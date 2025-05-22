@@ -6,7 +6,7 @@
   <link href="https://sakjijdidji55.github.io/atom.xml" rel="self"/>
   
   <link href="https://sakjijdidji55.github.io/"/>
-  <updated>2025-05-22T04:58:45.725Z</updated>
+  <updated>2025-05-22T04:59:01.214Z</updated>
   <id>https://sakjijdidji55.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://sakjijdidji55.github.io/posts/c7c83056.html"/>
     <id>https://sakjijdidji55.github.io/posts/c7c83056.html</id>
     <published>2025-05-22T04:49:23.000Z</published>
-    <updated>2025-05-22T04:58:45.725Z</updated>
+    <updated>2025-05-22T04:59:01.214Z</updated>
     
     <content type="html"><![CDATA[<h2 id="学习笔记"><a href="#学习笔记" class="headerlink" title="学习笔记"></a>学习笔记</h2><h4 id="力扣-982-按位与为零的三元组"><a href="#力扣-982-按位与为零的三元组" class="headerlink" title="力扣 982 按位与为零的三元组"></a>力扣 982 按位与为零的三元组</h4><p>思路：暴力枚举<br>先枚举一二个数，再看第三个数是否满足条件<br>前者是O(n^2)</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">unordered_map&lt;<span class="type">int</span>, <span class="type">int</span>&gt; cnt; <span class="comment">// 记录每个数出现的次数</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> j = i + <span class="number">1</span>; j &lt; n; ++j) &#123;</span><br><span class="line">        cnt[arr[i] &amp; arr[j]]++; <span class="comment">// 记录每个数出现的次数</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>然后用一个循环遍历所有可能的数，看是否满足条件，并且找到每个数的补码集合</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> i:arr)&#123;</span><br><span class="line">    <span class="type">int</span> mask = i^((<span class="number">1</span>&lt;&lt;<span class="number">16</span>)<span class="number">-1</span>); <span class="comment">// 找到补码,因为数据最大是16位，所以补码是1&lt;&lt;16-1</span></span><br><span class="line">    <span class="type">int</span> sub = mask;</span><br><span class="line">    <span class="keyword">do</span>&#123;</span><br><span class="line">        ans += cnt[sub];</span><br><span class="line">        sub = (sub<span class="number">-1</span>)&amp;mask; <span class="comment">// 找到补码集合, 当sub = -1 是取补集会回到mask </span></span><br><span class="line">    &#125;<span class="keyword">while</span>(sub!=mask);<span class="comment">// 找到补码集合, 当sub = -1 是取补集会回到mask</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>sub = (sub-1)&mask; // 找到补码集合, 当sub = -1 是取补集会回到mask<br>这步十分巧妙，因为最低位变成0， 然后与mask与运算，与原来的数进行限制操作以找到所有的数</p><p><a href="https://img.picgo.net/2025/05/22/614ac701-6b42-44fa-8e55-3008f4749f52f45a08d34e688858.md.png"></a></p>]]></content>
     
