@@ -1,0 +1,801 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>4.从零开始实现一个用于文本生成的 GPT 模型 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="4.从零开始实现一个用于文本生成的 GPT 模型本章涵盖以下内容：  编写一个类 GPT 的大语言模型（LLM），可以训练其生成类人文本（指的是由人工智能模型生成的文本，这些文本在语言表达、语法结构、情感表达等方面与人类自然书写的文本非常相似） 对网络层的激活值进行归一化，以稳定神经网络的训练过程 在深度神经网络中添加快捷连接，以更高效地训练模型 通过实现 Transformer 模块来构建不同规">
+<meta property="og:type" content="website">
+<meta property="og:title" content="4.从零开始实现一个用于文本生成的 GPT 模型">
+<meta property="og:url" content="https://sakjijdidji55.github.io/ai_study/4.%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%94%A8%E4%BA%8E%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90%E7%9A%84%20GPT%20%E6%A8%A1%E5%9E%8B.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="4.从零开始实现一个用于文本生成的 GPT 模型本章涵盖以下内容：  编写一个类 GPT 的大语言模型（LLM），可以训练其生成类人文本（指的是由人工智能模型生成的文本，这些文本在语言表达、语法结构、情感表达等方面与人类自然书写的文本非常相似） 对网络层的激活值进行归一化，以稳定神经网络的训练过程 在深度神经网络中添加快捷连接，以更高效地训练模型 通过实现 Transformer 模块来构建不同规">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2025-10-26T08:00:00.000Z">
+<meta property="article:modified_time" content="2025-10-26T07:34:26.779Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/ai_study/4.%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E7%94%A8%E4%BA%8E%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90%E7%9A%84%20GPT%20%E6%A8%A1%E5%9E%8B.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '4.从零开始实现一个用于文本生成的 GPT 模型',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"<!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">4.从零开始实现一个用于文本生成的 GPT 模型</h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1 id="4-从零开始实现一个用于文本生成的-GPT-模型"><a href="#4-从零开始实现一个用于文本生成的-GPT-模型" class="headerlink" title="4.从零开始实现一个用于文本生成的 GPT 模型"></a>4.从零开始实现一个用于文本生成的 GPT 模型</h1><p>本章涵盖以下内容：</p>
+<ul>
+<li><strong>编写一个类 GPT 的大语言模型（LLM），可以训练其生成类人文本（指的是由人工智能模型生成的文本，这些文本在语言表达、语法结构、情感表达等方面与人类自然书写的文本非常相似）</strong></li>
+<li><strong>对网络层的激活值进行归一化，以稳定神经网络的训练过程</strong></li>
+<li><strong>在深度神经网络中添加快捷连接，以更高效地训练模型</strong></li>
+<li><strong>通过实现 Transformer 模块来构建不同规模的 GPT 模型</strong></li>
+<li><strong>计算 GPT 模型的参数数量和存储需求</strong></li>
+</ul>
+<hr>
+<ul>
+<li><a href="#4从零开始实现一个用于文本生成的-gpt-模型">4.从零开始实现一个用于文本生成的 GPT 模型</a><ul>
+<li><a href="#41-实现-llm-的架构">4.1 实现 LLM 的架构</a></li>
+<li><a href="#42-使用层归一化对激活值进行标准化">4.2 使用层归一化对激活值进行标准化</a></li>
+<li><a href="#43-实现带有-gelu-激活函数的前馈神经网络">4.3 实现带有 GELU 激活函数的前馈神经网络</a></li>
+<li><a href="#44-添加快捷连接">4.4 添加快捷连接</a></li>
+<li><a href="#45-在-transformer-模块中连接注意力层与线性层">4.5 在 Transformer 模块中连接注意力层与线性层</a></li>
+<li><a href="#46-实现-gpt-模型">4.6 实现 GPT 模型</a></li>
+<li><a href="#47-生成文本">4.7 生成文本</a></li>
+<li><a href="#48-本章摘要">4.8 本章摘要</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<p>在上一章中，我们学习并实现了多头注意力机制，这是大语言模型（LLM）的核心组件之一。本章将进一步实现 LLM 的其他组件，并将它们组装成一个与 GPT 类似结构的模型。我们将在下一章中训练该模型，以生成类人文本，具体过程如图 4.1 所示。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.1.png" width="75%" />
+</div>
+
+<p>大语言模型（LLM）架构（见图 4.1）由多个模块构成，我们将在本章中实现这些模块。接下来的内容，我们首先从整体视角介绍模型架构，然后详细讲解各个组件。</p>
+<h2 id="4-1-实现-LLM-的架构"><a href="#4-1-实现-LLM-的架构" class="headerlink" title="4.1 实现 LLM 的架构"></a>4.1 实现 LLM 的架构</h2><p>LLM（如GPT，即生成式预训练 Transformer，Generative Pretrained Transformer）是一种大型深度神经网络架构，设计用于逐词（或逐 token）生成新文本。然而，尽管模型规模庞大，其结构却并没有想象中那么复杂，因为模型的许多组件是重复的（后文将对此展开说明）。图 4.2 展示了一个类 GPT 的 LLM 的整体视图，并突出了其主要组成部分。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.2.png" width="75%" />
+</div>
+
+<p>如图 4.2 所示，我们已经在之前的章节中讲解过几个模块，如输入的分词和嵌入，以及掩码多头注意力模块。本章的重点是实现 GPT 模型的核心结构（包括 Transformer 模块）。我们将在下一章对该模型进行训练，使其能够生成类人文本。</p>
+<p>在前几章中，为了简单起见，我们使用了较小的嵌入维度，确保概念和示例能够更方便地展示在一页内。而在本章中，我们将逐步扩展模型规模，达到小型 GPT-2 模型的大小（拥有1.24 亿参数量的最小版本）。该模型在 Radford 等人的论文《Language Models are Unsupervised Multitask Learners.》中有详细介绍。请注意，尽管最初的报告中提到参数量为 1.17 亿，但后来更正为 1.24 亿。</p>
+<p>第 6 章将重点介绍如何将预训练权重加载到我们的实现中，并将其调整为更大的 GPT-2 模型版本（包括 3.45 亿、7.62 亿和 15.42 亿参数量规模）。在深度学习和 GPT 等大语言模型的背景下，‘参数’一词指的是模型的可训练权重。这些权重本质上是模型的内部变量，在训练过程中不断调整和优化，以最小化特定的损失函数。这种优化使得模型能够从训练数据中学习。</p>
+<p>例如，在一个神经网络层中，其权重由一个 2,048 x 2,048 维的矩阵（或张量）表示，这个矩阵的每个元素都是一个参数。由于该矩阵有 2,048 行和 2,048 列，因此该层的总参数数量为 2,048 乘以 2,048，即 4,194,304 个参数。</p>
+<blockquote>
+<p>[!NOTE]</p>
+<p><strong>GPT-2 与 GPT-3 的比较</strong></p>
+<p>我们之所以关注 GPT-2，是因为 OpenAI 已公开了其预训练模型的权重，这些权重将在第 6 章中加载到我们的实现中。GPT-3 的模型架构基本上与 GPT-2 相同，只是将参数规模从 GPT-2 的 15 亿增加到了 1750 亿，同时在更多的数据上进行了训练。截至本文撰写时，GPT-3 的权重尚未公开。对于学习如何实现LLM，GPT-2 是更好的选择，因为它可以在单台笔记本电脑上运行，而 GPT-3 的训练和推理则需要 GPU 集群。根据 Lambda Labs 的估算，在单块 V100 数据中心 GPU 上训练 GPT-3 需要 355 年，而在消费级的 RTX 8000 GPU 上则需要 665 年。</p>
+</blockquote>
+<p>我们通过以下 Python 字典来定义小型 GPT-2 模型的配置，稍后将在代码示例中使用该配置：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GPT_CONFIG_124M = &#123;</span><br><span class="line">    <span class="string">&quot;vocab_size&quot;</span>: <span class="number">50257</span>,    <span class="comment"># Vocabulary size</span></span><br><span class="line">    <span class="string">&quot;context_length&quot;</span>: <span class="number">1024</span>, <span class="comment"># Context length</span></span><br><span class="line">    <span class="string">&quot;emb_dim&quot;</span>: <span class="number">768</span>,         <span class="comment"># Embedding dimension</span></span><br><span class="line">    <span class="string">&quot;n_heads&quot;</span>: <span class="number">12</span>,          <span class="comment"># Number of attention heads</span></span><br><span class="line">    <span class="string">&quot;n_layers&quot;</span>: <span class="number">12</span>,         <span class="comment"># Number of layers</span></span><br><span class="line">    <span class="string">&quot;drop_rate&quot;</span>: <span class="number">0.1</span>,       <span class="comment"># Dropout rate</span></span><br><span class="line">    <span class="string">&quot;qkv_bias&quot;</span>: <span class="literal">False</span>       <span class="comment"># Query-Key-Value bias</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 GPT_CONFIG_124M 字典中，我们使用简明的变量名，以保证清晰且避免代码行过长：</p>
+<ul>
+<li><code>vocab_size</code>指的是第 2 章中 BPE 分词器使用的 50,257 个词汇的词表大小。</li>
+<li><code>context_length</code>表示模型所能处理的最大输入 token 数（在第 2 章介绍位置嵌入时讨论过）。</li>
+<li><code>emb_dim</code>表示嵌入维度，将每个 token 转换为 768 维的向量。</li>
+<li><code>n_layers</code>指定模型中 Transformer 模块的层数，后续章节将对此详解。</li>
+<li><code>drop_rate</code>表示 dropout 机制的强度（例如，0.1 表示丢弃 10% 的隐藏单元），用于防止过拟合，具体内容请回顾第 3 章。</li>
+<li><code>qkv_bias</code> 参数决定是否在多头注意力的查询、键和值的线性层中加入偏置向量。我们最初会禁用该选项，以遵循现代大语言模型的标准，之后在第 6 章加载 OpenAI 预训练的 GPT-2 权重时再重新考虑该设置。</li>
+</ul>
+<p>使用上述配置，我们将从本章开始实现一个GPT占位架构（DummyGPTModel），如图4.3所示。这将为我们提供一个全局视图，了解所有组件如何组合在一起，以及在接下来的章节中需要编写哪些其他组件来组装完整的GPT模型架构。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.3.png" width="75%" />
+</div>
+
+<p>图 4.3 中显示的编号框说明了我们编写最终 GPT 架构所需理解的各个概念的顺序。我们将从第 1 步开始，这是一个我们称之为 DummyGPTModel 的 GPT 占位架构：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 4.1 A placeholder GPT model architecture class</span></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DummyGPTModel</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, cfg</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.tok_emb = nn.Embedding(cfg[<span class="string">&quot;vocab_size&quot;</span>], cfg[<span class="string">&quot;emb_dim&quot;</span>])</span><br><span class="line">        <span class="variable language_">self</span>.pos_emb = nn.Embedding(cfg[<span class="string">&quot;context_length&quot;</span>], cfg[<span class="string">&quot;emb_dim&quot;</span>])</span><br><span class="line">        <span class="variable language_">self</span>.drop_emb = nn.Dropout(cfg[<span class="string">&quot;drop_rate&quot;</span>])</span><br><span class="line">        <span class="variable language_">self</span>.trf_blocks = nn.Sequential(</span><br><span class="line">            *[DummyTransformerBlock(cfg) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(cfg[<span class="string">&quot;n_layers&quot;</span>])])      <span class="comment">#A</span></span><br><span class="line">        <span class="variable language_">self</span>.final_norm = DummyLayerNorm(cfg[<span class="string">&quot;emb_dim&quot;</span>])                       <span class="comment">#B</span></span><br><span class="line">        <span class="variable language_">self</span>.out_head = nn.Linear(</span><br><span class="line">            cfg[<span class="string">&quot;emb_dim&quot;</span>], cfg[<span class="string">&quot;vocab_size&quot;</span>], bias=<span class="literal">False</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, in_idx</span>):</span><br><span class="line">        batch_size, seq_len = in_idx.shape</span><br><span class="line">        tok_embeds = <span class="variable language_">self</span>.tok_emb(in_idx)</span><br><span class="line">        pos_embeds = <span class="variable language_">self</span>.pos_emb(torch.arange(seq_len, device=in_idx.device))</span><br><span class="line">        x = tok_embeds + pos_embeds</span><br><span class="line">        x = <span class="variable language_">self</span>.drop_emb(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.trf_blocks(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.final_norm(x)</span><br><span class="line">        logits = <span class="variable language_">self</span>.out_head(x)</span><br><span class="line">        <span class="keyword">return</span> logits</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DummyTransformerBlock</span>(nn.Module):                                       <span class="comment">#C</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, cfg</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):                                                     <span class="comment">#D</span></span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">DummyLayerNorm</span>(nn.Module):                                              <span class="comment">#E</span></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, normalized_shape, eps=<span class="number">1e-5</span></span>):                           <span class="comment">#F</span></span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#A 为 TransformerBlock 设置占位符</span></span><br><span class="line"><span class="comment">#B 为 LayerNorm 设置占位符</span></span><br><span class="line"><span class="comment">#C 一个简单的占位类，后续将被真正的 TransformerBlock 替换</span></span><br><span class="line"><span class="comment">#D 该模块无实际操作，仅原样返回输入</span></span><br><span class="line"><span class="comment">#E 一个简单的占位类，后续将被真正的 DummyLayerNorm 替换</span></span><br><span class="line"><span class="comment">#F 此处的参数仅用于模拟LayerNorm接口</span></span><br></pre></td></tr></table></figure>
+<p>此代码中的 DummyGPTModel 类使用 PyTorch 内置的神经网络模块（nn.Module）定义了一个简化版的类 GPT 模型。该类包括 token 嵌入、位置嵌入、dropout、多个 Transformer 模块（DummyTransformerBlock）、最终的层归一化（DummyLayerNorm）以及线性输出层（out_head）。模型配置通过 Python 字典传入，稍后将传入我们之前创建的 GPT_CONFIG_124M 字典。</p>
+<p><code>forward</code>方法定义了数据在模型中的流动方式：计算输入索引的 token 嵌入和位置嵌入，应用 dropout，通过 transformer block 处理数据，应用归一化，最后通过线性输出层生成 logits。</p>
+<p>上面的代码已经可以正常运行，不过需要先准备输入数据，在本节后面我们会看到运行效果。需要注意的是，目前代码中我们使用了 <code>DummyLayerNorm</code> 和 <code>DummyTransformerBlock</code> 作为 Transformer 模块和层归一化的占位符，实际的实现会在后续部分详细介绍。</p>
+<p>接下来，我们将准备输入数据并初始化一个新的 GPT 模型，以展示它的用法。基于第二章实现的分词器，图 4.4 展示了数据在 GPT 模型中流入和流出的整体流程。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.4.png" width="75%" />
+</div>
+
+<p>根据图 4.4 的步骤，我们使用第 2 章介绍的 tiktoken 分词器对包含两个文本的批量输入进行分词，以供 GPT 模型使用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tiktoken</span><br><span class="line"></span><br><span class="line">tokenizer = tiktoken.get_encoding(<span class="string">&quot;gpt2&quot;</span>)</span><br><span class="line">batch = []</span><br><span class="line">txt1 = <span class="string">&quot;Every effort moves you&quot;</span></span><br><span class="line">txt2 = <span class="string">&quot;Every day holds a&quot;</span></span><br><span class="line"></span><br><span class="line">batch.append(torch.tensor(tokenizer.encode(txt1)))</span><br><span class="line">batch.append(torch.tensor(tokenizer.encode(txt2)))</span><br><span class="line">batch = torch.stack(batch, dim=<span class="number">0</span>)</span><br><span class="line"><span class="built_in">print</span>(batch)</span><br></pre></td></tr></table></figure>
+<p>这两段文本的token ID 如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tensor([[ <span class="number">6109</span>, <span class="number">3626</span>, <span class="number">6100</span>, <span class="number">345</span>],      <span class="comment">#A</span></span><br><span class="line">        [ <span class="number">6109</span>, <span class="number">1110</span>, <span class="number">6622</span>, <span class="number">257</span>]])</span><br><span class="line"></span><br><span class="line"><span class="comment">#A 第一行对应第一段文本，第二行对应第二段文本。</span></span><br></pre></td></tr></table></figure>
+<p>接下来，我们初始化一个拥有 1.24 亿参数的 DummyGPTModel 模型实例，并将分词后的数据批量输入到模型中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">model = DummyGPTModel(GPT_CONFIG_124M)</span><br><span class="line">logits = model(batch)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Output shape:&quot;</span>, logits.shape)</span><br><span class="line"><span class="built_in">print</span>(logits)</span><br></pre></td></tr></table></figure>
+<p>模型输出（通常称为logits）如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Output shape: torch.Size([<span class="number">2</span>, <span class="number">4</span>, <span class="number">50257</span>])</span><br><span class="line">tensor([[[-<span class="number">1.2034</span>, <span class="number">0.3201</span>, -<span class="number">0.7130</span>, ..., -<span class="number">1.5548</span>, -<span class="number">0.2390</span>, -<span class="number">0.4667</span>],</span><br><span class="line">         [-<span class="number">0.1192</span>, <span class="number">0.4539</span>, -<span class="number">0.4432</span>, ..., <span class="number">0.2392</span>, <span class="number">1.3469</span>, <span class="number">1.2430</span>],</span><br><span class="line">         [ <span class="number">0.5307</span>, <span class="number">1.6720</span>, -<span class="number">0.4695</span>, ..., <span class="number">1.1966</span>, <span class="number">0.0111</span>, <span class="number">0.5835</span>],</span><br><span class="line">         [ <span class="number">0.0139</span>, <span class="number">1.6755</span>, -<span class="number">0.3388</span>, ..., <span class="number">1.1586</span>, -<span class="number">0.0435</span>, -<span class="number">1.0400</span>]],</span><br><span class="line"></span><br><span class="line">         [[-<span class="number">1.0908</span>, <span class="number">0.1798</span>, -<span class="number">0.9484</span>, ..., -<span class="number">1.6047</span>, <span class="number">0.2439</span>, -<span class="number">0.4530</span>],</span><br><span class="line">         [-<span class="number">0.7860</span>, <span class="number">0.5581</span>, -<span class="number">0.0610</span>, ..., <span class="number">0.4835</span>, -<span class="number">0.0077</span>, <span class="number">1.6621</span>],</span><br><span class="line">         [ <span class="number">0.3567</span>, <span class="number">1.2698</span>, -<span class="number">0.6398</span>, ..., -<span class="number">0.0162</span>, -<span class="number">0.1296</span>, <span class="number">0.3717</span>],</span><br><span class="line">         [-<span class="number">0.2407</span>, -<span class="number">0.7349</span>, -<span class="number">0.5102</span>, ..., <span class="number">2.0057</span>, -<span class="number">0.3694</span>, <span class="number">0.1814</span>]]],</span><br><span class="line">         grad_fn=&lt;UnsafeViewBackward0&gt;)</span><br></pre></td></tr></table></figure>
+<p>输出的张量有两行，每行对应一段文本。每段文本包含 4 个 token，每个 token 是一个 50,257 维的向量，维度大小与分词器的词汇表相同。</p>
+<p>嵌入层的维度为 50,257，因为每个维度对应词汇表中的一个唯一 token。在之后的处理中，我们会将这些 50,257 维向量转换回 token ID，然后再解码成单词。</p>
+<p>在对 GPT 架构及其输入输出进行了大概介绍之后，接下来的章节中将编写各个占位模块的实现，首先从用真实的层归一化类替换之前代码中的 DummyLayerNorm 开始。</p>
+<h2 id="4-2-使用层归一化对激活值进行标准化"><a href="#4-2-使用层归一化对激活值进行标准化" class="headerlink" title="4.2 使用层归一化对激活值进行标准化"></a>4.2 使用层归一化对激活值进行标准化</h2><p>在训练深度神经网络时，梯度消失或梯度爆炸问题有时会带来挑战。这些问题会导致训练过程不稳定，使得网络难以有效调整权重，也就是说，模型难以找到一组能最小化损失函数的参数。换句话说，模型很难从数据中学习到足够准确的模式，以支持其做出准确的预测或决策。（如果您对神经网络训练或梯度概念不熟悉，可参考附录 A 的 A.4 节《自动微分入门》。但要理解本书内容，不需要对梯度概念有深刻的理解。）</p>
+<blockquote>
+<p>[!TIP]</p>
+<p><strong>个人思考：</strong> 虽然对文本内容的理解并不需要深度掌握梯度的概念，但如果我们在学习过程中能习惯去发散，往往能帮助我们对所学知识理解的更深刻，下面我们就来聊一下梯度。</p>
+<p>梯度本质上是一个<strong>变化率</strong>，描述了某个值（例如函数输出值）对另一个值（如输入变量）的变化趋势。简单来说，梯度告诉我们在当前位置上，朝哪个方向移动能让某个目标值增加或减少得更快。</p>
+<p>举例：山坡上的爬山者</p>
+<p>假设你站在一座山的某个位置，想要找到最快下山的路线。你会怎么做呢？首先你会注意到山坡的倾斜度（也就是梯度），倾斜越陡的地方，就意味着朝这个方向走可以让你更快地下降海拔。</p>
+<p>在这个例子中：</p>
+<ul>
+<li><strong>你的当前位置</strong>代表模型当前的参数值。</li>
+<li><strong>山坡的倾斜度</strong>就是梯度，表示你在当前位置向下走的快慢和方向。</li>
+<li><strong>往斜坡最陡的方向走</strong>相当于使用梯度更新模型参数，使得海拔（也就是损失值）尽快下降。</li>
+</ul>
+<p>而大模型在应用梯度的概念时，首先会设计一个损失函数，用来衡量模型的预测结果与目标结果的差距。在训练过程中，它通过梯度去帮助每个模型参数不断调整来快速减少损失函数的值，从而提高模型的预测精度。</p>
+</blockquote>
+<p>本节中，我们将实现层归一化，以提高神经网络训练的稳定性和效率。</p>
+<p>归一化的核心思想是将神经网络层的激活（输出）调整为均值为 0，方差为 1（即单位方差）。这种调整可以加速权重的收敛速度，确保训练过程的一致性和稳定性。正如上一节提到的，在 GPT-2 和现代 Transformer 架构中，层归一化通常应用于多头注意力模块的前后以及最终输出层之前。</p>
+<p>在我们用代码实现层归一化之前，先通过图 4.5 了解一下层归一化的工作原理。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.5.png" width="75%" />
+</div>
+
+<p>我们可以通过以下代码重现图 4.5 中的示例，其中实现了一个具有 5 个输入和 6 个输出的神经网络层，并将其应用于两个输入样本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">batch_example = torch.randn(<span class="number">2</span>, <span class="number">5</span>)          <span class="comment">#A</span></span><br><span class="line">layer = nn.Sequential(nn.Linear(<span class="number">5</span>, <span class="number">6</span>), nn.ReLU())</span><br><span class="line">out = layer(batch_example)</span><br><span class="line"><span class="built_in">print</span>(out)</span><br><span class="line"></span><br><span class="line"><span class="comment">#A 创建2个训练样本，每个样本有5个维度（特征）</span></span><br></pre></td></tr></table></figure>
+<p>打印出的张量中，第一行表示第一个输入样本的层输出，第二行表示第二个输入样本的层输出：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tensor([[<span class="number">0.2260</span>, <span class="number">0.3470</span>, <span class="number">0.0000</span>, <span class="number">0.2216</span>, <span class="number">0.0000</span>, <span class="number">0.0000</span>],</span><br><span class="line">        [<span class="number">0.2133</span>, <span class="number">0.2394</span>, <span class="number">0.0000</span>, <span class="number">0.5198</span>, <span class="number">0.3297</span>, <span class="number">0.0000</span>]],</span><br><span class="line">        grad_fn=&lt;ReluBackward0&gt;)</span><br></pre></td></tr></table></figure>
+<p>我们实现的神经网络层包含一个线性层，后接一个非线性激活函数 ReLU，这是神经网络中的标准激活函数。如果你不熟悉 ReLU，只需了解它的作用是将负值设为 0，确保输出层中没有负值。在 GPT 中，我们将使用另一种更复杂的激活函数，后续章节会介绍。</p>
+<p>在对这些输出应用层归一化之前，我们先查看其均值和方差：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mean = out.mean(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">var = out.var(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Mean:\n&quot;</span>, mean)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Variance:\n&quot;</span>, var)</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Mean:</span><br><span class="line">  tensor([[<span class="number">0.1324</span>],</span><br><span class="line">         [<span class="number">0.2170</span>]], grad_fn=&lt;MeanBackward1&gt;)</span><br><span class="line"></span><br><span class="line">Variance:</span><br><span class="line">  tensor([[<span class="number">0.0231</span>],</span><br><span class="line">         [<span class="number">0.0398</span>]], grad_fn=&lt;VarBackward0&gt;)</span><br></pre></td></tr></table></figure>
+<p>以上均值张量的第一行包含第一个输入样本的均值，第二行输出包含第二个输入样本的均值。</p>
+<p>在计算均值或方差等操作时使用 <code>keepdim=True</code> 参数，可以确保输出张量的维度与输入张量相同，即使该操作通过<code>dim</code>参数减少了张量的维度。例如，如果不使用 <code>keepdim=True</code>，返回的均值张量将是一个二维向量 <code>[0.1324, 0.2170]</code>，而使用 <code>keepdim=True</code> 后，返回的张量则会是一个 <code>2×1</code> 的矩阵 <code>[[0.1324], [0.2170]]</code>。</p>
+<p><code>dim</code> 参数用于指定张量中进行统计计算（如均值或方差）的维度，具体如图 4.6 所示。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.6.png" width="75%" />
+</div>
+
+<p>如图 4.6 所示，对于二维张量（如矩阵），在进行均值或方差计算等操作时，使用 <code>dim=-1</code> 等同于使用 <code>dim=1</code>，因为 <code>-1</code> 指的是张量的最后一个维度，即二维张量中的列。在后续对 GPT 模型加入层归一化时，模型会生成形状为 <code>[batch_size, num_tokens, embedding_size]</code> 的三维张量，我们依然可以使用 <code>dim=-1</code> 对最后一个维度进行归一化，而无需将 <code>dim=1</code> 改为 <code>dim=2</code>。</p>
+<p>接下来，我们将对之前获得的层输出应用层归一化。该操作包括减去均值，并除以方差的平方根（即标准差）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">out_norm = (out - mean) / torch.sqrt(var)</span><br><span class="line">mean = out_norm.mean(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">var = out_norm.var(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Normalized layer outputs:\n&quot;</span>, out_norm)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Mean:\n&quot;</span>, mean)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Variance:\n&quot;</span>, var)</span><br></pre></td></tr></table></figure>
+<p>可以看到，归一化后的层输出现在也包含了负值，其均值为零，方差为 1：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Normalized layer outputs:</span><br><span class="line">  tensor([[ <span class="number">0.6159</span>, <span class="number">1.4126</span>, -<span class="number">0.8719</span>, <span class="number">0.5872</span>, -<span class="number">0.8719</span>, -<span class="number">0.8719</span>],</span><br><span class="line">          [-<span class="number">0.0189</span>, <span class="number">0.1121</span>, -<span class="number">1.0876</span>, <span class="number">1.5173</span>, <span class="number">0.5647</span>, -<span class="number">1.0876</span>]],</span><br><span class="line">          grad_fn=&lt;DivBackward0&gt;)</span><br><span class="line"></span><br><span class="line">Mean:</span><br><span class="line">  tensor([[<span class="number">2.9802e-08</span>],</span><br><span class="line">          [<span class="number">3.9736e-08</span>]], grad_fn=&lt;MeanBackward1&gt;)</span><br><span class="line"></span><br><span class="line">Variance:</span><br><span class="line">  tensor([[<span class="number">1.</span>],</span><br><span class="line">          [<span class="number">1.</span>]], grad_fn=&lt;VarBackward0&gt;)</span><br></pre></td></tr></table></figure>
+<p>请注意，输出张量中的值<code>2.9802e-08</code>是<code>2.9802 × 10^-8</code>的科学记数法表示，用十进制形式表示为<code>0.0000000298</code>。这个值虽然非常接近 0，但由于计算机表示数字的精度有限，会产生微小的数值误差，因此不完全等于 0。</p>
+<p>为提高可读性，我们可以将 sci_mode 设置为 False，从而关闭张量值的科学计数法显示模式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">torch.set_printoptions(sci_mode=<span class="literal">False</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Mean:\n&quot;</span>, mean)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Variance:\n&quot;</span>, var)</span><br><span class="line">Mean:</span><br><span class="line">  tensor([[ <span class="number">0.0000</span>],</span><br><span class="line">          [ <span class="number">0.0000</span>]], grad_fn=&lt;MeanBackward1&gt;)</span><br><span class="line">Variance:</span><br><span class="line">  tensor([[<span class="number">1.</span>],</span><br><span class="line">          [<span class="number">1.</span>]], grad_fn=&lt;VarBackward0&gt;)</span><br></pre></td></tr></table></figure>
+<p>在本节内容中，我们已逐步实现并应用了层归一化。现在将这个过程封装到一个 PyTorch 模块中，以便后续在 GPT 模型中使用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 4.2 A layer normalization class</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LayerNorm</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, emb_dim</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.eps = <span class="number">1e-5</span></span><br><span class="line">        <span class="variable language_">self</span>.scale = nn.Parameter(torch.ones(emb_dim))</span><br><span class="line">        <span class="variable language_">self</span>.shift = nn.Parameter(torch.zeros(emb_dim))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        mean = x.mean(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">        var = x.var(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>, unbiased=<span class="literal">False</span>)</span><br><span class="line">        norm_x = (x - mean) / torch.sqrt(var + <span class="variable language_">self</span>.eps)</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.scale * norm_x + <span class="variable language_">self</span>.shift</span><br></pre></td></tr></table></figure>
+<p>以上是对层归一化的具体实现，它作用于输入张量 <code>x</code> 的最后一个维度，该维度表示嵌入维度（emb_dim）。变量 <code>eps</code> 是一个小常数（epsilon），在归一化过程中加到方差上，以防止出现除零错误。<code>scale</code> 和 <code>shift</code> 是两个可训练参数（与输入具有相同的维度）。大语言模型（LLM）在训练中会自动调整这些参数，以改善模型在训练任务上的性能。这使得模型能够学习适合数据处理的最佳缩放和偏移方式。</p>
+<blockquote>
+<p>[!NOTE]</p>
+<p><strong>有偏方差</strong></p>
+<p>我们在方差计算方法中选择了设置 <code>unbiased=False</code>。对于好奇其含义的读者，可以理解为我们在方差公式中直接用样本数 n 作为分母，不使用贝塞尔校正（通常分母使用 n−1 以校正样本方差估计中的偏差）。这种决定会导致所谓的有偏方差估计。对于大语言模型（LLM）来说，其嵌入维度 n 通常非常大，因此使用 n 和 n−1 的差异实际上可以忽略不计。我们选择这种方式是为了确保与 GPT-2 模型的归一化层兼容，并保持与 TensorFlow 的默认行为一致，后者用于实现最初的 GPT-2 模型。这种设置确保我们的方法与第 6 章中将加载的预训练权重兼容。</p>
+</blockquote>
+<p>现在让我们在实践中尝试LayerNorm模块并将其应用于批量输入：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ln = LayerNorm(emb_dim=<span class="number">5</span>)</span><br><span class="line">out_ln = ln(batch_example)</span><br><span class="line">mean = out_ln.mean(dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">var = out_ln.var(dim=-<span class="number">1</span>, unbiased=<span class="literal">False</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Mean:\n&quot;</span>, mean)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Variance:\n&quot;</span>, var)</span><br></pre></td></tr></table></figure>
+<p>结果表明，层归一化代码运行正常，将两个输入的均值归一化为 0，方差归一化为 1：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Mean:</span><br><span class="line">  tensor([[ -<span class="number">0.0000</span>],</span><br><span class="line">          [ <span class="number">0.0000</span>]], grad_fn=&lt;MeanBackward1&gt;)</span><br><span class="line">Variance:</span><br><span class="line">  tensor([[<span class="number">1.0000</span>],</span><br><span class="line">          [<span class="number">1.0000</span>]], grad_fn=&lt;VarBackward0&gt;)</span><br></pre></td></tr></table></figure>
+<p>在本节中，我们介绍了实现 GPT 架构所需的一个基础模块（<code>LayerNorm</code>），如图 4.7 所示。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.7.png" width="75%" />
+</div>
+
+<p>在下一节中，我们将探讨大语言模型中使用的 GELU 激活函数，它将替代我们在本节使用的传统 ReLU 函数。</p>
+<blockquote>
+<p>[!NOTE]</p>
+<p><strong>层归一化与批量归一化的区别</strong></p>
+<p>如果你熟悉批量归一化这种常见的传统神经网络归一化方法，可能会好奇它与层归一化的区别。与在数量维度上进行归一化的批量归一化不同，层归一化是在特征维度上进行归一化。LLM 通常需要大量计算资源，而可用的硬件资源或特定的使用场景可能会限制训练或推理过程中的批量大小。由于层归一化对每个输入的处理不依赖批量大小，因此在这些场景下提供了更高的灵活性和稳定性。这对于分布式训练或资源受限的环境中部署模型尤其有利。</p>
+</blockquote>
+<h2 id="4-3-实现带有-GELU-激活函数的前馈神经网络"><a href="#4-3-实现带有-GELU-激活函数的前馈神经网络" class="headerlink" title="4.3 实现带有 GELU 激活函数的前馈神经网络"></a>4.3 实现带有 GELU 激活函数的前馈神经网络</h2><p>在本节中，我们将实现一个小型神经网络子模块，作为 LLM 架构中的 Transformer 模块的一部分。我们首先实现 GELU 激活函数，它将在这个神经网络子模块中起着至关重要的作用。（关于在 PyTorch 中实现神经网络的更多信息，请参考附录 A 的 A.5 节：实现多层神经网络）</p>
+<p>过去，ReLU 激活函数因其简单且有效，常用于各种神经网络架构中。但在大语言模型中，除了传统的 ReLU，还使用了其他几种激活函数，其中两个典型的例子是 GELU（高斯误差线性单元）和 SwiGLU（Swish 门控线性单元）。</p>
+<p>GELU 和 SwiGLU 是更复杂、平滑的激活函数，分别结合了高斯分布和 sigmoid 门控线性单元。与较简单的 ReLU 不同，这些激活函数能为深度学习模型提供更好的性能。</p>
+<p>GELU 激活函数可以通过多种方式实现，其确切版本定义为 <code>GELU(x) = x ⋅ Φ(x)</code>，其中 Φ(x) 是标准正态分布的累积分布函数。然而在实践中，通常会采用计算开销更低的近似实现（最初的 GPT-2 模型也是用这种近似实现进行训练的）：</p>
+<script type="math/tex; mode=display">\text{GELU}(x) \approx 0.5 \cdot x \cdot\left(1+\tanh \left[\sqrt{(2 / \pi)} \cdot\left(x+0.044715 \cdot x^{3}\right]\right)\right.</script><p>我们可以编码将该函数实现为一个 PyTorch 模块，如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 4.3 An implementation of the GELU activation function</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GELU</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0.5</span> * x * (<span class="number">1</span> + torch.tanh(</span><br><span class="line">            torch.sqrt(torch.tensor(<span class="number">2.0</span> / torch.pi)) *</span><br><span class="line">            (x + <span class="number">0.044715</span> * torch.<span class="built_in">pow</span>(x, <span class="number">3</span>))</span><br><span class="line">        ))</span><br></pre></td></tr></table></figure>
+<p>接下来，为了更直观的观察 GELU 函数的形状，并与 ReLU 函数进行对比，我们将这两个函数并排绘制：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line">gelu, relu = GELU(), nn.ReLU()</span><br><span class="line"></span><br><span class="line">x = torch.linspace(-<span class="number">3</span>, <span class="number">3</span>, <span class="number">100</span>)                                          <span class="comment">#A</span></span><br><span class="line">y_gelu, y_relu = gelu(x), relu(x)</span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">3</span>))</span><br><span class="line"><span class="keyword">for</span> i, (y, label) <span class="keyword">in</span> <span class="built_in">enumerate</span>(<span class="built_in">zip</span>([y_gelu, y_relu], [<span class="string">&quot;GELU&quot;</span>, <span class="string">&quot;ReLU&quot;</span>]), <span class="number">1</span>):</span><br><span class="line">    plt.subplot(<span class="number">1</span>, <span class="number">2</span>, i)</span><br><span class="line">    plt.plot(x, y)</span><br><span class="line">    plt.title(<span class="string">f&quot;<span class="subst">&#123;label&#125;</span> activation function&quot;</span>)</span><br><span class="line">    plt.xlabel(<span class="string">&quot;x&quot;</span>)</span><br><span class="line">    plt.ylabel(<span class="string">f&quot;<span class="subst">&#123;label&#125;</span>(x)&quot;</span>)</span><br><span class="line">    plt.grid(<span class="literal">True</span>)</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment">#A 在 -3 到 3 的范围内生成 100 个样本数据点</span></span><br></pre></td></tr></table></figure>
+<p>如图 4.8 所示，ReLU 是一个分段线性函数，输入为正时输出输入值本身，否则输出零。而 GELU 是一种平滑的非线性函数，它近似于 ReLU，但在负值上也具有非零梯度。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.8.png" width="75%" />
+</div>
+
+<p>如图 4.8 所示，GELU 的平滑性使其在训练过程中具有更好的优化特性，能够对模型参数进行更细微的调整。相比之下，ReLU 在零点处有一个拐角，这在网络深度较大或结构复杂时可能会增加优化难度。此外，ReLU 对所有负输入的输出为零，而 GELU 对负值允许一个小的非零输出。这意味着在训练过程中，接收负输入的神经元也能对学习过程产生一定的贡献，尽管贡献程度不及正输入。</p>
+<p>接下来让我们使用 GELU 激活函数实现一个小型的神经网络模块 FeedForward，该模块稍后会应用在 LLM 的 Transformer 模块中：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 4.4 A feed forward neural network module</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">FeedForward</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, cfg</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.layers = nn.Sequential(</span><br><span class="line">            nn.Linear(cfg[<span class="string">&quot;emb_dim&quot;</span>], <span class="number">4</span> * cfg[<span class="string">&quot;emb_dim&quot;</span>]),</span><br><span class="line">            GELU(),</span><br><span class="line">            nn.Linear(<span class="number">4</span> * cfg[<span class="string">&quot;emb_dim&quot;</span>], cfg[<span class="string">&quot;emb_dim&quot;</span>]),</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">self</span>.layers(x)</span><br></pre></td></tr></table></figure>
+<p>如代码所示，FeedForward 模块是一个小型神经网络，由两个线性层和一个 GELU 激活函数组成。在 1.24 亿参数的 GPT 模型中，该模块可以接收批量输入，每个输入 token 是一个 768 维的向量表示。这一嵌入维度大小通过 <code>GPT_CONFIG_124M</code> 配置字典中的 <code>GPT_CONFIG_124M[&quot;emb_dim&quot;]</code> 参数指定。</p>
+<p>图 4.9 展示了当我们输入数据后，这个前馈网络内部如何调整嵌入维度。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.9.png" width="75%" />
+</div>
+
+<p>按照图 4.9 中的示例，我们初始化一个新的 FeedForward 模块，设置 token 嵌入维度为 768，并输入一个包含 2 个样本且每个样本有 3 个 token 的数据集：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ffn = FeedForward(GPT_CONFIG_124M)</span><br><span class="line">x = torch.rand(<span class="number">2</span>, <span class="number">3</span>, <span class="number">768</span>)          <span class="comment">#A</span></span><br><span class="line">out = ffn(x)</span><br><span class="line"><span class="built_in">print</span>(out.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment">#A 创建一个 batch 大小为 2 的示例输入</span></span><br></pre></td></tr></table></figure>
+<p>显然，输出张量的形状与输入张量相同：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.Size([<span class="number">2</span>, <span class="number">3</span>, <span class="number">768</span>])</span><br></pre></td></tr></table></figure>
+<p>我们在本节实现的 FeedForward 模块对模型能力的增强（主要体现在从数据中学习模式并泛化方面）起到了关键作用。尽管该模块的输入和输出维度相同，但在内部，它首先通过第一个线性层将嵌入维度扩展到一个更高维度的空间（如图 4.10 所示）。之后再接入非线性 GELU 激活，最后再通过第二个线性层变换回原始维度。这样的设计能够探索更丰富的表示空间。</p>
+<blockquote>
+<p>[!TIP]</p>
+<p><strong>个人思考：</strong> 这段描述一笔带过了扩展和收缩嵌入维度为模型训练带来的好处，那到底该如何理解这样的设计能够探索更丰富的表示空间呢？</p>
+<p>可以将扩展和收缩的过程类比为一种<strong>数据解压缩与重新压缩</strong>的机制：</p>
+<ul>
+<li><strong>扩展（解压缩）</strong>：假设我们有一段压缩的音乐文件（例如 MP3），里面包含了音频的基本信息。通过解压缩（扩展），我们把这个文件变成了一个更高质量的音频格式，允许我们看到（听到）更多的细节，比如乐器的细微声响和音调变化。</li>
+<li><strong>特征提取</strong>：接着，我们可以在这个高质量的音频文件中应用各种音频处理算法（相当于非线性激活），分析出更多细节，比如每种乐器的声音特点。</li>
+<li><strong>收缩（压缩）</strong>：最后，我们将音频再次压缩为一种更适合传输和存储的格式。虽然最终文件变小了，但这个文件已经包含了之前提取出的更多的声音细节。</li>
+</ul>
+<p>将这种理解再应用到神经网络中，扩展后的高维空间可以让模型“看到”输入数据中更多的隐藏特征，提取出更丰富的信息。然后在收缩回低维度时，这些丰富的特征被整合到了输入的原始维度表示中，使模型最终的输出包含更多的上下文和信息。</p>
+</blockquote>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.10.png" width="75%" />
+</div>
+
+<p>此外，输入输出维度保持一致也有助于简化架构，方便堆叠多层（在后续的章节实现），无需调整各层维度，从而提升了模型的可扩展性。</p>
+<p>如图4.11所示，我们目前已经实现了LLM 架构中的大部分模块。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.11.png" width="75%" />
+</div>
+
+<p>下一节，我们将介绍“快捷连接”的概念，即在神经网络的不同层之间插入的连接结构，它对于提升深度神经网络架构的训练性能非常重要。</p>
+<h2 id="4-4-添加快捷连接"><a href="#4-4-添加快捷连接" class="headerlink" title="4.4 添加快捷连接"></a>4.4 添加快捷连接</h2><p>接下来，我们来讨论快捷连接（也称跳跃连接或残差连接）的概念。快捷连接最初是在计算机视觉中的深度网络（尤其是残差网络）提出的，用于缓解梯度消失问题。梯度消失是指在训练中指导权重更新的梯度在反向传播过程中逐渐减小，导致早期层（靠近输入端的网络层）难以有效训练，如图 4.12 所示。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.12.png" width="75%" />
+</div>
+
+<p>如图 4.12 所示，快捷连接通过跳过一层或多层，为梯度提供一条更短的流动路径，这是通过将某层的输出加到后续层的输出上来实现的。因此，这种连接方式也称为跳跃连接。在反向传播中，快捷连接对保持梯度流动至关重要。</p>
+<p>在以下代码示例中，我们将实现图 4.12 中所示的神经网络，以展示如何在前向传播方法中添加快捷连接：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 4.5 A neural network to illustrate shortcut connections</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ExampleDeepNeuralNetwork</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, layer_sizes, use_shortcut</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.use_shortcut = use_shortcut</span><br><span class="line">        <span class="variable language_">self</span>.layers = nn.ModuleList([</span><br><span class="line">            <span class="comment"># Implement 5 layers</span></span><br><span class="line">            nn.Sequential(nn.Linear(layer_sizes[<span class="number">0</span>], layer_sizes[<span class="number">1</span>]), GELU()),</span><br><span class="line">            nn.Sequential(nn.Linear(layer_sizes[<span class="number">1</span>], layer_sizes[<span class="number">2</span>]), GELU()),</span><br><span class="line">            nn.Sequential(nn.Linear(layer_sizes[<span class="number">2</span>], layer_sizes[<span class="number">3</span>]), GELU()),</span><br><span class="line">            nn.Sequential(nn.Linear(layer_sizes[<span class="number">3</span>], layer_sizes[<span class="number">4</span>]), GELU()),</span><br><span class="line">            nn.Sequential(nn.Linear(layer_sizes[<span class="number">4</span>], layer_sizes[<span class="number">5</span>]), GELU())</span><br><span class="line">        ])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">for</span> layer <span class="keyword">in</span> <span class="variable language_">self</span>.layers:</span><br><span class="line">            <span class="comment"># Compute the output of the current layer</span></span><br><span class="line">            layer_output = layer(x)</span><br><span class="line">            <span class="comment"># Check if shortcut can be applied</span></span><br><span class="line">            <span class="keyword">if</span> <span class="variable language_">self</span>.use_shortcut <span class="keyword">and</span> x.shape == layer_output.shape:</span><br><span class="line">                x = x + layer_output</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                x = layer_output</span><br><span class="line">        <span class="keyword">return</span> x</span><br></pre></td></tr></table></figure>
+<p>以上代码实现了一个 5 层的深度神经网络，每层包括一个线性层和 GELU 激活函数。在前向传播中，我们将输入逐层传递，同时如果 <code>self.use_shortcut</code> 属性设置为 True，则会添加图 4.12 所示的快捷连接。</p>
+<p>我们将使用以下代码初始化一个没有快捷连接的神经网络，其中每一层都被初始化为接受 3 个输入值并返回 3 个输出值。最后一层则返回一个单一的输出值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">layer_sizes = [<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">1</span>]</span><br><span class="line">sample_input = torch.tensor([[<span class="number">1.</span>, <span class="number">0.</span>, -<span class="number">1.</span>]])</span><br><span class="line">torch.manual_seed(<span class="number">123</span>) <span class="comment"># specify random seed for the initial weights for reproducibility</span></span><br><span class="line">model_without_shortcut = ExampleDeepNeuralNetwork(</span><br><span class="line">    layer_sizes, use_shortcut=<span class="literal">False</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>接下来，我们实现一个用于在模型反向传播过程中计算梯度的函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">print_gradients</span>(<span class="params">model, x</span>):</span><br><span class="line">    <span class="comment"># Forward pass</span></span><br><span class="line">    output = model(x)</span><br><span class="line">    target = torch.tensor([[<span class="number">0.</span>]])</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Calculate loss based on how close the target</span></span><br><span class="line">    <span class="comment"># and output are</span></span><br><span class="line">    loss = nn.MSELoss()</span><br><span class="line">    loss = loss(output, target)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Backward pass to calculate the gradients</span></span><br><span class="line">    loss.backward()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> name, param <span class="keyword">in</span> model.named_parameters():</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;weight&#x27;</span> <span class="keyword">in</span> name:</span><br><span class="line">            <span class="comment"># Print the mean absolute gradient of the weights</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;name&#125;</span> has gradient mean of <span class="subst">&#123;param.grad.<span class="built_in">abs</span>().mean().item()&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>上述代码中，我们定义了一个损失函数，用来计算模型输出与用户指定目标（此处为简单起见，目标值设为 0）之间的差距。接着，当调用 <code>loss.backward()</code> 时，PyTorch 会为模型的每一层计算损失的梯度。我们可以通过 <code>model.named_parameters()</code> 遍历权重参数。假设某层的权重参数是一个 3×3 的矩阵，那么这一层会有 3×3 的梯度值。然后我们打印出这 3×3 梯度值的绝对均值，以便得到每层的单一梯度值，从而更容易比较各层之间的梯度大小。</p>
+<p>简而言之，<code>.backward()</code> 是 PyTorch 中一个用于自动计算损失梯度的便捷方法，这在模型训练过程中很重要。它让我们无需亲自实现梯度计算的数学过程，从而大大简化了深度神经网络的开发过程。如果您对梯度和神经网络训练不熟悉，建议参考附录 A 中的 A.4 节：<strong>轻松实现自动微分</strong> 和 A.7 节：<strong>典型的训练循环</strong>。</p>
+<p>现在让我们使用 <code>print_gradients</code> 函数，并将其应用到没有跳跃连接的模型上：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print_gradients(model_without_shortcut, sample_input)</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">layers<span class="number">.0</span><span class="number">.0</span>.weight has gradient mean of <span class="number">0.00020173587836325169</span></span><br><span class="line">layers<span class="number">.1</span><span class="number">.0</span>.weight has gradient mean of <span class="number">0.0001201116101583466</span></span><br><span class="line">layers<span class="number">.2</span><span class="number">.0</span>.weight has gradient mean of <span class="number">0.0007152041653171182</span></span><br><span class="line">layers<span class="number">.3</span><span class="number">.0</span>.weight has gradient mean of <span class="number">0.001398873864673078</span></span><br><span class="line">layers<span class="number">.4</span><span class="number">.0</span>.weight has gradient mean of <span class="number">0.005049646366387606</span></span><br></pre></td></tr></table></figure>
+<p>从 <code>print_gradients</code> 函数的输出可以看出，梯度在从最后一层（layers.4）到第一层（layers.0）时逐渐减小，这种现象称为梯度消失问题。</p>
+<p>我们再来创建一个带有跳跃连接的模型，看看它的表现如何：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">model_with_shortcut = ExampleDeepNeuralNetwork(</span><br><span class="line">    layer_sizes, use_shortcut=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line">print_gradients(model_with_shortcut, sample_input)</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">layers<span class="number">.0</span><span class="number">.0</span>.weight has gradient mean of <span class="number">0.22169792652130127</span></span><br><span class="line">layers<span class="number">.1</span><span class="number">.0</span>.weight has gradient mean of <span class="number">0.20694105327129364</span></span><br><span class="line">layers<span class="number">.2</span><span class="number">.0</span>.weight has gradient mean of <span class="number">0.32896995544433594</span></span><br><span class="line">layers<span class="number">.3</span><span class="number">.0</span>.weight has gradient mean of <span class="number">0.2665732502937317</span></span><br><span class="line">layers<span class="number">.4</span><span class="number">.0</span>.weight has gradient mean of <span class="number">1.3258541822433472</span></span><br></pre></td></tr></table></figure>
+<p>从输出结果可以看到，最后一层（layers.4）的梯度依然比其他层更大。然而，随着接近第一层（layers.0），梯度值逐渐趋于稳定，并未缩小到几乎消失的程度。</p>
+<p>总之，快捷连接在解决深度神经网络中的梯度消失问题方面具有重要作用。作为 LLM 的核心构建单元，快捷连接可以确保各层之间的梯度稳定流动，从而帮助 GPT 模型更有效的训练（下一章实现训练过程）。</p>
+<p>在介绍了快捷连接后，我们将在下一节把之前讲解的所有概念（层归一化、GELU 激活、前馈网络模块和快捷连接）整合进一个 Transformer 模块中，这是构建 GPT 架构所需的最后一个模块。</p>
+<blockquote>
+<p>[!TIP]</p>
+<p><strong>个人思考：</strong> 看到这里，不知各位读者是否真正理解了快捷连接在深度神经网络中的作用，这里其实涉及到快捷连接的两个重要的作用：</p>
+<ul>
+<li><strong>保持信息（或者说是特征）流畅传递</strong></li>
+<li><strong>缓解梯度消失问题</strong></li>
+</ul>
+<p>让我们逐一解读，LLM 中的每个Transformer 模块通常包含两个重要组件（<strong>可以先阅读完4.5节，再回头看这里的解读</strong>）：</p>
+<ol>
+<li><strong>自注意力层（Self-Attention Layer）</strong>：计算每个 token 与其他 token 的关联，帮助模型理解上下文。</li>
+<li><strong>前馈网络（Feed Forward Network）</strong>：对每个 token 的嵌入（embedding）进行进一步的非线性转换，使模型能够提取更复杂的特征。</li>
+</ol>
+<p>这两个部分都在层归一化（Layer Normalization）和快捷连接（Shortcut Connections）的配合下工作。</p>
+<p>假设我们正在训练一个 LLM ，并希望它理解下面的句子：</p>
+<p><code>The cat sat on the mat because it was tired.</code></p>
+<p>模型需要通过多个 Transformer 层来逐层处理该句子，使得每个词（token）在上下文中能被理解。为了达到这一目的，每个 token 的嵌入会在多层中进行注意力计算和前馈网络处理。</p>
+<ol>
+<li><p><strong>没有快捷连接时的情况</strong></p>
+<p>如果没有快捷连接，那么每个 Transformer 层的输出就直接传递到下一个层。这种情况下，网络中的信息流大致如下：</p>
+<ul>
+<li><strong>层间信息传递的局限</strong>：假设当前层的注意力机制计算出了“it”和“cat”之间的关系，如果前馈网络进一步转换了这个信息，那么下一层就只能基于该层的输出，可能丢失一些最初的语义信息。</li>
+<li><strong>梯度消失</strong>：在训练过程中，梯度从输出层逐层向回传播。如果层数过多，梯度会逐渐变小（即“梯度消失”），从而导致模型难以有效更新前面层的参数。</li>
+</ul>
+<p>这种情况下，由于信息不能直接流动到更深层次的网络，可能会导致模型难以有效捕捉到前层的一些原始信息。</p>
+</li>
+<li><p><strong>加入快捷连接后的情况</strong></p>
+<p>加入快捷连接后，信息可以在层与层之间<strong>直接跳跃</strong>。例如，假设在第 n 层，我们有输入 X<sub>n</sub>，经过注意力和前馈网络得到输出F(X<sub>n</sub>)。加入快捷连接后，这一层的输出可以表示为：</p>
+<script type="math/tex; mode=display">\text { 输出 }=X_{n}+F\left(X_{n}\right)</script><p>这意味着第 n 层的输出不仅包含了这一层的新信息 F(X<sub>n</sub>)，还保留了原始输入 X<sub>n </sub>的信息。下面是这样做的好处：</p>
+<ul>
+<li><p><strong>保留原始信息</strong></p>
+<p>快捷连接让输入的原始信息直接传递到后续层，避免了在多层处理过程中丢失重要信息。例如，“it” 和 “cat” 之间的关系在较浅层中被捕捉到后，即使后面的层有进一步的处理，模型依然能够从快捷连接中获得最初的上下文信息。</p>
+</li>
+<li><p><strong>减轻梯度消失</strong></p>
+<p>假设我们有一个简单的三层网络，第三层的输出 O 是整个网络的输出。我们从损失函数 LLL 开始计算梯度：</p>
+<ul>
+<li><p>根据反向传播的原理，<strong>无快捷连接</strong>时，梯度必须逐层传递，如下：</p>
+<script type="math/tex; mode=display">\frac{\partial L}{\partial X_{1}}=\frac{\partial L}{\partial X_{3}} \cdot \frac{\partial X_{3}}{\partial X_{2}} \cdot \frac{\partial X_{2}}{\partial X_{1}}</script><p>这里，如果某一层的梯度值很小，那么梯度会被逐层缩小，导致梯度消失。</p>
+</li>
+<li><p><strong>有快捷连接</strong>时，假设我们在每一层之间都添加快捷连接，梯度的传播路径就多了一条直接路径：</p>
+<script type="math/tex; mode=display">\frac{\partial L}{\partial X_{1}}=\frac{\partial L}{\partial\left(X_{1}+F\left(X_{1}\right)\right)} \cdot\left(1+\frac{\partial F\left(X_{1}\right)}{\partial X_{1}}\right)</script><p>这样，即使 $<code>\frac&#123;\partial F\left(X_&#123;1&#125;\right)&#125;&#123;\partial X_&#123;1&#125;&#125;</code>$ 很小，梯度依然可以通过 111 这条路径直接传递到更前面的层。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</blockquote>
+<h2 id="4-5-在-Transformer-模块中连接注意力层与线性层"><a href="#4-5-在-Transformer-模块中连接注意力层与线性层" class="headerlink" title="4.5 在 Transformer 模块中连接注意力层与线性层"></a>4.5 在 Transformer 模块中连接注意力层与线性层</h2><p>本节我们将实现 Transformer 模块，它是 GPT 和其他大语言模型架构的基本模块。这个在 124M 参数的 GPT-2 架构中重复了十几次的模块，结合了多头注意力、层归一化、dropout、前馈层和 GELU 激活等多个概念，详见图 4.13。在下一节中，我们将把这个 Transformer 模块连接到 GPT 架构的其余部分。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.13.png" width="75%" />
+</div>
+
+<p>如图 4.13 所示，Transformer 模块结合了多个组件，包括第 3 章中的掩码多头注意力模块以及我们在 4.3 节中实现的前馈网络模块。</p>
+<p>当 Transformer 模块处理输入序列时，序列中的每个元素（如单词或子词 token）都会被表示为固定大小的向量（如图 4.13 中为 768 维）。Transformer 模块中的操作，包括多头注意力和前馈层，旨在以维度不变的方式对这些向量进行转换。</p>
+<p>之所以这样设计，是因为多头注意力模块中的自注意力机制用于识别和分析输入序列中各元素之间的关系，而前馈神经网络则对输入序列中每个位置的数据单独进行修改。这种组合不仅能够更细致地理解和处理输入信息，还增强了模型处理复杂数据模式的整体能力。</p>
+<p>可以通过以下代码实现 Transformer 模块：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 4.6 The transformer block component of GPT</span></span><br><span class="line"><span class="keyword">from</span> previous_chapters <span class="keyword">import</span> MultiHeadAttention</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TransformerBlock</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, cfg</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.att = MultiHeadAttention(</span><br><span class="line">        d_in=cfg[<span class="string">&quot;emb_dim&quot;</span>],</span><br><span class="line">        d_out=cfg[<span class="string">&quot;emb_dim&quot;</span>],</span><br><span class="line">        context_length=cfg[<span class="string">&quot;context_length&quot;</span>],</span><br><span class="line">        num_heads=cfg[<span class="string">&quot;n_heads&quot;</span>],</span><br><span class="line">        dropout=cfg[<span class="string">&quot;drop_rate&quot;</span>],</span><br><span class="line">        qkv_bias=cfg[<span class="string">&quot;qkv_bias&quot;</span>])</span><br><span class="line">        <span class="variable language_">self</span>.ff = FeedForward(cfg)</span><br><span class="line">        <span class="variable language_">self</span>.norm1 = LayerNorm(cfg[<span class="string">&quot;emb_dim&quot;</span>])</span><br><span class="line">        <span class="variable language_">self</span>.norm2 = LayerNorm(cfg[<span class="string">&quot;emb_dim&quot;</span>])</span><br><span class="line">        <span class="variable language_">self</span>.drop_shortcut = nn.Dropout(cfg[<span class="string">&quot;drop_rate&quot;</span>])</span><br><span class="line"></span><br><span class="line">   <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">       shortcut = x                                          <span class="comment">#A</span></span><br><span class="line">       x = <span class="variable language_">self</span>.norm1(x)</span><br><span class="line">       x = <span class="variable language_">self</span>.att(x)</span><br><span class="line">       x = <span class="variable language_">self</span>.drop_shortcut(x)</span><br><span class="line">       x = x + shortcut  <span class="comment"># Add the original input back</span></span><br><span class="line">       shortcut = x                                          <span class="comment">#B</span></span><br><span class="line">       x = <span class="variable language_">self</span>.norm2(x)</span><br><span class="line">      x = <span class="variable language_">self</span>.ff(x)</span><br><span class="line">      x = <span class="variable language_">self</span>.drop_shortcut(x)</span><br><span class="line">      x = x + shortcut                                       <span class="comment">#C</span></span><br><span class="line">      <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#A 注意力模块中的快捷连接</span></span><br><span class="line"><span class="comment">#B 前馈网络模块中的快捷链接</span></span><br><span class="line"><span class="comment">#C 将原始输入加回到输出中</span></span><br></pre></td></tr></table></figure>
+<p>给定的代码在 PyTorch 中定义了一个 TransformerBlock 类，包含多头注意力机制（MultiHeadAttention）和前馈网络（FeedForward），并根据提供的配置字典（cfg）进行配置，例如前文定义的 GPT_CONFIG_124M。</p>
+<p>层归一化（LayerNorm）在这两个组件（即自注意力和前馈网络）之前应用，而 dropout 则在它们之后应用，用于正则化模型并防止过拟合。这种方式也称为前置层归一化（Pre-LayerNorm）。而在早期的架构中（如原始的 Transformer 模型），一般将层归一化应用在自注意力和前馈网络之后，这被称为后置层归一化（Post-LayerNorm），这种方式通常会导致较差的训练效果。</p>
+<p>该类还实现了前向传播（<code>forward方法</code>），其中每个组件后面都设有一个快捷连接，将对应组件的输入添加到输出中。这一关键特性有助于在训练过程中促进梯度流动，从而提升 LLM 的学习能力，相关内容详见第 4.4 节。</p>
+<p>现在使用我们之前定义的 <code>GPT_CONFIG_124M</code> 配置字典，实例化一个 Transformer 模块，并向其中输入一些示例数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">x = torch.rand(<span class="number">2</span>, <span class="number">4</span>, <span class="number">768</span>)                    <span class="comment">#A</span></span><br><span class="line">block = TransformerBlock(GPT_CONFIG_124M)</span><br><span class="line">output = block(x)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Input shape:&quot;</span>, x.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Output shape:&quot;</span>, output.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment">#A 建一个形状为 [batch_size, num_tokens, emb_dim] 的输入张量</span></span><br></pre></td></tr></table></figure>
+<p>以上代码输出如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input shape: torch.Size([<span class="number">2</span>, <span class="number">4</span>, <span class="number">768</span>])</span><br><span class="line">Output shape: torch.Size([<span class="number">2</span>, <span class="number">4</span>, <span class="number">768</span>])</span><br></pre></td></tr></table></figure>
+<p>从代码输出可以看出，Transformer 模块的输出维度与输入维度保持一致，这说明 Transformer 架构在处理序列数据时不会改变数据的形状。</p>
+<p>Transformer 模块结构中保持数据形状不变并非偶然，而是其设计的一个关键特性。这种设计使 Transformer 擅长处理各种序列到序列任务，因为每个输出向量直接对应一个输入向量，保持一一对应关系。然而，虽然维度一致，但输出向量是包含整个输入序列信息的“上下文向量”。也就是说，尽管序列的物理维度（长度和特征维度）在经过 Transformer 模块时保持不变，但每个输出向量的内容会被重新编码，融合整个输入序列的上下文信息。</p>
+<p>在本节完成了 Transformer 模块的实现后，我们已经具备了实现 GPT 架构所需的全部基础模块（如图 4.14 所示）。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.14.png" width="75%" />
+</div>
+
+<p>如图 4.14 所示，Transformer 模块由层归一化、带有 GELU 激活函数的前馈网络和快捷连接组成，这些内容在本章前面已经讨论过。正如我们将在接下来的章节中看到的，这个 Transformer 模块将构成我们要实现的 GPT 架构的核心部分。</p>
+<h2 id="4-6-实现-GPT-模型"><a href="#4-6-实现-GPT-模型" class="headerlink" title="4.6 实现 GPT 模型"></a>4.6 实现 GPT 模型</h2><p>截止到目前，本章已初步实现了一个名为<code>DummyGPTModel</code>类的GPT架构，在该<code>DummyGPTModel</code>的代码实现中，我们展示了 GPT 模型的输入和输出形式，但其内部的一些核心模块仅仅使用了<code>DummyTransformerBlock</code>和<code>DummyLayerNorm</code>等类来占位，并未替换成真正的实现。</p>
+<p>在本节中，我们将 DummyTransformerBlock 和 DummyLayerNorm 占位符替换为本章后面实现的真实 TransformerBlock 和 LayerNorm 类，以组装出一个完整可用的原始 GPT-2 模型（124M 参数版本）。在第 5 章，我们将预训练一个 GPT-2 模型，第 6 章则会加载 OpenAI 的预训练权重。</p>
+<p>在我们通过代码构建 GPT-2 模型之前，先通过图 4.15 看一下模型的整体结构，该结构结合了本章目前为止介绍的所有概念。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.15.png" width="75%" />
+</div>
+
+<p>如图 4.15 所示，我们在 4.5 节中编写的 Transformer 模块在 GPT 架构中会重复多次。在参数量为 1.24 亿的 GPT-2 模型中，该模块重复了 12 次，这一数量通过 <code>GPT_CONFIG_124M</code> 配置字典中的<code>n_layers</code>参数指定。在 GPT-2 最大的 15.42 亿参数模型中，Transformer 模块重复了 36 次。</p>
+<p>我们还可以从图 4.15 中得知，最后一个 Transformer 模块的输出会经过一个最终的层归一化步骤，然后进入线性输出层。该层将 Transformer 的输出映射到一个高维空间（在本例中为 50,257 维，对应于模型的词汇表大小），以预测序列中的下一个词。</p>
+<p>接下来我们用代码实现图 4.15 中的架构：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 4.7 The GPT model architecture implementation</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GPTModel</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, cfg</span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        <span class="variable language_">self</span>.tok_emb = nn.Embedding(cfg[<span class="string">&quot;vocab_size&quot;</span>], cfg[<span class="string">&quot;emb_dim&quot;</span>])</span><br><span class="line">        <span class="variable language_">self</span>.pos_emb = nn.Embedding(cfg[<span class="string">&quot;context_length&quot;</span>], cfg[<span class="string">&quot;emb_dim&quot;</span>])</span><br><span class="line">        <span class="variable language_">self</span>.drop_emb = nn.Dropout(cfg[<span class="string">&quot;drop_rate&quot;</span>])</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.trf_blocks = nn.Sequential(</span><br><span class="line">            *[TransformerBlock(cfg) <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(cfg[<span class="string">&quot;n_layers&quot;</span>])])</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.final_norm = LayerNorm(cfg[<span class="string">&quot;emb_dim&quot;</span>])</span><br><span class="line">        <span class="variable language_">self</span>.out_head = nn.Linear(</span><br><span class="line">            cfg[<span class="string">&quot;emb_dim&quot;</span>], cfg[<span class="string">&quot;vocab_size&quot;</span>], bias=<span class="literal">False</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, in_idx</span>):</span><br><span class="line">        batch_size, seq_len = in_idx.shape</span><br><span class="line">        tok_embeds = <span class="variable language_">self</span>.tok_emb(in_idx)</span><br><span class="line"></span><br><span class="line">        pos_embeds = <span class="variable language_">self</span>.pos_emb(torch.arange(seq_len, device=in_idx.device))      <span class="comment">#A</span></span><br><span class="line">        x = tok_embeds + pos_embeds</span><br><span class="line">        x = <span class="variable language_">self</span>.drop_emb(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.trf_blocks(x)</span><br><span class="line">        x = <span class="variable language_">self</span>.final_norm(x)</span><br><span class="line">        logits = <span class="variable language_">self</span>.out_head(x)</span><br><span class="line">        <span class="keyword">return</span> logits</span><br><span class="line"></span><br><span class="line"> <span class="comment">#A 设备设置将根据输入数据所在的位置选择在 CPU 或 GPU 上训练模型</span></span><br></pre></td></tr></table></figure>
+<p>通过代码可以看出，由于我们已经在 4.5 节实现了 <code>TransformerBlock</code> 类，从而使得 <code>GPTModel</code> 类的设计更为简洁。</p>
+<p><code>GPTModel</code> 类的构造函数 <code>__init__</code> 使用字典 <code>cfg</code> 中的配置参数初始化 token 嵌入层和位置嵌入层。这些嵌入层负责将输入的 token 索引转换为密集向量并加入位置信息（在第 2 章已讨论过）。</p>
+<p>接下来，<code>__init__</code> 方法会根据 <code>cfg</code> 中指定的层数创建一个由 TransformerBlock 模块组成的顺序堆栈。紧接在 TransformerBlock 堆栈之后应用一个 LayerNorm 层，对其输出进行标准化，从而稳定训练过程。最后，定义了一个无偏置的线性输出层，将 Transformer 的输出投射到分词器的词汇空间，为词汇表中的每个 token 生成对应的 logits。</p>
+<p>forward 方法则负责接收一批 token 索引作为输入，计算它们的词嵌入向量，并应用位置嵌入，接着将序列通过 Transformer 模块进行处理，对最终的输出进行归一化，最后计算 logits 来表示下一个 token 的非归一化概率。我们将在下一节将这些 logits 转换为 token 和文本输出。</p>
+<p>现在让我们使用 <code>GPT_CONFIG_124M</code> 字典配置来初始化一个具有 1.24 亿参数的 GPT 模型，并将本章开头创建的批量文本作为模型输入。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">model = GPTModel(GPT_CONFIG_124M)</span><br><span class="line"></span><br><span class="line">out = model(batch)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Input batch:\n&quot;</span>, batch)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nOutput shape:&quot;</span>, out.shape)</span><br><span class="line"><span class="built_in">print</span>(out)</span><br></pre></td></tr></table></figure>
+<p>上面的代码依次打印了输入批次的内容和输出张量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Input batch:</span><br><span class="line">  tensor([[ <span class="number">6109</span>, <span class="number">3626</span>, <span class="number">6100</span>, <span class="number">345</span>], <span class="comment"># token IDs of text 1</span></span><br><span class="line">          [ <span class="number">6109</span>, <span class="number">1110</span>, <span class="number">6622</span>, <span class="number">257</span>]]) <span class="comment"># token IDs of text 2</span></span><br><span class="line"></span><br><span class="line">Output shape: torch.Size([<span class="number">2</span>, <span class="number">4</span>, <span class="number">50257</span>])</span><br><span class="line">  tensor([[[ <span class="number">0.3613</span>, <span class="number">0.4222</span>, -<span class="number">0.0711</span>, ..., <span class="number">0.3483</span>, <span class="number">0.4661</span>, -<span class="number">0.2838</span>],</span><br><span class="line">           [-<span class="number">0.1792</span>, -<span class="number">0.5660</span>, -<span class="number">0.9485</span>, ..., <span class="number">0.0477</span>, <span class="number">0.5181</span>, -<span class="number">0.3168</span>],</span><br><span class="line">           [ <span class="number">0.7120</span>, <span class="number">0.0332</span>, <span class="number">0.1085</span>, ..., <span class="number">0.1018</span>, -<span class="number">0.4327</span>, -<span class="number">0.2553</span>],</span><br><span class="line">           [-<span class="number">1.0076</span>, <span class="number">0.3418</span>, -<span class="number">0.1190</span>, ..., <span class="number">0.7195</span>, <span class="number">0.4023</span>, <span class="number">0.0532</span>]],</span><br><span class="line">           [[-<span class="number">0.2564</span>, <span class="number">0.0900</span>, <span class="number">0.0335</span>, ..., <span class="number">0.2659</span>, <span class="number">0.4454</span>, -<span class="number">0.6806</span>],</span><br><span class="line">           [ <span class="number">0.1230</span>, <span class="number">0.3653</span>, -<span class="number">0.2074</span>, ..., <span class="number">0.7705</span>, <span class="number">0.2710</span>, <span class="number">0.2246</span>],</span><br><span class="line">           [ <span class="number">1.0558</span>, <span class="number">1.0318</span>, -<span class="number">0.2800</span>, ..., <span class="number">0.6936</span>, <span class="number">0.3205</span>, -<span class="number">0.3178</span>],</span><br><span class="line">           [-<span class="number">0.1565</span>, <span class="number">0.3926</span>, <span class="number">0.3288</span>, ..., <span class="number">1.2630</span>, -<span class="number">0.1858</span>, <span class="number">0.0388</span>]]],</span><br><span class="line">           grad_fn=&lt;UnsafeViewBackward0&gt;)</span><br></pre></td></tr></table></figure>
+<p>可以看到，输出张量的形状是 [2, 4, 50257]，这是因为我们输入了 2 个文本，每个文本包含 4 个 token。最后一个维度 50257 对应于分词器的词汇表大小。在下一节中，我们将看到如何将这些 50257 维的输出向量转换回 token。</p>
+<p>在我们继续后续内容并编写将模型输出转换为文本的函数之前，让我们先花点时间研究一下模型架构本身，并分析其规模。</p>
+<p>使用 numel() 方法（即 <code>number of elements</code> 的缩写），可以统计模型中参数张量的总参数量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">total_params = <span class="built_in">sum</span>(p.numel() <span class="keyword">for</span> p <span class="keyword">in</span> model.parameters())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Total number of parameters: <span class="subst">&#123;total_params:,&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>输出如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Total number of parameters: <span class="number">163</span>,009,<span class="number">536</span></span><br></pre></td></tr></table></figure>
+<p>细心的读者可能会发现一个差异：我们之前提到 GPT 模型的参数量为 1.24 亿，但代码输出的实际参数量却是 1.63 亿，这是为什么呢？</p>
+<p>原因在于 GPT-2 架构中使用了一种称为‘权重共享’的概念，这意味着 GPT-2 架构将 token 嵌入层的权重复用于输出层。为了更好地理解这一点，我们可以来看一下在模型中初始化的 token 嵌入层和线性输出层的形状：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Token embedding layer shape:&quot;</span>, model.tok_emb.weight.shape)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Output layer shape:&quot;</span>, model.out_head.weight.shape)</span><br></pre></td></tr></table></figure>
+<p>从打印结果可以看到，这两层的权重形状相同：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Token embedding layer shape: torch.Size([<span class="number">50257</span>, <span class="number">768</span>])</span><br><span class="line">Output layer shape: torch.Size([<span class="number">50257</span>, <span class="number">768</span>])</span><br></pre></td></tr></table></figure>
+<p>token 嵌入层和输出层的参数量很大，因为分词器词汇表中包含 50,257 个 token。根据权重共享原则，我们可以从 GPT-2 模型的总参数量中去除输出层的参数量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">total_params_gpt2 = total_params - <span class="built_in">sum</span>(p.numel() <span class="keyword">for</span> p <span class="keyword">in</span> model.out_head.parameters())</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Number of trainable parameters considering weight tying: <span class="subst">&#123;total_params_gpt2:,&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Number of trainable parameters considering weight tying: <span class="number">124</span>,<span class="number">412</span>,<span class="number">160</span></span><br></pre></td></tr></table></figure>
+<p>如我们所见，模型现在的参数量为 1.24 亿，与 GPT-2 原始模型的规模一致。</p>
+<p>权重共享能够减少模型的整体内存占用和计算复杂度。然而，根据我的经验，分别使用独立的 token 嵌入层和输出层会使训练效果和模型性能更佳，因此在我们的 GPT 模型实现中，我们使用了独立的嵌入层和输出层。现代大语言模型也是如此。不过，在第 6 章加载 OpenAI 的预训练权重时，我们会再次探讨并实现权重共享的概念。</p>
+<blockquote>
+<p>[!NOTE]</p>
+<p><strong>练习 4.1 前馈网络和注意力模块的参数数量</strong></p>
+<p>计算并比较前馈模块和多头注意力模块中包含的参数数量。</p>
+</blockquote>
+<p>最后，让我们来计算 GPTModel 对象中 1.63 亿参数所需的内存：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">total_size_bytes = total_params * <span class="number">4</span>                 <span class="comment">#A</span></span><br><span class="line">total_size_mb = total_size_bytes / (<span class="number">1024</span> * <span class="number">1024</span>)    <span class="comment">#B</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Total size of the model: <span class="subst">&#123;total_size_mb:<span class="number">.2</span>f&#125;</span> MB&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#A 计算参数总大小（假设每个参数为 float32 类型，占用 4 字节）</span></span><br><span class="line"><span class="comment">#B 转换为 MB</span></span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Total size of the model: <span class="number">621.83</span> MB</span><br></pre></td></tr></table></figure>
+<p>通过计算 GPTModel 中 1.63 亿个参数所需的内存，并假设每个参数为 32 位浮点数，占用 4 字节，我们得出模型总大小为 621.83 MB。这表明，即使是相对较小的大语言模型也需要较大的存储空间。</p>
+<p>在本节中，我们实现了 GPTModel 架构，并观察到它的输出是形状为 [batch_size, num_tokens, vocab_size] 的数值张量。接下来，我们将编写代码把这些输出张量转换为文本。</p>
+<blockquote>
+<p>[!NOTE]</p>
+<p><strong>练习 4.2 初始化大型 GPT 模型</strong></p>
+<p>本章中，我们初始化了一个拥有 1.24 亿参数的 GPT 模型，即 GPT-2 small。请在不更改代码的情况下（仅更新配置文件），使用 <code>GPTModel</code> 类实现 GPT-2 medium（1024 维嵌入、24 层 Transformer 块、16 个多头注意力头）、GPT-2 large（1280 维嵌入、36 层 Transformer 块、20 个多头注意力头）和 GPT-2 XL（1600 维嵌入、48 层 Transformer 块、25 个多头注意力头）。作为附加任务，请计算每个 GPT 模型的总参数量。</p>
+</blockquote>
+<h2 id="4-7-生成文本"><a href="#4-7-生成文本" class="headerlink" title="4.7 生成文本"></a>4.7 生成文本</h2><p>在本章的最后一节，我们将编写代码把 GPT 模型的张量输出转回文本。在开始之前，我们先简要回顾一下像 LLM 这样的生成模型是如何逐词生成文本的，如图 4.16 所示。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.16.png" width="75%" />
+</div>
+
+<p>如图 4.16 所示，GPT 模型在给定输入上下文（例如 ‘Hello, I am’）后，逐步生成文本。每次迭代中，输入上下文会不断扩展，使模型能够生成连贯且符合上下文的内容。在第 6 次迭代时，模型已构建出完整句子 ‘Hello, I am a model ready to help.’。</p>
+<p>在上一节，我们看到目前的 GPTModel 输出的张量形状为 <code>[batch_size, num_token, vocab_size]</code>。那么问题来了，GPT 模型是如何将这些输出张量转化为图 4.16 所示的生成文本的呢？</p>
+<p>GPT 模型从输出张量到生成文本的过程涉及几个步骤（如图 4.17 所示）。这些步骤包括解码输出张量、根据概率分布选择 token，并将其转化为可读文本。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.17.png" width="75%" />
+</div>
+
+<p>图 4.17 详细展示了 GPT 模型根据输入生成下一个 token 的单步过程。</p>
+<p>在每一步，模型会输出一个矩阵，其中的向量表示潜在的下一个 token。取出对应于下一个 token 的向量，并通过 softmax 函数将其转换为概率分布。在包含概率分数的向量中，找到最高值的索引，并将其转换为 token ID。将该 token ID 解码回文本，得到序列中的下一个 token。最后，将该 token 添加到先前的输入中，形成下一次迭代的新输入序列。这种逐步生成的过程使模型能够根据初始输入上下文，按顺序生成文本，从而构建出连贯的短语和句子。</p>
+<p>在实践中，我们会多次迭代这一过程（如前文图 4.16 所示），直到生成的 token 数量达到用户指定值。</p>
+<p>我们通过以下代码来实现上述的 token 生成过程：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 4.8 A function for the GPT model to generate text</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_text_simple</span>(<span class="params">model, idx, max_new_tokens, context_size</span>): <span class="comment">#A</span></span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(max_new_tokens):</span><br><span class="line">        idx_cond = idx[:, -context_size:]                           <span class="comment">#B</span></span><br><span class="line">        <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">           logits = model(idx_cond)</span><br><span class="line"></span><br><span class="line">        logits = logits[:, -<span class="number">1</span>, :]                                   <span class="comment">#C</span></span><br><span class="line">        probas = torch.softmax(logits, dim=-<span class="number">1</span>)                      <span class="comment">#D</span></span><br><span class="line">        idx_next = torch.argmax(probas, dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)       <span class="comment">#E</span></span><br><span class="line">        idx = torch.cat((idx, idx_next), dim=<span class="number">1</span>)                     <span class="comment">#F</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> idx</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#A idx 是当前上下文中索引的数组，形状为 (batch, n_tokens)</span></span><br><span class="line"><span class="comment">#B 若上下文长度超出支持范围，则进行裁剪。例如，若模型仅支持 5 个 token，而上下文长度为 10，仅使用最后 5 个 token 作为上下文</span></span><br><span class="line"><span class="comment">#C 仅关注最后一个时间步，将形状从 (batch, n_token, vocab_size) 转换为 (batch, vocab_size)</span></span><br><span class="line"><span class="comment">#D probas 的形状为 (batch, vocab_size)</span></span><br><span class="line"><span class="comment">#E idx_next 的形状为 (batch, 1)</span></span><br><span class="line"><span class="comment">#F 将采样的索引追加到当前序列中，此时 idx 的形状为 (batch, n_tokens+1)</span></span><br></pre></td></tr></table></figure>
+<p>在上述代码中，<code>generate_text_simple</code> 函数使用 Softmax 函数将 logits 转换为概率分布，然后通过 <code>torch.argmax</code> 找出概率最高的位置。Softmax 函数是单调的，这意味着它会保持输入的相对顺序，因此，Softmax 这一步实际上是冗余的，因为 Softmax 输出中最高值的位置与原始 logits 中最高值的位置相同。换句话说，我们可以直接对 logits 应用 <code>torch.argmax</code> 得到相同的结果。不过，我们保留了这个转换过程，以展示从 logits 到概率的完整过程，有助于理解模型如何生成最可能的下一个词，这种方式称为贪婪解码。</p>
+<p>在下一章中，我们将在实现 GPT 训练代码的同时，引入一些新的采样技术，通过修改 softmax 输出，使模型在生成文本时不总是选择概率最高的词，这可以增加文本的多样性和创造性。</p>
+<p>我们可以使用 <code>generate_text_simple</code> 函数逐步生成 token ID，每次生成一个 token ID 并将其附加到上下文中。其具体过程详见图 4.18（每次迭代生成 token ID 的步骤详见图 4.17）。</p>
+<div style="text-align: center;">
+    <img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="../Image/chapter4/figure4.18.png" width="75%" />
+</div>
+
+<p>如图 4.18 所示，我们以迭代的方式逐步生成 token ID。例如，在第 1 轮迭代中，模型接收到“Hello , I am”对应的 token 作为输入，预测下一个 token（ID 为 257，对应“a”），并将其添加到输入序列中。这个过程不断重复，直到模型在第六轮迭代后生成完整的句子“Hello, I am a model ready to help.”。</p>
+<p>接下来我们将实践 <code>generate_text_simple</code> 函数，并使用 ‘Hello, I am’ 作为模型的输入上下文，具体如图 4.18 所示。</p>
+<p>首先，我们将输入上下文编码为 token ID：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start_context = <span class="string">&quot;Hello, I am&quot;</span></span><br><span class="line">encoded = tokenizer.encode(start_context)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;encoded:&quot;</span>, encoded)</span><br><span class="line">encoded_tensor = torch.tensor(encoded).unsqueeze(<span class="number">0</span>)            <span class="comment">#A</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;encoded_tensor.shape:&quot;</span>, encoded_tensor.shape)</span><br><span class="line"></span><br><span class="line"><span class="comment">#A  添加批次维度</span></span><br></pre></td></tr></table></figure>
+<p>编码后的 token ID 如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">encoded: [<span class="number">15496</span>, <span class="number">11</span>, <span class="number">314</span>, <span class="number">716</span>]</span><br><span class="line">encoded_tensor.shape: torch.Size([<span class="number">1</span>, <span class="number">4</span>])</span><br></pre></td></tr></table></figure>
+<p>接下来，将模型置于 <code>.eval()</code> 模式，禁用训练时使用的随机组件（如 dropout），然后在编码后的输入张量上使用 <code>generate_text_simple</code> 函数进行文本生成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">model.<span class="built_in">eval</span>()             <span class="comment">#A</span></span><br><span class="line">out = generate_text_simple(</span><br><span class="line">    model=model,</span><br><span class="line">    idx=encoded_tensor,</span><br><span class="line">    max_new_tokens=<span class="number">6</span>,</span><br><span class="line">    context_size=GPT_CONFIG_124M[<span class="string">&quot;context_length&quot;</span>]</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Output:&quot;</span>, out)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Output length:&quot;</span>, <span class="built_in">len</span>(out[<span class="number">0</span>]))</span><br><span class="line"></span><br><span class="line"><span class="comment">#A 禁用 dropout，因为当前不是在训练模型</span></span><br></pre></td></tr></table></figure>
+<p>输出 token ID 如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Output: tensor([[<span class="number">15496</span>, <span class="number">11</span>, <span class="number">314</span>, <span class="number">716</span>, <span class="number">27018</span>, <span class="number">24086</span>, <span class="number">47843</span>, <span class="number">30961</span>, <span class="number">42348</span>, <span class="number">7267</span>]])</span><br><span class="line">Output length: <span class="number">10</span></span><br></pre></td></tr></table></figure>
+<p>接着，使用分词器的 <code>.decode</code> 方法可以将 ID 转回文本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">decoded_text = tokenizer.decode(out.squeeze(<span class="number">0</span>).tolist())</span><br><span class="line"><span class="built_in">print</span>(decoded_text)</span><br></pre></td></tr></table></figure>
+<p>模型输出如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello, I am Featureiman Byeswickattribute argue</span><br></pre></td></tr></table></figure>
+<p>从以上的输出可以看到，模型生成的是一些毫无意义的内容，完全不像图 4.18 中的连贯文本。这是为什么呢？原因在于模型还没有经过训练。到目前为止，我们只是实现了 GPT 架构，并用随机权重初始化了模型实例。</p>
+<p>模型训练本身就是一个庞大的主题，我们将在下一章详细讨论。</p>
+<blockquote>
+<p>[!NOTE]</p>
+<p><strong>练习 4.3：使用独立的 Dropout 参数</strong></p>
+<p>在本章开头，我们在 <code>GPT_CONFIG_124M</code> 字典中定义了一个全局的 <code>&quot;drop_rate&quot;</code> 设置，用于统一设置整个 GPTModel 架构中各处的 dropout 率。请修改代码，为模型架构中各个不同的 dropout 层指定独立的 dropout 值。（提示：我们在三个不同的地方使用了dropout层：嵌入层、快捷连接层和多头注意力模块）</p>
+</blockquote>
+<h2 id="4-8-本章摘要"><a href="#4-8-本章摘要" class="headerlink" title="4.8 本章摘要"></a>4.8 本章摘要</h2><ul>
+<li>层归一化通过确保每一层的输出具有一致的均值和方差，从而稳定训练过程。</li>
+<li>在大语言模型（LLM）中，快捷连接可以通过将某一层的输出直接传递给更深层来跳过一个或多个层，有助于缓解深度神经网络训练中的梯度消失问题。</li>
+<li>Transformer 模块是 GPT 模型的核心结构，结合了掩码多头注意力模块和使用 GELU 激活函数的全连接前馈网络。</li>
+<li>GPT 模型是由许多重复的 Transformer 模块组成的大语言模型，参数量高达数百万到数十亿。</li>
+<li>GPT 模型有不同的规模，例如 1.24 亿、3.45 亿、7.62 亿和 15.42 亿参数。这些不同规模的模型可以用同一个 GPTModel 类来实现。</li>
+<li>类似 GPT 的大语言模型通过逐个预测 token，根据给定的输入上下文，将输出张量解码为可读文本，从而实现文本生成能力。</li>
+<li>未经训练的 GPT 模型生成的文本往往语义不连贯，这突显了训练对于生成连贯文本的重要性，这也将是后续章节的讨论重点。</li>
+</ul>
+</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">21</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/2f58633e.html" title="常用数据结构"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://origin.picgo.net/2025/10/11/792a8743-6d0d-43fe-91b8-0a5a77b529f4a296a597708421a1.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常用数据结构"/></a><div class="content"><a class="title" href="/posts/2f58633e.html" title="常用数据结构">常用数据结构</a><time datetime="2025-10-11T11:00:00.000Z" title="发表于 2025-10-11 19:00:00">2025-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7258f8a4.html" title="THYTHM 音游"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/08/01/HotT9.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="THYTHM 音游"/></a><div class="content"><a class="title" href="/posts/7258f8a4.html" title="THYTHM 音游">THYTHM 音游</a><time datetime="2025-08-01T04:00:00.000Z" title="发表于 2025-08-01 12:00:00">2025-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/73e7a68a.html" title="力扣每日一题讲解"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/07/24/QEaxN.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="力扣每日一题讲解"/></a><div class="content"><a class="title" href="/posts/73e7a68a.html" title="力扣每日一题讲解">力扣每日一题讲解</a><time datetime="2025-07-24T08:50:00.000Z" title="发表于 2025-07-24 16:50:00">2025-07-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/4729e793.html" title="数据结构入门"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/07/05/qp0G9.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据结构入门"/></a><div class="content"><a class="title" href="/posts/4729e793.html" title="数据结构入门">数据结构入门</a><time datetime="2025-07-04T16:11:10.000Z" title="发表于 2025-07-05 00:11:10">2025-07-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c7c83056.html" title="四至五月学习笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/07/03/qSwfa.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="四至五月学习笔记"/></a><div class="content"><a class="title" href="/posts/c7c83056.html" title="四至五月学习笔记">四至五月学习笔记</a><time datetime="2025-05-22T04:49:23.000Z" title="发表于 2025-05-22 12:49:23">2025-05-22</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            
+          </div>
+          <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/c%E8%AF%AD%E8%A8%80/"><span class="card-category-list-name">c语言</span><span class="card-category-list-count">1</span></a></li>
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%A4%A7%E5%AE%B6%E5%A5%BD%EF%BC%8C%E6%88%91%E6%98%AF%E8%BF%B7%E8%B7%AF%E7%9A%84%E5%B0%8F%E6%9C%8B%E5%8F%8B/" style="font-size: 1.1em; color: #999">大家好，我是迷路的小朋友</a> <a href="/tags/hexo-github-blog-node-js-npm-git-%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2-hexo%E9%83%A8%E7%BD%B2/" style="font-size: 1.1em; color: #999">hexo, github, blog, node.js,npm,git,部署博客,hexo部署</a> <a href="/tags/c%E8%AF%AD%E8%A8%80-%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">c语言,学习</a> <a href="/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" style="font-size: 1.1em; color: #999">每日一题</a> <a href="/tags/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%EF%BC%8Cbutterfly/" style="font-size: 1.1em; color: #999">一键部署，butterfly</a> <a href="/tags/python-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91-%E9%9F%B3%E6%B8%B8/" style="font-size: 1.1em; color: #999">python,游戏开发,音游</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">算法</a></div></div><div class="card-widget card-archives">
+    <div class="item-headline">
+      <i class="fas fa-archive"></i>
+      <span>归档</span>
+      
+    </div>
+  
+    <ul class="card-archive-list">
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/10/">
+            <span class="card-archive-list-date">
+              十月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/08/">
+            <span class="card-archive-list-date">
+              八月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/07/">
+            <span class="card-archive-list-date">
+              七月 2025
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/05/">
+            <span class="card-archive-list-date">
+              五月 2025
+            </span>
+            <span class="card-archive-list-count">1</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/04/">
+            <span class="card-archive-list-date">
+              四月 2025
+            </span>
+            <span class="card-archive-list-count">2</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/03/">
+            <span class="card-archive-list-date">
+              三月 2025
+            </span>
+            <span class="card-archive-list-count">7</span>
+          </a>
+        </li>
+      
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/2025/02/">
+            <span class="card-archive-list-date">
+              二月 2025
+            </span>
+            <span class="card-archive-list-count">7</span>
+          </a>
+        </li>
+      
+    </ul>
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">21</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-10-26T07:36:46.327Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://blog-twikoo.xindon.top/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://blog-twikoo.xindon.top/',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '0cca502ccc7341c2be6ba09309916622';
+  var gaud_map_key = '5653914d2fc43aad14b253ab6cf762b9';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script async src="/js/ali_font.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
