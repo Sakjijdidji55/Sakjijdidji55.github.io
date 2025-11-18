@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>5.在无标记数据集上进行预训练 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="5.在无标记数据集上进行预训练本章涵盖以下内容：  计算训练集和验证集的损失，以评估训练过程中大型语言模型生成文本的质量 实现训练函数并预训练大语言模型 保存和加载模型权重以便继续训练大语言模型 从OpenAI加载预训练权重    5.在无标记数据集上进行预训练 5.1 生成式文本模型的评估 5.1.1 使用 GPT 生成文本 5.1.2 文本生成损失的计算 5.1.3 计算训练集和验证集的损失">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>5.在无标记数据集上进行预训练 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="5.在无标记数据集上进行预训练 本章涵盖以下内容：  计算训练集和验证集的损失，以评估训练过程中大型语言模型生成文本的质量 实现训练函数并预训练大语言模型 保存和加载模型权重以便继续训练大语言模型 从OpenAI加载预训练权重    5.在无标记数据集上进行预训练  5.1 生成式文本模型的评估  5.1.1 使用 GPT 生成文本 5.1.2 文本生成损失的计算 5.1.3 计算训练集和验证集的">
 <meta property="og:type" content="website">
 <meta property="og:title" content="5.在无标记数据集上进行预训练">
 <meta property="og:url" content="https://sakjijdidji55.github.io/ai_study/5.%E5%9C%A8%E6%97%A0%E6%A0%87%E8%AE%B0%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8A%E8%BF%9B%E8%A1%8C%E9%A2%84%E8%AE%AD%E7%BB%83.html">
 <meta property="og:site_name" content="迷路的小朋友">
-<meta property="og:description" content="5.在无标记数据集上进行预训练本章涵盖以下内容：  计算训练集和验证集的损失，以评估训练过程中大型语言模型生成文本的质量 实现训练函数并预训练大语言模型 保存和加载模型权重以便继续训练大语言模型 从OpenAI加载预训练权重    5.在无标记数据集上进行预训练 5.1 生成式文本模型的评估 5.1.1 使用 GPT 生成文本 5.1.2 文本生成损失的计算 5.1.3 计算训练集和验证集的损失">
+<meta property="og:description" content="5.在无标记数据集上进行预训练 本章涵盖以下内容：  计算训练集和验证集的损失，以评估训练过程中大型语言模型生成文本的质量 实现训练函数并预训练大语言模型 保存和加载模型权重以便继续训练大语言模型 从OpenAI加载预训练权重    5.在无标记数据集上进行预训练  5.1 生成式文本模型的评估  5.1.1 使用 GPT 生成文本 5.1.2 文本生成损失的计算 5.1.3 计算训练集和验证集的">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
 <meta property="article:published_time" content="2025-10-26T08:00:00.000Z">
@@ -11,7 +11,7 @@
 <meta property="article:author" content="欣冻">
 <meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/ai_study/5.%E5%9C%A8%E6%97%A0%E6%A0%87%E8%AE%B0%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8A%E8%BF%9B%E8%A1%8C%E9%A2%84%E8%AE%AD%E7%BB%83.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/ai_study/5.%E5%9C%A8%E6%97%A0%E6%A0%87%E8%AE%B0%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8A%E8%BF%9B%E8%A1%8C%E9%A2%84%E8%AE%AD%E7%BB%83.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
     (() => {
       
     const saveToLocal = {
@@ -104,7 +104,7 @@
   </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
   translate: undefined,
   highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
   copy: {
@@ -146,8 +146,9 @@
   pageType: 'page'
 }</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"<!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
-</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">5.在无标记数据集上进行预训练</h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1 id="5-在无标记数据集上进行预训练"><a href="#5-在无标记数据集上进行预训练" class="headerlink" title="5.在无标记数据集上进行预训练"></a>5.在无标记数据集上进行预训练</h1><p>本章涵盖以下内容：</p>
+<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">5.在无标记数据集上进行预训练</h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1>5.在无标记数据集上进行预训练</h1>
+<p>本章涵盖以下内容：</p>
 <ul>
 <li><strong>计算训练集和验证集的损失，以评估训练过程中大型语言模型生成文本的质量</strong></li>
 <li><strong>实现训练函数并预训练大语言模型</strong></li>
@@ -156,44 +157,49 @@
 </ul>
 <hr>
 <ul>
-<li><a href="#5在无标记数据集上进行预训练">5.在无标记数据集上进行预训练</a><ul>
-<li><a href="#51-生成式文本模型的评估">5.1 生成式文本模型的评估</a><ul>
-<li><a href="#511-使用-gpt-生成文本">5.1.1 使用 GPT 生成文本</a></li>
-<li><a href="#512-文本生成损失的计算">5.1.2 文本生成损失的计算</a></li>
-<li><a href="#513-计算训练集和验证集的损失">5.1.3 计算训练集和验证集的损失</a></li>
+<li><a href="#5%E5%9C%A8%E6%97%A0%E6%A0%87%E8%AE%B0%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8A%E8%BF%9B%E8%A1%8C%E9%A2%84%E8%AE%AD%E7%BB%83">5.在无标记数据集上进行预训练</a>
+<ul>
+<li><a href="#51-%E7%94%9F%E6%88%90%E5%BC%8F%E6%96%87%E6%9C%AC%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AF%84%E4%BC%B0">5.1 生成式文本模型的评估</a>
+<ul>
+<li><a href="#511-%E4%BD%BF%E7%94%A8-gpt-%E7%94%9F%E6%88%90%E6%96%87%E6%9C%AC">5.1.1 使用 GPT 生成文本</a></li>
+<li><a href="#512-%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90%E6%8D%9F%E5%A4%B1%E7%9A%84%E8%AE%A1%E7%AE%97">5.1.2 文本生成损失的计算</a></li>
+<li><a href="#513-%E8%AE%A1%E7%AE%97%E8%AE%AD%E7%BB%83%E9%9B%86%E5%92%8C%E9%AA%8C%E8%AF%81%E9%9B%86%E7%9A%84%E6%8D%9F%E5%A4%B1">5.1.3 计算训练集和验证集的损失</a></li>
 </ul>
 </li>
-<li><a href="#52-训练-llm">5.2 训练 LLM</a></li>
-<li><a href="#53-通过解码策略控制生成结果的随机性">5.3 通过解码策略控制生成结果的随机性</a><ul>
+<li><a href="#52-%E8%AE%AD%E7%BB%83-llm">5.2 训练 LLM</a></li>
+<li><a href="#53-%E9%80%9A%E8%BF%87%E8%A7%A3%E7%A0%81%E7%AD%96%E7%95%A5%E6%8E%A7%E5%88%B6%E7%94%9F%E6%88%90%E7%BB%93%E6%9E%9C%E7%9A%84%E9%9A%8F%E6%9C%BA%E6%80%A7">5.3 通过解码策略控制生成结果的随机性</a>
+<ul>
 <li><a href="#531-temperature-scaling">5.3.1 Temperature scaling</a></li>
-<li><a href="#532-top-k-采样">5.3.2 Top-k 采样</a></li>
-<li><a href="#533-对文本生成函数进行调整">5.3.3 对文本生成函数进行调整</a></li>
+<li><a href="#532-top-k-%E9%87%87%E6%A0%B7">5.3.2 Top-k 采样</a></li>
+<li><a href="#533-%E5%AF%B9%E6%96%87%E6%9C%AC%E7%94%9F%E6%88%90%E5%87%BD%E6%95%B0%E8%BF%9B%E8%A1%8C%E8%B0%83%E6%95%B4">5.3.3 对文本生成函数进行调整</a></li>
 </ul>
 </li>
-<li><a href="#54-在-pytorch-中加载和保存模型权重">5.4 在 PyTorch 中加载和保存模型权重</a></li>
-<li><a href="#55-从-openai-加载预训练权重">5.5 从 OpenAI 加载预训练权重</a></li>
-<li><a href="#56-本章摘要">5.6 本章摘要</a></li>
+<li><a href="#54-%E5%9C%A8-pytorch-%E4%B8%AD%E5%8A%A0%E8%BD%BD%E5%92%8C%E4%BF%9D%E5%AD%98%E6%A8%A1%E5%9E%8B%E6%9D%83%E9%87%8D">5.4 在 PyTorch 中加载和保存模型权重</a></li>
+<li><a href="#55-%E4%BB%8E-openai-%E5%8A%A0%E8%BD%BD%E9%A2%84%E8%AE%AD%E7%BB%83%E6%9D%83%E9%87%8D">5.5 从 OpenAI 加载预训练权重</a></li>
+<li><a href="#56-%E6%9C%AC%E7%AB%A0%E6%91%98%E8%A6%81">5.6 本章摘要</a></li>
 </ul>
 </li>
 </ul>
 <hr>
 <p>在之前的章节中，我们实现了数据采样、注意力机制，并编写了 LLM 的架构。本章的核心是实现训练函数并对 LLM 进行预训练，详见图 5.1。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.1.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.1.png" alt=""></p>
 <p>如图5.1所示，我们将继续学习基本的模型评估技术，以衡量生成文本的质量，这对于在训练过程中优化 LLM 是非常必要的。此外，我们将讨论如何加载预训练权重，以便为接下来的微调提供坚实的基础。</p>
 <blockquote>
 <p>[!NOTE]</p>
 <p><strong>权重参数</strong></p>
 <p>在大语言模型（LLM）和其他深度学习模型中，权重指的是可以通过训练过程调整的参数，通常也被称为权重参数或直接称为参数。在 PyTorch 等框架中，这些权重通常存储在各层（如线性层）中，举例来说，我们在第 3 章实现的多头注意力模块和第 4 章实现的GPT模型中就使用了线性层。在初始化一个层（例如，<code>new_layer = torch.nn.Linear(...)</code>）后，我们可以通过<code>.weight</code>属性访问其权重，例如<code>new_layer.weight</code>。此外，出于便利性，PyTorch还允许通过<code>model.parameters()</code>方法直接访问模型的所有可训练参数，包括权重和偏置，我们将在后续实现模型训练时使用该方法。</p>
 </blockquote>
-<h2 id="5-1-生成式文本模型的评估"><a href="#5-1-生成式文本模型的评估" class="headerlink" title="5.1 生成式文本模型的评估"></a>5.1 生成式文本模型的评估</h2><p>本章开篇，我们将基于上一章的代码设置 LLM 进行文本生成，并讨论如何对生成文本质量进行评估的基本方法。而本章剩余部分的内容请参考图5.2。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.2.png" alt=""></p>
+<h2 id="5-1-生成式文本模型的评估">5.1 生成式文本模型的评估</h2>
+<p>本章开篇，我们将基于上一章的代码设置 LLM 进行文本生成，并讨论如何对生成文本质量进行评估的基本方法。而本章剩余部分的内容请参考图5.2。</p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.2.png" alt=""></p>
 <p>如图 5.2 所示，接下来的小节我们首先简要回顾上一章末尾的文本生成过程，然后深入探讨文本评估及训练和验证损失的计算方法。</p>
-<h3 id="5-1-1-使用-GPT-生成文本"><a href="#5-1-1-使用-GPT-生成文本" class="headerlink" title="5.1.1 使用 GPT 生成文本"></a>5.1.1 使用 GPT 生成文本</h3><p>在本节中，我们会先通过对 LLM 的设置简要回顾一下第四章中实现的文本生成过程。在开始这项工作之前，我们首先使用第 4 章中的 GPTModel 类和 GPT_CONFIG_124M 配置字典初始化 GPT 模型，以便在后续章节对其进行评估和训练：</p>
+<h3 id="5-1-1-使用-GPT-生成文本">5.1.1 使用 GPT 生成文本</h3>
+<p>在本节中，我们会先通过对 LLM 的设置简要回顾一下第四章中实现的文本生成过程。在开始这项工作之前，我们首先使用第 4 章中的 GPTModel 类和 GPT_CONFIG_124M 配置字典初始化 GPT 模型，以便在后续章节对其进行评估和训练：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">from</span> chapter04 <span class="keyword">import</span> GPTModel</span><br><span class="line">GPT_CONFIG_124M = &#123;</span><br><span class="line">    <span class="string">&quot;vocab_size&quot;</span>: <span class="number">50257</span>,</span><br><span class="line">    <span class="string">&quot;context_length&quot;</span>: <span class="number">256</span>,        <span class="comment">#A</span></span><br><span class="line">    <span class="string">&quot;emb_dim&quot;</span>: <span class="number">768</span>,</span><br><span class="line">    <span class="string">&quot;n_heads&quot;</span>: <span class="number">12</span>,</span><br><span class="line">    <span class="string">&quot;n_layers&quot;</span>: <span class="number">12</span>,</span><br><span class="line">    <span class="string">&quot;drop_rate&quot;</span>: <span class="number">0.1</span>,             <span class="comment">#B</span></span><br><span class="line">    <span class="string">&quot;qkv_bias&quot;</span>: <span class="literal">False</span></span><br><span class="line">&#125;</span><br><span class="line">torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">model = GPTModel(GPT_CONFIG_124M)</span><br><span class="line">model.<span class="built_in">eval</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">#A 我们将上下文长度从1024个token缩短到256个token</span></span><br><span class="line"><span class="comment">#B 将 dropout 设置为 0 是一种常见的做法</span></span><br></pre></td></tr></table></figure>
 <p>在之前定义的 GPT_CONFIG_124M 配置字典中，我们唯一的调整是将上下文长度（context_length）减少到 256 个 token。此项调整降低了模型训练的计算需求，使得可以在普通笔记本电脑上进行训练。</p>
 <p>参数量为 1.24 亿的 GPT-2 模型最初被配置为可处理最多 1024 个 token。本章结束时，我们将更新上下文大小设置，并加载预训练权重，使模型能够支持 1024-token 的上下文长度。</p>
 <p>我们通过前一章节中介绍的 generate_text_simple 函数来使用 GPTmodel 实例，同时引入了两个实用函数：text_to_token_ids 和token_ids_to_text。这些函数简化了文本与 token 表示之间的转换，本章中我们将多次使用这种技术。图 5.3 可以帮助我们更清楚地理解这一过程。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.3.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.3.png" alt=""></p>
 <p>图 5.3 展示了使用 GPT 模型生成文本的三个主要步骤。首先，分词器将输入文本转换为一系列 token ID（在第 2 章中已有讨论）。然后，模型接收这些 token ID 并生成对应的 logits（即词汇表中每个 token 的概率分布，具体见第 4 章）。最后，将 logits 转换回 token ID，分词器将其解码为可读的文本，完成从文本输入到文本输出的循环。</p>
 <p>我们通过代码来实现上述过程：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 5.1 Utility functions for text to token ID conversion</span></span><br><span class="line"><span class="keyword">import</span> tiktoken</span><br><span class="line"><span class="keyword">from</span> chapter04 <span class="keyword">import</span> generate_text_simple</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">text_to_token_ids</span>(<span class="params">text, tokenizer</span>):</span><br><span class="line">    encoded = tokenizer.encode(text, allowed_special=&#123;<span class="string">&#x27;&lt;|endoftext|&gt;&#x27;</span>&#125;)</span><br><span class="line">    encoded_tensor = torch.tensor(encoded).unsqueeze(<span class="number">0</span>) <span class="comment"># add batch dimension</span></span><br><span class="line">    <span class="keyword">return</span> encoded_tensor</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">token_ids_to_text</span>(<span class="params">token_ids, tokenizer</span>):</span><br><span class="line">    flat = token_ids.squeeze(<span class="number">0</span>) <span class="comment"># remove batch dimension</span></span><br><span class="line">    <span class="keyword">return</span> tokenizer.decode(flat.tolist())</span><br><span class="line"></span><br><span class="line">start_context = <span class="string">&quot;Every effort moves you&quot;</span></span><br><span class="line">tokenizer = tiktoken.get_encoding(<span class="string">&quot;gpt2&quot;</span>)</span><br><span class="line"></span><br><span class="line">token_ids = generate_text_simple(</span><br><span class="line">    model=model,</span><br><span class="line">    idx=text_to_token_ids(start_context, tokenizer),</span><br><span class="line">    max_new_tokens=<span class="number">10</span>,</span><br><span class="line">    context_size=GPT_CONFIG_124M[<span class="string">&quot;context_length&quot;</span>]</span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Output text:\n&quot;</span>, token_ids_to_text(token_ids, tokenizer))</span><br></pre></td></tr></table></figure>
@@ -201,9 +207,10 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Output text:</span><br><span class="line"> Every effort moves you rentingetic wasnم refres RexMeCHicular stren</span><br></pre></td></tr></table></figure>
 <p>从输出可以看出，模型尚未生成连贯的文本，因为它还没有经过训练。为了定义文本的‘连贯性’或‘高质量’，我们需要实现一种数值方法来评估生成的内容。这一方法将帮助我们在训练过程中监督并提升模型的性能。</p>
 <p>接下来将介绍如何计算生成内容的损失度量，该损失值会作为训练进展和效果的指示器。此外，在后续关于微调 LLM 的章节中，我们将探讨更多评估模型质量的方法。</p>
-<h3 id="5-1-2-文本生成损失的计算"><a href="#5-1-2-文本生成损失的计算" class="headerlink" title="5.1.2 文本生成损失的计算"></a>5.1.2 文本生成损失的计算</h3><p>本节将探讨如何通过计算‘文本生成损失’来数值化评估训练过程中生成的文本质量。在通过一个实际示例逐步讲解这一主题之前，先简要回顾第 2 章的数据加载方式以及第 4 章的<code>generate_text_simple</code>函数如何生成文本。</p>
+<h3 id="5-1-2-文本生成损失的计算">5.1.2 文本生成损失的计算</h3>
+<p>本节将探讨如何通过计算‘文本生成损失’来数值化评估训练过程中生成的文本质量。在通过一个实际示例逐步讲解这一主题之前，先简要回顾第 2 章的数据加载方式以及第 4 章的<code>generate_text_simple</code>函数如何生成文本。</p>
 <p>图 5.4 展示了从输入文本到 LLM 生成文本的整体流程，该流程通过五个步骤实现。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.4.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.4.png" alt=""></p>
 <p>图 5.4 展示了第 4 章中<code>generate_text_simple</code>函数内部的本生成过程。在后续章节中计算生成文本的质量损失之前，我们需要先执行这些初始步骤。</p>
 <p>为了便于在一页中展示图像，我们图中的示例仅使用了包含 7 个 token 的小型词汇表。然而，GPTModel 实际上使用了包含 50,257 个 token 的大型词汇表，因此在接下来的代码中，token ID 的范围为 0 到 50,256，而不是图示中的 0 到 6。</p>
 <p>此外，图 5.4 为了简洁仅展示了一个文本示例 ‘every effort moves’。在接下来的代码示例中，我们将实现图 5.4 中的步骤，并使用两个输入示例 ‘every effort moves’ 和 ‘I really like’ 作为 GPT 模型的输入。</p>
@@ -223,10 +230,10 @@
 <p>最后，步骤 5 将 token ID 转换回文本：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Targets batch 1: <span class="subst">&#123;token_ids_to_text(targets[<span class="number">0</span>], tokenizer)&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;Outputs batch 1: <span class="subst">&#123;token_ids_to_text(token_ids[<span class="number">0</span>].flatten(), tokenizer)&#125;</span>&quot;</span>)</span><br><span class="line"><span class="comment">#When we decode these tokens, we find that these output tokens are quite different from the target tokens we want the model to generate:</span></span><br><span class="line">Targets batch <span class="number">1</span>: effort moves you</span><br><span class="line">Outputs batch <span class="number">1</span>: Armed heNetflix</span><br></pre></td></tr></table></figure>
 <p>可以看到，模型生成的文本与目标文本不同，因为它尚未经过训练。接下来，我们将通过‘损失’来数值化评估模型生成文本的质量（详见图 5.5）。这不仅有助于衡量生成文本的质量，还为实现训练函数提供了基础，训练函数主要通过更新模型权重来改善生成文本的质量。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.5.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.5.png" alt=""></p>
 <p>文本评估过程的一部分（如图 5.5 所示）是衡量生成的 token 与正确预测目标之间的差距。本章后面实现的训练函数将利用这些信息来调整模型权重，使生成的文本更接近（或理想情况下完全匹配）目标文本。</p>
 <p>换句话说，模型训练的目标是提高正确目标 token ID 所在位置的 softmax 概率，如图 5.6 所示。接下来的部分中，我们还会将该 softmax 概率作为评价指标，用于对模型生成的输出进行数值化评估：正确位置上的概率越高，模型效果越好。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.6.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.6.png" alt=""></p>
 <p>请注意，图 5.6 使用了一个包含 7 个 token 的简化词汇表，以便所有内容可以在一张图中展示。这意味着 softmax 的初始随机值会在 1/7 左右（约 0.14）。</p>
 <p>然而，我们为 GPT-2 模型使用的词汇表包含 50,257 个 token，因此每个 token 的初始概率大约只有 0.00002（即 1/50,257）。</p>
 <p>对于这两个输入文本，我们可以通过以下代码打印与目标 token 对应的初始 softmax 概率得分：</p>
@@ -241,7 +248,7 @@
 <p>反向传播需要一个损失函数，该函数用于计算模型预测输出与实际目标输出之间的差异（此处指与目标 token ID 对应的概率）。这个损失函数用于衡量模型预测与目标值的偏差程度。</p>
 </blockquote>
 <p>在本节剩余内容中，我们将针对<code>target_probas_1</code>和<code>target_probas_2</code>的概率得分计算损失。图 5.7 展示了主要步骤。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.7.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.7.png" alt=""></p>
 <p>由于我们已经完成了图 5.7 中列出的步骤 1-3，得到了 <code>target_probas_1</code> 和 <code>target_probas_2</code>，现在进行第 4 步，对这些概率得分取对数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">log_probas = torch.log(torch.cat((target_probas_1, target_probas_2)))</span><br><span class="line"><span class="built_in">print</span>(log_probas)</span><br></pre></td></tr></table></figure>
 <p>计算结果如下：</p>
@@ -251,20 +258,23 @@
 <p>[!TIP]</p>
 <p><strong>个人思考：</strong> 在继续接下来的计算之前，我们首先来探讨一下，对数在损失函数的应用中到底有什么作用。</p>
 <ol>
-<li><p><strong>为什么要用概率的对数</strong></p>
+<li>
+<p><strong>为什么要用概率的对数</strong></p>
 <p>在 LLM 中，概率得分通常是小于1的数（例如0.1、0.05等），直接用这些数进行计算和优化可能会面临一些问题。比如，如果多个概率相乘，结果会变得非常小，甚至接近0。这种情况称为“数值下溢”（Numerical Underflow），可能导致计算不稳定。</p>
 <p>假设我们有三个概率值，分别为0.2、0.1和0.05。如果我们计算这些值的乘积，结果是：</p>
-<script type="math/tex; mode=display">0.2×0.1×0.05=0.001</script><p>这个值非常小，尤其在深度学习或概率模型中，我们通常会有成千上万个概率需要相乘，这样会导致最终的乘积接近0甚至为0，造成数值计算的不稳定性。</p>
+<p>$$0.2×0.1×0.05=0.001$$</p>
+<p>这个值非常小，尤其在深度学习或概率模型中，我们通常会有成千上万个概率需要相乘，这样会导致最终的乘积接近0甚至为0，造成数值计算的不稳定性。</p>
 <p>如果我们对这些概率值取对数，然后相加，而不是直接相乘，我们可以避免这个问题。例如，对这三个值取自然对数（logarithm）后再相加：</p>
-<script type="math/tex; mode=display">ln(0.2)+ln(0.1)+ln(0.05)≈−1.6094+(−2.3026)+(−2.9957)=−6.9077</script><p>虽然这个和也是负数，但它不会像直接相乘的结果那样接近于0，避免了数值下溢的问题。<strong>对数的累加性质</strong>允许我们将原本的累乘操作转换为累加，使得计算更加稳定和高效。</p>
+<p>$$ln(0.2)+ln(0.1)+ln(0.05)≈−1.6094+(−2.3026)+(−2.9957)=−6.9077$$</p>
+<p>虽然这个和也是负数，但它不会像直接相乘的结果那样接近于0，避免了数值下溢的问题。<strong>对数的累加性质</strong>允许我们将原本的累乘操作转换为累加，使得计算更加稳定和高效。</p>
 </li>
-</ol>
-<ol>
-<li><p>对数概率在损失函数中的作用**</p>
+<li>
+<p>对数概率在损失函数中的作用**</p>
 <p>GPT模型训练的目标是最大化正确目标 token 的概率，通常，我们会使用交叉熵损失来衡量模型预测与实际目标之间的差异。对于一个目标 token 序列 y=(y1,y2,…,yn)，GPT会生成一个对应的预测概率分布 P(y∣x)，其中 x 是模型的输入。</p>
 <p><strong>交叉熵损失的公式：</strong></p>
 <p>在计算交叉熵损失时，我们希望最大化模型分配给每个正确目标token的概率。交叉熵损失的数学公式为：</p>
-<script type="math/tex; mode=display">\text { Loss }=-\sum_{t=1}^{T} \ln P\left(y_{t} \mid x, \theta\right)</script><p>其中：</p>
+<p>$$\text { Loss }=-\sum_{t=1}^{T} \ln P\left(y_{t} \mid x, \theta\right)$$</p>
+<p>其中：</p>
 <ul>
 <li>T 是序列长度</li>
 <li>y<sub>t</sub> 是在位置 ttt 上的目标token</li>
@@ -311,8 +321,9 @@
 <p><code>Perplexity</code>通常比原始损失值更具可解释性，因为它表示了模型在每一步生成中，对有效词汇量的不确定程度。在这个例子中，<code>Perplexity</code>可以理解为模型在词汇表中的 47,678 个单词或 token 中，不确定该选择哪个作为下一个生成的 token。</p>
 </blockquote>
 <p>在本节中，我们对两个小文本输入进行了损失计算，以便更直观地说明损失函数的计算过程。下一节将把损失计算应用于整个训练集和验证集。</p>
-<h3 id="5-1-3-计算训练集和验证集的损失"><a href="#5-1-3-计算训练集和验证集的损失" class="headerlink" title="5.1.3 计算训练集和验证集的损失"></a>5.1.3 计算训练集和验证集的损失</h3><p>在本节中，我们首先准备训练和验证数据集，以用于后续 LLM 的训练。接着，我们计算训练集和验证集的交叉熵（如图 5.8 所示），这是模型训练过程中的重要组成部分。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.8.png" alt=""></p>
+<h3 id="5-1-3-计算训练集和验证集的损失">5.1.3 计算训练集和验证集的损失</h3>
+<p>在本节中，我们首先准备训练和验证数据集，以用于后续 LLM 的训练。接着，我们计算训练集和验证集的交叉熵（如图 5.8 所示），这是模型训练过程中的重要组成部分。</p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.8.png" alt=""></p>
 <p>为了计算训练集和验证集上的损失（如图 5.8 所示），我们使用了一个非常小的文本数据集，即伊迪丝·华顿的短篇小说《判决》，我们在第 2 章中已对此文本进行过处理。选择公共领域的文本可以避免任何关于使用权的担忧。此外，我们选择小数据集的原因在于，它允许代码示例在普通笔记本电脑上运行，即使没有高端 GPU 也能在几分钟内完成，这对于教学尤为有利。</p>
 <p>感兴趣的读者可以使用本书的配套代码，准备一个包含超过 60,000 本 Project Gutenberg 公有领域书籍的大规模数据集，并在此数据集上训练 LLM（详情请见附录 D）。</p>
 <blockquote>
@@ -328,7 +339,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Characters: <span class="number">20479</span></span><br><span class="line">Tokens: <span class="number">5145</span></span><br></pre></td></tr></table></figure>
 <p>仅有 5,145 个 token，看起来似乎不足以训练一个 LLM，但正如前面提到的，这仅用于教学演示，因此我们可以将代码的运行时间控制在几分钟，而不是几周。此外，在本章最后，我们将把 OpenAI 的预训练权重加载到我们的 GPTModel 代码中。</p>
 <p>接下来，我们将数据集划分为训练集和验证集，并使用第二章的数据加载器为 LLM 训练准备需输入的批量数据。图 5.9 展示了该过程。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.9.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.9.png" alt=""></p>
 <p>出于可视化的需要，图 5.9 将最大长度设置为 6。然而，在实际数据加载器中，我们会将最大长度设置为 LLM 支持的 256 个 token 的上下文长度，使得模型在训练时可以看到更长的文本。</p>
 <blockquote>
 <p>[!NOTE]</p>
@@ -357,10 +368,11 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Training loss: <span class="number">10.98758347829183</span></span><br><span class="line">Validation loss: <span class="number">10.98110580444336</span></span><br></pre></td></tr></table></figure>
 <p>模型未经过训练，因此损失值较高。相比之下，如果模型学会按训练集和验证集中的真实顺序生成下一个 token，损失值就会接近 0。</p>
 <p>现在我们已经有了评估生成文本质量的方法，接下来我们将训练 LLM 以减少损失，从而提升文本生成的效果，如图 5.10 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.10.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.10.png" alt=""></p>
 <p>如图 5.10 所示，下一节将重点讲解 LLM 的预训练过程。在模型训练完成后，将应用不同的文本生成策略，并保存和加载预训练模型的权重。</p>
-<h2 id="5-2-训练-LLM"><a href="#5-2-训练-LLM" class="headerlink" title="5.2 训练 LLM"></a>5.2 训练 LLM</h2><p>在本节中，我们将实现 LLM（基于GPTModel）的预训练代码。我们重点采用一种简单的训练循环方式来保证代码简洁易读（如图 5.11 所示）。不过，有兴趣的读者可以在附录 D 中了解更多高级技术，包括学习率预热、余弦退火和梯度裁剪等，以进一步完善训练循环。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.11.png" alt=""></p>
+<h2 id="5-2-训练-LLM">5.2 训练 LLM</h2>
+<p>在本节中，我们将实现 LLM（基于GPTModel）的预训练代码。我们重点采用一种简单的训练循环方式来保证代码简洁易读（如图 5.11 所示）。不过，有兴趣的读者可以在附录 D 中了解更多高级技术，包括学习率预热、余弦退火和梯度裁剪等，以进一步完善训练循环。</p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.11.png" alt=""></p>
 <p>图 5.11 中的流程图展示了一个典型的 PyTorch 神经网络训练流程，我们用它来训练大语言模型（LLM）。流程概述了 8 个步骤，从迭代各个 epoch 开始，处理批次数据、重置和计算梯度、更新权重，最后进行监控步骤如打印损失和生成文本样本。如果你对使用 PyTorch 如何训练深度神经网络不太熟悉，可以参考附录 A 中的 A.5 至 A.8 节。</p>
 <p>我们可以通过以下<code>train_model_simple</code>函数来实现这一训练流程：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 5.3 The main function for pretraining LLMs</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">train_model_simple</span>(<span class="params">model, train_loader, val_loader, optimizer, device, num_epochs,</span></span><br><span class="line"><span class="params">                       eval_freq, eval_iter, start_context, tokenizer</span>):</span><br><span class="line">    train_losses, val_losses, track_tokens_seen = [], [], []                        <span class="comment">#A</span></span><br><span class="line">    tokens_seen, global_step = <span class="number">0</span>, -<span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(num_epochs):                                                 <span class="comment">#B</span></span><br><span class="line">        model.train()</span><br><span class="line">        <span class="keyword">for</span> input_batch, target_batch <span class="keyword">in</span> train_loader:</span><br><span class="line">            optimizer.zero_grad()                                                   <span class="comment">#C</span></span><br><span class="line">            loss = calc_loss_batch(input_batch, target_batch, model, device)</span><br><span class="line">            loss.backward()                                                         <span class="comment">#D</span></span><br><span class="line">            optimizer.step()                                                        <span class="comment">#E</span></span><br><span class="line">            tokens_seen += input_batch.numel()</span><br><span class="line">            global_step += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> global_step % eval_freq == <span class="number">0</span>:                                        <span class="comment">#F</span></span><br><span class="line">                train_loss, val_loss = evaluate_model(</span><br><span class="line">                    model, train_loader, val_loader, device, eval_iter)</span><br><span class="line">                train_losses.append(train_loss)</span><br><span class="line">                val_losses.append(val_loss)</span><br><span class="line">                track_tokens_seen.append(tokens_seen)</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;Ep <span class="subst">&#123;epoch+<span class="number">1</span>&#125;</span> (Step <span class="subst">&#123;global_step:06d&#125;</span>): &quot;</span></span><br><span class="line">                      <span class="string">f&quot;Train loss <span class="subst">&#123;train_loss:<span class="number">.3</span>f&#125;</span>, Val loss <span class="subst">&#123;val_loss:<span class="number">.3</span>f&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        generate_and_print_sample(                                                  <span class="comment">#G</span></span><br><span class="line">            model, tokenizer, device, start_context</span><br><span class="line">        )</span><br><span class="line">    <span class="keyword">return</span> train_losses, val_losses, track_tokens_seen</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#A 初始化用于记录损失和已处理 token 数量的列表</span></span><br><span class="line"><span class="comment">#B 开始主训练循环</span></span><br><span class="line"><span class="comment">#C 重置上一批次的损失梯度</span></span><br><span class="line"><span class="comment">#D 计算损失梯度</span></span><br><span class="line"><span class="comment">#E 使用损失梯度更新模型权重</span></span><br><span class="line"><span class="comment">#F 可选的评估步骤</span></span><br><span class="line"><span class="comment">#G 每个 epoch 结束后打印示例文本</span></span><br></pre></td></tr></table></figure>
@@ -380,34 +392,38 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">model = GPTModel(GPT_CONFIG_124M)</span><br><span class="line">model.to(device)</span><br><span class="line">optimizer = torch.optim.AdamW(model.parameters(), lr=<span class="number">0.0004</span>, weight_decay=<span class="number">0.1</span>)      <span class="comment">#A</span></span><br><span class="line">num_epochs = <span class="number">10</span></span><br><span class="line">train_losses, val_losses, tokens_seen = train_model_simple(</span><br><span class="line">    model, train_loader, val_loader, optimizer, device,</span><br><span class="line">    num_epochs=num_epochs, eval_freq=<span class="number">5</span>, eval_iter=<span class="number">1</span>,</span><br><span class="line">    start_context=<span class="string">&quot;Every effort moves you&quot;</span>, tokenizer=tokenizer</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">#A .parameters() 方法返回模型的所有可训练权重参数</span></span><br></pre></td></tr></table></figure>
 <p>执行 <code>training_model_simple</code> 函数将开始训练过程，在 MacBook Air 或类似的笔记本电脑上完成约需 5 分钟。执行过程中打印的输出如下所示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Ep <span class="number">1</span> (Step <span class="number">000000</span>): Train loss <span class="number">9.781</span>, Val loss <span class="number">9.933</span></span><br><span class="line">Ep <span class="number">1</span> (Step 000005): Train loss <span class="number">8.111</span>, Val loss <span class="number">8.339</span></span><br><span class="line">Every effort moves you,,,,,,,,,,,,.</span><br><span class="line">Ep <span class="number">2</span> (Step <span class="number">0000</span>10): Train loss <span class="number">6.661</span>, Val loss <span class="number">7.048</span></span><br><span class="line">Ep <span class="number">2</span> (Step 000015): Train loss <span class="number">5.961</span>, Val loss <span class="number">6.616</span></span><br><span class="line">Every effort moves you, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>,</span><br><span class="line"><span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>, <span class="keyword">and</span>,, <span class="keyword">and</span>, <span class="keyword">and</span>,</span><br><span class="line">[...] Results are truncated to save space                 <span class="comment">#A</span></span><br><span class="line">Ep <span class="number">9</span> (Step 000080): Train loss <span class="number">0.541</span>, Val loss <span class="number">6.393</span></span><br><span class="line">Every effort moves you?<span class="string">&quot; &quot;</span>Yes--quite insensible to the irony. She wanted him</span><br><span class="line">vindicated--<span class="keyword">and</span> by me!<span class="string">&quot; He laughed again, and threw back the window-curtains, I had the</span></span><br><span class="line"><span class="string">donkey. &quot;</span>There were days when I</span><br><span class="line">Ep <span class="number">10</span> (Step 000085): Train loss <span class="number">0.391</span>, Val loss <span class="number">6.452</span></span><br><span class="line">Every effort moves you know,<span class="string">&quot; was one of the axioms he laid down across the Sevres and</span></span><br><span class="line"><span class="string">silver of an exquisitely appointed luncheon-table, when, on a later day, I had again run</span></span><br><span class="line"><span class="string">over from Monte Carlo; and Mrs. Gis</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">#A 中间结果被省略以节省空间</span></span><br></pre></td></tr></table></figure>
-<p>根据训练过程中的输出结果，训练损失显著下降，从 9.558 降到 0.762，模型的语言能力大幅提升。在训练初期，模型仅能在起始上下文后添加逗号（如“Every effort moves you,,,,,,,,,,,,”）或重复单词“and”。而在训练结束时，模型能够生成符合语法的文本。</p>
+<p>根据训练过程中的输出结果，训练损失显著下降，从 9.558 降到 0.762，模型的语言能力大幅提升。在训练初期，模型仅能在起始上下文后添加逗号（如“Every effort moves you,”）或重复单词“and”。而在训练结束时，模型能够生成符合语法的文本。</p>
 <p>与训练集损失类似，我们可以看到验证集损失在开始时较高（9.856），随后在训练过程中下降。但它始终未能像训练集损失那样低，在第 10 个 epoch 后保持在 6.372。</p>
 <p>在更详细地讨论验证集损失之前，我们先创建一个简单的图表，将训练集和验证集损失并排展示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">plot_losses</span>(<span class="params">epochs_seen, tokens_seen, train_losses, val_losses</span>):</span><br><span class="line">    fig, ax1 = plt.subplots(figsize=(<span class="number">5</span>, <span class="number">3</span>))</span><br><span class="line">    ax1.plot(epochs_seen, train_losses, label=<span class="string">&quot;Training loss&quot;</span>)</span><br><span class="line">    ax1.plot(epochs_seen, val_losses, linestyle=<span class="string">&quot;-.&quot;</span>, label=<span class="string">&quot;Validation loss&quot;</span>)</span><br><span class="line">    ax1.set_xlabel(<span class="string">&quot;Epochs&quot;</span>)</span><br><span class="line">    ax1.set_ylabel(<span class="string">&quot;Loss&quot;</span>)</span><br><span class="line">    ax1.legend(loc=<span class="string">&quot;upper right&quot;</span>)</span><br><span class="line">    ax2 = ax1.twiny() <span class="comment">#A</span></span><br><span class="line">    ax2.plot(tokens_seen, train_losses, alpha=<span class="number">0</span>) <span class="comment">#B</span></span><br><span class="line">    ax2.set_xlabel(<span class="string">&quot;Tokens seen&quot;</span>)</span><br><span class="line">    fig.tight_layout()</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line">epochs_tensor = torch.linspace(<span class="number">0</span>, num_epochs, <span class="built_in">len</span>(train_losses))</span><br><span class="line">plot_losses(epochs_tensor, tokens_seen, train_losses, val_losses)</span><br><span class="line"></span><br><span class="line"><span class="comment">#A 创建与 y 轴共用的第二个 x 轴</span></span><br><span class="line"><span class="comment">#B 用于对齐刻度的隐藏图形</span></span><br></pre></td></tr></table></figure>
 <p>生成的训练损失和验证损失图表如图 5.12 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.12.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.12.png" alt=""></p>
 <p>如图 5.12 所示，训练损失和验证损失在第一个 epoch 开始时都有所改善。然而，从第二个 epoch 之后，损失开始出现分歧。验证损失远高于训练损失，这表明模型在训练数据上出现了过拟合。我们可以通过搜索生成的文本片段（例如“The Verdict”文件中的片段：“quite insensible to the irony”）来确认模型逐词记住了训练数据。</p>
 <p>这种记忆现象是预料之中的，因为我们使用了一个非常小的训练数据集，并且对模型进行了多轮训练。通常，我们会在更大的数据集上训练模型，并且只需训练一个 epoch 即可。</p>
 <blockquote>
 <p>[!TIP]</p>
 <p><strong>个人思考：</strong> 让我们基于 LLM 的原理来探讨一下为什么在一个较小的数据集上进行多轮训练，容易产生过拟合的现象？</p>
 <ol>
-<li><strong>模型容量与数据集大小的匹配问题</strong><ul>
+<li><strong>模型容量与数据集大小的匹配问题</strong>
+<ul>
 <li>大语言模型具有极高的参数容量，通常包含数百万甚至数十亿个参数。如此巨大的参数空间可以高度灵活地适应数据，使得模型能够“记住”每个样本的具体特征</li>
 <li>当数据集很小时，模型没有足够的多样性去学习广泛的模式，而是倾向于学习每个数据点的细节。经过多轮训练，模型会逐渐“记住”小数据集中每个样本的特征，从而导致过拟合。</li>
 </ul>
 </li>
-<li><strong>多轮训练导致对数据集细节的过度学习</strong><ul>
+<li><strong>多轮训练导致对数据集细节的过度学习</strong>
+<ul>
 <li>多轮训练意味着模型会反复接触相同的数据。这种重复使得模型逐渐适应数据集的特定模式，而不是学习一般化的规律。</li>
 <li>每次训练迭代都会使模型在数据集上拟合得更好，因此在训练数据上损失逐渐减小，但由于缺少新的数据，模型无法学习到通用模式，只会进一步记住训练样本的细节。</li>
 </ul>
 </li>
-<li><strong>数据集的多样性不足</strong><ul>
+<li><strong>数据集的多样性不足</strong>
+<ul>
 <li>小数据集通常不能代表广泛的语言特征和分布，缺乏多样性。模型在小数据集上多轮训练，基本上是在有限的样本范围内形成模式，导致它对特定的训练样本依赖性过强。</li>
 <li>这种缺乏多样性的训练会使模型偏向训练数据的分布，难以适应实际应用中广泛的输入数据。</li>
 </ul>
 </li>
-<li><strong>过拟合与模型泛化能力的矛盾</strong><ul>
+<li><strong>过拟合与模型泛化能力的矛盾</strong>
+<ul>
 <li>过拟合本质上是模型在训练数据上的表现优异，但在未见过的数据上表现较差。大语言模型的训练目标是提高其泛化能力，即能在更广泛的分布上生成有意义的文本。</li>
 <li>当数据集非常小且多轮训练时，模型会对数据的细节和噪声进行过度拟合，这会导致模型在测试数据或实际应用中表现不佳，因为它无法应对新的、不同分布的输入。</li>
 </ul>
@@ -416,9 +432,10 @@
 </blockquote>
 <p>如前所述，感兴趣的读者可以尝试用 Project Gutenberg 中 60,000 本公共领域书籍来训练模型，这种情况下不会出现过拟合现象。详细信息见附录 B。</p>
 <p>在接下来的部分（如图 5.13 所示），我们将探讨 LLM 使用的采样方法，这些方法可以减轻记忆效应，从而生成更具新意的文本。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.13.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.13.png" alt=""></p>
 <p>如图 5.13 所示，下一节将介绍适用于 LLM 的文本生成策略，以减少训练数据的记忆倾向，提升 LLM 生成文本的原创性。之后我们还会讨论权重的加载与保存，以及从 OpenAI 的 GPT 模型加载预训练权重。</p>
-<h2 id="5-3-通过解码策略控制生成结果的随机性"><a href="#5-3-通过解码策略控制生成结果的随机性" class="headerlink" title="5.3 通过解码策略控制生成结果的随机性"></a>5.3 通过解码策略控制生成结果的随机性</h2><p>本节将介绍文本生成策略（也称为解码策略），用于生成更具原创性的文本。首先，我们将简要回顾前一章中的<code>generate_text_simple</code>函数，该函数已在本章前面用于生成和打印样本。然后，我们会讲解两种改进方法：<code>temperature scaling</code>和 <code>top-k 采样</code>。</p>
+<h2 id="5-3-通过解码策略控制生成结果的随机性">5.3 通过解码策略控制生成结果的随机性</h2>
+<p>本节将介绍文本生成策略（也称为解码策略），用于生成更具原创性的文本。首先，我们将简要回顾前一章中的<code>generate_text_simple</code>函数，该函数已在本章前面用于生成和打印样本。然后，我们会讲解两种改进方法：<code>temperature scaling</code>和 <code>top-k 采样</code>。</p>
 <p>首先，我们将模型从 GPU 转移回 CPU，因为相对较小的模型在推理时不需要使用 GPU。另外，在训练结束后，我们会将模型切换到评估模式，以关闭 dropout 等随机组件：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model.to(<span class="string">&quot;cpu&quot;</span>)</span><br><span class="line">model.<span class="built_in">eval</span>()</span><br></pre></td></tr></table></figure>
 <p>接下来，将 GPTModel 的实例（model）传入 generate_text_simple 函数，该函数使用 LLM 一次生成一个 token：</p>
@@ -427,7 +444,8 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Output text:</span><br><span class="line">Every effort moves you know,<span class="string">&quot; was one of the axioms he laid down across the Sevres and</span></span><br><span class="line"><span class="string">silver of an exquisitely appointed lun</span></span><br></pre></td></tr></table></figure>
 <p>如 5.1.2 节中所述，在生成过程中的每一步，都会选取词汇表中概率得分最高的 token 作为生成的 token。</p>
 <p>接下来介绍两种控制生成文本随机性和多样性的方法：<code>temperature scaling</code>和<code>top-k sampling</code>。</p>
-<h3 id="5-3-1-Temperature-scaling"><a href="#5-3-1-Temperature-scaling" class="headerlink" title="5.3.1 Temperature scaling"></a>5.3.1 Temperature scaling</h3><p>本节将介绍<code>temperature scaling</code>，这是一种在生成下一个词时加入概率选择的技术。</p>
+<h3 id="5-3-1-Temperature-scaling">5.3.1 Temperature scaling</h3>
+<p>本节将介绍<code>temperature scaling</code>，这是一种在生成下一个词时加入概率选择的技术。</p>
 <p>之前，在 <code>generate_text_simple</code> 函数中，我们总是用 <code>torch.argmax</code> 选择概率最高的 token 作为下一个词，这也叫做贪心解码。为了生成更加多样化的文本，可以将 <code>argmax</code> 替换为一种从概率分布中进行采样的函数（这里，概率分布是指模型在每一步为每个词汇生成的概率得分）。</p>
 <p>为了用具体的例子说明概率采样，我们将简要讨论下一词生成过程，并用一个非常小的词汇表来进行示例演示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">vocab = &#123;</span><br><span class="line">    <span class="string">&quot;closer&quot;</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="string">&quot;every&quot;</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="string">&quot;effort&quot;</span>: <span class="number">2</span>,</span><br><span class="line">    <span class="string">&quot;forward&quot;</span>: <span class="number">3</span>,</span><br><span class="line">    <span class="string">&quot;inches&quot;</span>: <span class="number">4</span>,</span><br><span class="line">    <span class="string">&quot;moves&quot;</span>: <span class="number">5</span>,</span><br><span class="line">    <span class="string">&quot;pizza&quot;</span>: <span class="number">6</span>,</span><br><span class="line">    <span class="string">&quot;toward&quot;</span>: <span class="number">7</span>,</span><br><span class="line">    <span class="string">&quot;you&quot;</span>: <span class="number">8</span>,</span><br><span class="line">&#125;</span><br><span class="line">inverse_vocab = &#123;v: k <span class="keyword">for</span> k, v <span class="keyword">in</span> vocab.items()&#125;</span><br></pre></td></tr></table></figure>
@@ -438,7 +456,8 @@
 <p>由于第四个位置的 logit 值最大，相应地，Softmax 归一化后的概率分数也在该位置上最大，因此生成的下一个词就是这个位置对应的词。</p>
 <p>为了实现概率采样过程，现在可以用 PyTorch 中的 multinomial 函数代替 argmax：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">next_token_id = torch.multinomial(probas, num_samples=<span class="number">1</span>).item()</span><br><span class="line"><span class="built_in">print</span>(inverse_vocab[next_token_id])</span><br></pre></td></tr></table></figure>
-<p>输出依然是“forward”，这和之前一样。这是为什么？<br>multinomial 函数根据每个 token 的概率得分来采样下一个 token。换句话说，“forward” 依然是最有可能的 token，因此大多数情况下会被 multinomial 选中，但并不是每次都选中。为了演示这一点，我们可以实现一个函数，重复采样 1000 次：</p>
+<p>输出依然是“forward”，这和之前一样。这是为什么？<br>
+multinomial 函数根据每个 token 的概率得分来采样下一个 token。换句话说，“forward” 依然是最有可能的 token，因此大多数情况下会被 multinomial 选中，但并不是每次都选中。为了演示这一点，我们可以实现一个函数，重复采样 1000 次：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">print_sampled_tokens</span>(<span class="params">probas</span>):</span><br><span class="line">    torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">    sample = [torch.multinomial(probas, num_samples=<span class="number">1</span>).item() <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1_000</span>)]</span><br><span class="line">    sampled_ids = torch.bincount(torch.tensor(sample))</span><br><span class="line">    <span class="keyword">for</span> i, freq <span class="keyword">in</span> <span class="built_in">enumerate</span>(sampled_ids):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;<span class="subst">&#123;freq&#125;</span> x <span class="subst">&#123;inverse_vocab[i]&#125;</span>&quot;</span>)</span><br><span class="line">print_sampled_tokens(probas)</span><br></pre></td></tr></table></figure>
 <p>采样输出结果如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">73</span> x closer</span><br><span class="line"><span class="number">0</span> x every</span><br><span class="line"><span class="number">0</span> x effort</span><br><span class="line"><span class="number">582</span> x forward</span><br><span class="line"><span class="number">2</span> x inches</span><br><span class="line"><span class="number">0</span> x moves</span><br><span class="line"><span class="number">0</span> x pizza</span><br><span class="line"><span class="number">343</span> x toward</span><br></pre></td></tr></table></figure>
@@ -446,28 +465,35 @@
 <p>我们可以通过一种称为<code>temperature scaling</code>的方法进一步控制分布和选择过程，所谓<code>temperature scaling</code>，其实就是将 logits 除以一个大于 0 的数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">softmax_with_temperature</span>(<span class="params">logits, temperature</span>):</span><br><span class="line">    scaled_logits = logits / temperature</span><br><span class="line">    <span class="keyword">return</span> torch.softmax(scaled_logits, dim=<span class="number">0</span>)</span><br><span class="line"><span class="comment">#Temperatures greater than 1 result in more uniformly distributed token probabilities, and Temperatures smaller than 1 will result in more confident (sharper or more peaky) distributions. Let&#x27;s illustrate this by plotting the original probabilities alongside probabilities scaled with different temperature values:</span></span><br><span class="line">temperatures = [<span class="number">1</span>, <span class="number">0.1</span>, <span class="number">5</span>]             <span class="comment">#A</span></span><br><span class="line">scaled_probas = [softmax_with_temperature(next_token_logits, T) <span class="keyword">for</span> T <span class="keyword">in</span> temperatures]</span><br><span class="line">x = torch.arange(<span class="built_in">len</span>(vocab))</span><br><span class="line">bar_width = <span class="number">0.15</span></span><br><span class="line">fig, ax = plt.subplots(figsize=(<span class="number">5</span>, <span class="number">3</span>))</span><br><span class="line"><span class="keyword">for</span> i, T <span class="keyword">in</span> <span class="built_in">enumerate</span>(temperatures):</span><br><span class="line">    rects = ax.bar(x + i * bar_width, scaled_probas[i],</span><br><span class="line">                   bar_width, label=<span class="string">f&#x27;Temperature = <span class="subst">&#123;T&#125;</span>&#x27;</span>)</span><br><span class="line">ax.set_ylabel(<span class="string">&#x27;Probability&#x27;</span>)</span><br><span class="line">ax.set_xticks(x)</span><br><span class="line">ax.set_xticklabels(vocab.keys(), rotation=<span class="number">90</span>)</span><br><span class="line">ax.legend()</span><br><span class="line">plt.tight_layout()</span><br><span class="line">plt.show()</span><br><span class="line"></span><br><span class="line"><span class="comment">#A 原始、较低和较高置信度</span></span><br></pre></td></tr></table></figure>
 <p>图 5.14 展示了生成的图表:</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.14.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.14.png" alt=""></p>
 <p>当 temperature 取 1 时，logits 在传递给 softmax 函数之前会除以 1，计算概率得分。这意味着，temperature 为 1 时相当于不进行任何缩放。在这种情况下，模型将根据原始的 softmax 概率，通过 PyTorch 中的<code>multinomial</code>函数来选择 token。</p>
 <p>如图 5.14 所示，当 temperature 设置为非常小的值（如 0.1）时，生成的分布会更加尖锐，因此<code>multinomial</code>函数几乎总是选择最可能的 token（这里是 ‘forward’），其行为接近 argmax 函数。相反，当 temperature 设置为 5 时，生成的分布更接近均匀分布，其他 token 被选中的频率更高。这种情况下，生成的文本多样性增加，但也更可能出现无意义的内容。例如，temperature 设置为 5 时，模型生成类似 ‘every effort moves you pizza’ 的文本概率大约为 4%。</p>
 <blockquote>
 <p>[!TIP]</p>
 <p><strong>个人思考：</strong> 为什么 temperature 值非常小时，生成的概率分布会更加尖锐，越大时，概率分布会更加均匀，文中只是说了结论，没有说过程。</p>
 <p><strong>temperature</strong> 参数被引入到 softmax 函数中，用于缩放 logits，从而控制输出的概率分布。当引入 temperature 后，softmax 函数的公式变为：</p>
-<script type="math/tex; mode=display">P\left(x_{i}\right)=\frac{\exp \left(\frac{z_{i}}{T}\right)}{\sum_{j} \exp \left(\frac{z_{j}}{T}\right)}</script><ol>
-<li><p><strong>当 T&gt;1</strong><br>所有 logits 被除以 T，缩放后，差异变小。由于 exp 函数的敏感性较高，这意味着 logits 值的差异被“压平”，使得最优词的概率降低，而其他次优词的概率提高。输出的概率分布变得更加均匀，再结合multinomial函数，可以使生成结果更加多样化，但同时也降低了生成结果的确定性。</p>
+<p>$$ P\left(x_{i}\right)=\frac{\exp \left(\frac{z_{i}}{T}\right)}{\sum_{j} \exp \left(\frac{z_{j}}{T}\right)} $$</p>
+<ol>
+<li>
+<p><strong>当 T&gt;1</strong><br>
+所有 logits 被除以 T，缩放后，差异变小。由于 exp 函数的敏感性较高，这意味着 logits 值的差异被“压平”，使得最优词的概率降低，而其他次优词的概率提高。输出的概率分布变得更加均匀，再结合multinomial函数，可以使生成结果更加多样化，但同时也降低了生成结果的确定性。</p>
 </li>
-<li><p><strong>当 T&lt;1</strong></p>
+<li>
+<p><strong>当 T&lt;1</strong></p>
 <p>logits 除以 T 后会被放大，差异变得更加显著。softmax 函数会使最高 logit 对应的词语的概率变得更高，其他词语的概率更低。这导致输出的概率分布更加集中，模型更倾向于选择概率最大的词，从而提高了生成结果的确定性。</p>
 </li>
 </ol>
+</blockquote>
+<blockquote>
 <p>[!NOTE]</p>
 <p><strong>练习 5.1</strong></p>
 <p>使用 <code>print_sampled_tokens</code> 函数，打印在图 5.14 所示 temperature 值下缩放的 Softmax 概率的采样频率。在每种情况下，单词“pizza”被采样的频率是多少？你能想到一种更快、更准确的方法来确定“pizza”被采样的频率吗？</p>
 </blockquote>
-<h3 id="5-3-2-Top-k-采样"><a href="#5-3-2-Top-k-采样" class="headerlink" title="5.3.2 Top-k 采样"></a>5.3.2 Top-k 采样</h3><p>在前一节中，我们实现了一种结合<code>temperature scaling</code>的概率采样方法来增加生成内容的多样性。我们发现，较高的 temperature 值会使下一词的概率分布更均匀，从而降低模型反复选择最可能词的概率，这样可以生成更多样化的内容，使生成过程探索那些概率较低但可能更有趣和创意的路径。不过，这种方法的一个缺点是，有时会导致生成语法不正确或完全不合逻辑的内容，比如 “every effort moves you pizza”。</p>
+<h3 id="5-3-2-Top-k-采样">5.3.2 Top-k 采样</h3>
+<p>在前一节中，我们实现了一种结合<code>temperature scaling</code>的概率采样方法来增加生成内容的多样性。我们发现，较高的 temperature 值会使下一词的概率分布更均匀，从而降低模型反复选择最可能词的概率，这样可以生成更多样化的内容，使生成过程探索那些概率较低但可能更有趣和创意的路径。不过，这种方法的一个缺点是，有时会导致生成语法不正确或完全不合逻辑的内容，比如 “every effort moves you pizza”。</p>
 <p>在本节中，我们引入了另一种称为<code>top-k 采样</code>的概念，当与概率采样和<code>temperature scaling</code>结合使用时，可以提升文本生成效果。</p>
 <p>在 top-k 采样中，我们可以将采样限制在最有可能的前 k 个 token 内，并通过将其他 token 的概率设为零，将它们排除在选择之外，如图 5.15 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.15.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.15.png" alt=""></p>
 <p>如图 5.15 所示，将所有未选中的 logits 替换为负无穷（-inf），这样在计算 Softmax 时，非 top-k 的 token 的概率为 0，剩下的概率之和为 1。（细心的读者可能记得，我们在第 3 章的因果注意力模块中使用过这种掩码技巧。）</p>
 <p>接下来让我们通过代码实现 Figure 5.15 中描述的 top-k 过程，首先选出 logits 值最大的那些 token：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">top_k = <span class="number">3</span></span><br><span class="line">top_logits, top_pos = torch.topk(next_token_logits, top_k)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Top logits:&quot;</span>, top_logits)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Top positions:&quot;</span>, top_pos)</span><br></pre></td></tr></table></figure>
@@ -481,25 +507,29 @@
 <p>可以看到，通过 top-3 方法得到的结果是三个非零的概率得分：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensor([<span class="number">0.0615</span>, <span class="number">0.0000</span>, <span class="number">0.0000</span>, <span class="number">0.5775</span>, <span class="number">0.0000</span>, <span class="number">0.0000</span>, <span class="number">0.0000</span>, <span class="number">0.3610</span>, <span class="number">0.0000</span>])</span><br></pre></td></tr></table></figure>
 <p>我们现在可以应用<code>temperature scaling</code> 和<code>multinomial</code>函数来进行概率采样，从这 3 个非零概率得分中选择下一个 token。在下一节中，我们将通过修改文本生成函数来实现此操作。</p>
-<h3 id="5-3-3-对文本生成函数进行调整"><a href="#5-3-3-对文本生成函数进行调整" class="headerlink" title="5.3.3 对文本生成函数进行调整"></a>5.3.3 对文本生成函数进行调整</h3><p>前两节介绍了两种增加 LLM 生成文本多样性的概念：<code>temperature scaling</code>和<code>top-k 采样</code>。本节中，我们将这两个概念整合并加入到之前用于生成文本的<code>generate_simple</code>函数中，从而创建一个新的<code>generate</code>函数：</p>
+<h3 id="5-3-3-对文本生成函数进行调整">5.3.3 对文本生成函数进行调整</h3>
+<p>前两节介绍了两种增加 LLM 生成文本多样性的概念：<code>temperature scaling</code>和<code>top-k 采样</code>。本节中，我们将这两个概念整合并加入到之前用于生成文本的<code>generate_simple</code>函数中，从而创建一个新的<code>generate</code>函数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 5.4 A modified text generation function with more diversity</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate</span>(<span class="params">model, idx, max_new_tokens, context_size,</span></span><br><span class="line"><span class="params">             temperature=<span class="number">1.0</span>, top_k=<span class="literal">None</span>, eos_id=<span class="literal">None</span></span>):</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> <span class="built_in">range</span>(max_new_tokens):                             <span class="comment">#A</span></span><br><span class="line">        idx_cond = idx[:, -context_size:]</span><br><span class="line">        <span class="keyword">with</span> torch.no_grad():</span><br><span class="line">            logits = model(idx_cond)</span><br><span class="line">        logits = logits[:, -<span class="number">1</span>, :]</span><br><span class="line">        <span class="keyword">if</span> top_k <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:                                   <span class="comment">#B</span></span><br><span class="line">            top_logits, _ = torch.topk(logits, top_k)</span><br><span class="line">            min_val = top_logits[:, -<span class="number">1</span>]</span><br><span class="line">            logits = torch.where(</span><br><span class="line">                logits &lt; min_val,</span><br><span class="line">                torch.tensor(<span class="built_in">float</span>(<span class="string">&#x27;-inf&#x27;</span>)).to(logits.device),</span><br><span class="line">                logits</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> temperature &gt; <span class="number">0.0</span>:                                       <span class="comment">#C</span></span><br><span class="line">        logits = logits / temperature</span><br><span class="line">        probs = torch.softmax(logits, dim=-<span class="number">1</span>)</span><br><span class="line">        idx_next = torch.multinomial(probs, num_samples=<span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:                                                       <span class="comment">#D</span></span><br><span class="line">        idx_next = torch.argmax(logits, dim=-<span class="number">1</span>, keepdim=<span class="literal">True</span>)</span><br><span class="line">    <span class="keyword">if</span> idx_next == eos_id:                                      <span class="comment">#E</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    idx_next = idx_next.unsqueeze(<span class="number">1</span>)</span><br><span class="line">    idx = torch.cat((idx, idx_next), dim=<span class="number">1</span>)</span><br><span class="line"><span class="keyword">return</span> idx</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#A For循环与之前相同：获取logits，仅关注最后的时间步</span></span><br><span class="line"><span class="comment">#B 在新步骤中，通过top-k采样过滤logits</span></span><br><span class="line"><span class="comment">#C 在新步骤中应用temperature scaling</span></span><br><span class="line"><span class="comment">#D 在未使用temperature scaling时，执行贪婪的下一个token选择</span></span><br><span class="line"><span class="comment">#E 如果遇到序列结束token且指定了eos_id，则提前停止生成</span></span><br></pre></td></tr></table></figure>
 <p>现在来看看这个新的<code>generate</code>函数的实际效果：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">token_ids = generate(</span><br><span class="line">    model=model,</span><br><span class="line">    idx=text_to_token_ids(<span class="string">&quot;Every effort moves you&quot;</span>, tokenizer).to(device),</span><br><span class="line">    max_new_tokens=<span class="number">15</span>,</span><br><span class="line">    context_size=GPT_CONFIG_124M[<span class="string">&quot;context_length&quot;</span>],</span><br><span class="line">    top_k=<span class="number">25</span>,</span><br><span class="line">    temperature=<span class="number">1.4</span></span><br><span class="line">)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Output text:\n&quot;</span>, token_ids_to_text(token_ids, tokenizer))</span><br></pre></td></tr></table></figure>
 <p>生成的文本如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Output text:</span><br><span class="line">Every effort moves you stand to work on surprise, a one of us had gone <span class="keyword">with</span> random-</span><br></pre></td></tr></table></figure>
-<p>正如我们所见，当前生成的文本与之前在 5.3 节开头用 <code>generate_simple</code> 函数生成的文本有很大不同（例如那句”Every effort moves you know,” was one of the axioms he laid…!”），而后者是模型从训练集中记忆的一段话。</p>
+<p>正如我们所见，当前生成的文本与之前在 5.3 节开头用 <code>generate_simple</code> 函数生成的文本有很大不同（例如那句&quot;Every effort moves you know,&quot; was one of the axioms he laid…!&quot;），而后者是模型从训练集中记忆的一段话。</p>
 <blockquote>
 <p>[!NOTE]</p>
 <p><strong>练习 5.2</strong></p>
 <p>尝试不同的 temperature 和 top-k 设置。根据你的观察，你能想到哪些应用场景适合较低的 temperature 和 top-k 设置吗？反之，哪些应用场景适合较高的 temperature 和 top-k 设置？（建议在本章末加载 OpenAI 的预训练权重后，再次进行此练习）</p>
+</blockquote>
+<blockquote>
 <p>[!NOTE]</p>
 <p><strong>练习 5.3</strong></p>
 <p>generate 函数有哪些不同的设置组合可以强制生成确定性行为，即禁用随机采样，使其输出始终一致，类似于 generate_simple 函数？</p>
 <p>到目前为止，我们已介绍了如何预训练 LLM 并使用其生成文本。本章最后两节将讨论如何保存和加载训练好的 LLM，以及如何加载 OpenAI 的预训练权重。</p>
 </blockquote>
-<h2 id="5-4-在-PyTorch-中加载和保存模型权重"><a href="#5-4-在-PyTorch-中加载和保存模型权重" class="headerlink" title="5.4 在 PyTorch 中加载和保存模型权重"></a>5.4 在 PyTorch 中加载和保存模型权重</h2><p>在本章中，我们讨论了如何数值化评估训练进度，以及从零开始预训练 LLM。尽管模型和数据集都相对较小，这次练习依然展示了预训练 LLM 的高昂成本。因此，能够保存 LLM 以避免每次在新会话中使用时都重新训练显得尤为重要。</p>
+<h2 id="5-4-在-PyTorch-中加载和保存模型权重">5.4 在 PyTorch 中加载和保存模型权重</h2>
+<p>在本章中，我们讨论了如何数值化评估训练进度，以及从零开始预训练 LLM。尽管模型和数据集都相对较小，这次练习依然展示了预训练 LLM 的高昂成本。因此，能够保存 LLM 以避免每次在新会话中使用时都重新训练显得尤为重要。</p>
 <p>如图 5.16 的章节概览所示，本节将介绍如何保存和加载预训练模型。然后，在接下来的部分中，我们将从 OpenAI 加载一个更强大的预训练 GPT 模型到我们的 GPTModel 实例中。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.16.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.16.png" alt=""></p>
 <p>幸运的是，保存 PyTorch 模型相对简单。推荐的做法是保存模型的 <code>state_dict</code>（状态字典），这是一个字典，用于将模型的每一层映射到其对应的参数上，可以通过 <code>torch.save</code> 函数来实现，代码如下所示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), <span class="string">&quot;model.pth&quot;</span>)</span><br></pre></td></tr></table></figure>
 <p>在以上代码中，<code>model.pth</code>是用于保存 <code>state_dict</code> 的文件名。<code>.pth</code> 是 PyTorch 文件的惯用扩展名，但实际上也可以使用其他扩展名。</p>
@@ -516,9 +546,10 @@
 <p><strong>练习 5.4</strong></p>
 <p>保存权重后，在新的 Python 会话中加载模型和优化器，使用 train_model_simple 函数继续进行 1 个 epoch 的预训练。</p>
 </blockquote>
-<h2 id="5-5-从-OpenAI-加载预训练权重"><a href="#5-5-从-OpenAI-加载预训练权重" class="headerlink" title="5.5 从 OpenAI 加载预训练权重"></a>5.5 从 OpenAI 加载预训练权重</h2><p>之前，我们为了教学目的，使用有限的数据集（包含一本短篇小说集）训练了一个小型 GPT-2 模型，这样可以专注于讲解 LLM 的基本原理，而无需耗费大量时间和计算资源。</p>
+<h2 id="5-5-从-OpenAI-加载预训练权重">5.5 从 OpenAI 加载预训练权重</h2>
+<p>之前，我们为了教学目的，使用有限的数据集（包含一本短篇小说集）训练了一个小型 GPT-2 模型，这样可以专注于讲解 LLM 的基本原理，而无需耗费大量时间和计算资源。</p>
 <p>OpenAI 公开了 GPT-2 模型的权重，使我们不必投入数十万甚至数百万美元自行在大规模语料上重新训练模型。</p>
-<p>在本节的余下部分，我们将把这些权重加载到 GPTModel 类中，并利用该模型进行文本生成。这里的权重是指存储在 PyTorch 的 Linear 和 Embedding 层的 <code>.weight</code>属性中的权重参数（在训练模型时，我们可以通过<code>model.parameters()</code>访问这些权重）。</p>
+<p>在本节的余下部分，我们将把这些权重加载到 GPTModel 类中，并利用该模型进行文本生成。这里的权重是指存储在 PyTorch 的 Linear 和 Embedding 层的 <code>.weight</code>属性中的权重参数（在训练模型时，我们可以通过<code>model.parameters() </code>访问这些权重）。</p>
 <p>在后续章节中，我们将复用这些预训练权重，对模型进行微调以用于文本分类任务，并遵循类似 ChatGPT 的指令。</p>
 <p>请注意，OpenAI 最初使用 TensorFlow 来保存 GPT-2 的权重，因此在 Python 中加载这些权重需要安装 TensorFlow。另外，以下代码将使用进度条工具 tqdm 来跟踪下载进度，也需要提前安装。</p>
 <p>请在终端中执行以下命令来安装所需的库：</p>
@@ -531,7 +562,7 @@
 <blockquote>
 <p>[!NOTE]</p>
 <p><strong>最新下载说明</strong></p>
-<p>如果下载代码无法正常工作，可能是由于网络连接不稳定、服务器问题，或者 OpenAI 共享 GPT-2 模型权重的方式发生了变化。请访问本章节的在线代码库（<a target="_blank" rel="noopener" href="https://github.com/rasbt/LLMs-from-scratch），以获取更新的操作说明。如有其他问题，也可在">https://github.com/rasbt/LLMs-from-scratch），以获取更新的操作说明。如有其他问题，也可在</a> Manning 论坛中提问。</p>
+<p>如果下载代码无法正常工作，可能是由于网络连接不稳定、服务器问题，或者 OpenAI 共享 GPT-2 模型权重的方式发生了变化。请访问本章节的在线代码库（<a target="_blank" rel="noopener" href="https://github.com/rasbt/LLMs-from-scratch%EF%BC%89%EF%BC%8C%E4%BB%A5%E8%8E%B7%E5%8F%96%E6%9B%B4%E6%96%B0%E7%9A%84%E6%93%8D%E4%BD%9C%E8%AF%B4%E6%98%8E%E3%80%82%E5%A6%82%E6%9C%89%E5%85%B6%E4%BB%96%E9%97%AE%E9%A2%98%EF%BC%8C%E4%B9%9F%E5%8F%AF%E5%9C%A8">https://github.com/rasbt/LLMs-from-scratch），以获取更新的操作说明。如有其他问题，也可在</a> Manning 论坛中提问。</p>
 </blockquote>
 <p>代码执行完成后，查看 <code>settings</code> 和 <code>params</code> 的内容：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Settings:&quot;</span>, settings)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Parameter dictionary keys:&quot;</span>, params.keys())</span><br></pre></td></tr></table></figure>
@@ -541,8 +572,8 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(params[<span class="string">&quot;wte&quot;</span>])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Token embedding weight tensor dimensions:&quot;</span>, params[<span class="string">&quot;wte&quot;</span>].shape)</span><br></pre></td></tr></table></figure>
 <p>token 嵌入层的权重如下所示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[[-<span class="number">0.11010301</span> ... -<span class="number">0.1363697</span> <span class="number">0.01506208</span> <span class="number">0.04531523</span>]</span><br><span class="line"> [ <span class="number">0.04034033</span> ... <span class="number">0.08605453</span> <span class="number">0.00253983</span> <span class="number">0.04318958</span>]</span><br><span class="line"> [-<span class="number">0.12746179</span> ... <span class="number">0.08991534</span> -<span class="number">0.12972379</span> -<span class="number">0.08785918</span>]</span><br><span class="line"> ...</span><br><span class="line"> [-<span class="number">0.04453601</span> ... <span class="number">0.10435229</span> <span class="number">0.09783269</span> -<span class="number">0.06952604</span>]</span><br><span class="line"> [ <span class="number">0.1860082</span> ... -<span class="number">0.09625227</span> <span class="number">0.07847701</span> -<span class="number">0.02245961</span>]</span><br><span class="line"> [ <span class="number">0.05135201</span> ... <span class="number">0.00704835</span> <span class="number">0.15519823</span> <span class="number">0.12067825</span>]]</span><br><span class="line">Token embedding weight tensor dimensions: (<span class="number">50257</span>, <span class="number">768</span>)</span><br></pre></td></tr></table></figure>
-<p>我们通过 <code>download_and_load_gpt2(model_size=&quot;124M&quot;, ...)</code> 加载了最小的 GPT-2 模型权重。此外，OpenAI 还提供了更大规模模型的权重，包括 “355M”、”774M” 和 “1558M” 等。尽管模型规模不同，但其整体架构是相同的，如图 5.17 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.17.png" alt=""></p>
+<p>我们通过 <code>download_and_load_gpt2(model_size=&quot;124M&quot;, ...)</code> 加载了最小的 GPT-2 模型权重。此外，OpenAI 还提供了更大规模模型的权重，包括 “355M”、“774M” 和 “1558M” 等。尽管模型规模不同，但其整体架构是相同的，如图 5.17 所示。</p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter5/figure5.17.png" alt=""></p>
 <p>如图 5.17 所示，不同大小的 GPT-2 模型在总体架构上保持一致，但注意力头和 Transformer 模块等组件的重复次数以及嵌入维度大小有所不同。本章的剩余代码也会兼容这些更大的模型。</p>
 <p>在将 GPT-2 模型的权重加载到 Python 后，我们还需要将这些权重从 <code>settings</code> 和 <code>params</code> 字典转移到 GPTModel 实例中：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># First, we create a dictionary that lists the differences between the different GPT model sizes, as explained in Figure 5.17:</span></span><br><span class="line">model_configs = &#123;</span><br><span class="line">    <span class="string">&quot;gpt2-small (124M)&quot;</span>: &#123;<span class="string">&quot;emb_dim&quot;</span>: <span class="number">768</span>, <span class="string">&quot;n_layers&quot;</span>: <span class="number">12</span>, <span class="string">&quot;n_heads&quot;</span>: <span class="number">12</span>&#125;,</span><br><span class="line">    <span class="string">&quot;gpt2-medium (355M)&quot;</span>: &#123;<span class="string">&quot;emb_dim&quot;</span>: <span class="number">1024</span>, <span class="string">&quot;n_layers&quot;</span>: <span class="number">24</span>, <span class="string">&quot;n_heads&quot;</span>: <span class="number">16</span>&#125;,</span><br><span class="line">    <span class="string">&quot;gpt2-large (774M)&quot;</span>: &#123;<span class="string">&quot;emb_dim&quot;</span>: <span class="number">1280</span>, <span class="string">&quot;n_layers&quot;</span>: <span class="number">36</span>, <span class="string">&quot;n_heads&quot;</span>: <span class="number">20</span>&#125;,</span><br><span class="line">    <span class="string">&quot;gpt2-xl (1558M)&quot;</span>: &#123;<span class="string">&quot;emb_dim&quot;</span>: <span class="number">1600</span>, <span class="string">&quot;n_layers&quot;</span>: <span class="number">48</span>, <span class="string">&quot;n_heads&quot;</span>: <span class="number">25</span>&#125;,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment"># Suppose we are interested in loading the smallest model, &quot;gpt2-small (124M)&quot;. We can use the corresponding settings from the model_configs table able to update our full-length GPT_CONFIG_124M we defined and used earlier throughout the chapter as follows:</span></span><br><span class="line">model_name = <span class="string">&quot;gpt2-small (124M)&quot;</span></span><br><span class="line">NEW_CONFIG = GPT_CONFIG_124M.copy()</span><br><span class="line">NEW_CONFIG.update(model_configs[model_name])</span><br></pre></td></tr></table></figure>
@@ -569,11 +600,14 @@
 <p>[!NOTE]</p>
 <p><strong>练习 5.5</strong></p>
 <p>使用 OpenAI 预训练权重的 GPT 模型在‘The Verdict’数据集上计算训练集和验证集的损失。</p>
+</blockquote>
+<blockquote>
 <p>[!NOTE]</p>
 <p><strong>练习 5.6</strong></p>
 <p>建议读者尝试不同规模的 GPT-2 模型，例如最大规模的 1558M 参数模型，并与本章加载的 124M 模型的生成效果进行比较。</p>
 </blockquote>
-<h2 id="5-6-本章摘要"><a href="#5-6-本章摘要" class="headerlink" title="5.6 本章摘要"></a>5.6 本章摘要</h2><ul>
+<h2 id="5-6-本章摘要">5.6 本章摘要</h2>
+<ul>
 <li>大语言模型在生成文本时，逐个生成 token。</li>
 <li>默认情况下，模型通过将输出转换为概率分数，并选择其中概率最高的 token 来生成下一个 token，这种方式称为“贪心解码”。</li>
 <li>通过概率采样和<code>temperature scaling</code>，可以影响生成文本的多样性和连贯性。</li>
@@ -582,14 +616,14 @@
 <li>LLM 的训练循环是深度学习中的标准流程，通常使用交叉熵损失和 AdamW 优化器。</li>
 <li>在大规模文本数据集上预训练 LLM 非常耗费时间和资源，因此可以加载 OpenAI 提供的开源预训练权重，作为自行预训练模型的替代方案。</li>
 </ul>
-</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/11/17/CfYA2b.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Transformer大语言模型架构原理学习笔记"/></a><div class="content"><a class="title" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记">Transformer大语言模型架构原理学习笔记</a><time datetime="2025-11-17T12:51:00.000Z" title="发表于 2025-11-17 20:51:00">2025-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/10/31/7I8gnp.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="快速幂、逆元与组合数学"/></a><div class="content"><a class="title" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学">快速幂、逆元与组合数学</a><time datetime="2025-10-31T15:48:33.000Z" title="发表于 2025-10-31 23:48:33">2025-10-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2f58633e.html" title="常用数据结构"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://origin.picgo.net/2025/10/11/792a8743-6d0d-43fe-91b8-0a5a77b529f4a296a597708421a1.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常用数据结构"/></a><div class="content"><a class="title" href="/posts/2f58633e.html" title="常用数据结构">常用数据结构</a><time datetime="2025-10-11T11:00:00.000Z" title="发表于 2025-10-11 19:00:00">2025-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7258f8a4.html" title="THYTHM 音游"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/08/01/HotT9.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="THYTHM 音游"/></a><div class="content"><a class="title" href="/posts/7258f8a4.html" title="THYTHM 音游">THYTHM 音游</a><time datetime="2025-08-01T04:00:00.000Z" title="发表于 2025-08-01 12:00:00">2025-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/73e7a68a.html" title="力扣每日一题讲解"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/07/24/QEaxN.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="力扣每日一题讲解"/></a><div class="content"><a class="title" href="/posts/73e7a68a.html" title="力扣每日一题讲解">力扣每日一题讲解</a><time datetime="2025-07-24T08:50:00.000Z" title="发表于 2025-07-24 16:50:00">2025-07-24</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/11/17/CfYA2b.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Transformer大语言模型架构原理学习笔记"/></a><div class="content"><a class="title" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记">Transformer大语言模型架构原理学习笔记</a><time datetime="2025-11-17T12:51:00.000Z" title="发表于 2025-11-17 20:51:00">2025-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/10/31/7I8gnp.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="快速幂、逆元与组合数学"/></a><div class="content"><a class="title" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学">快速幂、逆元与组合数学</a><time datetime="2025-10-31T15:48:33.000Z" title="发表于 2025-10-31 23:48:33">2025-10-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2f58633e.html" title="常用数据结构"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://origin.picgo.net/2025/10/11/792a8743-6d0d-43fe-91b8-0a5a77b529f4a296a597708421a1.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常用数据结构"/></a><div class="content"><a class="title" href="/posts/2f58633e.html" title="常用数据结构">常用数据结构</a><time datetime="2025-10-11T11:00:00.000Z" title="发表于 2025-10-11 19:00:00">2025-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7258f8a4.html" title="THYTHM 音游"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/08/01/HotT9.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="THYTHM 音游"/></a><div class="content"><a class="title" href="/posts/7258f8a4.html" title="THYTHM 音游">THYTHM 音游</a><time datetime="2025-08-01T04:00:00.000Z" title="发表于 2025-08-01 12:00:00">2025-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/73e7a68a.html" title="力扣每日一题讲解"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/07/24/QEaxN.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="力扣每日一题讲解"/></a><div class="content"><a class="title" href="/posts/73e7a68a.html" title="力扣每日一题讲解">力扣每日一题讲解</a><time datetime="2025-07-24T08:50:00.000Z" title="发表于 2025-07-24 16:50:00">2025-07-24</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             
           </div>
           <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/c%E8%AF%AD%E8%A8%80/"><span class="card-category-list-name">c语言</span><span class="card-category-list-count">1</span></a></li>
-          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%EF%BC%8Cbutterfly/" style="font-size: 1.1em; color: #999">一键部署，butterfly</a> <a href="/tags/hexo-github-blog-node-js-npm-git-%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2-hexo%E9%83%A8%E7%BD%B2/" style="font-size: 1.1em; color: #999">hexo, github, blog, node.js,npm,git,部署博客,hexo部署</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">算法</a> <a href="/tags/python-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91-%E9%9F%B3%E6%B8%B8/" style="font-size: 1.1em; color: #999">python,游戏开发,音游</a> <a href="/tags/c%E8%AF%AD%E8%A8%80-%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">c语言,学习</a> <a href="/tags/%E5%A4%A7%E5%AE%B6%E5%A5%BD%EF%BC%8C%E6%88%91%E6%98%AF%E8%BF%B7%E8%B7%AF%E7%9A%84%E5%B0%8F%E6%9C%8B%E5%8F%8B/" style="font-size: 1.1em; color: #999">大家好，我是迷路的小朋友</a> <a href="/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" style="font-size: 1.1em; color: #999">每日一题</a></div></div><div class="card-widget card-archives">
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/python-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91-%E9%9F%B3%E6%B8%B8/" style="font-size: 1.1em; color: #999">python,游戏开发,音游</a> <a href="/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" style="font-size: 1.1em; color: #999">每日一题</a> <a href="/tags/c%E8%AF%AD%E8%A8%80-%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">c语言,学习</a> <a href="/tags/hexo-github-blog-node-js-npm-git-%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2-hexo%E9%83%A8%E7%BD%B2/" style="font-size: 1.1em; color: #999">hexo, github, blog, node.js,npm,git,部署博客,hexo部署</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">算法</a> <a href="/tags/%E5%A4%A7%E5%AE%B6%E5%A5%BD%EF%BC%8C%E6%88%91%E6%98%AF%E8%BF%B7%E8%B7%AF%E7%9A%84%E5%B0%8F%E6%9C%8B%E5%8F%8B/" style="font-size: 1.1em; color: #999">大家好，我是迷路的小朋友</a> <a href="/tags/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%EF%BC%8Cbutterfly/" style="font-size: 1.1em; color: #999">一键部署，butterfly</a></div></div><div class="card-widget card-archives">
     <div class="item-headline">
       <i class="fas fa-archive"></i>
       <span>归档</span>
@@ -671,14 +705,18 @@
         </li>
       
     </ul>
-  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">23</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-11-18T08:49:37.562Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">23</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-11-18T10:10:27.300Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2025 By 欣冻</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
   const runMermaid = ele => {
     window.loadMermaid = true
     const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
 
     ele.forEach((item, index) => {
       const mermaidSrc = item.firstElementChild
-      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
       const mermaidID = `mermaid-${index}`
       const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
 
@@ -709,7 +747,7 @@
   }
 
   const loadMermaid = () => {
-    if (false) codeToMermaid()
+    if (true) codeToMermaid()
     const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
     if ($mermaid.length === 0) return
 
@@ -779,7 +817,62 @@
   } else {
     window.loadOtherComment = loadTwikoo
   }
-})()</script></div><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+})()</script></div><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '0cca502ccc7341c2be6ba09309916622';
+  var gaud_map_key = '5653914d2fc43aad14b253ab6cf762b9';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
 for(var i = 0;i<arr.length;i++){
     arr[i].classList.add('wow');
     arr[i].classList.add('animate__zoomIn');
@@ -835,59 +928,4 @@ for(var i = 0;i<arr.length;i++){
     arr[i].setAttribute('data-wow-delay', '');
     arr[i].setAttribute('data-wow-offset', '');
     arr[i].setAttribute('data-wow-iteration', '');
-  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
-  function butterfly_footer_beautify_injector_config(){
-    var parent_div_git = document.getElementById('footer-wrap');
-    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
-    console.log('已挂载butterfly_footer_beautify')
-    parent_div_git.insertAdjacentHTML("beforeend",item_html)
-    }
-  var elist = 'null'.split(',');
-  var cpage = location.pathname;
-  var epage = 'all';
-  var flag = 0;
-
-  for (var i=0;i<elist.length;i++){
-    if (cpage.includes(elist[i])){
-      flag++;
-    }
-  }
-
-  if ((epage ==='all')&&(flag == 0)){
-    butterfly_footer_beautify_injector_config();
-  }
-  else if (epage === cpage){
-    butterfly_footer_beautify_injector_config();
-  }
-  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script data-pjax>
-  function butterfly_clock_anzhiyu_injector_config(){
-    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
-    console.log('已挂载butterfly_clock_anzhiyu')
-    if(parent_div_git) {
-      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
-    }
-  }
-  var elist = 'null'.split(',');
-  var cpage = location.pathname;
-  var epage = 'all';
-  var qweather_key = '0cca502ccc7341c2be6ba09309916622';
-  var gaud_map_key = '5653914d2fc43aad14b253ab6cf762b9';
-  var baidu_ak_key = 'undefined';
-  var flag = 0;
-  var clock_rectangle = '112.982279,28.19409';
-  var clock_default_rectangle_enable = 'false';
-
-  for (var i=0;i<elist.length;i++){
-    if (cpage.includes(elist[i])){
-      flag++;
-    }
-  }
-
-  if ((epage ==='all')&&(flag == 0)){
-    butterfly_clock_anzhiyu_injector_config();
-  }
-  else if (epage === cpage){
-    butterfly_clock_anzhiyu_injector_config();
-  }
-  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

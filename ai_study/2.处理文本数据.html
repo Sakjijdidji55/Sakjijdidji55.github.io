@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2.处理文本数据 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="2.处理文本数据本章涵盖以下内容：  为大语言模型的训练准备文本数据集 将文本分割成词和子词token 字节对编码（Byte Pair Encoding，BPE）：一种更为高级的文本分词技术 使用滑动窗口方法采样训练示例 将tokens转换为向量，输入到大语言模型中    2.处理文本数据 2.1 理解词嵌入 2.2 文本分词 2.3 将 tokens 转换为token IDs 2.4 添加特殊上">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>2.处理文本数据 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="2.处理文本数据 本章涵盖以下内容：  为大语言模型的训练准备文本数据集 将文本分割成词和子词token 字节对编码（Byte Pair Encoding，BPE）：一种更为高级的文本分词技术 使用滑动窗口方法采样训练示例 将tokens转换为向量，输入到大语言模型中    2.处理文本数据  2.1 理解词嵌入 2.2 文本分词 2.3 将 tokens 转换为token IDs 2.4 添加特">
 <meta property="og:type" content="website">
 <meta property="og:title" content="2.处理文本数据">
 <meta property="og:url" content="https://sakjijdidji55.github.io/ai_study/2.%E5%A4%84%E7%90%86%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE.html">
 <meta property="og:site_name" content="迷路的小朋友">
-<meta property="og:description" content="2.处理文本数据本章涵盖以下内容：  为大语言模型的训练准备文本数据集 将文本分割成词和子词token 字节对编码（Byte Pair Encoding，BPE）：一种更为高级的文本分词技术 使用滑动窗口方法采样训练示例 将tokens转换为向量，输入到大语言模型中    2.处理文本数据 2.1 理解词嵌入 2.2 文本分词 2.3 将 tokens 转换为token IDs 2.4 添加特殊上">
+<meta property="og:description" content="2.处理文本数据 本章涵盖以下内容：  为大语言模型的训练准备文本数据集 将文本分割成词和子词token 字节对编码（Byte Pair Encoding，BPE）：一种更为高级的文本分词技术 使用滑动窗口方法采样训练示例 将tokens转换为向量，输入到大语言模型中    2.处理文本数据  2.1 理解词嵌入 2.2 文本分词 2.3 将 tokens 转换为token IDs 2.4 添加特">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
 <meta property="article:published_time" content="2025-10-26T08:00:00.000Z">
@@ -11,7 +11,7 @@
 <meta property="article:author" content="欣冻">
 <meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/ai_study/2.%E5%A4%84%E7%90%86%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/ai_study/2.%E5%A4%84%E7%90%86%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
     (() => {
       
     const saveToLocal = {
@@ -104,7 +104,7 @@
   </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
   translate: undefined,
   highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
   copy: {
@@ -146,8 +146,9 @@
   pageType: 'page'
 }</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"<!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
-</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">2.处理文本数据</h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1 id="2-处理文本数据"><a href="#2-处理文本数据" class="headerlink" title="2.处理文本数据"></a>2.处理文本数据</h1><p>本章涵盖以下内容：</p>
+<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">2.处理文本数据</h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1>2.处理文本数据</h1>
+<p>本章涵盖以下内容：</p>
 <ul>
 <li><strong>为大语言模型的训练准备文本数据集</strong></li>
 <li><strong>将文本分割成词和子词token</strong></li>
@@ -157,32 +158,33 @@
 </ul>
 <hr>
 <ul>
-<li><a href="#2处理文本数据">2.处理文本数据</a><ul>
-<li><a href="#21-理解词嵌入">2.1 理解词嵌入</a></li>
-<li><a href="#22-文本分词">2.2 文本分词</a></li>
-<li><a href="#23-将-tokens-转换为token-ids">2.3 将 tokens 转换为token IDs</a></li>
-<li><a href="#24-添加特殊上下文token">2.4 添加特殊上下文token</a></li>
-<li><a href="#25-字节对编码byte-pair-encoding">2.5 字节对编码（Byte pair encoding）</a></li>
-<li><a href="#26-使用滑动窗口进行数据采样">2.6 使用滑动窗口进行数据采样</a></li>
-<li><a href="#27-构建词嵌入层">2.7 构建词嵌入层</a></li>
-<li><a href="#28-位置编码">2.8 位置编码</a></li>
-<li><a href="#29-本章摘要">2.9 本章摘要</a></li>
+<li><a href="#2%E5%A4%84%E7%90%86%E6%96%87%E6%9C%AC%E6%95%B0%E6%8D%AE">2.处理文本数据</a>
+<ul>
+<li><a href="#21-%E7%90%86%E8%A7%A3%E8%AF%8D%E5%B5%8C%E5%85%A5">2.1 理解词嵌入</a></li>
+<li><a href="#22-%E6%96%87%E6%9C%AC%E5%88%86%E8%AF%8D">2.2 文本分词</a></li>
+<li><a href="#23-%E5%B0%86-tokens-%E8%BD%AC%E6%8D%A2%E4%B8%BAtoken-ids">2.3 将 tokens 转换为token IDs</a></li>
+<li><a href="#24-%E6%B7%BB%E5%8A%A0%E7%89%B9%E6%AE%8A%E4%B8%8A%E4%B8%8B%E6%96%87token">2.4 添加特殊上下文token</a></li>
+<li><a href="#25-%E5%AD%97%E8%8A%82%E5%AF%B9%E7%BC%96%E7%A0%81byte-pair-encoding">2.5 字节对编码（Byte pair encoding）</a></li>
+<li><a href="#26-%E4%BD%BF%E7%94%A8%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E9%87%87%E6%A0%B7">2.6 使用滑动窗口进行数据采样</a></li>
+<li><a href="#27-%E6%9E%84%E5%BB%BA%E8%AF%8D%E5%B5%8C%E5%85%A5%E5%B1%82">2.7 构建词嵌入层</a></li>
+<li><a href="#28-%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81">2.8 位置编码</a></li>
+<li><a href="#29-%E6%9C%AC%E7%AB%A0%E6%91%98%E8%A6%81">2.9 本章摘要</a></li>
 </ul>
 </li>
 </ul>
 <hr>
 <p>在上一章中，我们介绍了大语言模型（LLM）的基本结构，并了解到 LLM 用海量文本数据集进行<code>预训练</code>。我们特别关注仅用<strong>解码器</strong>（Transformer 架构下）的 LLM，这也是 ChatGPT 和其他流行 GPT 的 LLM 所依赖的模型。</p>
 <p>在<strong>预训练</strong>阶段，LLM 逐字处理文本。通过<strong>预测下一个单词任务</strong>，来训练出拥有数百万到数十亿参数的 LLM，最终生成的模型具有出色的能力。随后可以进一步微调模型，以遵循指令或执行特定目标任务。然而，在我们接下来几章中实现和训练 LLM 之前，我们需要准备训练数据集，这也是本章的重点，如图 2.1 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.1.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.1.png" alt=""></p>
 <p>在本章中，您将学习如何为训练 LLM 准备输入文本。这包括将文本拆分为单个单词和子词token，并将这些token编码为 LLM 的向量表示。您还将了解一些先进的token分割方案，比如字节对编码，流行 LLM 中常用此类优化后的方案。最后，我们将实现一个采样和数据加载策略，以生成后续章节中训练 LLM 所需的输入输出数据对。</p>
-<h2 id="2-1-理解词嵌入"><a href="#2-1-理解词嵌入" class="headerlink" title="2.1 理解词嵌入"></a>2.1 理解词嵌入</h2><p>深度神经网络模型，包括 LLM，往往无法直接处理原始文本。这是因为文本是离散的分类数据，它与实现和训练神经网络所需的数学运算不兼容。因此，我们需要一种方法将单词表示为连续值向量。（对计算中向量和张量不熟悉的读者，可以在附录 A 的 A2.2 节中了解更多关于张量的内容。）</p>
+<h2 id="2-1-理解词嵌入">2.1 理解词嵌入</h2>
+<p>深度神经网络模型，包括 LLM，往往无法直接处理原始文本。这是因为文本是离散的分类数据，它与实现和训练神经网络所需的数学运算不兼容。因此，我们需要一种方法将单词表示为连续值向量。（对计算中向量和张量不熟悉的读者，可以在附录 A 的 A2.2 节中了解更多关于张量的内容。）</p>
 <p>将数据转换为向量格式的过程通常被称为嵌入（Embedding）。我们可以通过特定的神经网络层或其他预训练的神经网络模型来对不同类型的数据进行嵌入，比如视频、音频和文本，如图 2.2 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.2.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.2.png" alt=""></p>
 <p>如图 2.2 所示，我们可以使用嵌入模型来处理多种不同的数据格式。然而，需要注意的是，不同的数据格式需要使用不同的嵌入模型。例如，专为文本设计的嵌入模型并不适用于音频或视频数据的嵌入。</p>
 <blockquote>
 <p>[!TIP]</p>
 <p><strong>个人思考：</strong> 不同格式的数据源（如文本、图像、音频、视频）在处理和嵌入时，需要不同的模型和技术，原因在于它们的数据结构、特征和处理方式各不相同，因此需要针对性的方法将这些不同的数据类型转换为适合神经网络处理的向量表示。以下总结了不同数据源在嵌入时的一些区别：</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -219,7 +221,6 @@
 </tr>
 </tbody>
 </table>
-</div>
 </blockquote>
 <p>嵌入的本质是将离散对象（如单词、图像或整个文档）映射到连续向量空间中的点。嵌入的主要目的是将非数值数据转换为神经网络能够处理的格式。</p>
 <p>虽然单词嵌入是最常用的文本嵌入形式，但也存在句子、段落或整篇文档的嵌入。句子和段落嵌入常被用于检索增强生成技术。检索增强生成结合了文本生成与从外部知识库中检索相关信息的过程，这是一种超出本书讨论范围的技术。由于我们希望训练类似于GPT的LLM，这类模型以逐字的方式生成文本，因此本章将重点放在单词嵌入上。</p>
@@ -234,12 +235,13 @@
 <p>而检索增强技术正是为了解决上述不足，它大致原理为将外部知识库（如文档、数据库、互联网等）进行向量化后存入到向量数据库中。当用户提交一个查询时，首先将这个查询也编码成一个向量，然后去承载外部知识库的向量数据库中检索（检索技术有很多种）与问题相关的信息。检索到的信息被作为额外的上下文信息输入到LLM中，LLM会将这些外部信息与原始输入结合起来，以更准确和丰富的内容生成回答。想要进一步了解RAG技术及其应用，可以参考：<a target="_blank" rel="noopener" href="https://waytoagi.feishu.cn/wiki/PUUfwNkwqielBOkbO5RcjnTQnUd">RAG 专区</a></p>
 </blockquote>
 <p>生成单词嵌入的算法和框架有很多。其中，Word2Vec是较早且最受欢迎的项目之一。Word2Vec通过预测给定目标词的上下文或反之，训练神经网络架构以生成单词嵌入。Word2Vec的核心思想是，出现在相似上下文中的词通常具有相似的含义。因此，当将单词投影到二维空间进行可视化时，可以看到相似的词汇聚在一起，如图2.3所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.3.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.3.png" alt=""></p>
 <p>词嵌入可以具有不同的维度，从一维到数千维。如图2.3所示，我们可以选择二维词嵌入进行可视化。更高的维度可能捕捉到更细微的关系，但代价是计算效率的降低。</p>
 <p>虽然我们可以使用预训练模型（例如 Word2Vec）为机器学习模型生成嵌入，但 LLM 通常会生成自己的嵌入，这些嵌入是输入层的一部分，并在训练过程中进行更新。将嵌入作为 LLM 训练的一部分进行优化，而不直接使用 Word2Vec，有一个明确的优势，就是嵌入能够针对特定的任务和数据进行优化。我们将在本章后面实现这样的嵌入层。此外，LLM 还能够创建上下文化的输出嵌入，这一点我们将在第三章中讨论。</p>
 <p>高维嵌入在可视化中面临挑战，因为我们的感官感知和常见的图形表示本质上只限于三维或更少的维度，这也是图 2.3 采用二维散点图展示二维嵌入的原因。然而，在处理 LLM 时，我们通常使用的嵌入的维度远高于图 2.3 所示的维度。对于 GPT-2 和 GPT-3，嵌入的大小（通常称为模型隐状态的维度）会根据具体的模型变体和大小而有所不同。这是性能与效率之间的权衡。以具体示例为例，最小的 GPT-2 模型（117M 和 125M 参数）使用 768 维的嵌入大小，而最大的 GPT-3 模型（175B 参数）则使用 12,288 维的嵌入大小。</p>
 <p>本章接下来的部分将系统地介绍准备 LLM 使用的嵌入所需的步骤，这些步骤包括将文本拆分为单词、将单词转换为token，以及将token转化为嵌入向量。</p>
-<h2 id="2-2-文本分词"><a href="#2-2-文本分词" class="headerlink" title="2.2 文本分词"></a>2.2 文本分词</h2><p>本节将讨论如何将输入文本拆分为单个token，这是创建 LLM 嵌入所需的预处理步骤。这些token可以是单个单词或特殊字符，包括标点符号，具体如图 2.4 所示。</p>
+<h2 id="2-2-文本分词">2.2 文本分词</h2>
+<p>本节将讨论如何将输入文本拆分为单个token，这是创建 LLM 嵌入所需的预处理步骤。这些token可以是单个单词或特殊字符，包括标点符号，具体如图 2.4 所示。</p>
 <p>![figure2.4]: <a target="_blank" rel="noopener" href="https://myblog.xindon.top/Image/chapter2/figure2.4.png">https://myblog.xindon.top/Image/chapter2/figure2.4.png</a></p>
 <p>我们即将用于 LLM 训练的文本数据集是一部由 Edith Wharton 创作的短篇小说《判决》，该作品已在网上公开，因此允许用于 LLM 训练任务。该文本可在 Wikisource 上找到，网址是 <a target="_blank" rel="noopener" href="https://en.wikisource.org/wiki/The_Verdict">https://en.wikisource.org/wiki/The_Verdict</a>，您可以将其复制并粘贴到文本文件中。我已将其复制到名为 “the-verdict.txt” 的文本文件中，以便使用 Python 的标准文件读取工具进行加载。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 2.1 Reading in a short story as text sample into Python</span></span><br><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;the-verdict.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">		raw_text = f.read()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Total number of character:&quot;</span>, <span class="built_in">len</span>(raw_text))</span><br><span class="line"><span class="built_in">print</span>(raw_text[:<span class="number">99</span>])</span><br></pre></td></tr></table></figure>
@@ -275,7 +277,7 @@
 <p>执行后输出如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;Hello&#x27;, &#x27;,&#x27;, &#x27;world&#x27;, &#x27;.&#x27;, &#x27;Is&#x27;, &#x27;this&#x27;, &#x27;--&#x27;, &#x27;a&#x27;, &#x27;test&#x27;, &#x27;?&#x27;]</span><br></pre></td></tr></table></figure>
 <p>如图 2.5 所示，我们的分词方案现在能够成功处理文本中的各种特殊字符。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.5.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.5.png" alt=""></p>
 <p>现在我们已经有了一个基本的分词器，接下来让我们将其应用于艾迪丝·沃顿的整篇短篇小说：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">preprocessed = re.split(<span class="string">r&#x27;([,.:;?_!&quot;()\&#x27;]|--|\s)&#x27;</span>, raw_text)</span><br><span class="line">preprocessed = [item.strip() <span class="keyword">for</span> item <span class="keyword">in</span> preprocessed <span class="keyword">if</span> item.strip()]</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(preprocessed))</span><br></pre></td></tr></table></figure>
 <p>上述代码的输出是4690，这是小说的token数量（不包含空白字符）。</p>
@@ -283,9 +285,10 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(preprocessed[:<span class="number">30</span>])</span><br></pre></td></tr></table></figure>
 <p>生成的输出显示，我们的分词器似乎很好地处理了文本，因为所有单词和特殊字符都被很好地分开了：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;I&#x27;, &#x27;HAD&#x27;, &#x27;always&#x27;, &#x27;thought&#x27;, &#x27;Jack&#x27;, &#x27;Gisburn&#x27;, &#x27;rather&#x27;, &#x27;a&#x27;, &#x27;cheap&#x27;, &#x27;genius&#x27;, &#x27;--&#x27;, &#x27;though&#x27;, &#x27;a&#x27;, &#x27;good&#x27;, &#x27;fellow&#x27;, &#x27;enough&#x27;, &#x27;--&#x27;, &#x27;so&#x27;, &#x27;it&#x27;, &#x27;was&#x27;, &#x27;no&#x27;, &#x27;great&#x27;, &#x27;surprise&#x27;, &#x27;to&#x27;, &#x27;me&#x27;, &#x27;to&#x27;, &#x27;hear&#x27;, &#x27;that&#x27;, &#x27;,&#x27;, &#x27;in&#x27;]</span><br></pre></td></tr></table></figure>
-<h2 id="2-3-将-tokens-转换为token-IDs"><a href="#2-3-将-tokens-转换为token-IDs" class="headerlink" title="2.3 将 tokens 转换为token IDs"></a>2.3 将 tokens 转换为token IDs</h2><p>在前一章节中，我们将艾迪丝·华顿的短篇小说分词为单独的token。在本节中，我们将把这些token从字符串转换为整形，以生成所谓的token ID。这一步是将token ID 转换为嵌入向量的中间步骤。</p>
+<h2 id="2-3-将-tokens-转换为token-IDs">2.3 将 tokens 转换为token IDs</h2>
+<p>在前一章节中，我们将艾迪丝·华顿的短篇小说分词为单独的token。在本节中，我们将把这些token从字符串转换为整形，以生成所谓的token ID。这一步是将token ID 转换为嵌入向量的中间步骤。</p>
 <p>为了将先前生成的token映射到token ID，我们首先需要构建一个词汇表。这个词汇表定义了每个独特单词和特殊字符与唯一整数的映射，如图 2.6 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.6.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.6.png" alt=""></p>
 <p>在前一章节中，我们将艾迪丝·华顿的短篇小说进行分词，并将其存储在名为 preprocessed 的 Python 变量中。现在，让我们创建一个包含所有唯一token的列表，并按字母顺序对其进行排序，以确定词汇表的大小：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">all_words = <span class="built_in">sorted</span>(<span class="built_in">set</span>(preprocessed))</span><br><span class="line">vocab_size = <span class="built_in">len</span>(all_words)</span><br><span class="line"><span class="built_in">print</span>(vocab_size)</span><br></pre></td></tr></table></figure>
 <p>在通过上述代码确定词汇表的大小为 1,130 后，我们通过以下代码创建词汇表并打印其前 51 个条目以便于说明：</p>
@@ -293,16 +296,17 @@
 <p>输出如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(&#x27;!&#x27;, 0)</span><br><span class="line">(&#x27;&quot;&#x27;, 1)</span><br><span class="line">(&quot;&#x27;&quot;, 2)</span><br><span class="line">...</span><br><span class="line">(&#x27;Her&#x27;, 49)</span><br><span class="line">(&#x27;Hermia&#x27;, 50)</span><br></pre></td></tr></table></figure>
 <p>根据输出可知，词汇表包含了与唯一整数标签相关联的单个token。我们接下来的目标是利用这个词汇表，将新文本转换为token ID，如图 2.7 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.7.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.7.png" alt=""></p>
 <p>在本书后面，当我们想将 LLM 的输出从数字转换回文本时，我们还需要一种将token ID 转换为文本的方法。为此，我们可以创建一个词汇表的反向版本，将token ID 映射回相应的文本token。</p>
 <p>让我们在 Python 中实现一个完整的分词器类，其中包含一个 encode 方法，该方法负责将文本拆分为token，并通过词汇表进行token字符串到整数（token ID）的映射，以通过词汇表生成token ID。此外，我们还将实现一个 decode 方法，该方法则负责进行整数到字符串的反向映射，将token ID 转换回文本。</p>
 <p>该分词器的代码实现如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing 2.3 Implementing a simple text tokenizer</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">SimpleTokenizerV1</span>:</span><br><span class="line">  	<span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, vocab</span>):</span><br><span class="line">      	<span class="variable language_">self</span>.str_to_int = vocab                                                   <span class="comment">#A</span></span><br><span class="line">        <span class="variable language_">self</span>.int_to_str = &#123;i:s <span class="keyword">for</span> s,i <span class="keyword">in</span> vocab.items()&#125;                          <span class="comment">#B</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">encode</span>(<span class="params">self, text</span>):                                                       <span class="comment">#C</span></span><br><span class="line">      	preprocessed = re.split(<span class="string">r&#x27;([,.?_!&quot;()\&#x27;]|--|\s)&#x27;</span>, text)</span><br><span class="line">        preprocessed = [item.strip() <span class="keyword">for</span> item <span class="keyword">in</span> preprocessed <span class="keyword">if</span> item.strip()]</span><br><span class="line">        ids = [<span class="variable language_">self</span>.str_to_int[s] <span class="keyword">for</span> s <span class="keyword">in</span> preprocessed]</span><br><span class="line">        <span class="keyword">return</span> ids</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">decode</span>(<span class="params">self, ids</span>):                                                        <span class="comment">#D</span></span><br><span class="line">      	text = <span class="string">&quot; &quot;</span>.join([<span class="variable language_">self</span>.int_to_str[i] <span class="keyword">for</span> i <span class="keyword">in</span> ids])</span><br><span class="line"></span><br><span class="line">        text = re.sub(<span class="string">r&#x27;\s+([,.?!&quot;()\&#x27;])&#x27;</span>, <span class="string">r&#x27;\1&#x27;</span>, text)                           <span class="comment">#E</span></span><br><span class="line">        <span class="keyword">return</span> text</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#A 将词汇表作为类属性存储，以方便在 encode 和 decode 方法中访问</span></span><br><span class="line"><span class="comment">#B 创建一个反向词汇表，将token ID 映射回原始的文本token</span></span><br><span class="line"><span class="comment">#C 将输入文本转换为token ID</span></span><br><span class="line"><span class="comment">#D 将token ID 还原为文本</span></span><br><span class="line"><span class="comment">#E 在指定的标点符号前去掉空格</span></span><br></pre></td></tr></table></figure>
 <p>使用上述的 SimpleTokenizerV1 Python 类，我们现在可以使用现有的词汇表实例化新的分词器对象，并利用这些对象对文本进行编码和解码，如图 2.8 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.8.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.8.png" alt=""></p>
 <p>让我们通过 SimpleTokenizerV1 类实例化一个新的分词器对象，并对艾迪丝·华顿的短篇小说中的一段文本进行分词，以便在实践中进行尝试：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tokenizer = SimpleTokenizerV1(vocab)</span><br><span class="line">text = <span class="string">&quot;&quot;&quot;&quot;It&#x27;s the last he painted, you know,&quot; Mrs. Gisburn said with pardonable pride.&quot;&quot;&quot;</span></span><br><span class="line">ids = tokenizer.encode(text)</span><br><span class="line"><span class="built_in">print</span>(ids)</span><br></pre></td></tr></table></figure>
-<p>上面的代码打印出以下token ID：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 56, 2, 850, 988, 602, 533, 746, 5, 1126, 596, 5, 1, 67, 7, 38, 851, 1108, 754, 793, 7]</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码打印出以下token ID：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1, 56, 2, 850, 988, 602, 533, 746, 5, 1126, 596, 5, 1, 67, 7, 38, 851, 1108, 754, 793, 7]</span><br></pre></td></tr></table></figure>
 <p>接下来，让我们看看能否通过 decode 方法将这些token ID 转换回文本：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(tokenizer.decode(ids))</span><br></pre></td></tr></table></figure>
 <p>输出如下：</p>
@@ -314,11 +318,12 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">KeyError: &#x27;Hello&#x27;</span><br></pre></td></tr></table></figure>
 <p>问题在于短篇小说《判决》中没有使用“Hello”这个词。因此，它不包含在词汇中。这突显了在处理大型语言模型时，需要考虑大型和多样化的训练集以扩展词汇的必要性。</p>
 <p>在下一节中，我们将进一步测试分词器在包含未知词汇的文本上的表现，并且我们还将讨论可以用于在训练期间为LLM提供更多上下文的额外特殊tokens。</p>
-<h2 id="2-4-添加特殊上下文token"><a href="#2-4-添加特殊上下文token" class="headerlink" title="2.4 添加特殊上下文token"></a>2.4 添加特殊上下文token</h2><p>在上一节中，我们实现了一个简单的分词器，并将其应用于训练集中的一段文本。在本节中，我们将修改这个分词器来处理未知单词。</p>
+<h2 id="2-4-添加特殊上下文token">2.4 添加特殊上下文token</h2>
+<p>在上一节中，我们实现了一个简单的分词器，并将其应用于训练集中的一段文本。在本节中，我们将修改这个分词器来处理未知单词。</p>
 <p>具体来说，我们将修改在前一节中实现的词汇表和分词器类（修改后的类命名为SimpleTokenizerV2），以支持两个新的token：&lt;|unk|&gt; 和 &lt;|endoftext|&gt;，具体见图 2.9。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.9.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.9.png" alt=""></p>
 <p>如图2.9所示，我们可以修改分词器，以便在遇到不在词汇表中的单词时使用一个&lt;|unk|&gt; token。此外，我们还会在不相关的文本之间添加一个特殊的&lt;|endoftext|&gt; token。例如，在对多个独立文档或书籍进行GPT类大语言模型的训练时，通常会在每个文档或书籍之前插入一个token，以连接前一个文本源，如图2.10所示。这有助于大语言模型理解，尽管这些文本源在训练中是连接在一起的，但它们实际上是无关的。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.10.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.10.png" alt=""></p>
 <p>现在，让我们修改词汇表，将这两个特殊token &lt;|unk|&gt; 和 &lt;|endoftext|&gt; 包含在内，方法是将它们添加到我们在上一节中创建的唯一单词列表中：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">all_tokens = <span class="built_in">sorted</span>(<span class="built_in">list</span>(<span class="built_in">set</span>(preprocessed)))</span><br><span class="line">all_tokens.extend([<span class="string">&quot;&lt;|endoftext|&gt;&quot;</span>, <span class="string">&quot;&lt;|unk|&gt;&quot;</span>])</span><br><span class="line">vocab = &#123;token:integer <span class="keyword">for</span> integer,token <span class="keyword">in</span> <span class="built_in">enumerate</span>(all_tokens)&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(vocab.items()))</span><br></pre></td></tr></table></figure>
 <p>基于上述打印语句的输出，新词汇表的大小为1161（上一节的词汇表大小为1159）。</p>
@@ -352,9 +357,9 @@
 <p>[!TIP]</p>
 <p><strong>个人思考：</strong> 在训练神经网络时，通常会将不同长度的句子或文本批处理为一个 batch 进行并行训练。然而，不同长度的句子需要补齐到同一长度（基于矩阵运算要求形状一致），这时就需要填充 token 来对齐所有序列的长度，使得模型能够有效处理不同长度的输入。掩码其实就是一个标志位，用来告诉大模型哪些位置需要关注，哪些可以忽略，例如考虑以下句子：</p>
 <ul>
-<li>句子1：”I love NLP.”</li>
-<li>句子 2：”Transformers are powerful.”</li>
-<li>句子 3：”GPT is amazing.”</li>
+<li>句子1：“I love NLP.”</li>
+<li>句子 2：“Transformers are powerful.”</li>
+<li>句子 3：“GPT is amazing.”</li>
 </ul>
 <p>为了将它们放入一个批次，我们需要将它们填充到相同的长度。假设最长句子的长度为 5（token 数量），因此每个句子需要填充到 5 个 token。填充时，GPT 使用 <code>&lt;|endoftext|&gt;</code> 作为填充标记。在输入批次时，我们为每个 token 位置创建一个<strong>掩码矩阵</strong>，用来标识哪些位置是有效 token（模型应该关注），哪些是填充 token（模型应该忽略）。假设 <code>1</code> 表示有效 token，<code>0</code> 表示填充 token，则掩码矩阵如下：</p>
 <ul>
@@ -365,7 +370,8 @@
 <p>在这个掩码矩阵中，<code>1</code> 表示模型会关注的 token，<code>0</code> 表示模型会忽略的填充 token。通过这种掩码矩阵，模型知道在计算和训练时哪些 token 是有效内容，哪些 token 是填充部分，无需关注。</p>
 </blockquote>
 <p>此外，用于 GPT 模型的分词器也不使用 &lt;|unk|&gt; 标记来表示词汇表之外的词。相反，GPT 模型采用字节对编码分词器，它将单词分解为子词单元，我们将在下一节中讨论这一点。</p>
-<h2 id="2-5-字节对编码（Byte-pair-encoding）"><a href="#2-5-字节对编码（Byte-pair-encoding）" class="headerlink" title="2.5 字节对编码（Byte pair encoding）"></a>2.5 字节对编码（Byte pair encoding）</h2><p>我们在前面的章节中实现了一个简单的分词方案以作说明。本节将介绍一种基于字节对编码（BPE）概念的更复杂的分词方案。BPE分词器曾用于训练大语言模型，如GPT-2、GPT-3以及最初用于 ChatGPT 的 LLM。</p>
+<h2 id="2-5-字节对编码（Byte-pair-encoding）">2.5 字节对编码（Byte pair encoding）</h2>
+<p>我们在前面的章节中实现了一个简单的分词方案以作说明。本节将介绍一种基于字节对编码（BPE）概念的更复杂的分词方案。BPE分词器曾用于训练大语言模型，如GPT-2、GPT-3以及最初用于 ChatGPT 的 LLM。</p>
 <p>由于从零开始实现BPE可能相对复杂，我们将使用一个名为tiktoken的现有Python开源库（<a target="_blank" rel="noopener" href="https://github.com/openai/tiktoken">https://github.com/openai/tiktoken</a>），该库基于Rust中的源代码非常高效地实现了BPE算法。与其他Python库类似，我们可以通过Python的pip安装程序从终端安装tiktoken库：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install tiktoken</span><br></pre></td></tr></table></figure>
 <p>本章中的代码基于 tiktoken 0.5.1。您可以使用以下代码来查看您当前安装的版本：</p>
@@ -383,7 +389,7 @@
 <p>根据上面的token ID 和解码后的文本，我们可以观察到两点：首先，&lt;|endoftext|&gt; token被分配了一个相对较大的token ID，即 50256。实际上，用于训练诸如 GPT-2、GPT-3 以及最初用于训练 ChatGPT 的模型的 BPE 分词器，总词汇表大小为 50,257，其中 &lt;|endoftext|&gt; 被分配了最大的token ID。</p>
 <p>其次，上述BPE分词器能够正确编码和解码未知词汇，例如“someunknownPlace”。BPE分词器可以处理任何未知词汇。它是如何在不使用 &lt;|unk|&gt; token的情况下实现这一点的？</p>
 <p>BPE背后的算法将不在其预定义词汇表中的单词分解为更小的子词单元甚至单个字符，使其能够处理超出词汇表的单词。因此，得益于BPE算法，如果分词器在分词过程中遇到一个不熟悉的单词，它可以将其表示为一系列子词token或字符，如图2.11所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.11.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.11.png" alt=""></p>
 <p>如图 2.11 所示，将未知单词分解为单个字符的能力确保了分词器以及随之训练的 LLM 能够处理任何文本，即使文本中包含训练数据中不存在的单词。</p>
 <blockquote>
 <p>[!NOTE]</p>
@@ -396,25 +402,30 @@
 <p><strong>个人思考：</strong> 字节对编码是一种基于统计的方法，它会先从整个语料库中找出最常见的字节对（byte pair），然后把这些字节对合并成一个新的单元。让我们用一个具体的示例来描述这个过程：</p>
 <p>假如有句子：“The cat drank the milk because it was hungry”</p>
 <ol>
-<li><p><strong>初始化：BPE会先将句子中每个字符视为一个单独的token</strong></p>
+<li>
+<p><strong>初始化：BPE会先将句子中每个字符视为一个单独的token</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;T&#x27;, &#x27;h&#x27;, &#x27;e&#x27;, &#x27; &#x27;, &#x27;c&#x27;, &#x27;a&#x27;, &#x27;t&#x27;, &#x27; &#x27;, &#x27;d&#x27;, &#x27;r&#x27;, &#x27;a&#x27;, &#x27;n&#x27;, &#x27;k&#x27;, &#x27; &#x27;, &#x27;t&#x27;, &#x27;h&#x27;, &#x27;e&#x27;, &#x27; &#x27;, &#x27;m&#x27;, &#x27;i&#x27;, &#x27;l&#x27;, &#x27;k&#x27;, &#x27; &#x27;, &#x27;b&#x27;, &#x27;e&#x27;, &#x27;c&#x27;, &#x27;a&#x27;, &#x27;u&#x27;, &#x27;s&#x27;, &#x27;e&#x27;, &#x27; &#x27;, &#x27;i&#x27;, &#x27;t&#x27;, &#x27; &#x27;, &#x27;w&#x27;, &#x27;a&#x27;, &#x27;s&#x27;, &#x27; &#x27;, &#x27;h&#x27;, &#x27;u&#x27;, &#x27;n&#x27;, &#x27;g&#x27;, &#x27;r&#x27;, &#x27;y&#x27;]</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><strong>统计最常见的字节对</strong></p>
+<li>
+<p><strong>统计最常见的字节对</strong></p>
 <p>BPE算法会在这些token中找到出现频率最高的“字节对”（即相邻的两个字符），然后将其合并为一个新的token。</p>
-<p>例如这里最常见的字节对时（’t’, ‘h’），因为它在单词”the”和”that”中出现频率较高。</p>
+<p>例如这里最常见的字节对时（‘t’, ‘h’），因为它在单词&quot;the&quot;和&quot;that&quot;中出现频率较高。</p>
 </li>
-<li><p><strong>合并字节对</strong></p>
-<p>根据统计结果，我们将最常见的字节对（’t’, ‘h’）合并为一个新的token，其它类似</p>
+<li>
+<p><strong>合并字节对</strong></p>
+<p>根据统计结果，我们将最常见的字节对（‘t’, ‘h’）合并为一个新的token，其它类似</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;Th&#x27;, &#x27;e&#x27;, &#x27; &#x27;, &#x27;c&#x27;, &#x27;a&#x27;, &#x27;t&#x27;, &#x27; &#x27;, &#x27;dr&#x27;, &#x27;a&#x27;, &#x27;nk&#x27;, &#x27; &#x27;, &#x27;th&#x27;, &#x27;e&#x27;, &#x27; &#x27;, &#x27;m&#x27;, &#x27;i&#x27;, &#x27;l&#x27;, &#x27;k&#x27;, &#x27; &#x27;, &#x27;be&#x27;, &#x27;c&#x27;, &#x27;a&#x27;, &#x27;u&#x27;, &#x27;se&#x27;, &#x27; &#x27;, &#x27;it&#x27;, &#x27; &#x27;, &#x27;wa&#x27;, &#x27;s&#x27;, &#x27; &#x27;, &#x27;hu&#x27;, &#x27;n&#x27;, &#x27;gr&#x27;, &#x27;y&#x27;]</span><br></pre></td></tr></table></figure>
 </li>
-<li><p><strong>重复步骤2和3，得到最终的token序列</strong></p>
+<li>
+<p><strong>重复步骤2和3，得到最终的token序列</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#x27;The&#x27;, &#x27; &#x27;, &#x27;cat&#x27;, &#x27; &#x27;, &#x27;drank&#x27;, &#x27; &#x27;, &#x27;the&#x27;, &#x27; &#x27;, &#x27;milk&#x27;, &#x27; &#x27;, &#x27;because&#x27;, &#x27; &#x27;, &#x27;it&#x27;, &#x27; &#x27;, &#x27;was&#x27;, &#x27; &#x27;, &#x27;hungry&#x27;]</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
 </blockquote>
-<h2 id="2-6-使用滑动窗口进行数据采样"><a href="#2-6-使用滑动窗口进行数据采样" class="headerlink" title="2.6 使用滑动窗口进行数据采样"></a>2.6 使用滑动窗口进行数据采样</h2><p>上一节详细介绍了分词步骤以及将字符串分词成token再转换为整数token ID 的过程。在我们最终为 LLM 创建嵌入之前，还要提前做的一件事是生成训练 LLM 所需的输入-目标对。</p>
+<h2 id="2-6-使用滑动窗口进行数据采样">2.6 使用滑动窗口进行数据采样</h2>
+<p>上一节详细介绍了分词步骤以及将字符串分词成token再转换为整数token ID 的过程。在我们最终为 LLM 创建嵌入之前，还要提前做的一件事是生成训练 LLM 所需的输入-目标对。</p>
 <p>这些输入-目标对是什么样的呢？正如我们在第一章中所学，LLM通过预测文本中的下一个单词进行预训练，如图2.12所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.12.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.12.png" alt=""></p>
 <p>在本节中，我们将实现一个数据加载器，通过滑动窗口方法从训练数据集中提取图 2.12 所示的输入-目标对。</p>
 <p>首先，我们将使用前一节中介绍的BPE分词器对我们之前处理的《判决》短篇小说进行分词：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;the-verdict.txt&quot;</span>, <span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">  	raw_text = f.read()</span><br><span class="line"></span><br><span class="line">enc_text = tokenizer.encode(raw_text)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">len</span>(enc_text))</span><br></pre></td></tr></table></figure>
@@ -429,7 +440,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, context_size+<span class="number">1</span>):</span><br><span class="line">  	context = enc_sample[:i]</span><br><span class="line">    desired = enc_sample[i]</span><br><span class="line">    <span class="built_in">print</span>(context, <span class="string">&quot;----&gt;&quot;</span>, desired)</span><br></pre></td></tr></table></figure>
 <p>执行后输出如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[290] ----&gt; 4920</span><br><span class="line">[290, 4920] ----&gt; 2241</span><br><span class="line">[290, 4920, 2241] ----&gt; 287</span><br><span class="line">[290, 4920, 2241, 287] ----&gt; 257</span><br></pre></td></tr></table></figure>
-<p>箭头左侧（——&gt;）的所有内容代表 LLM 将接收到的输入，而箭头右侧的token ID 则表示 LLM 应该预测的目标token ID。</p>
+<p>箭头左侧（----&gt;）的所有内容代表 LLM 将接收到的输入，而箭头右侧的token ID 则表示 LLM 应该预测的目标token ID。</p>
 <p>为了演示，我们将重复之前的代码，但将token ID 转换为文本：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>, context_size+<span class="number">1</span>):</span><br><span class="line">  	context = enc_sample[:i]</span><br><span class="line">    desired = enc_sample[i]</span><br><span class="line">    <span class="built_in">print</span>(tokenizer.decode(context), <span class="string">&quot;----&gt;&quot;</span>, tokenizer.decode([desired]))</span><br></pre></td></tr></table></figure>
 <p>以下输出展示了输入和输出在文本格式下的样子：</p>
@@ -437,7 +448,7 @@
 <p>我们现在已经创建了输入-目标对，可以在接下来的章节中应用于 LLM 的训练。</p>
 <p>在我们将token转换为嵌入之前，还有一个任务要完成，正如我们在本章开始时提到的：实现一个高效的数据加载器，该加载器遍历输入数据集并将输入和目标作为 PyTorch 张量返回，这些张量可以视为多维数组。</p>
 <p>具体来说，我们的目标是返回两个张量：一个输入张量，包括 LLM 看到的文本，另一个目标张量，包含 LLM 需要预测的目标，如图 2.13 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.13.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.13.png" alt=""></p>
 <p>虽然图2.13展示了字符串格式的token以供说明，但代码实现将直接操作token ID，因为 BPE 分词器的 encode 方法将分词和转换为token ID 的过程合并为了一个步骤。</p>
 <p>为了实现高效的数据加载器，我们将使用 PyTorch 内置的 Dataset 和 DataLoader 类。有关安装 PyTorch 的更多信息与指导，请参见附录 A 中的 A.1.3 节，安装 PyTorch。</p>
 <p>代码清单 2.5 中展示了数据加载器类的实现细节：</p>
@@ -455,7 +466,7 @@
 <p>第二个批次的具体内容如下：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[tensor([[ 367, 2885, 1464, 1807]]), tensor([[2885, 1464, 1807, 3619]])]</span><br></pre></td></tr></table></figure>
 <p>如果我们将第一个批次与第二个批次进行比较，可以看到第二个批次的token ID 相较于第一个批次右移了一个位置（例如，第一个批次输入中的第二个 ID 是 367，而它是第二个批次输入的第一个 ID）。步幅设置决定了输入在批次之间移动的位置数，模拟了滑动窗口的方法，如图 2.14 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.14.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.14.png" alt=""></p>
 <blockquote>
 <p>[!NOTE]</p>
 <p><strong>练习 2.2 针对数据加载器（Data Loaders）设置不同步幅和上下文大小</strong></p>
@@ -466,28 +477,34 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">dataloader = create_dataloader_v1(raw_text, batch_size=<span class="number">8</span>, max_length=<span class="number">4</span>, stride=<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">data_iter = <span class="built_in">iter</span>(dataloader)</span><br><span class="line">inputs, targets = <span class="built_in">next</span>(data_iter)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Inputs:\n&quot;</span>, inputs)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;\nTargets:\n&quot;</span>, targets)</span><br><span class="line">This prints the following:</span><br><span class="line">Inputs:</span><br><span class="line">  tensor([[ <span class="number">40</span>, <span class="number">367</span>, <span class="number">2885</span>, <span class="number">1464</span>],</span><br><span class="line">         [ <span class="number">1807</span>, <span class="number">3619</span>, <span class="number">402</span>, <span class="number">271</span>],</span><br><span class="line">         [<span class="number">10899</span>, <span class="number">2138</span>, <span class="number">257</span>,<span class="number">7026</span>],</span><br><span class="line">         [<span class="number">15632</span>, <span class="number">438</span>, <span class="number">2016</span>, <span class="number">257</span>],</span><br><span class="line">         [ <span class="number">922</span>, <span class="number">5891</span>, <span class="number">1576</span>, <span class="number">438</span>],</span><br><span class="line">         [ <span class="number">568</span>, <span class="number">340</span>, <span class="number">373</span>,   <span class="number">645</span>],</span><br><span class="line">         [ <span class="number">1049</span>, <span class="number">5975</span>, <span class="number">284</span>, <span class="number">502</span>],</span><br><span class="line">         [ <span class="number">284</span>, <span class="number">3285</span>, <span class="number">326</span>,   <span class="number">11</span>]])</span><br><span class="line"></span><br><span class="line">Targets:</span><br><span class="line">  tensor([[ <span class="number">367</span>, <span class="number">2885</span>, <span class="number">1464</span>, <span class="number">1807</span>],</span><br><span class="line">         [ <span class="number">3619</span>, <span class="number">402</span>,  <span class="number">271</span>, <span class="number">10899</span>],</span><br><span class="line">         [ <span class="number">2138</span>, <span class="number">257</span>, <span class="number">7026</span>, <span class="number">15632</span>],</span><br><span class="line">         [ <span class="number">438</span>,  <span class="number">2016</span>, <span class="number">257</span>,   <span class="number">922</span>],</span><br><span class="line">         [ <span class="number">5891</span>, <span class="number">1576</span>, <span class="number">438</span>,   <span class="number">568</span>],</span><br><span class="line">         [ <span class="number">340</span>,  <span class="number">373</span>,   <span class="number">645</span>, <span class="number">1049</span>],</span><br><span class="line">         [ <span class="number">5975</span>, <span class="number">284</span>,   <span class="number">502</span>,  <span class="number">284</span>],</span><br><span class="line">         [ <span class="number">3285</span>, <span class="number">326</span>,   <span class="number">11</span>,   <span class="number">287</span>]])</span><br></pre></td></tr></table></figure>
 <p>请注意，以上代码将步幅增加到了 4。这是为了全面利用数据集（我们不跳过任何单词），同时避免批次之间的重叠，因为更多的重叠可能会导致过拟合：</p>
 <p>在本章的最后两个部分，我们将实现嵌入层，将token ID 转换为连续的向量表示，这些表示将用作 LLM 的输入数据格式。</p>
-<h2 id="2-7-构建词嵌入层"><a href="#2-7-构建词嵌入层" class="headerlink" title="2.7 构建词嵌入层"></a>2.7 构建词嵌入层</h2><p>为 LLM 准备训练集的最后一步是将token ID 转换为嵌入向量，如图 2.15 所示，这将是本章最后两部分的主要内容。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.15.png" alt=""></p>
+<h2 id="2-7-构建词嵌入层">2.7 构建词嵌入层</h2>
+<p>为 LLM 准备训练集的最后一步是将token ID 转换为嵌入向量，如图 2.15 所示，这将是本章最后两部分的主要内容。</p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.15.png" alt=""></p>
 <p>除了图 2.15 中概述的过程外，还需注意的是，我们首先会以随机值初始化这些嵌入权重。这一初始化为 LLM 的学习过程提供了起始点。我们将在第 5 章中优化嵌入权重，作为 LLM 训练的一部分。</p>
 <p>对于GPT类大语言模型（LLM）来说，连续向量表示（Embedding）非常重要，原因在于这些模型使用深度神经网络结构，并通过反向传播算法（backpropagation）进行训练。如果你不熟悉神经网络是如何通过反向传播进行训练的，请参阅附录 A 中的 A.4 节，《自动微分简易教程》。</p>
 <blockquote>
 <p>[!TIP]</p>
 <p><strong>个人思考：</strong> 上面一段描述说的有些笼统，为什么通过反向传播算法训练的大语言模型必须具有Embedding，让我们通过以下几个方面来分析和思考：</p>
 <ol>
-<li><p><strong>深度神经网络和连续向量表示</strong></p>
+<li>
+<p><strong>深度神经网络和连续向量表示</strong></p>
 <p>GPT 类模型（以及其他深度神经网络）是基于大量的矩阵运算和数值计算构建的，尤其是神经元之间的连接权重和偏置在训练过程中不断更新。这些运算要求输入的数据是<strong>数值形式的向量</strong>，因为神经网络只能对数值数据进行有效计算，而无法直接处理原始的离散文字数据（如单词、句子）。</p>
 <ul>
 <li><strong>向量表示</strong>：通过将每个单词、句子或段落转换为连续向量（Embedding），可以在高维空间中表示文本的语义关系。例如，通过词嵌入（如 Word2Vec、GloVe）或上下文嵌入（如 GPT 中的词嵌入层），每个单词都被转换为一个向量，这个向量可以用于神经网络的计算。</li>
 </ul>
 </li>
-<li><p><strong>向量嵌入的作用</strong></p>
+<li>
+<p><strong>向量嵌入的作用</strong></p>
+</li>
+</ol>
 <p>连续向量表示不仅让文本数据可以进入神经网络，还帮助模型捕捉和表示文本之间的语义关系。例如：</p>
 <ul>
 <li><strong>同义词或相似词</strong>：在向量空间中，相似的单词可以有接近的向量表示。这种语义相似性帮助模型理解上下文，并在生成文本时提供参考。</li>
 <li><strong>上下文关系</strong>：GPT 等 LLM 模型不仅依赖单词级别的向量表示，还会考虑句子或段落上下文，形成动态嵌入，从而生成更具连贯性的文本。</li>
 </ul>
-</li>
-<li><p><strong>反向传播算法的要求</strong></p>
+<ol start="3">
+<li>
+<p><strong>反向传播算法的要求</strong></p>
 <p>深度神经网络通过<strong>反向传播算法</strong>进行训练，反向传播的本质是利用梯度下降法来更新网络的权重，以最小化损失函数（loss function）。反向传播要求每一层的输入、输出和权重都能够参与梯度计算，而梯度计算只能应用于数值数据。</p>
 <ul>
 <li><strong>自动微分与梯度计算</strong>：在反向传播中，神经网络会根据损失函数的导数来计算梯度，这个过程依赖于自动微分（automatic differentiation）。为了计算每层的梯度，输入的数据必须是数值形式（即向量），否则无法对离散的文本数据求导。</li>
@@ -520,14 +537,15 @@
 <p>输出是一个4x3 的矩阵：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">tensor([[ 1.2753, -0.2010, -0.1606],</span><br><span class="line">				[-0.4015, 0.9666, -1.1481],</span><br><span class="line">				[-2.8400, -0.7849, -1.4096],</span><br><span class="line">				[ 0.9178, 1.5810, 1.3010]], grad_fn=&lt;EmbeddingBackward0&gt;)</span><br></pre></td></tr></table></figure>
 <p>输出矩阵中的每一行都是通过从嵌入权重矩阵进行查找操作获得的，如图2.16所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.16.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.16.png" alt=""></p>
 <p>本节介绍了如何从token ID 创建嵌入向量。本章的下一节也是最后一节将对这些嵌入向量进行小的修改，以编码文本中token的位置信息。</p>
-<h2 id="2-8-位置编码"><a href="#2-8-位置编码" class="headerlink" title="2.8 位置编码"></a>2.8 位置编码</h2><p>在上一节中，我们将token ID 转换为连续的向量表示，即所谓的token嵌入。原则上，这适合作为 LLM 的输入。然而，LLM的一个小缺点是它们的自注意力机制（将在第3章详细介绍）对序列中token的位置或顺序没有概念。</p>
+<h2 id="2-8-位置编码">2.8 位置编码</h2>
+<p>在上一节中，我们将token ID 转换为连续的向量表示，即所谓的token嵌入。原则上，这适合作为 LLM 的输入。然而，LLM的一个小缺点是它们的自注意力机制（将在第3章详细介绍）对序列中token的位置或顺序没有概念。</p>
 <p>之前引入的嵌入层的工作方式是，无论token ID 在输入序列中的位置如何，相同的token ID 始终映射到相同的向量表示，如图 2.17 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.17.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.17.png" alt=""></p>
 <p>从原则上讲，确定性的、与位置无关的token ID 嵌入对于可重复性是有益的。然而，由于LLM的自注意力机制本身也是与位置无关的，因此向LLM注入额外的位置信息是有帮助的。</p>
 <p>绝对位置嵌入与序列中的特定位置直接相关。对于输入序列中的每个位置，都会将一个唯一的绝对位置嵌入向量添加到token的嵌入向量中，以传达其确切位置。例如，第一个token将具有特定的位置嵌入，第二个token将具有另一个不同的嵌入，依此类推，如图2.18所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.18.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.18.png" alt=""></p>
 <p>与关注token在序列中的绝对位置不同，相对位置嵌入强调的是token之间的相对位置或距离。这意味着模型学习的是“相隔多远”的关系，而不是“在什么确切位置”。这样的优势在于，即使模型在训练时没有接触过不同的长度，它也可以更好地适应各种长度的序列。</p>
 <p>这两种类型的位置嵌入旨在增强 LLM 理解token顺序与关系的能力，从而确保在预测时能对上下文具有更准确的感知。选择哪种类型的位置嵌入通常取决于特定的应用和所处理数据的性质。</p>
 <p>OpenAI 的 GPT 模型使用绝对位置嵌入，这些嵌入在训练过程中进行优化，而不是像原始 Transformer 模型中的位置编码那样是固定或预定义的。这个优化过程属于模型训练的一部分，我们将在本书后面的章节中实现。目前，让我们创建初始位置嵌入，以便为接下来的章节准备 LLM 输入。</p>
@@ -553,8 +571,9 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">input_embeddings = token_embeddings + pos_embeddings</span><br><span class="line"><span class="built_in">print</span>(input_embeddings.shape)</span><br></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.Size([8, 4, 256])</span><br></pre></td></tr></table></figure>
 <p>我们创建的 input_embeddings，如图 2.19 所示，现在可作为LLM的核心模块的输入嵌入。我们将在第3章开始实现这些模块。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.19.png" alt=""></p>
-<h2 id="2-9-本章摘要"><a href="#2-9-本章摘要" class="headerlink" title="2.9 本章摘要"></a>2.9 本章摘要</h2><ul>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/chapter2/figure2.19.png" alt=""></p>
+<h2 id="2-9-本章摘要">2.9 本章摘要</h2>
+<ul>
 <li>LLM 需要将文本数据转换为数值向量，这称之为嵌入，因为它们无法处理原始文本。嵌入将离散数据（如单词或图像）转化为连续的向量空间，从而使其能够与神经网络操作兼容。</li>
 <li>作为第一步，原始文本被分解为token，这些token可以是单词或字符。然后，这些token被转换为整数表示，称为token ID。</li>
 <li>可以添加特殊token，如 &lt;|unk|&gt; 和 &lt;|endoftext|&gt;，以增强模型的理解能力，并处理各种上下文，例如未知单词或无关文本之间的边界分隔。</li>
@@ -563,14 +582,14 @@
 <li>在 PyTorch 中，嵌入层作为一种查找操作，用于检索与token ID 对应的向量。生成的嵌入向量提供了token的连续表示，这在训练像 LLM 这样的深度学习模型时至关重要。</li>
 <li>虽然token嵌入为每个token提供了一致的向量表示，但它们并没有考虑token在序列中的位置。为了解决这个问题，存在两种主要类型的位置嵌入：绝对位置嵌入和相对位置嵌入。OpenAI 的 GPT 模型采用绝对位置嵌入，这些位置嵌入向量会与token嵌入向量相加，并在模型训练过程中进行优化。</li>
 </ul>
-</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/11/17/CfYA2b.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Transformer大语言模型架构原理学习笔记"/></a><div class="content"><a class="title" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记">Transformer大语言模型架构原理学习笔记</a><time datetime="2025-11-17T12:51:00.000Z" title="发表于 2025-11-17 20:51:00">2025-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/10/31/7I8gnp.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="快速幂、逆元与组合数学"/></a><div class="content"><a class="title" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学">快速幂、逆元与组合数学</a><time datetime="2025-10-31T15:48:33.000Z" title="发表于 2025-10-31 23:48:33">2025-10-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2f58633e.html" title="常用数据结构"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://origin.picgo.net/2025/10/11/792a8743-6d0d-43fe-91b8-0a5a77b529f4a296a597708421a1.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常用数据结构"/></a><div class="content"><a class="title" href="/posts/2f58633e.html" title="常用数据结构">常用数据结构</a><time datetime="2025-10-11T11:00:00.000Z" title="发表于 2025-10-11 19:00:00">2025-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7258f8a4.html" title="THYTHM 音游"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/08/01/HotT9.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="THYTHM 音游"/></a><div class="content"><a class="title" href="/posts/7258f8a4.html" title="THYTHM 音游">THYTHM 音游</a><time datetime="2025-08-01T04:00:00.000Z" title="发表于 2025-08-01 12:00:00">2025-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/73e7a68a.html" title="力扣每日一题讲解"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/07/24/QEaxN.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="力扣每日一题讲解"/></a><div class="content"><a class="title" href="/posts/73e7a68a.html" title="力扣每日一题讲解">力扣每日一题讲解</a><time datetime="2025-07-24T08:50:00.000Z" title="发表于 2025-07-24 16:50:00">2025-07-24</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/11/17/CfYA2b.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Transformer大语言模型架构原理学习笔记"/></a><div class="content"><a class="title" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记">Transformer大语言模型架构原理学习笔记</a><time datetime="2025-11-17T12:51:00.000Z" title="发表于 2025-11-17 20:51:00">2025-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/10/31/7I8gnp.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="快速幂、逆元与组合数学"/></a><div class="content"><a class="title" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学">快速幂、逆元与组合数学</a><time datetime="2025-10-31T15:48:33.000Z" title="发表于 2025-10-31 23:48:33">2025-10-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2f58633e.html" title="常用数据结构"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://origin.picgo.net/2025/10/11/792a8743-6d0d-43fe-91b8-0a5a77b529f4a296a597708421a1.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常用数据结构"/></a><div class="content"><a class="title" href="/posts/2f58633e.html" title="常用数据结构">常用数据结构</a><time datetime="2025-10-11T11:00:00.000Z" title="发表于 2025-10-11 19:00:00">2025-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7258f8a4.html" title="THYTHM 音游"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/08/01/HotT9.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="THYTHM 音游"/></a><div class="content"><a class="title" href="/posts/7258f8a4.html" title="THYTHM 音游">THYTHM 音游</a><time datetime="2025-08-01T04:00:00.000Z" title="发表于 2025-08-01 12:00:00">2025-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/73e7a68a.html" title="力扣每日一题讲解"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/07/24/QEaxN.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="力扣每日一题讲解"/></a><div class="content"><a class="title" href="/posts/73e7a68a.html" title="力扣每日一题讲解">力扣每日一题讲解</a><time datetime="2025-07-24T08:50:00.000Z" title="发表于 2025-07-24 16:50:00">2025-07-24</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             
           </div>
           <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/c%E8%AF%AD%E8%A8%80/"><span class="card-category-list-name">c语言</span><span class="card-category-list-count">1</span></a></li>
-          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%EF%BC%8Cbutterfly/" style="font-size: 1.1em; color: #999">一键部署，butterfly</a> <a href="/tags/hexo-github-blog-node-js-npm-git-%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2-hexo%E9%83%A8%E7%BD%B2/" style="font-size: 1.1em; color: #999">hexo, github, blog, node.js,npm,git,部署博客,hexo部署</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">算法</a> <a href="/tags/python-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91-%E9%9F%B3%E6%B8%B8/" style="font-size: 1.1em; color: #999">python,游戏开发,音游</a> <a href="/tags/c%E8%AF%AD%E8%A8%80-%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">c语言,学习</a> <a href="/tags/%E5%A4%A7%E5%AE%B6%E5%A5%BD%EF%BC%8C%E6%88%91%E6%98%AF%E8%BF%B7%E8%B7%AF%E7%9A%84%E5%B0%8F%E6%9C%8B%E5%8F%8B/" style="font-size: 1.1em; color: #999">大家好，我是迷路的小朋友</a> <a href="/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" style="font-size: 1.1em; color: #999">每日一题</a></div></div><div class="card-widget card-archives">
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/python-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91-%E9%9F%B3%E6%B8%B8/" style="font-size: 1.1em; color: #999">python,游戏开发,音游</a> <a href="/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" style="font-size: 1.1em; color: #999">每日一题</a> <a href="/tags/c%E8%AF%AD%E8%A8%80-%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">c语言,学习</a> <a href="/tags/hexo-github-blog-node-js-npm-git-%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2-hexo%E9%83%A8%E7%BD%B2/" style="font-size: 1.1em; color: #999">hexo, github, blog, node.js,npm,git,部署博客,hexo部署</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">算法</a> <a href="/tags/%E5%A4%A7%E5%AE%B6%E5%A5%BD%EF%BC%8C%E6%88%91%E6%98%AF%E8%BF%B7%E8%B7%AF%E7%9A%84%E5%B0%8F%E6%9C%8B%E5%8F%8B/" style="font-size: 1.1em; color: #999">大家好，我是迷路的小朋友</a> <a href="/tags/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%EF%BC%8Cbutterfly/" style="font-size: 1.1em; color: #999">一键部署，butterfly</a></div></div><div class="card-widget card-archives">
     <div class="item-headline">
       <i class="fas fa-archive"></i>
       <span>归档</span>
@@ -652,14 +671,18 @@
         </li>
       
     </ul>
-  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">23</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-11-18T08:49:37.562Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">23</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-11-18T10:10:27.300Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2025 By 欣冻</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
   const runMermaid = ele => {
     window.loadMermaid = true
     const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
 
     ele.forEach((item, index) => {
       const mermaidSrc = item.firstElementChild
-      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
       const mermaidID = `mermaid-${index}`
       const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
 
@@ -690,7 +713,7 @@
   }
 
   const loadMermaid = () => {
-    if (false) codeToMermaid()
+    if (true) codeToMermaid()
     const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
     if ($mermaid.length === 0) return
 
@@ -760,7 +783,62 @@
   } else {
     window.loadOtherComment = loadTwikoo
   }
-})()</script></div><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+})()</script></div><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '0cca502ccc7341c2be6ba09309916622';
+  var gaud_map_key = '5653914d2fc43aad14b253ab6cf762b9';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
 for(var i = 0;i<arr.length;i++){
     arr[i].classList.add('wow');
     arr[i].classList.add('animate__zoomIn');
@@ -816,59 +894,4 @@ for(var i = 0;i<arr.length;i++){
     arr[i].setAttribute('data-wow-delay', '');
     arr[i].setAttribute('data-wow-offset', '');
     arr[i].setAttribute('data-wow-iteration', '');
-  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
-  function butterfly_footer_beautify_injector_config(){
-    var parent_div_git = document.getElementById('footer-wrap');
-    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
-    console.log('已挂载butterfly_footer_beautify')
-    parent_div_git.insertAdjacentHTML("beforeend",item_html)
-    }
-  var elist = 'null'.split(',');
-  var cpage = location.pathname;
-  var epage = 'all';
-  var flag = 0;
-
-  for (var i=0;i<elist.length;i++){
-    if (cpage.includes(elist[i])){
-      flag++;
-    }
-  }
-
-  if ((epage ==='all')&&(flag == 0)){
-    butterfly_footer_beautify_injector_config();
-  }
-  else if (epage === cpage){
-    butterfly_footer_beautify_injector_config();
-  }
-  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script data-pjax>
-  function butterfly_clock_anzhiyu_injector_config(){
-    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
-    console.log('已挂载butterfly_clock_anzhiyu')
-    if(parent_div_git) {
-      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
-    }
-  }
-  var elist = 'null'.split(',');
-  var cpage = location.pathname;
-  var epage = 'all';
-  var qweather_key = '0cca502ccc7341c2be6ba09309916622';
-  var gaud_map_key = '5653914d2fc43aad14b253ab6cf762b9';
-  var baidu_ak_key = 'undefined';
-  var flag = 0;
-  var clock_rectangle = '112.982279,28.19409';
-  var clock_default_rectangle_enable = 'false';
-
-  for (var i=0;i<elist.length;i++){
-    if (cpage.includes(elist[i])){
-      flag++;
-    }
-  }
-
-  if ((epage ==='all')&&(flag == 0)){
-    butterfly_clock_anzhiyu_injector_config();
-  }
-  else if (epage === cpage){
-    butterfly_clock_anzhiyu_injector_config();
-  }
-  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

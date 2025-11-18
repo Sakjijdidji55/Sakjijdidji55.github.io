@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const isPrismjs = plugin === 'prismjs'
     const highlightShrinkClass = isHighlightShrink === true ? 'closed' : ''
     const highlightShrinkEle = isHighlightShrink !== undefined ? '<i class="fas fa-angle-down expand"></i>' : ''
-    const highlightCopyEle = highlightCopy ? '<div class="copy-notice"></div><i class="fas fa-paste copy-button"></i>' : ''
+    const highlightCopyEle = highlightCopy ? '<i class="fas fa-paste copy-button"></i>' : ''
     const highlightMacStyleEle = '<div class="macStyle"><div class="mac-close"></div><div class="mac-minimize"></div><div class="mac-maximize"></div></div>'
     const highlightFullpageEle = highlightFullpage ? '<i class="fa-solid fa-up-right-and-down-left-from-center fullpage-button"></i>' : ''
 
@@ -76,9 +76,42 @@ document.addEventListener('DOMContentLoaded', () => {
       if (GLOBAL_CONFIG.Snackbar !== undefined) {
         btf.snackbarShow(text)
       } else {
-        ele.textContent = text
-        ele.style.opacity = 1
-        setTimeout(() => { ele.style.opacity = 0 }, 800)
+        const newEle = document.createElement('div')
+        newEle.className = 'copy-notice'
+        newEle.textContent = text
+        document.body.appendChild(newEle)
+
+        const buttonRect = ele.getBoundingClientRect()
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft
+        const finalLeft = buttonRect.left + scrollLeft + buttonRect.width / 2
+
+        // Show tooltip below button if too close to top
+        const normalTop = buttonRect.top + scrollTop - 40
+        const shouldShowBelow = buttonRect.top < 60 || normalTop < 10
+
+        const topValue = shouldShowBelow ? buttonRect.top + scrollTop + buttonRect.height + 10 : normalTop
+
+        newEle.style.cssText = `
+      top: ${topValue + 10}px;
+      left: ${finalLeft}px;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s ease, top 0.3s ease;
+    `
+
+        requestAnimationFrame(() => {
+          newEle.style.opacity = '1'
+          newEle.style.top = `${topValue}px`
+        })
+
+        setTimeout(() => {
+          newEle.style.opacity = '0'
+          newEle.style.top = `${topValue + 10}px`
+          setTimeout(() => {
+            newEle?.remove()
+          }, 300)
+        }, 800)
       }
     }
 
@@ -99,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const preCodeSelector = isPrismjs ? 'pre code' : 'table .code pre'
       const codeElement = $buttonParent.querySelector(preCodeSelector)
       if (!codeElement) return
-      copy(codeElement.innerText, clickEle.previousElementSibling)
+      copy(codeElement.innerText, clickEle)
       $buttonParent.classList.remove('copy-true')
     }
 
@@ -698,7 +731,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const addCopyright = () => {
     const { limitCount, languages } = GLOBAL_CONFIG.copyright
 
-    const handleCopy = (e) => {
+    const handleCopy = e => {
       e.preventDefault()
       const copyFont = window.getSelection(0).toString()
       let textFont = copyFont

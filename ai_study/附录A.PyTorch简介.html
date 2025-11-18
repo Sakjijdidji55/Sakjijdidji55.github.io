@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>附录A.PyTorch简介 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="附录A. PyTorch简介本章涵盖以下内容：  PyTorch深度学习框架概述 搭建深度学习所需的环境和工作空间 张量：深度学习中的基础数据结构 深度神经网络的训练机制 在GPU上训练模型    附录A. PyTorch简介 A.1 什么是 PyTorch A.1.1 PyTorch 的三个核心组件 A.1.2 定义深度学习 A.1.3 安装 PyTorch   A.2 理解张量 A.2.1 标">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>附录A.PyTorch简介 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="附录A. PyTorch简介 本章涵盖以下内容：  PyTorch深度学习框架概述 搭建深度学习所需的环境和工作空间 张量：深度学习中的基础数据结构 深度神经网络的训练机制 在GPU上训练模型    附录A. PyTorch简介  A.1 什么是 PyTorch  A.1.1 PyTorch 的三个核心组件 A.1.2 定义深度学习 A.1.3 安装 PyTorch   A.2 理解张量  A.2">
 <meta property="og:type" content="website">
 <meta property="og:title" content="附录A.PyTorch简介">
 <meta property="og:url" content="https://sakjijdidji55.github.io/ai_study/%E9%99%84%E5%BD%95A.PyTorch%E7%AE%80%E4%BB%8B.html">
 <meta property="og:site_name" content="迷路的小朋友">
-<meta property="og:description" content="附录A. PyTorch简介本章涵盖以下内容：  PyTorch深度学习框架概述 搭建深度学习所需的环境和工作空间 张量：深度学习中的基础数据结构 深度神经网络的训练机制 在GPU上训练模型    附录A. PyTorch简介 A.1 什么是 PyTorch A.1.1 PyTorch 的三个核心组件 A.1.2 定义深度学习 A.1.3 安装 PyTorch   A.2 理解张量 A.2.1 标">
+<meta property="og:description" content="附录A. PyTorch简介 本章涵盖以下内容：  PyTorch深度学习框架概述 搭建深度学习所需的环境和工作空间 张量：深度学习中的基础数据结构 深度神经网络的训练机制 在GPU上训练模型    附录A. PyTorch简介  A.1 什么是 PyTorch  A.1.1 PyTorch 的三个核心组件 A.1.2 定义深度学习 A.1.3 安装 PyTorch   A.2 理解张量  A.2">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
 <meta property="article:published_time" content="2025-10-26T08:00:00.000Z">
@@ -11,7 +11,7 @@
 <meta property="article:author" content="欣冻">
 <meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/ai_study/%E9%99%84%E5%BD%95A.PyTorch%E7%AE%80%E4%BB%8B.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><script type="application/ld+json"></script><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/ai_study/%E9%99%84%E5%BD%95A.PyTorch%E7%AE%80%E4%BB%8B.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
     (() => {
       
     const saveToLocal = {
@@ -104,7 +104,7 @@
   </script><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
-  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
   translate: undefined,
   highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
   copy: {
@@ -146,8 +146,9 @@
   pageType: 'page'
 }</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"<!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
-</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">附录A.PyTorch简介</h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1 id="附录A-PyTorch简介"><a href="#附录A-PyTorch简介" class="headerlink" title="附录A. PyTorch简介"></a>附录A. PyTorch简介</h1><p>本章涵盖以下内容：</p>
+<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title">附录A.PyTorch简介</h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1>附录A. PyTorch简介</h1>
+<p>本章涵盖以下内容：</p>
 <ul>
 <li><strong>PyTorch深度学习框架概述</strong></li>
 <li><strong>搭建深度学习所需的环境和工作空间</strong></li>
@@ -157,35 +158,40 @@
 </ul>
 <hr>
 <ul>
-<li><a href="#附录a-pytorch简介">附录A. PyTorch简介</a><ul>
-<li><a href="#a1-什么是-pytorch">A.1 什么是 PyTorch</a><ul>
-<li><a href="#a11-pytorch-的三个核心组件">A.1.1 PyTorch 的三个核心组件</a></li>
-<li><a href="#a12-定义深度学习">A.1.2 定义深度学习</a></li>
-<li><a href="#a13-安装-pytorch">A.1.3 安装 PyTorch</a></li>
+<li><a href="#%E9%99%84%E5%BD%95a-pytorch%E7%AE%80%E4%BB%8B">附录A. PyTorch简介</a>
+<ul>
+<li><a href="#a1-%E4%BB%80%E4%B9%88%E6%98%AF-pytorch">A.1 什么是 PyTorch</a>
+<ul>
+<li><a href="#a11-pytorch-%E7%9A%84%E4%B8%89%E4%B8%AA%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6">A.1.1 PyTorch 的三个核心组件</a></li>
+<li><a href="#a12-%E5%AE%9A%E4%B9%89%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0">A.1.2 定义深度学习</a></li>
+<li><a href="#a13-%E5%AE%89%E8%A3%85-pytorch">A.1.3 安装 PyTorch</a></li>
 </ul>
 </li>
-<li><a href="#a2-理解张量">A.2 理解张量</a><ul>
-<li><a href="#a21-标量向量矩阵和张量">A.2.1 标量、向量、矩阵和张量</a></li>
-<li><a href="#a22-张量数据类型">A.2.2 张量数据类型</a></li>
-<li><a href="#a23-常用的-pytorch-张量操作">A.2.3 常用的 PyTorch 张量操作</a></li>
+<li><a href="#a2-%E7%90%86%E8%A7%A3%E5%BC%A0%E9%87%8F">A.2 理解张量</a>
+<ul>
+<li><a href="#a21-%E6%A0%87%E9%87%8F%E5%90%91%E9%87%8F%E7%9F%A9%E9%98%B5%E5%92%8C%E5%BC%A0%E9%87%8F">A.2.1 标量、向量、矩阵和张量</a></li>
+<li><a href="#a22-%E5%BC%A0%E9%87%8F%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">A.2.2 张量数据类型</a></li>
+<li><a href="#a23-%E5%B8%B8%E7%94%A8%E7%9A%84-pytorch-%E5%BC%A0%E9%87%8F%E6%93%8D%E4%BD%9C">A.2.3 常用的 PyTorch 张量操作</a></li>
 </ul>
 </li>
-<li><a href="#a3-将模型视为计算图">A.3 将模型视为计算图</a></li>
-<li><a href="#a4-轻松实现自动微分">A.4 轻松实现自动微分</a><ul>
-<li><a href="#偏导数与梯度">偏导数与梯度</a></li>
+<li><a href="#a3-%E5%B0%86%E6%A8%A1%E5%9E%8B%E8%A7%86%E4%B8%BA%E8%AE%A1%E7%AE%97%E5%9B%BE">A.3 将模型视为计算图</a></li>
+<li><a href="#a4-%E8%BD%BB%E6%9D%BE%E5%AE%9E%E7%8E%B0%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86">A.4 轻松实现自动微分</a>
+<ul>
+<li><a href="#%E5%81%8F%E5%AF%BC%E6%95%B0%E4%B8%8E%E6%A2%AF%E5%BA%A6">偏导数与梯度</a></li>
 </ul>
 </li>
-<li><a href="#a5-实现多层神经网络">A.5 实现多层神经网络</a></li>
-<li><a href="#a6-设置高效的数据加载器">A.6 设置高效的数据加载器</a></li>
-<li><a href="#47-一个典型的训练循环">4.7 一个典型的训练循环</a></li>
-<li><a href="#48-保存和加载模型">4.8 保存和加载模型</a></li>
-<li><a href="#a9-使用-gpu-优化训练性能">A.9 使用 GPU 优化训练性能</a><ul>
-<li><a href="#91-pytorch-在-gpu-设备上的计算">9.1 PyTorch 在 GPU 设备上的计算</a></li>
-<li><a href="#a92-单-gpu-训练">A.9.2 单 GPU 训练</a></li>
-<li><a href="#a93-使用多个-gpu-训练">A.9.3 使用多个 GPU 训练</a></li>
+<li><a href="#a5-%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B1%82%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C">A.5 实现多层神经网络</a></li>
+<li><a href="#a6-%E8%AE%BE%E7%BD%AE%E9%AB%98%E6%95%88%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%99%A8">A.6 设置高效的数据加载器</a></li>
+<li><a href="#47-%E4%B8%80%E4%B8%AA%E5%85%B8%E5%9E%8B%E7%9A%84%E8%AE%AD%E7%BB%83%E5%BE%AA%E7%8E%AF">4.7 一个典型的训练循环</a></li>
+<li><a href="#48-%E4%BF%9D%E5%AD%98%E5%92%8C%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9E%8B">4.8 保存和加载模型</a></li>
+<li><a href="#a9-%E4%BD%BF%E7%94%A8-gpu-%E4%BC%98%E5%8C%96%E8%AE%AD%E7%BB%83%E6%80%A7%E8%83%BD">A.9 使用 GPU 优化训练性能</a>
+<ul>
+<li><a href="#91-pytorch-%E5%9C%A8-gpu-%E8%AE%BE%E5%A4%87%E4%B8%8A%E7%9A%84%E8%AE%A1%E7%AE%97">9.1 PyTorch 在 GPU 设备上的计算</a></li>
+<li><a href="#a92-%E5%8D%95-gpu-%E8%AE%AD%E7%BB%83">A.9.2 单 GPU 训练</a></li>
+<li><a href="#a93-%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA-gpu-%E8%AE%AD%E7%BB%83">A.9.3 使用多个 GPU 训练</a></li>
 </ul>
 </li>
-<li><a href="#a10-本章摘要">A.10 本章摘要</a></li>
+<li><a href="#a10-%E6%9C%AC%E7%AB%A0%E6%91%98%E8%A6%81">A.10 本章摘要</a></li>
 </ul>
 </li>
 </ul>
@@ -194,19 +200,22 @@
 <p>我们将介绍 PyTorch，一个流行的基于 Python 的深度学习库，它将作为本书后续章节的主要工具。本章还将指导你如何设置一个配备 PyTorch 和 GPU 支持的深度学习工作环境。</p>
 <p>接下来，你将学习张量的基本概念以及它们在 PyTorch 中的应用。我们还将深入探讨 PyTorch 的自动微分引擎，这一功能使得我们能够便捷且高效地使用反向传播，这是神经网络训练中的关键环节。</p>
 <p>请注意，本章旨在为深度学习初学者提供 PyTorch 入门知识。尽管本章会从基础开始讲解 PyTorch，但并不打算对 PyTorch 库进行全面介绍。相反，本章主要介绍我们将在本书中实现大语言模型所需的 PyTorch 基础知识。如果你已经熟悉深度学习，可以跳过本章，直接进入第 2 章，学习如何处理文本数据。</p>
-<h2 id="A-1-什么是-PyTorch"><a href="#A-1-什么是-PyTorch" class="headerlink" title="A.1 什么是 PyTorch"></a>A.1 什么是 PyTorch</h2><p>PyTorch（<a target="_blank" rel="noopener" href="https://pytorch.org/）是一个基于">https://pytorch.org/）是一个基于</a> Python 的开源深度学习库。根据 ‘Papers With Code’（<a target="_blank" rel="noopener" href="https://paperswithcode.com/trends）这一平台的统计数据（`该平台的数据源来自于追踪和分析研究论文`），PyTorch">https://paperswithcode.com/trends）这一平台的统计数据（`该平台的数据源来自于追踪和分析研究论文`），PyTorch</a> 自 2019 年以来一直是研究领域中使用最广泛的深度学习库，且领先优势明显。根据 Kaggle 2022 年数据科学与机器学习调查（<a target="_blank" rel="noopener" href="https://www.kaggle.com/c/kaggle-survey-2022），使用">https://www.kaggle.com/c/kaggle-survey-2022），使用</a> PyTorch 的受访者者比例约为 40%，且这一比例每年持续增长。</p>
+<h2 id="A-1-什么是-PyTorch">A.1 什么是 PyTorch</h2>
+<p>PyTorch（<a target="_blank" rel="noopener" href="https://pytorch.org/%EF%BC%89%E6%98%AF%E4%B8%80%E4%B8%AA%E5%9F%BA%E4%BA%8E">https://pytorch.org/）是一个基于</a> Python 的开源深度学习库。根据 ‘Papers With Code’（<a target="_blank" rel="noopener" href="https://paperswithcode.com/trends%EF%BC%89%E8%BF%99%E4%B8%80%E5%B9%B3%E5%8F%B0%E7%9A%84%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE%EF%BC%88%60%E8%AF%A5%E5%B9%B3%E5%8F%B0%E7%9A%84%E6%95%B0%E6%8D%AE%E6%BA%90%E6%9D%A5%E8%87%AA%E4%BA%8E%E8%BF%BD%E8%B8%AA%E5%92%8C%E5%88%86%E6%9E%90%E7%A0%94%E7%A9%B6%E8%AE%BA%E6%96%87%60%EF%BC%89%EF%BC%8CPyTorch">https://paperswithcode.com/trends）这一平台的统计数据（`该平台的数据源来自于追踪和分析研究论文`），PyTorch</a> 自 2019 年以来一直是研究领域中使用最广泛的深度学习库，且领先优势明显。根据 Kaggle 2022 年数据科学与机器学习调查（<a target="_blank" rel="noopener" href="https://www.kaggle.com/c/kaggle-survey-2022%EF%BC%89%EF%BC%8C%E4%BD%BF%E7%94%A8">https://www.kaggle.com/c/kaggle-survey-2022），使用</a> PyTorch 的受访者者比例约为 40%，且这一比例每年持续增长。</p>
 <p>PyTorch 之所以如此受欢迎，部分原因在于其用户友好的界面和高效性。然而，尽管它易于使用，但并未牺牲灵活性，依然为高级用户提供了调整模型底层细节以实现定制和优化的能力。简而言之，PyTorch 为许多实践者和研究人员提供了易用性与功能性之间的完美平衡。</p>
 <p>在以下小节中，我们将介绍 PyTorch 所提供的主要功能。</p>
-<h3 id="A-1-1-PyTorch-的三个核心组件"><a href="#A-1-1-PyTorch-的三个核心组件" class="headerlink" title="A.1.1 PyTorch 的三个核心组件"></a>A.1.1 PyTorch 的三个核心组件</h3><p>PyTorch 是一个功能全面的深度学习库，快速理解它的一种方法是从它的三个核心组件入手，在图 A.1 中对这三个组件进行了总结。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.1.png" alt=""></p>
+<h3 id="A-1-1-PyTorch-的三个核心组件">A.1.1 PyTorch 的三个核心组件</h3>
+<p>PyTorch 是一个功能全面的深度学习库，快速理解它的一种方法是从它的三个核心组件入手，在图 A.1 中对这三个组件进行了总结。</p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.1.png" alt=""></p>
 <p>首先，PyTorch 是一个张量库，它在数组导向编程库 NumPy 的基础上扩展了功能，增加了对 GPU 加速计算的支持，从而实现了 CPU 和 GPU 之间的无缝切换。</p>
 <p>其次，PyTorch 是一个自动微分引擎，也称为 autograd，它能够自动计算张量操作的梯度，从而简化反向传播过程和模型优化。</p>
 <p>最后，PyTorch 是一个深度学习库，提供模块化、灵活和高效的构建模块（包括预训练模型、损失函数和优化器），用于设计和训练各种深度学习模型，同时满足研究人员和开发人员的需求。</p>
 <p>在接下来的小节中，我们将首先定义深度学习的概念并介绍如何安装 PyTorch。随后，本章将详细讲解 PyTorch 的三个核心组件，并通过实际的代码示例进行演示。</p>
-<h3 id="A-1-2-定义深度学习"><a href="#A-1-2-定义深度学习" class="headerlink" title="A.1.2 定义深度学习"></a>A.1.2 定义深度学习</h3><p>大语言模型（LLM）经常在新闻中被称为人工智能（AI）模型。然而，正如第一章第 1 节（“什么是大语言模型？”）中所示，大语言模型也是一种深度神经网络，而 PyTorch 是一个深度学习库。听起来是不是有些混乱？让我们在继续之前，简要总结一下这些术语之间的关系。</p>
+<h3 id="A-1-2-定义深度学习">A.1.2 定义深度学习</h3>
+<p>大语言模型（LLM）经常在新闻中被称为人工智能（AI）模型。然而，正如第一章第 1 节（“什么是大语言模型？”）中所示，大语言模型也是一种深度神经网络，而 PyTorch 是一个深度学习库。听起来是不是有些混乱？让我们在继续之前，简要总结一下这些术语之间的关系。</p>
 <p>人工智能的核心在于创建能够执行高级任务（所谓高级是指通常需要达到人类智能才能完成）的计算机系统。这些任务包括理解自然语言、识别模式和做决策（尽管已有显著进展，但AI仍远未实现这一层次的通用智能）。</p>
 <p>机器学习是人工智能的一个子领域（如图 A.2 所示），其重点在于开发和改进学习算法。机器学习的核心思想是使计算机能够从数据中学习，并在无需编程的情况下进行预测或决策。这涉及到开发能够识别数据模式的算法，并通过更多的数据和反馈不断改进其性能。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.2.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.2.png" alt=""></p>
 <p>机器学习在人工智能的发展中一直扮演着至关重要的角色，推动了包括大语言模型（LLM）在内的许多的技术进步，例如在线零售商和流媒体服务使用的推荐系统、电子邮件垃圾邮件过滤、虚拟助手中的语音识别，甚至是自动驾驶汽车。机器学习的引入和发展极大地增强了人工智能的能力，使其能够超越严格的基于规则的系统，并适应新的输入或变化的环境。</p>
 <p>深度学习是机器学习的一个子领域，专注于深度神经网络的训练和应用。这些深度神经网络最初的灵感来源于人脑的工作方式，特别是众多神经元之间的相互连接。深度学习中的“深度”指的是人工神经元或节点的多个隐藏层，这些隐藏层使其能够建模数据中复杂的非线性关系。</p>
 <blockquote>
@@ -215,21 +224,26 @@
 <p>举个简单的图像分类神经网络的例子：</p>
 <p>假设你想训练一个神经网络来判断一个图片是猫还是狗。</p>
 <ol>
-<li><p><strong>输入层：</strong> 这是网络的第一层，接收图片的原始像素数据（比如图片中每个点的颜色值）。每个像素值就相当于网络的一个“输入”。</p>
+<li>
+<p><strong>输入层：</strong> 这是网络的第一层，接收图片的原始像素数据（比如图片中每个点的颜色值）。每个像素值就相当于网络的一个“输入”。</p>
 </li>
-<li><p><strong>隐藏层：</strong> 这里的神经元会对这些输入数据进行处理。例如，网络可能会从原始像素中提取出一些特征，如图片的边缘、颜色或纹理。每个隐藏层神经元负责从输入数据中提取一个特定的特征，多个隐藏层可能会在不同的抽象层次上提取出更复杂的特征（如形状、对象等）。比如，第一层隐藏层可能会提取出图像的边缘信息，而第二层隐藏层则可能会将边缘信息组合起来，识别出动物的轮廓。进一步的隐藏层可以开始识别更多高级特征，比如“耳朵”或“鼻子”。</p>
+<li>
+<p><strong>隐藏层：</strong> 这里的神经元会对这些输入数据进行处理。例如，网络可能会从原始像素中提取出一些特征，如图片的边缘、颜色或纹理。每个隐藏层神经元负责从输入数据中提取一个特定的特征，多个隐藏层可能会在不同的抽象层次上提取出更复杂的特征（如形状、对象等）。比如，第一层隐藏层可能会提取出图像的边缘信息，而第二层隐藏层则可能会将边缘信息组合起来，识别出动物的轮廓。进一步的隐藏层可以开始识别更多高级特征，比如“耳朵”或“鼻子”。</p>
 </li>
-<li><strong>输出层：</strong> 最后，经过所有隐藏层的处理，输出层会根据网络提取的特征做出判断，最终告诉你这张图片是猫还是狗。</li>
+<li>
+<p><strong>输出层：</strong> 最后，经过所有隐藏层的处理，输出层会根据网络提取的特征做出判断，最终告诉你这张图片是猫还是狗。</p>
+</li>
 </ol>
 <p>从这个例子中可以看出，隐藏层其实就是负责提取数据的特征，而每一层隐藏层都会逐渐提取更高层次的特征，帮助网络更好地理解数据，例如，从原始的像素数据到形状、颜色，再到物体的具体内容。</p>
 </blockquote>
 <p>与擅长简单模式识别的传统机器学习技术不同，深度学习尤其擅长处理非结构化数据，如图像、音频或文本，因此，深度学习特别适合用于大语言模型（LLM）。</p>
 <p>下图 A.3 总结了机器学习和深度学习中典型的预测建模工作流程（也称为监督学习）。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.3.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.3.png" alt=""></p>
 <p>如上图所示，模型通过使用一种学习算法在包含示例及其对应标签的训练数据集上进行训练。例如，在电子邮件垃圾邮件分类器的案例中，训练数据集包含电子邮件及其由人工标注的垃圾邮件和非垃圾邮件标签。然后，训练好的模型可以用于新的观测数据（新的电子邮件），以预测它们未知的标签（垃圾邮件或非垃圾邮件）。</p>
 <p>当然，我们还需要在训练和推理阶段之间增加模型评估，以确保模型在应用于实际场景之前满足我们的性能标准。</p>
 <p>请注意，正如本书后面将要介绍的那样，如果我们将大语言模型（LLM）用于文本分类，那么训练和使用它的工作流程与图 A.3 中描述的工作流程类似。如果将 LLM 用于文本生成（这也是本书的主要重点），图 A.3 仍然适用。在这种情况下，预训练期间的标签可以从文本本身派生出来（第一章介绍的下一个词预测任务），LLM 将在推理过程中根据输入提示生成全新的文本（而不是预测标签）。</p>
-<h3 id="A-1-3-安装-PyTorch"><a href="#A-1-3-安装-PyTorch" class="headerlink" title="A.1.3 安装 PyTorch"></a>A.1.3 安装 PyTorch</h3><p>PyTorch 的安装方式与其他 Python 库或包类似。然而，由于 PyTorch 是一个包含 CPU 和 GPU 兼容代码的综合库，因此其安装可能需要额外的说明。</p>
+<h3 id="A-1-3-安装-PyTorch">A.1.3 安装 PyTorch</h3>
+<p>PyTorch 的安装方式与其他 Python 库或包类似。然而，由于 PyTorch 是一个包含 CPU 和 GPU 兼容代码的综合库，因此其安装可能需要额外的说明。</p>
 <blockquote>
 <p>[!NOTE]</p>
 <p><strong>PYTHON 版本</strong></p>
@@ -244,7 +258,7 @@
 <p>截至本书撰写之时，PyTorch 也已经通过 ROCm 添加了对 AMD GPU 的实验性支持。请访问 <a target="_blank" rel="noopener" href="https://pytorch.org">https://pytorch.org</a> 查看更多说明。</p>
 </blockquote>
 <p>然而，为了明确安装与 CUDA 兼容的 PyTorch 版本，通常最好指定你希望 PyTorch 兼容的 CUDA 版本。PyTorch 的官方网站 (<a target="_blank" rel="noopener" href="https://pytorch.org">https://pytorch.org</a>) 提供了针对不同操作系统的、带有 CUDA 支持的 PyTorch 安装命令，如图 A.4 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.4.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.4.png" alt=""></p>
 <p>（注意，图 A.4 中显示的命令也会安装 torchvision 和 torchaudio 库，这两个库对于本书是可选的。）</p>
 <p>截至本书撰写之时，本书基于 PyTorch 2.0.1，因此建议使用以下安装命令来安装确切的版本，以保证与本书的兼容性：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install torch==<span class="number">2.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
@@ -258,41 +272,48 @@
 <p><strong>PYTORCH 和 TORCH</strong></p>
 <p>请注意，Python 库之所以命名为 “torch”，主要是因为它是在 Torch 库的基础上进行延续并为 Python 进行了适配（因此得名 “PyTorch”）。名称 “torch” 承认该库的根源在于 Torch，这是一个广泛支持机器学习算法的科学计算框架，最初是使用 Lua 编程语言创建的。</p>
 </blockquote>
-<p>如果你正在寻找关于设置你的 Python 环境或安装本书后续章节中使用的其他库的更多建议和说明，我建议你访问本书的补充 GitHub 仓库：<a target="_blank" rel="noopener" href="https://github.com/rasbt/LLMs-from-scratch。">https://github.com/rasbt/LLMs-from-scratch。</a></p>
+<p>如果你正在寻找关于设置你的 Python 环境或安装本书后续章节中使用的其他库的更多建议和说明，我建议你访问本书的补充 GitHub 仓库：<a target="_blank" rel="noopener" href="https://github.com/rasbt/LLMs-from-scratch%E3%80%82">https://github.com/rasbt/LLMs-from-scratch。</a></p>
 <p>安装 PyTorch 之后，你可以通过在 Python 中运行以下代码来检查你的安装是否能够检测并且使用你电脑上的 NVIDIA 显卡：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">torch.cuda.is_available()</span><br></pre></td></tr></table></figure>
 <p>上述代码返回：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="literal">True</span></span><br></pre></td></tr></table></figure>
 <p>如果命令返回 <code>True</code>，那就说明你的配置没问题了。如果命令返回 <code>False</code>，那可能是你的电脑没有兼容的显卡，或者 PyTorch 没有检测到它。虽然本书的前几章内容并不强制要求使用 GPU（主要出于教学目的），但它们可以显著加快与深度学习相关的计算速度。</p>
-<p>如果你没有 GPU，有一些云计算服务提供商可以按小时收费让你使用 GPU 进行计算。一个很受欢迎的、类似于 Jupyter Notebook 的环境是 Google Colab (<a target="_blank" rel="noopener" href="https://colab.research.google.com)，截至本书撰写之时，它提供有时限的">https://colab.research.google.com)，截至本书撰写之时，它提供有时限的</a> GPU 使用权限。通过“运行时”菜单，你可以选择使用 GPU，如图 A.5 的截图所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.5.png" alt=""></p>
+<p>如果你没有 GPU，有一些云计算服务提供商可以按小时收费让你使用 GPU 进行计算。一个很受欢迎的、类似于 Jupyter Notebook 的环境是 Google Colab (<a target="_blank" rel="noopener" href="https://colab.research.google.com">https://colab.research.google.com</a>)，截至本书撰写之时，它提供有时限的 GPU 使用权限。通过“运行时”菜单，你可以选择使用 GPU，如图 A.5 的截图所示。</p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.5.png" alt=""></p>
 <blockquote>
 <p>[!NOTE]</p>
 <p><strong>Apple Silicon 上的 PyTorch</strong></p>
 <p>如果你有一台搭载 Apple Silicon 芯片（例如 M1、M2、M3 或更新型号）的苹果 Mac 电脑，你可以选择利用它的性能来加速 PyTorch 代码的执行。要使用你的 Apple Silicon 芯片来运行 PyTorch，你首先需要像之前一样安装 PyTorch。然后，要检查你的 Mac 是否支持通过其 Apple Silicon 芯片加速 PyTorch，你可以在 Python 中运行一个简单的代码片段：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(torch.backends.mps.is_available())</span><br></pre></td></tr></table></figure>
 <p>如果它返回 <code>True</code>，那就意味着你的 Mac 电脑配备了可以用来加速 PyTorch 代码的 Apple Silicon 芯片。</p>
+</blockquote>
+<blockquote>
 <p>[!NOTE]</p>
 <p><strong>练习 A.1</strong></p>
 <p>在你的电脑上安装并配置好 PyTorch。</p>
+</blockquote>
+<blockquote>
 <p>[!NOTE]</p>
 <p><strong>练习 A.2</strong></p>
 <p>运行位于 <a target="_blank" rel="noopener" href="https://github.com/rasbt/LLMs-from-scratch">https://github.com/rasbt/LLMs-from-scratch</a> 的补充材料中第二章的代码，该代码会检查你的环境是否已正确设置。</p>
 </blockquote>
-<h2 id="A-2-理解张量"><a href="#A-2-理解张量" class="headerlink" title="A.2 理解张量"></a>A.2 理解张量</h2><p>张量代表一个将向量和矩阵向更高维度的推广的数学概念。换句话说，张量是可以用它们的阶（或秩）来描述的数学对象，阶（或秩）表示了张量的维度数量。例如，一个标量（就是一个数字）是 0 阶张量，一个向量是 1 阶张量，一个矩阵是 2 阶张量，如图 A.6 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.6.png" alt=""></p>
+<h2 id="A-2-理解张量">A.2 理解张量</h2>
+<p>张量代表一个将向量和矩阵向更高维度的推广的数学概念。换句话说，张量是可以用它们的阶（或秩）来描述的数学对象，阶（或秩）表示了张量的维度数量。例如，一个标量（就是一个数字）是 0 阶张量，一个向量是 1 阶张量，一个矩阵是 2 阶张量，如图 A.6 所示。</p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.6.png" alt=""></p>
 <p>从计算的角度来看，张量充当数据容器。例如，它们可以存储多维数据，其中每个维度代表一个不同的特征。张量库（例如 PyTorch）可以高效地创建、操作和计算这些多维数组。在这种情况下，张量库的作用类似于数组库。</p>
 <p>PyTorch 张量与 NumPy 数组类似，但具有一些对深度学习来说很重要的额外特性。例如，PyTorch 添加了一个自动微分引擎，简化了梯度的计算，这将在后面的 2.4 节中讨论。PyTorch 张量还支持 GPU 计算，以加速深度神经网络的训练，我们将在后面的 2.8 节中讨论。</p>
 <blockquote>
 <p>[!NOTE]</p>
 <p><strong>PyTorch 拥有类似 NumPy 的 API</strong></p>
-<p>正如接下来的章节所示，PyTorch 在其张量运算中采用了大部分 NumPy 数组 API 和语法。如果你不熟悉 NumPy ，可以通过我的文章《Python 科学计算：NumPy 和 Matplotlib 简介》（<a target="_blank" rel="noopener" href="https://sebastianraschka.com/blog/2020/numpy-intro.html）快速了解最相关的概念。">https://sebastianraschka.com/blog/2020/numpy-intro.html）快速了解最相关的概念。</a></p>
+<p>正如接下来的章节所示，PyTorch 在其张量运算中采用了大部分 NumPy 数组 API 和语法。如果你不熟悉 NumPy ，可以通过我的文章《Python 科学计算：NumPy 和 Matplotlib 简介》（<a target="_blank" rel="noopener" href="https://sebastianraschka.com/blog/2020/numpy-intro.html%EF%BC%89%E5%BF%AB%E9%80%9F%E4%BA%86%E8%A7%A3%E6%9C%80%E7%9B%B8%E5%85%B3%E7%9A%84%E6%A6%82%E5%BF%B5%E3%80%82">https://sebastianraschka.com/blog/2020/numpy-intro.html）快速了解最相关的概念。</a></p>
 </blockquote>
 <p>接下来的小节将介绍 PyTorch 张量库的基本操作，展示如何创建简单的张量以及一些基本操作。</p>
-<h3 id="A-2-1-标量、向量、矩阵和张量"><a href="#A-2-1-标量、向量、矩阵和张量" class="headerlink" title="A.2.1 标量、向量、矩阵和张量"></a>A.2.1 标量、向量、矩阵和张量</h3><p>如前所述，PyTorch 张量是用于存储类似数组结构的数据容器。标量是 0 维张量（例如，一个简单的数字），向量是 1 维张量，而矩阵是 2 维张量。对于更高维度的张量没有特定的术语，所以我们通常将 3 维张量称为 3D 张量，以此类推。</p>
+<h3 id="A-2-1-标量、向量、矩阵和张量">A.2.1 标量、向量、矩阵和张量</h3>
+<p>如前所述，PyTorch 张量是用于存储类似数组结构的数据容器。标量是 0 维张量（例如，一个简单的数字），向量是 1 维张量，而矩阵是 2 维张量。对于更高维度的张量没有特定的术语，所以我们通常将 3 维张量称为 3D 张量，以此类推。</p>
 <p>我们可以使用 <code>torch.tensor</code> 函数创建 PyTorch 的 <code>Tensor</code> 类的对象，如下所示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing A.1 Creating PyTorch tensors</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch</span><br><span class="line">tensor0d = torch.tensor(<span class="number">1</span>)                                    <span class="comment">#A</span></span><br><span class="line">tensor1d = torch.tensor([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])                            <span class="comment">#B</span></span><br><span class="line">tensor2d = torch.tensor([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]])                     <span class="comment">#C</span></span><br><span class="line">tensor3d = torch.tensor([[[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>]], [[<span class="number">5</span>, <span class="number">6</span>], [<span class="number">7</span>, <span class="number">8</span>]]]) <span class="comment">#D</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#A 从 Python 整数创建一个 0 维张量（标量）</span></span><br><span class="line"><span class="comment">#B 从 Python 列表创建一个 1 维张量（向量）</span></span><br><span class="line"><span class="comment">#C 从嵌套的 Python 列表创建一个 2 维张量</span></span><br><span class="line"><span class="comment">#D 从嵌套的 Python 列表创建一个 3 维张量</span></span><br></pre></td></tr></table></figure>
-<h3 id="A-2-2-张量数据类型"><a href="#A-2-2-张量数据类型" class="headerlink" title="A.2.2 张量数据类型"></a>A.2.2 张量数据类型</h3><p>在前一节中，我们从 Python 整数创建了张量。在这种情况下，PyTorch 采用了 Python 的默认 64 位整数类型。我们可以通过张量的 <code>.dtype</code> 属性来访问张量的数据类型：</p>
+<h3 id="A-2-2-张量数据类型">A.2.2 张量数据类型</h3>
+<p>在前一节中，我们从 Python 整数创建了张量。在这种情况下，PyTorch 采用了 Python 的默认 64 位整数类型。我们可以通过张量的 <code>.dtype</code> 属性来访问张量的数据类型：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tensor1d = torch.tensor([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line"><span class="built_in">print</span>(tensor1d.dtype)</span><br></pre></td></tr></table></figure>
 <p>输出如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.int64</span><br></pre></td></tr></table></figure>
@@ -305,8 +326,9 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">floatvec = tensor1d.to(torch.float32)</span><br><span class="line"><span class="built_in">print</span>(floatvec.dtype)</span><br></pre></td></tr></table></figure>
 <p>输出如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.float32</span><br></pre></td></tr></table></figure>
-<p>要了解更多关于 PyTorch 中可用的不同张量数据类型的信息，我建议查看官方文档：<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/tensors.html。">https://pytorch.org/docs/stable/tensors.html。</a></p>
-<h3 id="A-2-3-常用的-PyTorch-张量操作"><a href="#A-2-3-常用的-PyTorch-张量操作" class="headerlink" title="A.2.3 常用的 PyTorch 张量操作"></a>A.2.3 常用的 PyTorch 张量操作</h3><p>本书无法全面涵盖所有不同的 PyTorch 张量操作和命令，但我们会在本书中介绍相关操作时简要描述它们。</p>
+<p>要了解更多关于 PyTorch 中可用的不同张量数据类型的信息，我建议查看官方文档：<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/tensors.html%E3%80%82">https://pytorch.org/docs/stable/tensors.html。</a></p>
+<h3 id="A-2-3-常用的-PyTorch-张量操作">A.2.3 常用的 PyTorch 张量操作</h3>
+<p>本书无法全面涵盖所有不同的 PyTorch 张量操作和命令，但我们会在本书中介绍相关操作时简要描述它们。</p>
 <p>在我们继续学习下一节关于计算图概念的内容之前，下面列出了一些最基本的 PyTorch 张量操作。</p>
 <p>我们已经介绍过使用 <code>torch.tensor()</code> 函数来创建新的张量。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tensor2d = torch.tensor([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>], [<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>]])</span><br><span class="line"><span class="built_in">print</span>(tensor2d)</span><br></pre></td></tr></table></figure>
@@ -337,16 +359,18 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(tensor2d @ tensor2d.T)</span><br></pre></td></tr></table></figure>
 <p>输出如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tensor([[<span class="number">14</span>, <span class="number">32</span>],</span><br><span class="line">        [<span class="number">32</span>, <span class="number">77</span>]])</span><br></pre></td></tr></table></figure>
-<p>如前所述，我们将在本书的后续内容中根据需要介绍其他操作。对于想要浏览 PyTorch 中所有不同张量操作的读者（提示：我们不会用到其中的大多数），我建议查看官方文档：<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/tensors.html。">https://pytorch.org/docs/stable/tensors.html。</a></p>
-<h2 id="A-3-将模型视为计算图"><a href="#A-3-将模型视为计算图" class="headerlink" title="A.3 将模型视为计算图"></a>A.3 将模型视为计算图</h2><p>在前一节中，我们介绍了 PyTorch 的三个主要组成部分之一，即其张量库。接下来介绍 PyTorch 的自动微分引擎，也称为 autograd。PyTorch 的 autograd 系统提供了自动计算动态计算图中梯度的功能。但在我们深入探讨下一节中梯度的计算之前，让我们先定义一下计算图的概念。</p>
+<p>如前所述，我们将在本书的后续内容中根据需要介绍其他操作。对于想要浏览 PyTorch 中所有不同张量操作的读者（提示：我们不会用到其中的大多数），我建议查看官方文档：<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/tensors.html%E3%80%82">https://pytorch.org/docs/stable/tensors.html。</a></p>
+<h2 id="A-3-将模型视为计算图">A.3 将模型视为计算图</h2>
+<p>在前一节中，我们介绍了 PyTorch 的三个主要组成部分之一，即其张量库。接下来介绍 PyTorch 的自动微分引擎，也称为 autograd。PyTorch 的 autograd 系统提供了自动计算动态计算图中梯度的功能。但在我们深入探讨下一节中梯度的计算之前，让我们先定义一下计算图的概念。</p>
 <p>计算图是一个有向图，它允许我们表达和可视化数学表达式。在深度学习的背景下，计算图描绘了计算神经网络输出所需的计算序列——我们稍后将需要它来计算反向传播所需的梯度，反向传播是神经网络的主要训练算法。</p>
 <p>让我们看一个具体的例子来解释计算图的概念。以下代码实现了一个简单逻辑回归分类器的前向传播（预测步骤），它可以被看作是一个单层神经网络，返回一个介于 0 和 1 之间的分数，在计算损失时，这个分数会与真实的类别标签（0 或 1）进行比较：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing A.2 A logistic regression forward pass</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F <span class="comment">#A</span></span><br><span class="line"></span><br><span class="line">y = torch.tensor([<span class="number">1.0</span>])         <span class="comment">#B</span></span><br><span class="line">x1 = torch.tensor([<span class="number">1.1</span>])        <span class="comment">#C</span></span><br><span class="line">w1 = torch.tensor([<span class="number">2.2</span>])        <span class="comment">#D</span></span><br><span class="line">b = torch.tensor([<span class="number">0.0</span>])         <span class="comment">#E</span></span><br><span class="line">z = x1 * w1 + b                 <span class="comment">#F</span></span><br><span class="line">a = torch.sigmoid(z)            <span class="comment">#G</span></span><br><span class="line"></span><br><span class="line">loss = F.binary_cross_entropy(a, y)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#A 这是 PyTorch 中常见的导入约定，用于避免代码行过长</span></span><br><span class="line"><span class="comment">#B 真实标签</span></span><br><span class="line"><span class="comment">#C 输入特征</span></span><br><span class="line"><span class="comment">#D 权重参数</span></span><br><span class="line"><span class="comment">#E 偏置单元</span></span><br><span class="line"><span class="comment">#F 网络输入</span></span><br><span class="line"><span class="comment">#G 激活与输出</span></span><br></pre></td></tr></table></figure>
 <p>如果你不完全理解上面代码中的所有内容，不用担心。这个例子的重点不是实现一个逻辑回归分类器，而是为了说明我们如何将一系列计算视为一个计算图，如图 A.7 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.7.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.7.png" alt=""></p>
 <p>事实上，PyTorch 在后台构建了这样一个计算图，我们可以利用它来计算损失函数相对于模型参数（这里是 w1 和 b）的梯度，从而训练模型，这也是接下来章节的主题。</p>
-<h2 id="A-4-轻松实现自动微分"><a href="#A-4-轻松实现自动微分" class="headerlink" title="A.4 轻松实现自动微分"></a>A.4 轻松实现自动微分</h2><p>在上一节中，我们介绍了计算图的概念。如果在 PyTorch 中进行计算，默认情况下，PyTorch 通过构建计算图，并利用你设置的 <code>requires_grad=True</code> 标记，就能自动帮你计算出训练神经网络所需的关键信息——梯度，而反向传播就是利用这些梯度来更新模型参数，让模型变得更聪明。如图 A.8 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.8.png" alt=""></p>
+<h2 id="A-4-轻松实现自动微分">A.4 轻松实现自动微分</h2>
+<p>在上一节中，我们介绍了计算图的概念。如果在 PyTorch 中进行计算，默认情况下，PyTorch 通过构建计算图，并利用你设置的 <code>requires_grad=True</code> 标记，就能自动帮你计算出训练神经网络所需的关键信息——梯度，而反向传播就是利用这些梯度来更新模型参数，让模型变得更聪明。如图 A.8 所示。</p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.8.png" alt=""></p>
 <blockquote>
 <p>[!TIP]</p>
 <p><strong>个人思考：</strong> 这里说了一大串，核心其实就是 PyTorch 可以自动帮我们计算“变化率”（也就是梯度），而这个“变化率”对于训练神经网络非常重要。</p>
@@ -359,7 +383,8 @@
 <li><strong>反向传播是一种计算梯度的方法：</strong> “反向传播”是训练神经网络最常用的方法。它本质上就是利用计算图和微积分中的“链式法则”来高效地计算出模型中所有参数的梯度。</li>
 </ul>
 </blockquote>
-<h3 id="偏导数与梯度"><a href="#偏导数与梯度" class="headerlink" title="偏导数与梯度"></a>偏导数与梯度</h3><p>图 A.8 展示了偏导数，它衡量的是当函数的一个变量发生变化时，函数值的变化率。梯度是一个向量，它包含了多元函数（即输入包含多个变量的函数）的所有偏导数。</p>
+<h3 id="偏导数与梯度">偏导数与梯度</h3>
+<p>图 A.8 展示了偏导数，它衡量的是当函数的一个变量发生变化时，函数值的变化率。梯度是一个向量，它包含了多元函数（即输入包含多个变量的函数）的所有偏导数。</p>
 <p>如果你不熟悉或者不记得微积分中的偏导数、梯度或链式法则，别担心。从高层次上来说，本书只需要知道链式法则是一种计算损失函数关于模型参数在计算图中的梯度的方法。这提供了更新每个参数所需的信息，以使其朝着最小化损失函数的方向变化。损失函数可以作为衡量模型性能的指标，而更新参数的方法通常是梯度下降。我们将在 2.7 节“一个典型的训练循环”中重新讨论在 PyTorch 中实现这个训练循环的计算过程。</p>
 <p>那么，这一切是如何与我们之前提到的 PyTorch 库的第二个组成部分，即自动微分 (autograd) 引擎联系起来的呢？通过跟踪对张量执行的每一个操作，PyTorch 的 autograd 引擎在后台构建一个计算图。然后，通过调用 <code>grad</code> 函数，我们可以计算损失相对于模型参数 w1 的梯度，如下所示：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing A.3 Computing gradients via autograd</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> grad</span><br><span class="line"></span><br><span class="line">y = torch.tensor([<span class="number">1.0</span>])</span><br><span class="line">x1 = torch.tensor([<span class="number">1.1</span>])</span><br><span class="line">w1 = torch.tensor([<span class="number">2.2</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line">b = torch.tensor([<span class="number">0.0</span>], requires_grad=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">z = x1 * w1 + b</span><br><span class="line">a = torch.sigmoid(z)</span><br><span class="line"></span><br><span class="line">loss = F.binary_cross_entropy(a, y)</span><br><span class="line"></span><br><span class="line">grad_L_w1 = grad(loss, w1, retain_graph=<span class="literal">True</span>)         <span class="comment">#A</span></span><br><span class="line">grad_L_b = grad(loss, b, retain_graph=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#A 默认情况下，PyTorch 在计算完梯度后会销毁计算图以释放内存。然而，由于我们稍后将重用这个计算图，所以我们设置了 retain_graph=True，使其保留在内存中。</span></span><br></pre></td></tr></table></figure>
@@ -372,9 +397,10 @@
 <p>输出如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(tensor([-<span class="number">0.0898</span>]),)</span><br><span class="line">(tensor([-<span class="number">0.0817</span>]),)</span><br></pre></td></tr></table></figure>
 <p>如果本节信息量很大，并且你可能对微积分的概念感到不知所措，请不要担心。虽然这些微积分术语是为了解释 PyTorch 的 autograd 组件，但你只需要从本节中记住，PyTorch 会通过 <code>.backward</code> 方法为我们处理微积分——在本书中，我们不需要手动计算任何导数或梯度。</p>
-<h2 id="A-5-实现多层神经网络"><a href="#A-5-实现多层神经网络" class="headerlink" title="A.5 实现多层神经网络"></a>A.5 实现多层神经网络</h2><p>在之前的章节中，我们介绍了 PyTorch 的张量和自动微分组件。本节重点介绍如何通过 PyTorch 实现深度神经网络。</p>
+<h2 id="A-5-实现多层神经网络">A.5 实现多层神经网络</h2>
+<p>在之前的章节中，我们介绍了 PyTorch 的张量和自动微分组件。本节重点介绍如何通过 PyTorch 实现深度神经网络。</p>
 <p>为了提供一个具体的例子，我们将重点介绍多层感知器，它是一种全连接神经网络，如图 A.9 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.9.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.9.png" alt=""></p>
 <p>在 PyTorch 中实现神经网络时，我们通常会继承 <code>torch.nn.Module</code> 类来定义我们自己的自定义网络架构。这个 <code>Module</code> 基类提供了许多功能，使得构建和训练模型更加容易。例如，它允许我们封装层和操作，并跟踪模型的参数。</p>
 <p>在<code>torch.nn.Module</code>的子类中，我们在 <code>__init__</code> 构造函数中定义网络层，并在 <code>forward</code> 方法中指定它们如何交互。<code>forward</code> 方法描述了输入数据如何通过网络并组合成一个计算图。</p>
 <p>相比之下，<code>backward</code> 方法（我们通常不需要自己实现）在训练期间用于计算损失函数相对于模型参数的梯度，正如我们将在 2.7 节“一个典型的训练循环”中看到的那样。</p>
@@ -430,14 +456,17 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">out = model(X)</span><br><span class="line"><span class="built_in">print</span>(out)</span><br></pre></td></tr></table></figure>
 <p>输出结果如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensor([[-<span class="number">0.1262</span>, <span class="number">0.1080</span>, -<span class="number">0.1792</span>]])</span><br></pre></td></tr></table></figure>
-<p>在 PyTorch 中，一种常见的做法是将模型编码成返回最后一层（logits）的输出，而不会将它们传递给非线性激活函数。这是因为<br> PyTorch 常用的损失函数将 softmax（或二元分类的sigmoid）运算与负对数似然损失组合在一个类中。这样做的原因是<br>出于数值效率和稳定性的考虑。因此，如果我们想计算预测的类别成员概率，则必须显式调用softmax函数：</p>
+<p>在 PyTorch 中，一种常见的做法是将模型编码成返回最后一层（logits）的输出，而不会将它们传递给非线性激活函数。这是因为<br>
+PyTorch 常用的损失函数将 softmax（或二元分类的sigmoid）运算与负对数似然损失组合在一个类中。这样做的原因是<br>
+出于数值效率和稳定性的考虑。因此，如果我们想计算预测的类别成员概率，则必须显式调用softmax函数：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> torch.no_grad():</span><br><span class="line">out = torch.softmax(model(X), dim=<span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span>(out)</span><br></pre></td></tr></table></figure>
 <p>输出如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensor([[<span class="number">0.3113</span>, <span class="number">0.3934</span>, <span class="number">0.2952</span>]])</span><br></pre></td></tr></table></figure>
 <p>现在这些值可以解释为总和为1的类别成员概率。对于这个随机输入，这些值大致相等，这对于一个未经训练的、随机初始化的模型来说是预期的。</p>
 <p>在接下来的两节中，我们将学习如何设置一个高效的数据加载器并训练模型。</p>
-<h2 id="A-6-设置高效的数据加载器"><a href="#A-6-设置高效的数据加载器" class="headerlink" title="A.6 设置高效的数据加载器"></a>A.6 设置高效的数据加载器</h2><p>在上一节中，我们自定义了一个神经网络模型。在训练这个模型之前，我们需要简要地讨论一下如何在 PyTorch 中创建高效的数据加载器，以便在训练模型的过程中使用。PyTorch 中数据加载的总体思路如图 A.10 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.10.png" alt=""></p>
+<h2 id="A-6-设置高效的数据加载器">A.6 设置高效的数据加载器</h2>
+<p>在上一节中，我们自定义了一个神经网络模型。在训练这个模型之前，我们需要简要地讨论一下如何在 PyTorch 中创建高效的数据加载器，以便在训练模型的过程中使用。PyTorch 中数据加载的总体思路如图 A.10 所示。</p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.10.png" alt=""></p>
 <p>根据图 A.10 中的说明，在本节中，我们将实现一个自定义的 <code>Dataset</code> 类，接着使用它来创建训练数据集和测试数据集，最后用这些数据集来创建数据加载器。</p>
 <p>让我们首先创建一个简单的玩具数据集，其中包含五个训练样本，每个样本有两个特征。伴随这些训练样本，我们还创建了一个包含相应类别标签的张量：其中三个样本属于类别 0，另外两个样本属于类别 1。此外，我们还创建了一个包含两个条目的测试集。创建此数据集的代码如下所示。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing A.5 Creating a small toy dataset</span></span><br><span class="line"></span><br><span class="line">X_train = torch.tensor([</span><br><span class="line">    [-<span class="number">1.2</span>, <span class="number">3.1</span>],</span><br><span class="line">    [-<span class="number">0.9</span>, <span class="number">2.9</span>],</span><br><span class="line">    [-<span class="number">0.5</span>, <span class="number">2.6</span>],</span><br><span class="line">    [<span class="number">2.3</span>, -<span class="number">1.1</span>],</span><br><span class="line">    [<span class="number">2.7</span>, -<span class="number">1.5</span>]</span><br><span class="line">])</span><br><span class="line">y_train = torch.tensor([<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">X_test = torch.tensor([</span><br><span class="line">    [-<span class="number">0.8</span>, <span class="number">2.8</span>],</span><br><span class="line">    [<span class="number">2.6</span>, -<span class="number">1.6</span>],</span><br><span class="line">])</span><br><span class="line">y_test = torch.tensor([<span class="number">0</span>, <span class="number">1</span>])</span><br></pre></td></tr></table></figure>
@@ -472,11 +501,12 @@
 <p>结果如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Batch <span class="number">1</span>: tensor([[-<span class="number">0.9000</span>, <span class="number">2.9000</span>],</span><br><span class="line">				[ <span class="number">2.3000</span>, -<span class="number">1.1000</span>]]) tensor([<span class="number">0</span>, <span class="number">1</span>])</span><br><span class="line">Batch <span class="number">2</span>: tensor([[ <span class="number">2.7000</span>, -<span class="number">1.5000</span>],</span><br><span class="line">				[-<span class="number">0.5000</span>, <span class="number">2.6000</span>]]) tensor([<span class="number">1</span>, <span class="number">0</span>])</span><br></pre></td></tr></table></figure>
 <p>最后，让我们讨论一下 <code>DataLoader</code> 中的 <code>num_workers=0</code> 这个设置。PyTorch <code>DataLoader</code> 函数中的这个参数对于并行化数据加载和预处理至关重要。当 <code>num_workers</code> 设置为 0 时，数据加载将在主进程中完成，而不是在单独的工作进程中。这看起来可能没什么问题，但当我们使用 GPU 训练更大的网络时，可能会导致模型训练速度显著下降。这是因为 CPU 除了专注于深度学习模型的处理外，还必须花费时间来加载和预处理数据。结果，GPU 可能会在等待 CPU 完成这些任务时处于空闲状态。相反，当 <code>num_workers</code> 设置为大于零的数字时，会启动多个工作进程来并行加载数据，从而使主进程可以专注于训练你的模型并更好地利用系统的资源，如图 A.11 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.11.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.11.png" alt=""></p>
 <p>然而，如果我们处理的是非常小的数据集，那么将 <code>num_workers</code> 设置为 1 或更大的值可能没有必要，因为总的训练时间可能只需要几分之一秒。相反，如果你处理的是非常小的数据集或者像 Jupyter 笔记本这样的交互式环境，增加 <code>num_workers</code> 可能不会带来任何明显的加速。事实上，它们甚至可能导致一些问题。一个潜在的问题是启动多个工作进程的开销，当你的数据集很小时，这个开销可能比实际的数据加载时间还要长。</p>
 <p>此外，对于 Jupyter 笔记本，将 <code>num_workers</code> 设置为大于 0 的值有时会导致不同进程之间资源共享的问题，从而引发错误或笔记本崩溃。因此，理解这种权衡并在设置 <code>num_workers</code> 参数时做出明智的决定至关重要。如果使用得当，它可以是一个有益的工具，但应该根据你的具体数据集大小和计算环境进行调整，以获得最佳结果。</p>
 <p>根据我的经验，对于许多真实世界的数据集，将 <code>num_workers</code> 设置为 4 通常可以获得最佳性能，但最佳设置取决于你的硬件以及在 <code>Dataset</code> 类中定义的用于加载训练样本的代码。</p>
-<h2 id="4-7-一个典型的训练循环"><a href="#4-7-一个典型的训练循环" class="headerlink" title="4.7 一个典型的训练循环"></a>4.7 一个典型的训练循环</h2><p>到目前为止，我们已经讨论了训练神经网络的所有必要条件：PyTorch 的张量库、自动梯度（autograd）、模块 API（Module API）和高效的数据加载器。现在，让我们将所有这些要素结合起来，并在上一节创建的玩具数据集上训练一个神经网络。训练代码如下面的代码清单 A.9 所示。</p>
+<h2 id="4-7-一个典型的训练循环">4.7 一个典型的训练循环</h2>
+<p>到目前为止，我们已经讨论了训练神经网络的所有必要条件：PyTorch 的张量库、自动梯度（autograd）、模块 API（Module API）和高效的数据加载器。现在，让我们将所有这些要素结合起来，并在上一节创建的玩具数据集上训练一个神经网络。训练代码如下面的代码清单 A.9 所示。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing A.9 Neural network training in PyTorch</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"></span><br><span class="line">torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">model = NeuralNetwork(num_inputs=<span class="number">2</span>, num_outputs=<span class="number">2</span>)         <span class="comment">#A</span></span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">0.5</span>)    <span class="comment">#B</span></span><br><span class="line"></span><br><span class="line">num_epochs = <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(num_epochs):</span><br><span class="line">  </span><br><span class="line">    model.train()</span><br><span class="line">    <span class="keyword">for</span> batch_idx, (features, labels) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_loader):</span><br><span class="line">      </span><br><span class="line">        logits = model(features)</span><br><span class="line">        loss = F.cross_entropy(logits, labels)</span><br><span class="line">        </span><br><span class="line">        optimizer.zero_grad()                             <span class="comment">#C</span></span><br><span class="line">        loss.backward()                                   <span class="comment">#D</span></span><br><span class="line">        optimizer.step()                                  <span class="comment">#E</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">### LOGGING</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Epoch: <span class="subst">&#123;epoch+<span class="number">1</span>:03d&#125;</span>/<span class="subst">&#123;num_epochs:03d&#125;</span>&quot;</span></span><br><span class="line">              <span class="string">f&quot; | Batch <span class="subst">&#123;batch_idx:03d&#125;</span>/<span class="subst">&#123;<span class="built_in">len</span>(train_loader):03d&#125;</span>&quot;</span></span><br><span class="line">              <span class="string">f&quot; | Train Loss: <span class="subst">&#123;loss:<span class="number">.2</span>f&#125;</span>&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    model.<span class="built_in">eval</span>()</span><br><span class="line">    <span class="comment"># Optional model evaluation</span></span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="comment">#A 上一节的数据集包含 2 个特征和 2 个类别</span></span><br><span class="line"><span class="comment">#B 我们让优化器知道需要优化哪些参数</span></span><br><span class="line"><span class="comment">#C 将上一轮的梯度设置为零，以防止意外的梯度累积</span></span><br><span class="line"><span class="comment">#D 计算损失函数相对于模型参数的梯度</span></span><br><span class="line"><span class="comment">#E 优化器使用梯度来更新模型参数</span></span><br></pre></td></tr></table></figure>
 <p>运行上面清单 A.9 中的代码会产生以下输出：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Epoch: 001/003 | Batch <span class="number">000</span>/002 | Train Loss: <span class="number">0.75</span></span><br><span class="line">Epoch: 001/003 | Batch 001/002 | Train Loss: <span class="number">0.65</span></span><br><span class="line">Epoch: 002/003 | Batch <span class="number">000</span>/002 | Train Loss: <span class="number">0.44</span></span><br><span class="line">Epoch: 002/003 | Batch 001/002 | Trainl Loss: <span class="number">0.13</span></span><br><span class="line">Epoch: 003/003 | Batch <span class="number">000</span>/002 | Train Loss: <span class="number">0.03</span></span><br><span class="line">Epoch: 003/003 | Batch 001/002 | Train Loss: <span class="number">0.00</span></span><br></pre></td></tr></table></figure>
@@ -550,7 +580,8 @@
 <p>输出如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.0</span></span><br></pre></td></tr></table></figure>
 <p>在本节中，我们学习了如何使用 PyTorch 训练神经网络。接下来，让我们看看如何在训练后保存和恢复模型。</p>
-<h2 id="4-8-保存和加载模型"><a href="#4-8-保存和加载模型" class="headerlink" title="4.8 保存和加载模型"></a>4.8 保存和加载模型</h2><p>在上一节中，我们成功地训练了一个模型。现在让我们看看如何保存已训练好的模型以便以后重用。</p>
+<h2 id="4-8-保存和加载模型">4.8 保存和加载模型</h2>
+<p>在上一节中，我们成功地训练了一个模型。现在让我们看看如何保存已训练好的模型以便以后重用。</p>
 <p>这是在 PyTorch 中保存和加载模型的推荐方法：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">torch.save(model.state_dict(), <span class="string">&quot;model.pth&quot;</span>)</span><br></pre></td></tr></table></figure>
 <p>模型的 <code>state_dict</code> 是一个 Python 字典对象，它将模型中的每一层映射到其可训练的参数（权重和偏置）。注意，“model.pth” 是保存在磁盘上的模型文件名。我们可以随意命名和设置文件扩展名；然而，<code>.pth</code> 和 <code>.pt</code> 是最常见的约定。</p>
@@ -559,8 +590,10 @@
 <p><code>torch.load(&quot;model.pth&quot;)</code> 函数读取文件 “model.pth” 并重建包含模型参数的 Python 字典对象，同时， <code>model.load_state_dict()</code> 将这些参数应用于模型，从而有效地恢复其保存时的学习状态。</p>
 <p>注意，如果你在保存模型的同一个会话中执行此代码，那么上面的 <code>model = NeuralNetwork(2, 2)</code> 这行代码严格来说并不是必需的。然而，我在这里包含了这行代码，是为了说明我们需要在内存中有一个模型实例才能应用已保存的参数。在这里，<code>NeuralNetwork(2, 2)</code> 的架构需要与原始保存的模型完全匹配。</p>
 <p>现在，我们已经具备了使用 PyTorch 实现大语言模型的能力。不过，在我入下一章节之前，最后一节将向你展示如何使用一个或多个 GPU（如果可用）更快地训练 PyTorch 模型。</p>
-<h2 id="A-9-使用-GPU-优化训练性能"><a href="#A-9-使用-GPU-优化训练性能" class="headerlink" title="A.9 使用 GPU 优化训练性能"></a>A.9 使用 GPU 优化训练性能</h2><p>在本章的最后一节中，我们将学习如何利用 GPU 来加速深度神经网络的训练，相比于普通的 CPU，GPU 可以显著提升训练速度。首先，我们将介绍 PyTorch 中 GPU 计算背后的主要概念。然后，我们将在一个 GPU 上训练一个模型。最后，我们将探讨使用多个 GPU 进行分布式训练。</p>
-<h3 id="9-1-PyTorch-在-GPU-设备上的计算"><a href="#9-1-PyTorch-在-GPU-设备上的计算" class="headerlink" title="9.1 PyTorch 在 GPU 设备上的计算"></a>9.1 PyTorch 在 GPU 设备上的计算</h3><p>正如你将看到的，仅需修改三行代码，就可以将 2.7 节中的训练循环代码运行在 GPU 上。</p>
+<h2 id="A-9-使用-GPU-优化训练性能">A.9 使用 GPU 优化训练性能</h2>
+<p>在本章的最后一节中，我们将学习如何利用 GPU 来加速深度神经网络的训练，相比于普通的 CPU，GPU 可以显著提升训练速度。首先，我们将介绍 PyTorch 中 GPU 计算背后的主要概念。然后，我们将在一个 GPU 上训练一个模型。最后，我们将探讨使用多个 GPU 进行分布式训练。</p>
+<h3 id="9-1-PyTorch-在-GPU-设备上的计算">9.1 PyTorch 在 GPU 设备上的计算</h3>
+<p>正如你将看到的，仅需修改三行代码，就可以将 2.7 节中的训练循环代码运行在 GPU 上。</p>
 <p>在我们进行修改之前，理解 PyTorch 中 GPU 计算背后的主要概念至关重要。首先，我们需要介绍“设备”的概念。在 PyTorch 中，“设备”是指计算发生和数据存储的地方。CPU 和 GPU 就是设备的例子。一个 PyTorch 张量驻留在某个设备上，并且其上的所有操作都在同一个设备上执行。</p>
 <p>让我们看看这在实际中是如何运作的。假设你已经按照 2.1.3 节“安装 PyTorch”中的说明安装了与 GPU 兼容的 PyTorch 版本，我们可以通过以下代码再次确认我们的运行时环境是否支持 GPU 计算：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(torch.cuda.is_available())</span><br></pre></td></tr></table></figure>
@@ -574,13 +607,14 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">tensor_1 = tensor_1.to(<span class="string">&quot;cuda&quot;</span>)</span><br><span class="line">tensor_2 = tensor_2.to(<span class="string">&quot;cuda&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(tensor_1 + tensor_2)</span><br></pre></td></tr></table></figure>
 <p>输出结果如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tensor([<span class="number">5.</span>, <span class="number">7.</span>, <span class="number">9.</span>], device=<span class="string">&#x27;cuda:0&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p>请注意，生成的张量现在包含了设备信息，<code>device=&#39;cuda:0&#39;</code>，这意味着这些张量位于第一个 GPU 上。如果你的机器装有多个 GPU，你可以选择指定要将张量转移到哪个 GPU 上。你可以通过在传输命令中指定设备 ID 来做到这一点。例如，你可以使用 <code>.to(&quot;cuda:0&quot;)</code>、<code>.to(&quot;cuda:1&quot;)</code> 等等。</p>
+<p>请注意，生成的张量现在包含了设备信息，<code>device='cuda:0'</code>，这意味着这些张量位于第一个 GPU 上。如果你的机器装有多个 GPU，你可以选择指定要将张量转移到哪个 GPU 上。你可以通过在传输命令中指定设备 ID 来做到这一点。例如，你可以使用 <code>.to(&quot;cuda:0&quot;)</code>、<code>.to(&quot;cuda:1&quot;)</code> 等等。</p>
 <p>然而，需要注意的是，所有参与运算的张量必须位于同一个设备上。否则，计算将会失败，如下所示，其中一个张量位于 CPU 上，而另一个位于 GPU 上：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tensor_1 = tensor_1.to(<span class="string">&quot;cpu&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(tensor_1 + tensor_2)</span><br></pre></td></tr></table></figure>
 <p>结果如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">RuntimeError Traceback (most recent call last)</span><br><span class="line">&lt;ipython-<span class="built_in">input</span>-<span class="number">7</span>-4ff3c4d20fc3&gt; <span class="keyword">in</span> &lt;cell line: <span class="number">2</span>&gt;()</span><br><span class="line"><span class="number">1</span> tensor_1 = tensor_1.to(<span class="string">&quot;cpu&quot;</span>)</span><br><span class="line">----&gt; <span class="number">2</span> <span class="built_in">print</span>(tensor_1 + tensor_2)</span><br><span class="line">RuntimeError: Expected <span class="built_in">all</span> tensors to be on the same device, but found at least two</span><br><span class="line">devices, cuda:<span class="number">0</span> <span class="keyword">and</span> cpu!</span><br></pre></td></tr></table></figure>
 <p>在本节中，我们了解到在 PyTorch 上进行 GPU 计算是相对简单的。我们所需要做的就是将张量转移到同一个 GPU 设备上，PyTorch 会处理其余的事情。掌握了这些信息，我们现在可以在 GPU 上训练上一节中的神经网络了。</p>
-<h3 id="A-9-2-单-GPU-训练"><a href="#A-9-2-单-GPU-训练" class="headerlink" title="A.9.2 单 GPU 训练"></a>A.9.2 单 GPU 训练</h3><p>现在我们已经熟悉了如何将张量传输到 GPU ，我们可以修改训练循环（参见第 2.7 节“典型的训练循环”），使其在 GPU 上运行。这只需要修改三行代码，如下面的代码清单 A.11 所示。</p>
+<h3 id="A-9-2-单-GPU-训练">A.9.2 单 GPU 训练</h3>
+<p>现在我们已经熟悉了如何将张量传输到 GPU ，我们可以修改训练循环（参见第 2.7 节“典型的训练循环”），使其在 GPU 上运行。这只需要修改三行代码，如下面的代码清单 A.11 所示。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing A.11 A training loop on a GPU</span></span><br><span class="line"></span><br><span class="line">torch.manual_seed(<span class="number">123</span>)</span><br><span class="line">model = NeuralNetwork(num_inputs=<span class="number">2</span>, num_outputs=<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">device = torch.device(<span class="string">&quot;cuda&quot;</span>)                                          <span class="comment">#A</span></span><br><span class="line">model = model.to(device)                                               <span class="comment">#B</span></span><br><span class="line"></span><br><span class="line">optimizer = torch.optim.SGD(model.parameters(), lr=<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line">num_epochs = <span class="number">3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(num_epochs):</span><br><span class="line">  </span><br><span class="line">    model.train()</span><br><span class="line">    <span class="keyword">for</span> batch_idx, (features, labels) <span class="keyword">in</span> <span class="built_in">enumerate</span>(train_loader):</span><br><span class="line">      </span><br><span class="line">        features, labels = features.to(device), labels.to(device)      <span class="comment">#C</span></span><br><span class="line">        logits = model(features)</span><br><span class="line">        loss = F.cross_entropy(logits, labels) <span class="comment"># Loss function</span></span><br><span class="line">        </span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line">        </span><br><span class="line">        <span class="comment">### LOGGING</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Epoch: <span class="subst">&#123;epoch+<span class="number">1</span>:03d&#125;</span>/<span class="subst">&#123;num_epochs:03d&#125;</span>&quot;</span></span><br><span class="line">        <span class="string">f&quot; | Batch <span class="subst">&#123;batch_idx:03d&#125;</span>/<span class="subst">&#123;<span class="built_in">len</span>(train_loader):03d&#125;</span>&quot;</span></span><br><span class="line">        <span class="string">f&quot; | Train/Val Loss: <span class="subst">&#123;loss:<span class="number">.2</span>f&#125;</span>&quot;</span>)</span><br><span class="line">        </span><br><span class="line">		model.<span class="built_in">eval</span>()</span><br><span class="line">		<span class="comment"># Optional model evaluation</span></span><br><span class="line">        </span><br><span class="line"> </span><br><span class="line"><span class="comment">#A 定义一个设备变量，默认设置为 GPU。</span></span><br><span class="line"><span class="comment">#B 将模型转移到 GPU 上。</span></span><br><span class="line"><span class="comment">#C 将数据转移到 GPU 上。</span></span><br></pre></td></tr></table></figure>
 <p>运行上面的代码将输出以下内容，类似于之前在 2.7 节中在 CPU 上获得的结果：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Epoch: 001/003 | Batch <span class="number">000</span>/002 | Train/Val Loss: <span class="number">0.75</span></span><br><span class="line">Epoch: 001/003 | Batch 001/002 | Train/Val Loss: <span class="number">0.65</span></span><br><span class="line">Epoch: 002/003 | Batch <span class="number">000</span>/002 | Train/Val Loss: <span class="number">0.44</span></span><br><span class="line">Epoch: 002/003 | Batch 001/002 | Train/Val Loss: <span class="number">0.13</span></span><br><span class="line">Epoch: 003/003 | Batch <span class="number">000</span>/002 | Train/Val Loss: <span class="number">0.03</span></span><br><span class="line">Epoch: 003/003 | Batch 001/002 | Train/Val Loss: <span class="number">0.00</span></span><br></pre></td></tr></table></figure>
@@ -596,11 +630,14 @@
 <p>变更为：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">device = torch.device(<span class="string">&quot;mps&quot;</span> <span class="keyword">if</span> torch.backends.mps.is_available() <span class="keyword">else</span> <span class="string">&quot;cpu&quot;</span>)</span><br></pre></td></tr></table></figure>
 <p>从而充分利用 GPU 芯片的性能。</p>
+</blockquote>
+<blockquote>
 <p>[!NOTE]</p>
 <p><strong>练习 A.4</strong></p>
 <p>比较在 CPU 上和 GPU 上进行矩阵乘法的运行时长。在什么矩阵尺寸下，你会开始看到在 GPU 上进行的矩阵乘法比在 CPU 上更快？提示：我建议在 Jupyter 中使用 <code>%timeit</code> 命令来比较运行时长。例如，给定矩阵 <code>a</code> 和 <code>b</code>，在新笔记本单元格中运行命令 <code>%timeit a @ b</code>。</p>
 </blockquote>
-<h3 id="A-9-3-使用多个-GPU-训练"><a href="#A-9-3-使用多个-GPU-训练" class="headerlink" title="A.9.3 使用多个 GPU 训练"></a>A.9.3 使用多个 GPU 训练</h3><p>在本节中，我们将简要介绍分布式训练的概念。分布式训练是指将模型训练过程分散到多个 GPU 和机器上进行。</p>
+<h3 id="A-9-3-使用多个-GPU-训练">A.9.3 使用多个 GPU 训练</h3>
+<p>在本节中，我们将简要介绍分布式训练的概念。分布式训练是指将模型训练过程分散到多个 GPU 和机器上进行。</p>
 <p>为什么我们需要这样做呢？这是因为在单个 GPU 或机器上训练模型可能非常耗时。通过将训练过程分布到多台机器上，每台机器可能配备多个 GPU，可以显著缩短训练时间。这在模型开发的实验阶段尤其重要，因为可能需要多次训练迭代来微调模型参数和架构。</p>
 <blockquote>
 <p>[!NOTE]</p>
@@ -608,7 +645,7 @@
 </blockquote>
 <p>在本节中，我们将介绍分布式训练最基本的情况：PyTorch 的 DistributedDataParallel (DDP) 策略。DDP 通过将输入数据拆分到可用的设备上并同时处理这些数据子集来实现并行计算。</p>
 <p>这是如何工作的呢？PyTorch 在每个 GPU 上启动一个独立的进程，每个进程都会接收并保存模型的副本——这些副本在训练过程中会保持同步。为了说明这一点，假设我们有两个想要用来训练神经网络的 GPU，如图 A.12 所示。</p>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.12.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.12.png" alt=""></p>
 <p>如上图所示，两个 GPU 中的每一个都将接收到模型的一个副本。然后，在每个训练迭代中，每个模型都将从数据加载器接收到一个小批量（或称为批次）。我们可以使用 <code>DistributedSampler</code> 来确保在使用 DDP 时，每个 GPU 都将接收到不同的、不重叠的批次。</p>
 <p>由于每个模型副本都会看到不同的训练数据样本，因此模型副本将返回不同的 logits 作为输出，并在反向传播期间计算不同的梯度。然后，这些梯度在训练期间被平均和同步，以更新模型。这样，我们确保模型不会发散，如图 A.13 所示。</p>
 <blockquote>
@@ -625,13 +662,13 @@
 </ol>
 <p>简单来说，多 GPU 训练就像是让多个“学生”（GPU）同时学习不同的“教材”（数据），然后定期交流“学习心得”（梯度），最终让每个“学生”都掌握相同的知识（更新后的模型）。</p>
 </blockquote>
-<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.13.png" alt=""></p>
+<p><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixA/A.13.png" alt=""></p>
 <p>使用 DDP 的好处是，与单个 GPU 相比，它可以显著提高处理数据集的速度。除去使用 DDP 带来的设备之间微小的通信开销，理论上，使用两个 GPU 可以将一个训练 epoch 的处理时间缩短一半，而使用一个 GPU 则需要更长的时间。这种时间效率随着 GPU 数量的增加而提高，如果我们有八个 GPU，就可以将一个 epoch 的处理速度提高八倍，以此类推。</p>
 <blockquote>
 <p>[!NOTE]</p>
 <p><strong>交互式环境中的多 GPU 计算</strong>  DDP 在交互式 Python 环境（如 Jupyter notebooks）中无法正常工作，因为这些环境处理多进程的方式与独立的 Python 脚本不同。因此，以下代码应该作为脚本执行，而不是在像 Jupyter 这样的笔记本界面中执行。这是因为 DDP 需要启动多个进程，并且每个进程都应该有自己的 Python 解释器实例。</p>
 </blockquote>
-<p>现在让我们看看这在实践中是如何运作的。为了简洁起见，我们将只关注之前代码中需要为 DDP 训练进行调整的核心部分。然而，对于那些想在自己的多 GPU 机器或他们选择的云实例上运行代码的读者，建议使用本书 GitHub 仓库中提供的独立脚本，地址是 <a target="_blank" rel="noopener" href="https://github.com/rasbt/LLMs-from-scratch。">https://github.com/rasbt/LLMs-from-scratch。</a></p>
+<p>现在让我们看看这在实践中是如何运作的。为了简洁起见，我们将只关注之前代码中需要为 DDP 训练进行调整的核心部分。然而，对于那些想在自己的多 GPU 机器或他们选择的云实例上运行代码的读者，建议使用本书 GitHub 仓库中提供的独立脚本，地址是 <a target="_blank" rel="noopener" href="https://github.com/rasbt/LLMs-from-scratch%E3%80%82">https://github.com/rasbt/LLMs-from-scratch。</a></p>
 <p>首先，我们将导入一些额外的子模块、类和函数，用于 PyTorch 的分布式训练，如下面的代码清单 A.13 所示。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Listing A.12 PyTorch utilities for distributed training</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> torch.multiprocessing <span class="keyword">as</span> mp</span><br><span class="line"><span class="keyword">from</span> torch.utils.data.distributed <span class="keyword">import</span> DistributedSampler</span><br><span class="line"><span class="keyword">from</span> torch.nn.parallel <span class="keyword">import</span> DistributedDataParallel <span class="keyword">as</span> DDP</span><br><span class="line"><span class="keyword">from</span> torch.distributed <span class="keyword">import</span> init_process_group, destroy_process_group</span><br></pre></td></tr></table></figure>
 <p>在我们深入研究如何更改代码可以使训练与 DDP 兼容之前，让我们先简要介绍一下这些新导入的实用程序的原理和用法，这些实用程序需要与 <code>DistributedDataParallel</code> 类一起使用。</p>
@@ -660,13 +697,14 @@
 <p>正如预期的那样，我们可以看到一些批次在第一个 GPU (GPU0) 上处理，而另一些在第二个 GPU (GPU1) 上处理。然而，在打印训练和测试准确率时，我们看到了重复的输出行。这是因为每个进程（换句话说，每个 GPU）都独立地打印测试准确率。由于 DDP 将模型复制到每个 GPU 上，并且每个进程都独立运行，因此，如果你的测试循环中有打印语句，每个进程都会执行它，从而导致重复的输出行。</p>
 <p>如果这让你感到困扰，你可以使用每个进程的 rank 来控制你的打印语句，从而解决这个问题。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> rank == <span class="number">0</span>: <span class="comment"># only print in the first process</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Test accuracy: &quot;</span>, accuracy)</span><br></pre></td></tr></table></figure>
-<p>总而言之，这就是通过 DDP 进行分布式训练的工作方式。如果你对更多细节感兴趣，我建议查看官方 API 文档：<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html。">https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html。</a></p>
+<p>总而言之，这就是通过 DDP 进行分布式训练的工作方式。如果你对更多细节感兴趣，我建议查看官方 API 文档：<a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html%E3%80%82">https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html。</a></p>
 <blockquote>
 <p>[!NOTE]</p>
-<p><strong>多 GPU 训练的替代 PyTorch API</strong> </p>
-<p>如果你更喜欢在 PyTorch 中使用多个 GPU 的更直接方法，你也可以考虑使用附加 API，例如开源的 Fabric 库，我曾在《加速 PyTorch 模型训练：使用混合精度和全分片数据并行》这篇文章中介绍过它，链接是 <a target="_blank" rel="noopener" href="https://magazine.sebastianraschka.com/p/accelerating-pytorch-modeltraining。">https://magazine.sebastianraschka.com/p/accelerating-pytorch-modeltraining。</a></p>
+<p><strong>多 GPU 训练的替代 PyTorch API</strong></p>
+<p>如果你更喜欢在 PyTorch 中使用多个 GPU 的更直接方法，你也可以考虑使用附加 API，例如开源的 Fabric 库，我曾在《加速 PyTorch 模型训练：使用混合精度和全分片数据并行》这篇文章中介绍过它，链接是 <a target="_blank" rel="noopener" href="https://magazine.sebastianraschka.com/p/accelerating-pytorch-modeltraining%E3%80%82">https://magazine.sebastianraschka.com/p/accelerating-pytorch-modeltraining。</a></p>
 </blockquote>
-<h2 id="A-10-本章摘要"><a href="#A-10-本章摘要" class="headerlink" title="A.10 本章摘要"></a>A.10 本章摘要</h2><ul>
+<h2 id="A-10-本章摘要">A.10 本章摘要</h2>
+<ul>
 <li>PyTorch 是一个开源库，它由三个核心组件构成：一个张量库，自动微分函数，以及深度学习实用工具。</li>
 <li>PyTorch 的张量库类似于 NumPy 等数组库。</li>
 <li>在 PyTorch 中，张量是类似于数组的数据结构，用于表示标量、向量、矩阵和更高维度的数组。</li>
@@ -677,14 +715,14 @@
 <li>在 CPU 或单个 GPU 上训练模型是最简单的。</li>
 <li>如果可以使用多个 GPU，那么使用 DistributedDataParallel 是 PyTorch 中加速训练的最简单方法。</li>
 </ul>
-</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/11/17/CfYA2b.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Transformer大语言模型架构原理学习笔记"/></a><div class="content"><a class="title" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记">Transformer大语言模型架构原理学习笔记</a><time datetime="2025-11-17T12:51:00.000Z" title="发表于 2025-11-17 20:51:00">2025-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/10/31/7I8gnp.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="快速幂、逆元与组合数学"/></a><div class="content"><a class="title" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学">快速幂、逆元与组合数学</a><time datetime="2025-10-31T15:48:33.000Z" title="发表于 2025-10-31 23:48:33">2025-10-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2f58633e.html" title="常用数据结构"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://origin.picgo.net/2025/10/11/792a8743-6d0d-43fe-91b8-0a5a77b529f4a296a597708421a1.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常用数据结构"/></a><div class="content"><a class="title" href="/posts/2f58633e.html" title="常用数据结构">常用数据结构</a><time datetime="2025-10-11T11:00:00.000Z" title="发表于 2025-10-11 19:00:00">2025-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7258f8a4.html" title="THYTHM 音游"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/08/01/HotT9.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="THYTHM 音游"/></a><div class="content"><a class="title" href="/posts/7258f8a4.html" title="THYTHM 音游">THYTHM 音游</a><time datetime="2025-08-01T04:00:00.000Z" title="发表于 2025-08-01 12:00:00">2025-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/73e7a68a.html" title="力扣每日一题讲解"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/07/24/QEaxN.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="力扣每日一题讲解"/></a><div class="content"><a class="title" href="/posts/73e7a68a.html" title="力扣每日一题讲解">力扣每日一题讲解</a><time datetime="2025-07-24T08:50:00.000Z" title="发表于 2025-07-24 16:50:00">2025-07-24</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">7</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/11/17/CfYA2b.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Transformer大语言模型架构原理学习笔记"/></a><div class="content"><a class="title" href="/posts/4260ab42.html" title="Transformer大语言模型架构原理学习笔记">Transformer大语言模型架构原理学习笔记</a><time datetime="2025-11-17T12:51:00.000Z" title="发表于 2025-11-17 20:51:00">2025-11-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/10/31/7I8gnp.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="快速幂、逆元与组合数学"/></a><div class="content"><a class="title" href="/posts/6f4fa4e7.html" title="快速幂、逆元与组合数学">快速幂、逆元与组合数学</a><time datetime="2025-10-31T15:48:33.000Z" title="发表于 2025-10-31 23:48:33">2025-10-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/2f58633e.html" title="常用数据结构"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://origin.picgo.net/2025/10/11/792a8743-6d0d-43fe-91b8-0a5a77b529f4a296a597708421a1.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="常用数据结构"/></a><div class="content"><a class="title" href="/posts/2f58633e.html" title="常用数据结构">常用数据结构</a><time datetime="2025-10-11T11:00:00.000Z" title="发表于 2025-10-11 19:00:00">2025-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/7258f8a4.html" title="THYTHM 音游"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/08/01/HotT9.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="THYTHM 音游"/></a><div class="content"><a class="title" href="/posts/7258f8a4.html" title="THYTHM 音游">THYTHM 音游</a><time datetime="2025-08-01T04:00:00.000Z" title="发表于 2025-08-01 12:00:00">2025-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/73e7a68a.html" title="力扣每日一题讲解"><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/07/24/QEaxN.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="力扣每日一题讲解"/></a><div class="content"><a class="title" href="/posts/73e7a68a.html" title="力扣每日一题讲解">力扣每日一题讲解</a><time datetime="2025-07-24T08:50:00.000Z" title="发表于 2025-07-24 16:50:00">2025-07-24</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             
           </div>
           <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/c%E8%AF%AD%E8%A8%80/"><span class="card-category-list-name">c语言</span><span class="card-category-list-count">1</span></a></li>
-          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%EF%BC%8Cbutterfly/" style="font-size: 1.1em; color: #999">一键部署，butterfly</a> <a href="/tags/hexo-github-blog-node-js-npm-git-%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2-hexo%E9%83%A8%E7%BD%B2/" style="font-size: 1.1em; color: #999">hexo, github, blog, node.js,npm,git,部署博客,hexo部署</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">算法</a> <a href="/tags/python-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91-%E9%9F%B3%E6%B8%B8/" style="font-size: 1.1em; color: #999">python,游戏开发,音游</a> <a href="/tags/c%E8%AF%AD%E8%A8%80-%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">c语言,学习</a> <a href="/tags/%E5%A4%A7%E5%AE%B6%E5%A5%BD%EF%BC%8C%E6%88%91%E6%98%AF%E8%BF%B7%E8%B7%AF%E7%9A%84%E5%B0%8F%E6%9C%8B%E5%8F%8B/" style="font-size: 1.1em; color: #999">大家好，我是迷路的小朋友</a> <a href="/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" style="font-size: 1.1em; color: #999">每日一题</a></div></div><div class="card-widget card-archives">
+          </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/python-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91-%E9%9F%B3%E6%B8%B8/" style="font-size: 1.1em; color: #999">python,游戏开发,音游</a> <a href="/tags/%E6%AF%8F%E6%97%A5%E4%B8%80%E9%A2%98/" style="font-size: 1.1em; color: #999">每日一题</a> <a href="/tags/c%E8%AF%AD%E8%A8%80-%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">c语言,学习</a> <a href="/tags/hexo-github-blog-node-js-npm-git-%E9%83%A8%E7%BD%B2%E5%8D%9A%E5%AE%A2-hexo%E9%83%A8%E7%BD%B2/" style="font-size: 1.1em; color: #999">hexo, github, blog, node.js,npm,git,部署博客,hexo部署</a> <a href="/tags/%E7%AE%97%E6%B3%95/" style="font-size: 1.1em; color: #999">算法</a> <a href="/tags/%E5%A4%A7%E5%AE%B6%E5%A5%BD%EF%BC%8C%E6%88%91%E6%98%AF%E8%BF%B7%E8%B7%AF%E7%9A%84%E5%B0%8F%E6%9C%8B%E5%8F%8B/" style="font-size: 1.1em; color: #999">大家好，我是迷路的小朋友</a> <a href="/tags/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%EF%BC%8Cbutterfly/" style="font-size: 1.1em; color: #999">一键部署，butterfly</a></div></div><div class="card-widget card-archives">
     <div class="item-headline">
       <i class="fas fa-archive"></i>
       <span>归档</span>
@@ -766,14 +804,18 @@
         </li>
       
     </ul>
-  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">23</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-11-18T08:49:37.562Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2025 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  </div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站信息</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">23</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总浏览量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-11-18T10:10:27.300Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2019 - 2025 By 欣冻</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
   const runMermaid = ele => {
     window.loadMermaid = true
     const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
 
     ele.forEach((item, index) => {
       const mermaidSrc = item.firstElementChild
-      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
       const mermaidID = `mermaid-${index}`
       const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
 
@@ -804,7 +846,7 @@
   }
 
   const loadMermaid = () => {
-    if (false) codeToMermaid()
+    if (true) codeToMermaid()
     const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
     if ($mermaid.length === 0) return
 
@@ -874,7 +916,62 @@
   } else {
     window.loadOtherComment = loadTwikoo
   }
-})()</script></div><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+})()</script></div><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = '0cca502ccc7341c2be6ba09309916622';
+  var gaud_map_key = '5653914d2fc43aad14b253ab6cf762b9';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
 for(var i = 0;i<arr.length;i++){
     arr[i].classList.add('wow');
     arr[i].classList.add('animate__zoomIn');
@@ -930,59 +1027,4 @@ for(var i = 0;i<arr.length;i++){
     arr[i].setAttribute('data-wow-delay', '');
     arr[i].setAttribute('data-wow-offset', '');
     arr[i].setAttribute('data-wow-iteration', '');
-  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
-  function butterfly_footer_beautify_injector_config(){
-    var parent_div_git = document.getElementById('footer-wrap');
-    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
-    console.log('已挂载butterfly_footer_beautify')
-    parent_div_git.insertAdjacentHTML("beforeend",item_html)
-    }
-  var elist = 'null'.split(',');
-  var cpage = location.pathname;
-  var epage = 'all';
-  var flag = 0;
-
-  for (var i=0;i<elist.length;i++){
-    if (cpage.includes(elist[i])){
-      flag++;
-    }
-  }
-
-  if ((epage ==='all')&&(flag == 0)){
-    butterfly_footer_beautify_injector_config();
-  }
-  else if (epage === cpage){
-    butterfly_footer_beautify_injector_config();
-  }
-  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script data-pjax>
-  function butterfly_clock_anzhiyu_injector_config(){
-    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
-    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
-    console.log('已挂载butterfly_clock_anzhiyu')
-    if(parent_div_git) {
-      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
-    }
-  }
-  var elist = 'null'.split(',');
-  var cpage = location.pathname;
-  var epage = 'all';
-  var qweather_key = '0cca502ccc7341c2be6ba09309916622';
-  var gaud_map_key = '5653914d2fc43aad14b253ab6cf762b9';
-  var baidu_ak_key = 'undefined';
-  var flag = 0;
-  var clock_rectangle = '112.982279,28.19409';
-  var clock_default_rectangle_enable = 'false';
-
-  for (var i=0;i<elist.length;i++){
-    if (cpage.includes(elist[i])){
-      flag++;
-    }
-  }
-
-  if ((epage ==='all')&&(flag == 0)){
-    butterfly_clock_anzhiyu_injector_config();
-  }
-  else if (epage === cpage){
-    butterfly_clock_anzhiyu_injector_config();
-  }
-  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
