@@ -360,13 +360,6 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/tags/Java/</loc>
-    <lastmod>2025-12-29</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://sakjijdidji55.github.io/tags/c%E8%AF%AD%E8%A8%80-%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
@@ -374,7 +367,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%EF%BC%8Cbutterfly/</loc>
+    <loc>https://sakjijdidji55.github.io/tags/Java/</loc>
     <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -388,7 +381,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/tags/python-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91-%E9%9F%B3%E6%B8%B8/</loc>
+    <loc>https://sakjijdidji55.github.io/tags/%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2%EF%BC%8Cbutterfly/</loc>
     <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -403,6 +396,13 @@
   
   <url>
     <loc>https://sakjijdidji55.github.io/tags/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2025-12-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/python-%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91-%E9%9F%B3%E6%B8%B8/</loc>
     <lastmod>2025-12-29</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
