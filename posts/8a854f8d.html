@@ -1,0 +1,546 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JsonObjectView 模块 · 函数级参考手册 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="JsonObjectView 模块 · 函数级参考手册 依据源码：include&#x2F;JsonObjectView.h。 该模块为 header-only（无独立 cpp），所有函数均内联定义在头文件中。  0. 模块定位 JsonObjectView 是 JsonValue 的轻量包装访问器，目标是：  JSON 文本一次解析后进行链式键访问 提供统一字符串&#x2F;数字读取接口 提供 object 的浅层">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JsonObjectView 模块 · 函数级参考手册">
+<meta property="og:url" content="https://sakjijdidji55.github.io/posts/8a854f8d.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="JsonObjectView 模块 · 函数级参考手册 依据源码：include&#x2F;JsonObjectView.h。 该模块为 header-only（无独立 cpp），所有函数均内联定义在头文件中。  0. 模块定位 JsonObjectView 是 JsonValue 的轻量包装访问器，目标是：  JSON 文本一次解析后进行链式键访问 提供统一字符串&#x2F;数字读取接口 提供 object 的浅层">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-04-29T07:01:37.000Z">
+<meta property="article:modified_time" content="2026-04-29T06:33:45.996Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "JsonObjectView 模块 · 函数级参考手册",
+  "url": "https://sakjijdidji55.github.io/posts/8a854f8d.html",
+  "image": "https://sakjijdidji55.github.io/img/my-icon.png",
+  "datePublished": "2026-04-29T07:01:37.000Z",
+  "dateModified": "2026-04-29T06:33:45.996Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "欣冻",
+      "url": "https://sakjijdidji55.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/posts/8a854f8d.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JsonObjectView 模块 · 函数级参考手册',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a><a class="nav-page-title" href="/"><span class="site-name">JsonObjectView 模块 · 函数级参考手册</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">JsonObjectView 模块 · 函数级参考手册</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-29T06:33:45.996Z" title="更新于 2026-04-29 14:33:45">2026-04-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>JsonObjectView 模块 · 函数级参考手册</h1>
+<p>依据源码：<code>include/JsonObjectView.h</code>。<br>
+该模块为 header-only（无独立 <code>cpp</code>），所有函数均内联定义在头文件中。</p>
+<hr>
+<h2 id="0-模块定位">0. 模块定位</h2>
+<p><code>JsonObjectView</code> 是 <code>JsonValue</code> 的轻量包装访问器，目标是：</p>
+<ul>
+<li>JSON 文本一次解析后进行链式键访问</li>
+<li>提供统一字符串/数字读取接口</li>
+<li>提供 object 的浅层导出（<code>unordered_map</code>）</li>
+</ul>
+<p>它不替代 <code>JsonValue</code>，而是“读取体验层”。</p>
+<hr>
+<h2 id="1-数据成员">1. 数据成员</h2>
+<h3 id="JsonValue-node-（私有）"><code>JsonValue node_;</code>（私有）</h3>
+<ul>
+<li>保存当前视图指向的 JSON 节点值（对象、数组或标量）。</li>
+<li>视图不是引用语义，而是值语义（内部持有一份 <code>JsonValue</code>）。</li>
+</ul>
+<hr>
+<h2 id="2-构造函数">2. 构造函数</h2>
+<h3 id="2-1-JsonObjectView-default">2.1 <code>JsonObjectView() = default</code></h3>
+<ul>
+<li>默认构造一个空视图。</li>
+<li>空视图底层 <code>node_</code> 为 <code>JsonValue</code> 默认值（通常是 <code>NULL_TYPE</code>）。</li>
+</ul>
+<h3 id="2-2-explicit-JsonObjectView-JsonValue-v">2.2 <code>explicit JsonObjectView(JsonValue v)</code></h3>
+<ul>
+<li>参数按值传入，再 <code>std::move(v)</code> 到 <code>node_</code>。</li>
+<li>用于从已有 <code>JsonValue</code> 构造视图。</li>
+</ul>
+<hr>
+<h2 id="3-解析入口">3. 解析入口</h2>
+<h3 id="static-JsonObjectView-parse-const-std-string-json"><code>static JsonObjectView parse(const std::string&amp; json)</code></h3>
+<ul>
+<li><strong>作用</strong>：将 JSON 文本解析成根视图。</li>
+</ul>
+<h4 id="执行步骤">执行步骤</h4>
+<ol>
+<li><code>JsonValue v;</code></li>
+<li><code>v.fromJson(json);</code></li>
+<li><code>return JsonObjectView(std::move(v));</code></li>
+</ol>
+<h4 id="异常语义">异常语义</h4>
+<ul>
+<li>若 <code>fromJson</code> 解析失败，异常向上传播（本函数不捕获）。</li>
+</ul>
+<h4 id="面试点">面试点</h4>
+<ul>
+<li>该函数只负责“建根视图”，并不限制根节点必须是对象；数组/标量也允许。</li>
+<li>但 <code>operator[]</code> 仅对对象类型有效。</li>
+</ul>
+<hr>
+<h2 id="4-键访问">4. 键访问</h2>
+<h3 id="JsonObjectView-operator-const-std-string-key-const"><code>JsonObjectView operator[](const std::string&amp; key) const</code></h3>
+<ul>
+<li><strong>作用</strong>：在当前节点为对象时取子键，返回新视图。</li>
+</ul>
+<h4 id="执行步骤-2">执行步骤</h4>
+<ol>
+<li>若 <code>node_.getType() != JsonValue::OBJECT</code>：
+<ul>
+<li>返回空视图 <code>&#123;&#125;</code></li>
+</ul>
+</li>
+<li><code>const auto obj = node_.asObject();</code></li>
+<li><code>it = obj.find(key)</code></li>
+<li>若未找到：
+<ul>
+<li>返回空视图 <code>&#123;&#125;</code></li>
+</ul>
+</li>
+<li>找到：
+<ul>
+<li><code>return JsonObjectView(it-&gt;second);</code></li>
+</ul>
+</li>
+</ol>
+<h4 id="语义特点">语义特点</h4>
+<ul>
+<li>非对象节点访问键不会抛异常，返回空视图（容错式 API）。</li>
+<li>访问链中任何一步失败都会传递为空视图。</li>
+</ul>
+<h4 id="性能注意">性能注意</h4>
+<ul>
+<li><code>asObject()</code> 返回对象副本，<code>operator[]</code> 每次调用会复制一层 map。</li>
+<li>深链访问在大对象上可能有额外开销。</li>
+</ul>
+<hr>
+<h2 id="5-原始值与拷贝接口">5. 原始值与拷贝接口</h2>
+<h3 id="5-1-const-JsonValue-raw-const">5.1 <code>const JsonValue&amp; raw() const</code></h3>
+<ul>
+<li>返回内部 <code>node_</code> 的常量引用。</li>
+<li>适合需要读取底层完整类型信息的场景。</li>
+</ul>
+<h3 id="5-2-JsonValue-copy-const">5.2 <code>JsonValue copy() const</code></h3>
+<ul>
+<li>返回 <code>node_</code> 的值拷贝。</li>
+<li>适合调用方需要独立副本进行后续修改。</li>
+</ul>
+<hr>
+<h2 id="6-类型读取接口">6. 类型读取接口</h2>
+<h3 id="6-1-std-string-asString-const">6.1 <code>std::string asString() const</code></h3>
+<ul>
+<li>语义与历史 <code>jsonGetString</code> 保持一致：
+<ul>
+<li>若 <code>node_</code> 是 <code>STRING</code>：返回原字符串</li>
+<li>否则：返回 <code>node_.toJson()</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="说明">说明</h4>
+<ul>
+<li>非字符串不会返回空，而是 JSON 序列化文本（例如数字返回 <code>&quot;123&quot;</code> 的文本形式 <code>123</code>）。</li>
+</ul>
+<hr>
+<h3 id="6-2-int-asInt-int-defaultValue-0-const">6.2 <code>int asInt(int defaultValue = 0) const</code></h3>
+<ul>
+<li>转换规则：
+<ol>
+<li><code>NUMBER</code>：<code>static_cast&lt;int&gt;(node_.asNumber())</code></li>
+<li><code>STRING</code>：尝试 <code>std::stoi(node_.asString())</code></li>
+<li>其他类型：返回 <code>defaultValue</code></li>
+<li><code>stoi</code> 抛异常时：返回 <code>defaultValue</code></li>
+</ol>
+</li>
+</ul>
+<h4 id="注意">注意</h4>
+<ul>
+<li><code>NUMBER -&gt; int</code> 为截断转换（小数会截断）。</li>
+</ul>
+<hr>
+<h3 id="6-3-double-asNumber-double-defaultValue-0-0-const">6.3 <code>double asNumber(double defaultValue = 0.0) const</code></h3>
+<ul>
+<li>转换规则：
+<ol>
+<li><code>NUMBER</code>：返回 <code>asNumber()</code></li>
+<li><code>STRING</code>：尝试 <code>std::stod(node_.asString())</code></li>
+<li>其他类型或解析失败：返回 <code>defaultValue</code></li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="6-4-bool-isObject-const">6.4 <code>bool isObject() const</code></h3>
+<ul>
+<li>判断当前节点是否对象类型：<code>node_.getType() == JsonValue::OBJECT</code>。</li>
+</ul>
+<hr>
+<h2 id="7-对象导出接口">7. 对象导出接口</h2>
+<h3 id="std-unordered-map-std-string-JsonValue-asUnorderedMap-const"><code>std::unordered_map&lt;std::string, JsonValue&gt; asUnorderedMap() const</code></h3>
+<ul>
+<li><strong>作用</strong>：将当前对象节点浅拷贝导出为 <code>unordered_map</code>。</li>
+</ul>
+<h4 id="执行步骤-3">执行步骤</h4>
+<ol>
+<li>创建空 <code>out</code></li>
+<li>若当前非对象：返回空 <code>out</code></li>
+<li>遍历 <code>node_.asObject()</code> 的键值对</li>
+<li><code>out.emplace(k, v)</code></li>
+<li>返回 <code>out</code></li>
+</ol>
+<h4 id="语义">语义</h4>
+<ul>
+<li>仅浅层导出；嵌套对象仍以 <code>JsonValue</code> 形式存在。</li>
+<li><code>map -&gt; unordered_map</code> 转换后键顺序不保证。</li>
+</ul>
+<hr>
+<h2 id="8-常见使用模式（面试表达）">8. 常见使用模式（面试表达）</h2>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">auto</span> root = JsonObjectView::<span class="built_in">parse</span>(jsonText);</span><br><span class="line">std::string name = root[<span class="string">&quot;user&quot;</span>][<span class="string">&quot;name&quot;</span>].<span class="built_in">asString</span>();</span><br><span class="line"><span class="type">int</span> age = root[<span class="string">&quot;user&quot;</span>][<span class="string">&quot;age&quot;</span>].<span class="built_in">asInt</span>(<span class="number">-1</span>);</span><br></pre></td></tr></table></figure>
+<p>若任一层不存在或类型不符，最终返回默认值/空视图，不会因键缺失抛异常。</p>
+<hr>
+<h2 id="9-边界与改进建议">9. 边界与改进建议</h2>
+<h3 id="优点">优点</h3>
+<ul>
+<li>API 非常轻量，业务读取代码简洁</li>
+<li>键缺失容错友好</li>
+<li>与 <code>JsonValue</code> 完整兼容</li>
+</ul>
+<h3 id="限制">限制</h3>
+<ul>
+<li>值语义导致对象复制开销（<code>asObject()</code> + <code>JsonValue</code> 复制）</li>
+<li>仅支持对象键访问，不支持数组下标访问器</li>
+<li>空视图与 JSON <code>null</code> 语义需要业务侧区分</li>
+</ul>
+<h3 id="可改进方向">可改进方向</h3>
+<ul>
+<li>引入引用视图（<code>const JsonValue*</code>）减少复制</li>
+<li>增加 <code>operator[](size_t index)</code> 以支持数组</li>
+<li>增加 <code>has(key)</code> / <code>isNull()</code> / <code>type()</code> 辅助接口</li>
+</ul>
+<hr>
+<h2 id="下一模块（顺序）">下一模块（顺序）</h2>
+<p><strong>JWT</strong> → <code>docs/modules/detail/JWT_FUNCTIONS.md</code></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://sakjijdidji55.github.io">欣冻</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://sakjijdidji55.github.io/posts/8a854f8d.html">https://sakjijdidji55.github.io/posts/8a854f8d.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://sakjijdidji55.github.io" target="_blank">迷路的小朋友</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/my-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/bab61679.html" title="JWT 模块 · 函数级参考手册"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">JWT 模块 · 函数级参考手册</div></div><div class="info-2"><div class="info-item-1">JWT 模块 · 函数级参考手册 依据源码：include/jwt.h、src/jwt.cpp。  0. 模块能力总览 JWT 提供三类能力：  Token 生成/校验（HS256） Claim 解析与 TTL 处理 密码哈希/校验（PBKDF2 风格迭代 HMAC-SHA256）  关键成员：  secret_：签名密钥 algorithm_：当前固定 HS256 defaultTTL_：默认过期秒数 static JWT* instance_：单例指针   1. 构造与配置接口 1.1 JWT::JWT(const std::string&amp; expiresIn, const std::string&amp; jwtPrivateKeyPath)  作用：单例风格构造，允许通过 TTL 字符串与密钥文件初始化。 流程：  设 algorithm_=HS256，defaultTTL_=3600 若 instance_ != nullptr，仅打印 &quot;JWT instance already exists&quot; 并 return 若 expiresIn...</div></div></div></a><a class="pagination-related" href="/posts/ce44345d.html" title="RDConnector 模块 · 函数级参考手册"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">RDConnector 模块 · 函数级参考手册</div></div><div class="info-2"><div class="info-item-1">RDConnector 模块 · 函数级参考手册 依据源码：include/RDConnector.h、src/RDConnector.cpp。  0. 模块定位 RdConnector 是基于 hiredis 的轻量 Redis 封装，提供：  连接与认证 数据库选择 基础 KV 操作：get/set/setex/exists/del 连接错误信息获取   1. 数据成员与生命周期 成员  host_, port_, password_, db redisContext* context static RdConnector* instance_  构造函数 RdConnector(std::string host, std::string port, std::string password, int db)  仅保存参数，context = nullptr 不主动建连  析构函数 ~RdConnector()  若 context != nullptr：  redisFree(context) context = nullptr 打印 &quot;redis...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">JsonObjectView 模块 · 函数级参考手册</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%BD%8D"><span class="toc-number">1.1.</span> <span class="toc-text">0. 模块定位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98"><span class="toc-number">1.2.</span> <span class="toc-text">1. 数据成员</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JsonValue-node-%EF%BC%88%E7%A7%81%E6%9C%89%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">JsonValue node_;（私有）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text">2. 构造函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-JsonObjectView-default"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 JsonObjectView() &#x3D; default</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-explicit-JsonObjectView-JsonValue-v"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 explicit JsonObjectView(JsonValue v)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%A7%A3%E6%9E%90%E5%85%A5%E5%8F%A3"><span class="toc-number">1.4.</span> <span class="toc-text">3. 解析入口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#static-JsonObjectView-parse-const-std-string-json"><span class="toc-number">1.4.1.</span> <span class="toc-text">static JsonObjectView parse(const std::string&amp; json)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">执行步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E8%AF%AD%E4%B9%89"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">异常语义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E7%82%B9"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">面试点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%94%AE%E8%AE%BF%E9%97%AE"><span class="toc-number">1.5.</span> <span class="toc-text">4. 键访问</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#JsonObjectView-operator-const-std-string-key-const"><span class="toc-number">1.5.1.</span> <span class="toc-text">JsonObjectView operator[](const std::string&amp; key) const</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4-2"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">执行步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%AD%E4%B9%89%E7%89%B9%E7%82%B9"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">语义特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%83%BD%E6%B3%A8%E6%84%8F"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">性能注意</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%8E%9F%E5%A7%8B%E5%80%BC%E4%B8%8E%E6%8B%B7%E8%B4%9D%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.6.</span> <span class="toc-text">5. 原始值与拷贝接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-const-JsonValue-raw-const"><span class="toc-number">1.6.1.</span> <span class="toc-text">5.1 const JsonValue&amp; raw() const</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-JsonValue-copy-const"><span class="toc-number">1.6.2.</span> <span class="toc-text">5.2 JsonValue copy() const</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E7%B1%BB%E5%9E%8B%E8%AF%BB%E5%8F%96%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.7.</span> <span class="toc-text">6. 类型读取接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-std-string-asString-const"><span class="toc-number">1.7.1.</span> <span class="toc-text">6.1 std::string asString() const</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B4%E6%98%8E"><span class="toc-number">1.7.1.1.</span> <span class="toc-text">说明</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-int-asInt-int-defaultValue-0-const"><span class="toc-number">1.7.2.</span> <span class="toc-text">6.2 int asInt(int defaultValue &#x3D; 0) const</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">1.7.2.1.</span> <span class="toc-text">注意</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-double-asNumber-double-defaultValue-0-0-const"><span class="toc-number">1.7.3.</span> <span class="toc-text">6.3 double asNumber(double defaultValue &#x3D; 0.0) const</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-bool-isObject-const"><span class="toc-number">1.7.4.</span> <span class="toc-text">6.4 bool isObject() const</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%AF%B9%E8%B1%A1%E5%AF%BC%E5%87%BA%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.8.</span> <span class="toc-text">7. 对象导出接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#std-unordered-map-std-string-JsonValue-asUnorderedMap-const"><span class="toc-number">1.8.1.</span> <span class="toc-text">std::unordered_map&lt;std::string, JsonValue&gt; asUnorderedMap() const</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4-3"><span class="toc-number">1.8.1.1.</span> <span class="toc-text">执行步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%AD%E4%B9%89"><span class="toc-number">1.8.1.2.</span> <span class="toc-text">语义</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%B8%B8%E8%A7%81%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%BC%8F%EF%BC%88%E9%9D%A2%E8%AF%95%E8%A1%A8%E8%BE%BE%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">8. 常见使用模式（面试表达）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E8%BE%B9%E7%95%8C%E4%B8%8E%E6%94%B9%E8%BF%9B%E5%BB%BA%E8%AE%AE"><span class="toc-number">1.10.</span> <span class="toc-text">9. 边界与改进建议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-number">1.10.1.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%90%E5%88%B6"><span class="toc-number">1.10.2.</span> <span class="toc-text">限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91"><span class="toc-number">1.10.3.</span> <span class="toc-text">可改进方向</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E4%B8%80%E6%A8%A1%E5%9D%97%EF%BC%88%E9%A1%BA%E5%BA%8F%EF%BC%89"><span class="toc-number">1.11.</span> <span class="toc-text">下一模块（顺序）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/74dc839a.html" title="Channel 模块实现说明">Channel 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/f8f79a3.html" title="Coroutine 模块实现说明">Coroutine 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/60a0897e.html" title="Crash 模块实现说明">Crash 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/cb47dfb.html" title="JsonObjectView 模块实现说明">JsonObjectView 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/6ba6c26b.html" title="DBConnector 模块实现说明">DBConnector 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://blog-twikoo.xindon.top/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://blog-twikoo.xindon.top/',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

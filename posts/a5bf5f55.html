@@ -1,0 +1,630 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Crash 模块 · 函数级参考手册 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Crash 模块 · 函数级参考手册 依据源码：include&#x2F;Crash.h、src&#x2F;Crash.cpp。  0. 编译器与平台宏（Crash.h L8–15） 在 Crash.h 中根据编译器定义以下宏之一（用于 printCrashInfo 分支与日志中的 Compiler 字段）：    宏 条件     COMPILER_MSVC _MSC_VER   COMPILER_MINGW __">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Crash 模块 · 函数级参考手册">
+<meta property="og:url" content="https://sakjijdidji55.github.io/posts/a5bf5f55.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="Crash 模块 · 函数级参考手册 依据源码：include&#x2F;Crash.h、src&#x2F;Crash.cpp。  0. 编译器与平台宏（Crash.h L8–15） 在 Crash.h 中根据编译器定义以下宏之一（用于 printCrashInfo 分支与日志中的 Compiler 字段）：    宏 条件     COMPILER_MSVC _MSC_VER   COMPILER_MINGW __">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-04-29T07:01:37.000Z">
+<meta property="article:modified_time" content="2026-04-29T06:33:06.233Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Crash 模块 · 函数级参考手册",
+  "url": "https://sakjijdidji55.github.io/posts/a5bf5f55.html",
+  "image": "https://sakjijdidji55.github.io/img/my-icon.png",
+  "datePublished": "2026-04-29T07:01:37.000Z",
+  "dateModified": "2026-04-29T06:33:06.233Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "欣冻",
+      "url": "https://sakjijdidji55.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/posts/a5bf5f55.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Crash 模块 · 函数级参考手册',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a><a class="nav-page-title" href="/"><span class="site-name">Crash 模块 · 函数级参考手册</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">Crash 模块 · 函数级参考手册</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-29T06:33:06.233Z" title="更新于 2026-04-29 14:33:06">2026-04-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>Crash 模块 · 函数级参考手册</h1>
+<p>依据源码：<code>include/Crash.h</code>、<code>src/Crash.cpp</code>。</p>
+<hr>
+<h2 id="0-编译器与平台宏（Crash-h-L8–15）">0. 编译器与平台宏（<code>Crash.h</code> L8–15）</h2>
+<p>在 <strong><code>Crash.h</code></strong> 中根据编译器定义以下宏之一（用于 <code>printCrashInfo</code> 分支与日志中的 Compiler 字段）：</p>
+<table>
+<thead>
+<tr>
+<th>宏</th>
+<th>条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>COMPILER_MSVC</code></td>
+<td><code>_MSC_VER</code></td>
+</tr>
+<tr>
+<td><code>COMPILER_MINGW</code></td>
+<td><code>__MINGW32__</code></td>
+</tr>
+<tr>
+<td><code>COMPILER_LINUX</code></td>
+<td><code>__linux__</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意</strong>：<code>printCrashInfo</code> 写日志时还引用了 <code>COMPILER_CLANG</code>、<code>COMPILER_GCC</code>（<code>Crash.cpp</code> L284–287），这些由 <strong>CMake/工程</strong> 定义；若未定义，会落入 <code>Compiler: Unknown</code>。这与头文件三元宏并存，属配置层细节。</p>
+<hr>
+<h2 id="1-类型别名-CleanupCallback">1. 类型别名 <code>CleanupCallback</code></h2>
+<ul>
+<li><strong>定义</strong>：<code>using CleanupCallback = std::function&lt;void()&gt;</code>（<code>Crash.h</code> L39）</li>
+<li><strong>含义</strong>：在崩溃或主动 <code>gracefulExit</code> 时，在进程退出前执行的一段用户逻辑（例如关闭 socket、刷日志）。</li>
+<li><strong>线程语义</strong>：在 <code>gracefulExit</code> 调用栈内<strong>同步</strong>执行；应简短、避免再次死锁。</li>
+</ul>
+<hr>
+<h2 id="2-类-CrashHandler-—-公开接口">2. 类 <code>CrashHandler</code> — 公开接口</h2>
+<h3 id="2-1-static-CrashHandler-instance">2.1 <code>static CrashHandler&amp; instance()</code></h3>
+<ul>
+<li><strong>位置</strong>：<code>Crash.h</code> L44–47</li>
+<li><strong>实现</strong>：Meyers 单例，<code>static CrashHandler handler</code>。</li>
+<li><strong>线程安全</strong>：C++11 起静态局部变量初始化线程安全。</li>
+<li><strong>生命周期</strong>：进程级，不手动销毁。</li>
+</ul>
+<hr>
+<h3 id="2-2-void-init-const-CleanupCallback-cleanupFunc">2.2 <code>void init(const CleanupCallback&amp; cleanupFunc)</code></h3>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L50</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L26–80</li>
+<li><strong>作用</strong>：安装各类崩溃/终止钩子，并保存清理回调。</li>
+</ul>
+<h4 id="步骤拆解">步骤拆解</h4>
+<ol>
+<li><strong>保存回调</strong>：<code>cleanupCallback_ = cleanupFunc</code></li>
+<li><strong>重置退出标志</strong>：<code>isExiting_ = false</code>（允许再次 <code>init</code> 时重新注册语义上“新的一次”；实际项目通常只 <code>init</code> 一次）</li>
+<li><strong><code>std::set_terminate(terminateHandler)</code></strong><br>
+未捕获的 C++ 异常导致 <code>std::terminate</code> 时进入 <code>terminateHandler</code>。</li>
+<li><strong>信号数组</strong>（<code>Crash.cpp</code> L34–44）<br>
+<code>SIGINT, SIGTERM, SIGSEGV, SIGABRT, SIGILL, SIGFPE</code>，Linux 额外 <code>SIGBUS</code>。</li>
+<li><strong>逐个注册信号</strong>
+<ul>
+<li><strong>Windows</strong>：<code>signal(sig, signalHandler)</code>，失败打印 <code>cerr</code></li>
+<li><strong>非 Windows</strong>：<code>sigaction</code>，<code>sa_handler = signalHandler</code>，<code>SA_RESTART</code>，失败打印 <code>cerr</code></li>
+</ul>
+</li>
+<li><strong>平台扩展</strong>
+<ul>
+<li><strong>Windows</strong>：<code>SetUnhandledExceptionFilter(sehExceptionHandler)</code>；<code>SetConsoleCtrlHandler(consoleCtrlHandler, TRUE)</code></li>
+<li><strong>Linux</strong>：再对 <code>SIGQUIT</code> 注册一次 <code>sigaction</code>（与上面相同 handler）</li>
+</ul>
+</li>
+<li>打印：<code>Crash handler initialized successfully</code></li>
+</ol>
+<h4 id="可重复调用行为">可重复调用行为</h4>
+<ul>
+<li>多次 <code>init</code> 会再次 <code>set_terminate</code>、<code>signal</code>/<code>sigaction</code>、Windows 过滤器注册；行为依赖 CRT/OS，<strong>建议进程内只调用一次</strong>。</li>
+</ul>
+<hr>
+<h3 id="2-3-void-gracefulExit-int-exitCode-1-const-std-string-reason-Unknown-crash">2.3 <code>void gracefulExit(int exitCode = 1, const std::string&amp; reason = &quot;Unknown crash&quot;)</code></h3>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L53</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L83–122</li>
+<li><strong>作用</strong>：统一的“崩溃/强制退出”出口：打印、写诊断、执行清理、<strong>立即终止进程</strong>。</li>
+</ul>
+<h4 id="步骤拆解-2">步骤拆解</h4>
+<ol>
+<li><strong><code>isExiting_.exchange(true)</code></strong><br>
+若已为 <code>true</code>，<strong>直接 return</strong>（防止多线程重复进入完整退出流程）。</li>
+<li><strong><code>std::lock_guard&lt;std::mutex&gt; lock(exitMutex_)</code></strong><br>
+序列化退出阶段的日志与清理（与 <code>exchange</code> 配合：只有首个线程做重活）。</li>
+<li><strong>stderr 横幅</strong>：Reason、Exit code。</li>
+<li><strong><code>printCrashInfo(exitCode, reason)</code></strong><br>
+控制台诊断 + 追加写 <code>crash_log.txt</code>（见第 4 节）。</li>
+<li><strong>清理回调</strong><br>
+若 <code>cleanupCallback_</code> 非空：try/catch 包裹调用；清理失败只打日志，不阻止退出。</li>
+<li><strong>终止进程</strong>
+<ul>
+<li><strong>Windows</strong>：<code>ExitProcess(static_cast&lt;UINT&gt;(exitCode))</code></li>
+<li><strong>Linux</strong>：<code>_exit(exitCode)</code></li>
+</ul>
+</li>
+</ol>
+<h4 id="与-exit-的差异">与 <code>exit()</code> 的差异</h4>
+<ul>
+<li><strong><code>_exit</code> / <code>ExitProcess</code></strong>：不运行完整 C++ 静态析构、不刷全量 stdio；适合崩溃路径，避免在已损坏状态下再执行复杂析构。</li>
+</ul>
+<h4 id="面试点">面试点</h4>
+<ul>
+<li>首入者执行清理；其它线程若再触发 <code>gracefulExit</code> 会在 <code>exchange</code> 后直接返回，可能仍在跑业务——需业务层配合停服。</li>
+</ul>
+<hr>
+<h2 id="3-CrashHandler-—-私有成员">3. <code>CrashHandler</code> — 私有成员</h2>
+<table>
+<thead>
+<tr>
+<th>成员</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CleanupCallback cleanupCallback_</code></td>
+<td><code>init</code> 注入的清理逻辑</td>
+</tr>
+<tr>
+<td><code>std::atomic&lt;bool&gt; isExiting_</code></td>
+<td>是否已进入/完成退出流程的门闩</td>
+</tr>
+<tr>
+<td><code>std::mutex exitMutex_</code></td>
+<td>保护退出阶段临界区</td>
+</tr>
+</tbody>
+</table>
+<h3 id="私有构造-析构">私有构造 / 析构</h3>
+<ul>
+<li><strong><code>CrashHandler()</code></strong>：<code>cleanupCallback_(nullptr)</code>, <code>isExiting_(false)</code></li>
+<li><strong><code>~CrashHandler() = default</code></strong>：单例进程结束时随静态存储期销毁，通常发生在 <code>main</code> 返回之后；崩溃路径已 <code>_exit</code>，往往走不到这里。</li>
+</ul>
+<hr>
+<h2 id="4-static-void-signalHandler-int-sig">4. <code>static void signalHandler(int sig)</code></h2>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L64</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L125–141</li>
+<li><strong>作用</strong>：将信号编号映射为可读 <code>reason</code> 字符串，调用 <code>instance().gracefulExit(sig, reason)</code>。</li>
+</ul>
+<h4 id="映射表">映射表</h4>
+<table>
+<thead>
+<tr>
+<th>信号</th>
+<th>reason 文案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SIGINT</code></td>
+<td>Ctrl+C</td>
+</tr>
+<tr>
+<td><code>SIGTERM</code></td>
+<td>Kill</td>
+</tr>
+<tr>
+<td><code>SIGSEGV</code></td>
+<td>段错误</td>
+</tr>
+<tr>
+<td><code>SIGABRT</code></td>
+<td>abort</td>
+</tr>
+<tr>
+<td><code>SIGILL</code></td>
+<td>非法指令</td>
+</tr>
+<tr>
+<td><code>SIGFPE</code></td>
+<td>浮点异常</td>
+</tr>
+<tr>
+<td>Linux <code>SIGBUS</code></td>
+<td>总线错误</td>
+</tr>
+<tr>
+<td>Linux <code>SIGQUIT</code></td>
+<td>Ctrl+\</td>
+</tr>
+<tr>
+<td>default</td>
+<td>Unknown signal (编号)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意</strong>：<code>gracefulExit</code> 的第一个参数此处为 <strong><code>sig</code></strong>，在 Linux 上会作为“退出码”传入 <code>_exit(sig)</code>；与业务约定的 0–255 可能不一致，属实现细节。</p>
+<hr>
+<h2 id="5-Windows-专有静态函数">5. Windows 专有静态函数</h2>
+<h3 id="5-1-static-LONG-WINAPI-sehExceptionHandler-EXCEPTION-POINTERS-pException">5.1 <code>static LONG WINAPI sehExceptionHandler(EXCEPTION_POINTERS* pException)</code></h3>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L68</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L144–166</li>
+<li><strong>作用</strong>：未处理 SEH 时由系统调用；解析 <code>ExceptionCode</code>，<code>gracefulExit(code, reason)</code>，返回 <code>EXCEPTION_EXECUTE_HANDLER</code>。</li>
+</ul>
+<h4 id="显式映射的异常码">显式映射的异常码</h4>
+<ul>
+<li><code>EXCEPTION_ACCESS_VIOLATION</code></li>
+<li><code>EXCEPTION_INT_DIVIDE_BY_ZERO</code></li>
+<li><code>EXCEPTION_STACK_OVERFLOW</code></li>
+<li>其他：格式化为十六进制码字符串</li>
+</ul>
+<p><strong>空指针</strong>：若 <code>pException</code> 为空，<code>exceptionCode = 0</code>。</p>
+<hr>
+<h3 id="5-2-static-BOOL-WINAPI-consoleCtrlHandler-DWORD-dwCtrlType">5.2 <code>static BOOL WINAPI consoleCtrlHandler(DWORD dwCtrlType)</code></h3>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L70</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L171–188</li>
+<li><strong>作用</strong>：控制台控制事件（关闭窗口、Ctrl+C、关机等）映射为 reason，调用 <code>gracefulExit((int)dwCtrlType, reason)</code>，返回 <code>TRUE</code>。</li>
+</ul>
+<hr>
+<h2 id="6-static-void-terminateHandler">6. <code>static void terminateHandler()</code></h2>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L74</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L192–202</li>
+<li><strong>作用</strong>：<code>std::terminate</code> 钩子；尝试 <code>throw;</code> 在 <code>terminate</code> 上下文中捕获 <code>std::exception</code> 的 <code>what</code>，否则标记未知类型；最后 <code>gracefulExit(EXIT_FAILURE, reason)</code>。</li>
+</ul>
+<p><strong>限制</strong>：在部分实现中 <code>terminate</code> 时 <code>throw;</code> 行为依赖标准库；此处用于尽力提取信息。</p>
+<hr>
+<h2 id="7-static-void-printCrashInfo-int-sig-const-std-string-reason">7. <code>static void printCrashInfo(int sig, const std::string&amp; reason)</code></h2>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L77</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L220–298</li>
+<li><strong>参数</strong>：
+<ul>
+<li><code>sig</code>：在函数开头 <code>(void)sig</code>，<strong>控制台分支不使用</strong>；仅用于写文件时作为 <code>ExitCode</code> 字段（L277）。</li>
+<li><code>reason</code>：人类可读原因；MinGW 分支会再打一份到 <code>cerr</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="控制台输出（条件编译）">控制台输出（条件编译）</h4>
+<ul>
+<li><strong><code>COMPILER_MSVC</code></strong>：打印 Windows/MSVC 标题与时间；注释称 MSVC 栈回溯逻辑省略。</li>
+<li><strong><code>COMPILER_MINGW</code></strong>：时间、reason；<code>SymInitialize</code> + 模块快照打印前 10 个模块基址；提示 MinGW 无完整 SEH 栈回溯。</li>
+<li><strong><code>COMPILER_LINUX</code></strong>：打印 Linux 标题与时间；注释称 Linux 专属回溯省略。</li>
+</ul>
+<h4 id="文件输出（跨分支共用）">文件输出（跨分支共用）</h4>
+<ul>
+<li>追加打开 <strong><code>crash_log.txt</code></strong></li>
+<li>一行：<code>[时间] ExitCode: &lt;sig&gt;, Reason: &lt;reason&gt;</code></li>
+<li>下一行：Compiler 类型（依赖 <code>COMPILER_*</code> 宏组合）</li>
+<li>分隔线 <code>----------------------------------------</code></li>
+</ul>
+<h4 id="辅助函数-formatCurrentTime-（文件内-static）">辅助函数 <code>formatCurrentTime()</code>（文件内 static）</h4>
+<ul>
+<li><strong>位置</strong>：<code>Crash.cpp</code> L205–216</li>
+<li><strong>作用</strong>：<code>localtime_s</code>（Windows）或 <code>localtime_r</code>（Linux），格式 <code>%Y-%m-%d %H:%M:%S</code>。</li>
+</ul>
+<hr>
+<h2 id="8-宏-SAFE-ASSERT-expr">8. 宏 <code>SAFE_ASSERT(expr)</code></h2>
+<ul>
+<li><strong>位置</strong>：<code>Crash.h</code> L88–93</li>
+<li><strong>展开</strong>：若 <code>!(expr)</code>，则 <code>CrashHandler::instance().gracefulExit(1, &quot;Assert failed: &quot; #expr)</code>。</li>
+<li><strong>与 <code>assert()</code> 区别</strong>：不依赖 <code>NDEBUG</code>；失败即走统一崩溃退出与清理（若已 <code>init</code>）。</li>
+</ul>
+<hr>
+<h2 id="9-与-Server-的集成（调用链记忆）">9. 与 <code>Server</code> 的集成（调用链记忆）</h2>
+<p><code>Server</code> 构造函数中典型写法：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CrashHandler::<span class="built_in">instance</span>().<span class="built_in">init</span>([<span class="keyword">this</span>]() &#123; <span class="keyword">this</span>-&gt;<span class="built_in">cleanup</span>(); &#125;);</span><br></pre></td></tr></table></figure>
+<p>因此 SIGINT/SIGTERM、未处理异常、Windows SEH/控制台事件等路径最终会尝试执行 <code>Server::cleanup()</code>（在仍安全的前提下）。</p>
+<hr>
+<h2 id="10-异步信号安全（面试高频）">10. 异步信号安全（面试高频）</h2>
+<p>在 <code>signalHandler</code> 中调用 <code>gracefulExit</code>，内部大量使用 <code>iostream</code>、锁、回调——<strong>不属于 POSIX 异步信号安全函数</strong>。</p>
+<ul>
+<li>工程上常见折中：信号处理器只做 <code>write</code>/置原子标志，由主线程收尾。</li>
+<li>本实现优先“统一落盘与清理”，适合服务端工具场景；严谨生产可再分层。</li>
+</ul>
+<hr>
+<h2 id="下一模块（索引顺序）">下一模块（索引顺序）</h2>
+<p><strong>DBConnector</strong> → <code>docs/modules/detail/DBConnector_FUNCTIONS.md</code>。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://sakjijdidji55.github.io">欣冻</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://sakjijdidji55.github.io/posts/a5bf5f55.html">https://sakjijdidji55.github.io/posts/a5bf5f55.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://sakjijdidji55.github.io" target="_blank">迷路的小朋友</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/my-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/d2ac760c.html" title="EmailSender 模块 · 函数级参考手册"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">EmailSender 模块 · 函数级参考手册</div></div><div class="info-2"><div class="info-item-1">EmailSender 模块 · 函数级参考手册 依据源码：include/EmailSender.h、src/EmailSender.cpp。  0. 模块定位与总体结构 EmailSender 是一个轻量 SMTP 客户端封装，支持：  单例获取 SMTP 参数初始化 单收件人 / 多收件人发送 AUTH LOGIN 认证 纯文本邮件正文发送  关键状态成员  smtpHost_, smtpPort_, username_, password_ lastError_ std::mutex mutex_ static EmailSender* instance_   1. 单例与初始化 1.1 static EmailSender* getInstance()  位置：EmailSender.cpp 实现：  static EmailSender inst; instance_ = &amp;inst; 返回 instance_    1.2 void init(const std::string&amp; smtpHost, unsigned short smtpPort,...</div></div></div></a><a class="pagination-related" href="/posts/bab61679.html" title="JWT 模块 · 函数级参考手册"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">JWT 模块 · 函数级参考手册</div></div><div class="info-2"><div class="info-item-1">JWT 模块 · 函数级参考手册 依据源码：include/jwt.h、src/jwt.cpp。  0. 模块能力总览 JWT 提供三类能力：  Token 生成/校验（HS256） Claim 解析与 TTL 处理 密码哈希/校验（PBKDF2 风格迭代 HMAC-SHA256）  关键成员：  secret_：签名密钥 algorithm_：当前固定 HS256 defaultTTL_：默认过期秒数 static JWT* instance_：单例指针   1. 构造与配置接口 1.1 JWT::JWT(const std::string&amp; expiresIn, const std::string&amp; jwtPrivateKeyPath)  作用：单例风格构造，允许通过 TTL 字符串与密钥文件初始化。 流程：  设 algorithm_=HS256，defaultTTL_=3600 若 instance_ != nullptr，仅打印 &quot;JWT instance already exists&quot; 并 return 若 expiresIn...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Crash 模块 · 函数级参考手册</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E7%BC%96%E8%AF%91%E5%99%A8%E4%B8%8E%E5%B9%B3%E5%8F%B0%E5%AE%8F%EF%BC%88Crash-h-L8%E2%80%9315%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">0. 编译器与平台宏（Crash.h L8–15）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D-CleanupCallback"><span class="toc-number">1.2.</span> <span class="toc-text">1. 类型别名 CleanupCallback</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%B1%BB-CrashHandler-%E2%80%94-%E5%85%AC%E5%BC%80%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.3.</span> <span class="toc-text">2. 类 CrashHandler — 公开接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-static-CrashHandler-instance"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 static CrashHandler&amp; instance()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-void-init-const-CleanupCallback-cleanupFunc"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 void init(const CleanupCallback&amp; cleanupFunc)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4%E6%8B%86%E8%A7%A3"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">步骤拆解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%B0%83%E7%94%A8%E8%A1%8C%E4%B8%BA"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">可重复调用行为</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-void-gracefulExit-int-exitCode-1-const-std-string-reason-Unknown-crash"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3 void gracefulExit(int exitCode &#x3D; 1, const std::string&amp; reason &#x3D; &quot;Unknown crash&quot;)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4%E6%8B%86%E8%A7%A3-2"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">步骤拆解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8E-exit-%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">与 exit() 的差异</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E8%AF%95%E7%82%B9"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">面试点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-CrashHandler-%E2%80%94-%E7%A7%81%E6%9C%89%E6%88%90%E5%91%98"><span class="toc-number">1.4.</span> <span class="toc-text">3. CrashHandler — 私有成员</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%81%E6%9C%89%E6%9E%84%E9%80%A0-%E6%9E%90%E6%9E%84"><span class="toc-number">1.4.1.</span> <span class="toc-text">私有构造 &#x2F; 析构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-static-void-signalHandler-int-sig"><span class="toc-number">1.5.</span> <span class="toc-text">4. static void signalHandler(int sig)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%A0%E5%B0%84%E8%A1%A8"><span class="toc-number">1.5.0.1.</span> <span class="toc-text">映射表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Windows-%E4%B8%93%E6%9C%89%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0"><span class="toc-number">1.6.</span> <span class="toc-text">5. Windows 专有静态函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-static-LONG-WINAPI-sehExceptionHandler-EXCEPTION-POINTERS-pException"><span class="toc-number">1.6.1.</span> <span class="toc-text">5.1 static LONG WINAPI sehExceptionHandler(EXCEPTION_POINTERS* pException)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%BE%E5%BC%8F%E6%98%A0%E5%B0%84%E7%9A%84%E5%BC%82%E5%B8%B8%E7%A0%81"><span class="toc-number">1.6.1.1.</span> <span class="toc-text">显式映射的异常码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-static-BOOL-WINAPI-consoleCtrlHandler-DWORD-dwCtrlType"><span class="toc-number">1.6.2.</span> <span class="toc-text">5.2 static BOOL WINAPI consoleCtrlHandler(DWORD dwCtrlType)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-static-void-terminateHandler"><span class="toc-number">1.7.</span> <span class="toc-text">6. static void terminateHandler()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-static-void-printCrashInfo-int-sig-const-std-string-reason"><span class="toc-number">1.8.</span> <span class="toc-text">7. static void printCrashInfo(int sig, const std::string&amp; reason)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%BE%93%E5%87%BA%EF%BC%88%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91%EF%BC%89"><span class="toc-number">1.8.0.1.</span> <span class="toc-text">控制台输出（条件编译）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%EF%BC%88%E8%B7%A8%E5%88%86%E6%94%AF%E5%85%B1%E7%94%A8%EF%BC%89"><span class="toc-number">1.8.0.2.</span> <span class="toc-text">文件输出（跨分支共用）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0-formatCurrentTime-%EF%BC%88%E6%96%87%E4%BB%B6%E5%86%85-static%EF%BC%89"><span class="toc-number">1.8.0.3.</span> <span class="toc-text">辅助函数 formatCurrentTime()（文件内 static）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%AE%8F-SAFE-ASSERT-expr"><span class="toc-number">1.9.</span> <span class="toc-text">8. 宏 SAFE_ASSERT(expr)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E4%B8%8E-Server-%E7%9A%84%E9%9B%86%E6%88%90%EF%BC%88%E8%B0%83%E7%94%A8%E9%93%BE%E8%AE%B0%E5%BF%86%EF%BC%89"><span class="toc-number">1.10.</span> <span class="toc-text">9. 与 Server 的集成（调用链记忆）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E5%BC%82%E6%AD%A5%E4%BF%A1%E5%8F%B7%E5%AE%89%E5%85%A8%EF%BC%88%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%EF%BC%89"><span class="toc-number">1.11.</span> <span class="toc-text">10. 异步信号安全（面试高频）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E4%B8%80%E6%A8%A1%E5%9D%97%EF%BC%88%E7%B4%A2%E5%BC%95%E9%A1%BA%E5%BA%8F%EF%BC%89"><span class="toc-number">1.12.</span> <span class="toc-text">下一模块（索引顺序）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/74dc839a.html" title="Channel 模块实现说明">Channel 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/f8f79a3.html" title="Coroutine 模块实现说明">Coroutine 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/60a0897e.html" title="Crash 模块实现说明">Crash 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/cb47dfb.html" title="JsonObjectView 模块实现说明">JsonObjectView 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/6ba6c26b.html" title="DBConnector 模块实现说明">DBConnector 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://blog-twikoo.xindon.top/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://blog-twikoo.xindon.top/',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

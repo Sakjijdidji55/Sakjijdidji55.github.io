@@ -1,0 +1,657 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>EmailSender 模块 · 函数级参考手册 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="EmailSender 模块 · 函数级参考手册 依据源码：include&#x2F;EmailSender.h、src&#x2F;EmailSender.cpp。  0. 模块定位与总体结构 EmailSender 是一个轻量 SMTP 客户端封装，支持：  单例获取 SMTP 参数初始化 单收件人 &#x2F; 多收件人发送 AUTH LOGIN 认证 纯文本邮件正文发送  关键状态成员  smtpHost_, smtpP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EmailSender 模块 · 函数级参考手册">
+<meta property="og:url" content="https://sakjijdidji55.github.io/posts/d2ac760c.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="EmailSender 模块 · 函数级参考手册 依据源码：include&#x2F;EmailSender.h、src&#x2F;EmailSender.cpp。  0. 模块定位与总体结构 EmailSender 是一个轻量 SMTP 客户端封装，支持：  单例获取 SMTP 参数初始化 单收件人 &#x2F; 多收件人发送 AUTH LOGIN 认证 纯文本邮件正文发送  关键状态成员  smtpHost_, smtpP">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-04-29T07:01:37.000Z">
+<meta property="article:modified_time" content="2026-04-29T06:33:31.045Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "EmailSender 模块 · 函数级参考手册",
+  "url": "https://sakjijdidji55.github.io/posts/d2ac760c.html",
+  "image": "https://sakjijdidji55.github.io/img/my-icon.png",
+  "datePublished": "2026-04-29T07:01:37.000Z",
+  "dateModified": "2026-04-29T06:33:31.045Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "欣冻",
+      "url": "https://sakjijdidji55.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/posts/d2ac760c.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'EmailSender 模块 · 函数级参考手册',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a><a class="nav-page-title" href="/"><span class="site-name">EmailSender 模块 · 函数级参考手册</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">EmailSender 模块 · 函数级参考手册</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-29T06:33:31.045Z" title="更新于 2026-04-29 14:33:31">2026-04-29</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1>EmailSender 模块 · 函数级参考手册</h1>
+<p>依据源码：<code>include/EmailSender.h</code>、<code>src/EmailSender.cpp</code>。</p>
+<hr>
+<h2 id="0-模块定位与总体结构">0. 模块定位与总体结构</h2>
+<p><code>EmailSender</code> 是一个轻量 SMTP 客户端封装，支持：</p>
+<ul>
+<li>单例获取</li>
+<li>SMTP 参数初始化</li>
+<li>单收件人 / 多收件人发送</li>
+<li>AUTH LOGIN 认证</li>
+<li>纯文本邮件正文发送</li>
+</ul>
+<h3 id="关键状态成员">关键状态成员</h3>
+<ul>
+<li><code>smtpHost_</code>, <code>smtpPort_</code>, <code>username_</code>, <code>password_</code></li>
+<li><code>lastError_</code></li>
+<li><code>std::mutex mutex_</code></li>
+<li><code>static EmailSender* instance_</code></li>
+</ul>
+<hr>
+<h2 id="1-单例与初始化">1. 单例与初始化</h2>
+<h3 id="1-1-static-EmailSender-getInstance">1.1 <code>static EmailSender* getInstance()</code></h3>
+<ul>
+<li><strong>位置</strong>：<code>EmailSender.cpp</code></li>
+<li><strong>实现</strong>：
+<ol>
+<li><code>static EmailSender inst;</code></li>
+<li><code>instance_ = &amp;inst;</code></li>
+<li>返回 <code>instance_</code></li>
+</ol>
+</li>
+</ul>
+<h3 id="1-2-void-init-const-std-string-smtpHost-unsigned-short-smtpPort-const-std-string-username-const-std-string-password">1.2 <code>void init(const std::string&amp; smtpHost, unsigned short smtpPort, const std::string&amp; username, const std::string&amp; password)</code></h3>
+<ul>
+<li><strong>作用</strong>：设置 SMTP 连接参数并清空上次错误。</li>
+<li><strong>并发</strong>：函数内部 <code>lock_guard&lt;mutex_&gt;</code>，确保参数更新与发送互斥。</li>
+<li><strong>行为</strong>：
+<ul>
+<li>覆盖旧配置</li>
+<li><code>lastError_.clear()</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-编码辅助">2. 编码辅助</h2>
+<h3 id="2-1-static-std-string-base64Encode-const-std-string-raw">2.1 <code>static std::string base64Encode(const std::string&amp; raw)</code></h3>
+<ul>
+<li><strong>作用</strong>：SMTP <code>AUTH LOGIN</code> 需要对用户名/密码做 Base64 编码。</li>
+<li><strong>实现要点</strong>：
+<ul>
+<li>3 字节分组编码</li>
+<li>尾部不足 3 字节时补 <code>=</code></li>
+<li>返回标准 Base64（不是 URL 安全变体）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="3-网络连接与协议收发">3. 网络连接与协议收发</h2>
+<h3 id="3-1-bool-smtpConnect-int-sockOut">3.1 <code>bool smtpConnect(int* sockOut)</code></h3>
+<ul>
+<li><strong>作用</strong>：建立到 SMTP 服务器的 TCP 连接。</li>
+</ul>
+<h4 id="步骤">步骤</h4>
+<ol>
+<li>Windows 下 <code>WSAStartup</code>（每次调用都初始化一次）</li>
+<li><code>getaddrinfo(smtpHost_, smtpPort_)</code></li>
+<li><code>socket(...)</code></li>
+<li><code>connect(...)</code></li>
+<li>成功后 <code>*sockOut = sock</code></li>
+</ol>
+<h4 id="失败路径">失败路径</h4>
+<ul>
+<li>每个失败分支都设置 <code>lastError_</code></li>
+<li>Windows 下在失败时调用 <code>WSACleanup()</code></li>
+<li>释放 <code>addrinfo</code>、关闭 socket（如已创建）</li>
+</ul>
+<h4 id="注意点">注意点</h4>
+<ul>
+<li><code>hints.ai_family = AF_INET</code>：当前只走 IPv4</li>
+<li>无连接超时参数（依赖系统默认）</li>
+</ul>
+<hr>
+<h3 id="3-2-bool-smtpCommandRecv-int-sock-std-string-outLine">3.2 <code>bool smtpCommandRecv(int sock, std::string* outLine)</code></h3>
+<ul>
+<li><strong>作用</strong>：从 socket 读取一行 SMTP 响应（简化实现）。</li>
+</ul>
+<h4 id="逻辑">逻辑</h4>
+<ol>
+<li>循环 <code>recv</code> 到本地 <code>line</code></li>
+<li>若 <code>n &lt;= 0</code> 返回 false</li>
+<li>终止条件：
+<ul>
+<li><code>line.size() &gt;= 4 &amp;&amp; line[3] == ' '</code>（SMTP 最终行）</li>
+<li>或已包含 <code>\r\n</code></li>
+</ul>
+</li>
+<li>截断到首个 <code>\r\n</code> 之前</li>
+<li>若 <code>outLine</code> 非空则写入</li>
+</ol>
+<h4 id="边界">边界</h4>
+<ul>
+<li>对多行响应处理较简化，主要适配当前使用的命令流。</li>
+</ul>
+<hr>
+<h3 id="3-3-bool-smtpCommand-int-sock-const-std-string-cmd-int-expectCode">3.3 <code>bool smtpCommand(int sock, const std::string&amp; cmd, int expectCode)</code></h3>
+<ul>
+<li><strong>作用</strong>：发送 SMTP 命令并校验响应码。</li>
+</ul>
+<h4 id="步骤-2">步骤</h4>
+<ol>
+<li>发送 <code>cmd + &quot;\r\n&quot;</code></li>
+<li>调用 <code>smtpCommandRecv</code> 收响应</li>
+<li>解析前 3 位数字为 <code>code</code></li>
+<li><code>return code == expectCode</code></li>
+</ol>
+<h4 id="注意">注意</h4>
+<ul>
+<li>若 <code>send</code> 或 <code>recv</code> 失败，直接返回 false</li>
+<li>不自动写 <code>lastError_</code>（多数错误信息由调用方设置）</li>
+</ul>
+<hr>
+<h2 id="4-发送主流程">4. 发送主流程</h2>
+<h3 id="4-1-bool-sendMailImpl-const-std-string-from-const-std-vector-std-string-toList-const-std-string-subject-const-std-string-body">4.1 <code>bool sendMailImpl(const std::string&amp; from, const std::vector&lt;std::string&gt;&amp; toList, const std::string&amp; subject, const std::string&amp; body)</code></h3>
+<ul>
+<li><strong>作用</strong>：完整 SMTP 会话（核心函数）。</li>
+</ul>
+<h4 id="0-前置检查">0) 前置检查</h4>
+<ul>
+<li>若 <code>smtpHost_</code> 或 <code>username_</code> 为空：
+<ul>
+<li><code>lastError_ = &quot;EmailSender not initialized. Call init() first.&quot;</code></li>
+<li>返回 false</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-建连与服务器问候">1) 建连与服务器问候</h4>
+<ol>
+<li><code>smtpConnect(&amp;sock)</code> 失败返回 false</li>
+<li>首次 <code>smtpCommandRecv</code>，要求响应 <code>220</code></li>
+<li>否则：
+<ul>
+<li><code>lastError_ = &quot;SMTP greeting failed: &quot; + line</code></li>
+<li>关闭 socket，返回 false</li>
+</ul>
+</li>
+</ol>
+<h4 id="2-标识与认证">2) 标识与认证</h4>
+<ol>
+<li>先 <code>EHLO localhost</code> 期待 <code>250</code></li>
+<li>失败则回退 <code>HELO localhost</code> 期待 <code>250</code></li>
+<li><code>AUTH LOGIN</code> 期待 <code>334</code></li>
+<li>发送 <code>base64(username_)</code> 期待 <code>334</code></li>
+<li>发送 <code>base64(password_)</code> 期待 <code>235</code></li>
+</ol>
+<p>任一步失败都设置 <code>lastError_</code> 并关闭连接返回 false。</p>
+<h4 id="3-邮件信封">3) 邮件信封</h4>
+<ol>
+<li><code>MAIL FROM:&lt;from&gt;</code> 期待 <code>250</code></li>
+<li>遍历 <code>toList</code>：
+<ul>
+<li>去掉空白字符</li>
+<li>空字符串跳过</li>
+<li><code>RCPT TO:&lt;recipient&gt;</code> 期待 <code>250</code></li>
+</ul>
+</li>
+<li>若任何收件人失败：
+<ul>
+<li><code>lastError_ = &quot;RCPT TO failed: ...&quot;</code></li>
+<li>关闭连接返回 false</li>
+</ul>
+</li>
+</ol>
+<h4 id="4-邮件正文">4) 邮件正文</h4>
+<ol>
+<li><code>DATA</code> 期待 <code>354</code></li>
+<li>构造数据：
+<ul>
+<li><code>From: ...</code></li>
+<li><code>To: ...</code>（用逗号拼接）</li>
+<li><code>Subject: ...</code></li>
+<li><code>Content-Type: text/plain; charset=UTF-8</code></li>
+<li>空行</li>
+<li>正文 <code>body</code></li>
+<li>终止符 <code>\r\n.</code></li>
+</ul>
+</li>
+<li>实际发送字符串为 <code>data + &quot;\r\n&quot;</code>（即 SMTP data block 的 <code>&lt;CRLF&gt;.&lt;CRLF&gt;</code>）</li>
+<li>读响应，要求 <code>250</code></li>
+</ol>
+<p>失败则设置 <code>lastError_</code> 并返回 false。</p>
+<h4 id="5-结束会话">5) 结束会话</h4>
+<ol>
+<li><code>smtpCommand(sock, &quot;QUIT&quot;, 221)</code>（返回值未强制检查）</li>
+<li>关闭 socket</li>
+<li>Windows 下 <code>WSACleanup()</code></li>
+<li>返回 true</li>
+</ol>
+<hr>
+<h2 id="5-对外发送接口">5. 对外发送接口</h2>
+<h3 id="5-1-bool-sendMail-const-std-string-from-const-std-string-to-const-std-string-subject-const-std-string-body">5.1 <code>bool sendMail(const std::string&amp; from, const std::string&amp; to, const std::string&amp; subject, const std::string&amp; body)</code></h3>
+<ul>
+<li><strong>作用</strong>：字符串收件人版本（支持逗号或分号分隔）。</li>
+<li><strong>逻辑</strong>：
+<ol>
+<li>解析 <code>to</code>：
+<ul>
+<li>分隔符 <code>,</code> 或 <code>;</code></li>
+<li>忽略空白</li>
+</ul>
+</li>
+<li>形成 <code>toList</code></li>
+<li>调用向量版本 <code>sendMail(from, toList, subject, body)</code></li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="5-2-bool-sendMail-const-std-string-from-const-std-vector-std-string-toList-const-std-string-subject-const-std-string-body">5.2 <code>bool sendMail(const std::string&amp; from, const std::vector&lt;std::string&gt;&amp; toList, const std::string&amp; subject, const std::string&amp; body)</code></h3>
+<ul>
+<li><strong>作用</strong>：线程安全入口。</li>
+<li><strong>并发控制</strong>：
+<ul>
+<li><code>lock_guard&lt;mutex_&gt;</code></li>
+<li>保护配置读写与 <code>lastError_</code></li>
+</ul>
+</li>
+<li><strong>实际执行</strong>：
+<ul>
+<li>调用 <code>sendMailImpl(...)</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="6-只读接口">6. 只读接口</h2>
+<h3 id="std-string-getLastError-const"><code>std::string getLastError() const</code></h3>
+<ul>
+<li><strong>定义在头文件内联</strong></li>
+<li>返回 <code>lastError_</code> 的副本</li>
+</ul>
+<blockquote>
+<p>说明：该接口本身未加锁；但主写路径在 <code>sendMail</code> 和 <code>init</code> 中已加锁。若极端并发下要求严格一致性，可考虑读也加锁或使用原子/线程安全日志通道。</p>
+</blockquote>
+<hr>
+<h2 id="7-跨平台实现差异">7. 跨平台实现差异</h2>
+<h3 id="Windows">Windows</h3>
+<ul>
+<li>使用 Winsock：
+<ul>
+<li><code>WSAStartup</code></li>
+<li><code>closesocket</code></li>
+<li><code>WSACleanup</code></li>
+</ul>
+</li>
+<li><code>_MSC_VER</code> 下链接 <code>ws2_32.lib</code></li>
+</ul>
+<h3 id="Linux-Unix">Linux/Unix</h3>
+<ul>
+<li>POSIX socket：
+<ul>
+<li><code>socket/connect/send/recv/close</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="8-语义与边界说明（面试高频）">8. 语义与边界说明（面试高频）</h2>
+<ol>
+<li><strong>协议支持范围</strong>
+<ul>
+<li>当前是明文 SMTP + AUTH LOGIN，未实现 STARTTLS/SMTPS。</li>
+</ul>
+</li>
+<li><strong>超时控制</strong>
+<ul>
+<li>代码中无 socket 超时设置，网络异常可能阻塞较久。</li>
+</ul>
+</li>
+<li><strong>邮件格式</strong>
+<ul>
+<li>仅文本正文，未做 MIME multipart、附件、HTML。</li>
+</ul>
+</li>
+<li><strong>响应解析</strong>
+<ul>
+<li>多行响应处理简化，适配常见服务器但并非完整 RFC 严格实现。</li>
+</ul>
+</li>
+<li><strong>资源清理</strong>
+<ul>
+<li>成功路径与失败路径基本都有 socket 关闭；Windows 清理在多个分支执行。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="9-改进建议（可直接面试回答）">9. 改进建议（可直接面试回答）</h2>
+<ul>
+<li>增加 TLS（STARTTLS / SMTPS 465）</li>
+<li>增加 socket 超时与重试策略</li>
+<li>完整 SMTP 多行响应解析</li>
+<li>MIME/附件/HTML 支持</li>
+<li>引入异步发送队列与失败重投</li>
+<li>抽象错误码，而非仅 <code>lastError_</code> 文本</li>
+</ul>
+<hr>
+<h2 id="下一模块（顺序）">下一模块（顺序）</h2>
+<p><strong>JsonObjectView</strong> → <code>docs/modules/detail/JsonObjectView_FUNCTIONS.md</code></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://sakjijdidji55.github.io">欣冻</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://sakjijdidji55.github.io/posts/d2ac760c.html">https://sakjijdidji55.github.io/posts/d2ac760c.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://sakjijdidji55.github.io" target="_blank">迷路的小朋友</a>！</span></div></div><div class="tag_share"><div class="post-share"><div class="social-share" data-image="/img/my-icon.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/posts/5d3368d6.html" title="DBConnector 模块 · 函数级参考手册"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">DBConnector 模块 · 函数级参考手册</div></div><div class="info-2"><div class="info-item-1">DBConnector 模块 · 函数级参考手册 依据源码：include/DBConnector.h、src/DBConnector.cpp。  0. 全局静态成员与总体职责 静态成员  DBConnector* DBConnector::instance_ = nullptr; std::mutex DBConnector::mutex_;  模块职责  管理 MySQL 连接句柄 MYSQL* db_ 提供查询与执行接口 提供单例初始化/获取/销毁 提供最后错误信息 last_error_ 提供 SQL 字面量转义 escapeSqlLiteral   1. 构造与析构 1.1 DBConnector::DBConnector(std::string host, std::string user, std::string passwd, std::string dbname, unsigned int port = 3306)（私有）  位置：src/DBConnector.cpp 作用：保存连接参数并初始化 MySQL 句柄。  执行步骤  成员初始化：  db_ =...</div></div></div></a><a class="pagination-related" href="/posts/a5bf5f55.html" title="Crash 模块 · 函数级参考手册"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">Crash 模块 · 函数级参考手册</div></div><div class="info-2"><div class="info-item-1">Crash 模块 · 函数级参考手册 依据源码：include/Crash.h、src/Crash.cpp。  0. 编译器与平台宏（Crash.h L8–15） 在 Crash.h 中根据编译器定义以下宏之一（用于 printCrashInfo 分支与日志中的 Compiler 字段）：    宏 条件     COMPILER_MSVC _MSC_VER   COMPILER_MINGW __MINGW32__   COMPILER_LINUX __linux__    注意：printCrashInfo 写日志时还引用了 COMPILER_CLANG、COMPILER_GCC（Crash.cpp L284–287），这些由 CMake/工程 定义；若未定义，会落入 Compiler: Unknown。这与头文件三元宏并存，属配置层细节。  1. 类型别名 CleanupCallback  定义：using CleanupCallback = std::function&lt;void()&gt;（Crash.h L39） 含义：在崩溃或主动 gracefulExit...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">50</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">EmailSender 模块 · 函数级参考手册</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%BD%8D%E4%B8%8E%E6%80%BB%E4%BD%93%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">0. 模块定位与总体结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E7%8A%B6%E6%80%81%E6%88%90%E5%91%98"><span class="toc-number">1.1.1.</span> <span class="toc-text">关键状态成员</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%8D%95%E4%BE%8B%E4%B8%8E%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">1.2.</span> <span class="toc-text">1. 单例与初始化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-static-EmailSender-getInstance"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1 static EmailSender* getInstance()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-void-init-const-std-string-smtpHost-unsigned-short-smtpPort-const-std-string-username-const-std-string-password"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 void init(const std::string&amp; smtpHost, unsigned short smtpPort, const std::string&amp; username, const std::string&amp; password)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BC%96%E7%A0%81%E8%BE%85%E5%8A%A9"><span class="toc-number">1.3.</span> <span class="toc-text">2. 编码辅助</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-static-std-string-base64Encode-const-std-string-raw"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 static std::string base64Encode(const std::string&amp; raw)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%8D%8F%E8%AE%AE%E6%94%B6%E5%8F%91"><span class="toc-number">1.4.</span> <span class="toc-text">3. 网络连接与协议收发</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-bool-smtpConnect-int-sockOut"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 bool smtpConnect(int* sockOut)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%B1%E8%B4%A5%E8%B7%AF%E5%BE%84"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">失败路径</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">注意点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-bool-smtpCommandRecv-int-sock-std-string-outLine"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 bool smtpCommandRecv(int sock, std::string* outLine)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BE%B9%E7%95%8C"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">边界</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-bool-smtpCommand-int-sock-const-std-string-cmd-int-expectCode"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.3 bool smtpCommand(int sock, const std::string&amp; cmd, int expectCode)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A4-2"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">注意</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%8F%91%E9%80%81%E4%B8%BB%E6%B5%81%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">4. 发送主流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-bool-sendMailImpl-const-std-string-from-const-std-vector-std-string-toList-const-std-string-subject-const-std-string-body"><span class="toc-number">1.5.1.</span> <span class="toc-text">4.1 bool sendMailImpl(const std::string&amp; from, const std::vector&lt;std::string&gt;&amp; toList, const std::string&amp; subject, const std::string&amp; body)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#0-%E5%89%8D%E7%BD%AE%E6%A3%80%E6%9F%A5"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">0) 前置检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%BB%BA%E8%BF%9E%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%97%AE%E5%80%99"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">1) 建连与服务器问候</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%A0%87%E8%AF%86%E4%B8%8E%E8%AE%A4%E8%AF%81"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">2) 标识与认证</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%82%AE%E4%BB%B6%E4%BF%A1%E5%B0%81"><span class="toc-number">1.5.1.4.</span> <span class="toc-text">3) 邮件信封</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E9%82%AE%E4%BB%B6%E6%AD%A3%E6%96%87"><span class="toc-number">1.5.1.5.</span> <span class="toc-text">4) 邮件正文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E7%BB%93%E6%9D%9F%E4%BC%9A%E8%AF%9D"><span class="toc-number">1.5.1.6.</span> <span class="toc-text">5) 结束会话</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%AF%B9%E5%A4%96%E5%8F%91%E9%80%81%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.6.</span> <span class="toc-text">5. 对外发送接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-bool-sendMail-const-std-string-from-const-std-string-to-const-std-string-subject-const-std-string-body"><span class="toc-number">1.6.1.</span> <span class="toc-text">5.1 bool sendMail(const std::string&amp; from, const std::string&amp; to, const std::string&amp; subject, const std::string&amp; body)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-bool-sendMail-const-std-string-from-const-std-vector-std-string-toList-const-std-string-subject-const-std-string-body"><span class="toc-number">1.6.2.</span> <span class="toc-text">5.2 bool sendMail(const std::string&amp; from, const std::vector&lt;std::string&gt;&amp; toList, const std::string&amp; subject, const std::string&amp; body)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%8F%AA%E8%AF%BB%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.7.</span> <span class="toc-text">6. 只读接口</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#std-string-getLastError-const"><span class="toc-number">1.7.1.</span> <span class="toc-text">std::string getLastError() const</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%B7%A8%E5%B9%B3%E5%8F%B0%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82"><span class="toc-number">1.8.</span> <span class="toc-text">7. 跨平台实现差异</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">1.8.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-Unix"><span class="toc-number">1.8.2.</span> <span class="toc-text">Linux&#x2F;Unix</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E8%AF%AD%E4%B9%89%E4%B8%8E%E8%BE%B9%E7%95%8C%E8%AF%B4%E6%98%8E%EF%BC%88%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%EF%BC%89"><span class="toc-number">1.9.</span> <span class="toc-text">8. 语义与边界说明（面试高频）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E6%94%B9%E8%BF%9B%E5%BB%BA%E8%AE%AE%EF%BC%88%E5%8F%AF%E7%9B%B4%E6%8E%A5%E9%9D%A2%E8%AF%95%E5%9B%9E%E7%AD%94%EF%BC%89"><span class="toc-number">1.10.</span> <span class="toc-text">9. 改进建议（可直接面试回答）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8B%E4%B8%80%E6%A8%A1%E5%9D%97%EF%BC%88%E9%A1%BA%E5%BA%8F%EF%BC%89"><span class="toc-number">1.11.</span> <span class="toc-text">下一模块（顺序）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/74dc839a.html" title="Channel 模块实现说明">Channel 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/f8f79a3.html" title="Coroutine 模块实现说明">Coroutine 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/60a0897e.html" title="Crash 模块实现说明">Crash 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/cb47dfb.html" title="JsonObjectView 模块实现说明">JsonObjectView 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/posts/6ba6c26b.html" title="DBConnector 模块实现说明">DBConnector 模块实现说明</a><time datetime="2026-04-29T07:01:37.000Z" title="发表于 2026-04-29 15:01:37">2026-04-29</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://blog-twikoo.xindon.top/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://blog-twikoo.xindon.top/',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
