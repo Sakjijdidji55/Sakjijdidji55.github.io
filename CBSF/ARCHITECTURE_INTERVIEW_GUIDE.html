@@ -1,15 +1,17 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="生命不息，追番不止！         .bangumi-tabs{margin-bottom:15px;margin-top:15px}.bangumi-tab{padding:5px}a.bangumi-tab{text-decoration:none}.bangumi-active{background:#657b83;color:#fff}.bangumi-item{positi">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>迷路的小朋友 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="c++Server 架构与模块细节（面试版） 本文档用于面试场景，目标是帮助你在 5~15 分钟内清晰讲解项目的整体设计、核心模块实现细节、可被深挖的问题、与 Go + Gin 的差异以及改进方向。  1. 项目定位与设计目标 c++Server 是一个轻量级 C++ HTTP 服务框架，当前具备：  HTTP 服务接入与请求分发 路由与中间件机制 请求解析（query&#x2F;form&#x2F;json&#x2F;mul">
 <meta property="og:type" content="website">
-<meta property="og:title" content="追番列表">
-<meta property="og:url" content="https://sakjijdidji55.github.io/bangumis/index.html">
+<meta property="og:title" content="迷路的小朋友">
+<meta property="og:url" content="https://sakjijdidji55.github.io/CBSF/ARCHITECTURE_INTERVIEW_GUIDE.html">
 <meta property="og:site_name" content="迷路的小朋友">
-<meta property="og:description" content="生命不息，追番不止！         .bangumi-tabs{margin-bottom:15px;margin-top:15px}.bangumi-tab{padding:5px}a.bangumi-tab{text-decoration:none}.bangumi-active{background:#657b83;color:#fff}.bangumi-item{positi">
+<meta property="og:description" content="c++Server 架构与模块细节（面试版） 本文档用于面试场景，目标是帮助你在 5~15 分钟内清晰讲解项目的整体设计、核心模块实现细节、可被深挖的问题、与 Go + Gin 的差异以及改进方向。  1. 项目定位与设计目标 c++Server 是一个轻量级 C++ HTTP 服务框架，当前具备：  HTTP 服务接入与请求分发 路由与中间件机制 请求解析（query&#x2F;form&#x2F;json&#x2F;mul">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-04-29T06:39:25.085Z">
+<meta property="article:modified_time" content="2026-04-29T06:39:25.085Z">
 <meta property="article:author" content="欣冻">
 <meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/bangumis/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/CBSF/ARCHITECTURE_INTERVIEW_GUIDE.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
     (() => {
       
     const saveToLocal = {
@@ -138,86 +140,424 @@
   },
   autoDarkmode: false
 }</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
-  title: '追番列表',
+  title: '迷路的小朋友',
   isHighlightShrink: false,
   isToc: false,
-  pageType: 'home'
+  pageType: 'page'
 }</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"<!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 <link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
-</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="site-info"><h1 id="site-title">迷路的小朋友</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container">
-<blockquote>
-    <p>生命不息，追番不止！</p>
-</blockquote>
-
-
-<style>
-    .bangumi-tabs{margin-bottom:15px;margin-top:15px}.bangumi-tab{padding:5px}a.bangumi-tab{text-decoration:none}.bangumi-active{background:#657b83;color:#fff}.bangumi-item{position:relative;clear:both;padding:10px 0;border-bottom:1px solid #ddd;min-height:180px}@media screen and (max-width:600px){.bangumi-item{width:100%}}.bangumi-picture{position:absolute;left:0;top:10px;width:110px}.bangumi-picture img{margin:10px 0}.bangumi-info{padding-left:120px;margin-top:10px;min-height:160px}.bangumi-meta{font-size:12px;padding-right:10px;height:45px}.bangumi-summary{font-size:12px;margin-top:10px}.bangumi-summary>p{word-break:break-all;text-overflow:ellipsis;overflow:hidden;white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3}.bangumi-comments{font-size:12px}.bangumi-pagination{margin-top:15px;text-align:center;margin-bottom:10px}.bangumi-button{padding:5px}.bangumi-button:hover{background:#657b83;color:#fff}.bangumi-hide{display:none}.bangumi-show{display:block}.bangumi-title{font-size:18px;font-weight:700}.bangumi-title a{line-height:1;text-decoration:none}.bangumi-info-items{font-size:12px;color:#2fd8d8;padding-top:10px;line-height:1;float:left;width:100%}.bangumi-info-item{display:inline-block;width:13%;border-right:1px solid #2fd8d8;text-align:center;height:34px}.bangumi-info-label{display:block;line-height:12px}.bangumi-info-item em{display:block;padding-top:6px;line-height:17px;font-style:normal;font-weight:700}.bangumi-info-total{padding-top:11px;display:block;line-height:12px;font-weight:700}.bangumi-info-item-score{border-right:1px solid #0000;width:50px}.bangumi-info-label-em{color:transparent;opacity:0;visibility:hidden;line-height:6px!important;padding:0!important}@media (max-width:650px){.bangumi-coin,.bangumi-type{display:none}.bangumi-info-item{width:16%}}@media (max-width:590px){.bangumi-danmaku,.bangumi-wish{display:none}.bangumi-info-item{width:19%}}@media (max-width:520px){.bangumi-doing,.bangumi-play{display:none}.bangumi-info-item{width:24%}}@media (max-width:480px){.bangumi-collect,.bangumi-follow{display:none}.bangumi-info-item{width:30%}}@media (max-width:400px){.bangumi-area{display:none}.bangumi-info-item{width:45%}}.bangumi-my-comments{border:1px dashed #8f8f8f;padding:3px;border-radius:5px}.bangumi-starstop{background:url(https://cdn.jsdelivr.net/npm/hexo-bilibili-bangumi@1.7.9/lib/img/rate_star_2x.png) 100% 100%/10px 19.5px repeat-x;height:10px;width:50px;display:inline-block;float:none}.bangumi-starlight{background:url(https://cdn.jsdelivr.net/npm/hexo-bilibili-bangumi@1.7.9/lib/img/rate_star_2x.png) 0 0/10px 19.5px repeat-x;height:10px;display:block;width:100%}.bangumi-starlight.stars1{width:5px}.bangumi-starlight.stars2{width:10px}.bangumi-starlight.stars3{width:15px}.bangumi-starlight.stars4{width:20px}.bangumi-starlight.stars5{width:25px}.bangumi-starlight.stars6{width:30px}.bangumi-starlight.stars7{width:35px}.bangumi-starlight.stars8{width:40px}.bangumi-starlight.stars9{width:45px}.bangumi-starlight.stars10{width:50px}.bangumi-info .bangumi-progress{width:100%;height:24px;background-color:#f2f2f2;border-radius:5px;overflow:hidden;font-size:16px;text-align:center;position:relative}.bangumi-info .bangumi-progress-text{z-index:100;position:relative;color:#3c4858;line-height:24px}.bangumi-info .bangumi-progress .progress-bar{z-index:50;height:100%;background-color:#007bffad;border-radius:5px;position:absolute;top:0}
-    
-</style>
-<div class="bangumi-tabs">
-    <a class="bangumi-tab" id="bangumi-tab1" href="javascript:;" rel="external" target="_self" onclick="return false">
-    想看
-    (0)</a>
-    <a class="bangumi-tab" id="bangumi-tab2" href="javascript:;" rel="external" target="_self" onclick="return false">
-        在看
-        (0)</a>
-    <a class="bangumi-tab" id="bangumi-tab3" href="javascript:;" rel="external" target="_self" onclick="return false">
-        已看
-        (0)</a>
-</div>
-<div>
-    <div id="bangumi-item1">
-        
-        
-        <div class="bangumi-pagination">
-    <a class="bangumi-button bangumi-firstpage" href="javascript:;" target="_self" onclick="return false"> 首页</a>
-    <a class="bangumi-button bangumi-previouspage" href="javascript:;" target="_self" onclick="return false">上一页</a>
-    <span class="bangumi-pagenum">2 / 3</span>
-    <a class="bangumi-button bangumi-nextpage" href="javascript:;" target="_self" onclick="return false">下一页</a>
-    <a class="bangumi-button bangumi-lastpage" href="javascript:;" target="_self" onclick="return false">尾页</a>
-</div>
-        
-    </div>
-    <div id="bangumi-item2">
-        
-        
-        <div class="bangumi-pagination">
-    <a class="bangumi-button bangumi-firstpage" href="javascript:;" target="_self" onclick="return false"> 首页</a>
-    <a class="bangumi-button bangumi-previouspage" href="javascript:;" target="_self" onclick="return false">上一页</a>
-    <span class="bangumi-pagenum">2 / 3</span>
-    <a class="bangumi-button bangumi-nextpage" href="javascript:;" target="_self" onclick="return false">下一页</a>
-    <a class="bangumi-button bangumi-lastpage" href="javascript:;" target="_self" onclick="return false">尾页</a>
-</div>
-        
-    </div>
-    <div id="bangumi-item3">
-        
-        
-        <div class="bangumi-pagination">
-    <a class="bangumi-button bangumi-firstpage" href="javascript:;" target="_self" onclick="return false"> 首页</a>
-    <a class="bangumi-button bangumi-previouspage" href="javascript:;" target="_self" onclick="return false">上一页</a>
-    <span class="bangumi-pagenum">2 / 3</span>
-    <a class="bangumi-button bangumi-nextpage" href="javascript:;" target="_self" onclick="return false">下一页</a>
-    <a class="bangumi-button bangumi-lastpage" href="javascript:;" target="_self" onclick="return false">尾页</a>
-</div>
-        
-    </div>
-</div>
-<script>
-    (function () {
-    
-    const bangumiLazyload = false;
-    "use strict";/* eslint-disable no-plusplus */(function(){// eslint-disable-next-line func-style
-function a(){this.classList.add("bangumi-active");for(var a=this.siblings(),b=0;b<a.length;b++)a[b].classList.remove("bangumi-active");// 显示对应板块
-var c=this.id.replace("tab","item"),d=document.getElementById(c);d.classList.remove("bangumi-hide"),d.classList.add("bangumi-show"),a=document.getElementById(c).siblings();for(var e=0;e<a.length;e++)a[e].classList.remove("bangumi-show"),a[e].classList.add("bangumi-hide")}Element.prototype.siblings=function(){for(var a=[],b=this.parentNode.children,c=0;c<b.length;c++)b[c]!==this&&a.push(b[c]);return a};for(var b=document.getElementsByClassName("bangumi-tab"),c=0;c<b.length;c++)b[c].onclick=a,b[c].onclick.apply(b[c]);"undefined"!=typeof pagenumsPre&&axios.get(new URL("../bangumis.json",window.location.href)).then(function(a){if(a.data){var b={wantWatch:a.data.wantWatch.slice(10).map(function(a){return ejs.render(ejsTemplate,{item:a,loading:loading,metaColor:metaColor,type:type})}).join("\n"),watching:a.data.watching.slice(10).map(function(a){return ejs.render(ejsTemplate,{item:a,loading:loading,metaColor:metaColor,type:type})}).join("\n"),watched:a.data.watched.slice(10).map(function(a){return ejs.render(ejsTemplate,{item:a,loading:loading,metaColor:metaColor,type:type})}).join("\n")};document.querySelectorAll("#bangumi-item1>.bangumi-pagination")[0].insertAdjacentHTML("beforeBegin",b.wantWatch),document.querySelectorAll("#bangumi-item2>.bangumi-pagination")[0].insertAdjacentHTML("beforeBegin",b.watching),document.querySelectorAll("#bangumi-item3>.bangumi-pagination")[0].insertAdjacentHTML("beforeBegin",b.watched)}})})();
-
-    document.getElementsByClassName('bangumi-tab')[1].click();
-    /* eslint-disable no-plusplus, func-style */(function(){var a=Math.ceil;function b(b,c){return`${b+1} / ${a(0==c.length/10?1:a(c.length/10))}`}function c(){const a=this.parentNode.siblings();g(a,0),this.parentNode.getElementsByClassName("bangumi-pagenum")[0].innerText=b(0,a)}function d(){const a=this.parentNode.siblings();let c=this.parentNode.getElementsByClassName("bangumi-pagenum")[0].innerText;c=c.substr(0,c.indexOf("/")-1),c=parseInt(c,10)-1,0<c&&c--,g(a,c),this.parentNode.getElementsByClassName("bangumi-pagenum")[0].innerText=b(c,a)}function e(){const c=this.parentNode.siblings();let d=this.parentNode.getElementsByClassName("bangumi-pagenum")[0].innerText;d=d.substr(0,d.indexOf("/")-1),d=parseInt(d,10)-1,d<a(c.length/10)-1&&d++,g(c,d),this.parentNode.getElementsByClassName("bangumi-pagenum")[0].innerText=b(d,c)}function f(){const c=this.parentNode.siblings();g(c,a(c.length/10)-1),this.parentNode.getElementsByClassName("bangumi-pagenum")[0].innerText=b(-1==a(c.length/10)-1?0:a(c.length/10)-1,c)}function g(a,b){for(let c=0;c<a.length;c++)if(Math.floor(c/10)===b){a[c].classList.remove("bangumi-hide");const[b]=a[c].getElementsByTagName("img");bangumiLazyload&&(b.src=b.getAttribute("data-src"))}else a[c].classList.add("bangumi-hide")}const h=document.getElementsByClassName("bangumi-firstpage"),j=document.getElementsByClassName("bangumi-previouspage"),k=document.getElementsByClassName("bangumi-nextpage"),l=document.getElementsByClassName("bangumi-lastpage"),m=document.getElementsByClassName("bangumi-pagenum");for(let b=0;b<h.length;b++){h[b].onclick=c,j[b].onclick=d,k[b].onclick=e,l[b].onclick=f;// set page num
-const g="undefined"==typeof pagenumsPre?m[b].parentNode.siblings().length:pagenumsPre[b]??m[b].parentNode.siblings().length;h[b].click(),m[b].innerText=`1 / ${0===a(g/10)?1:a(g/10)}`}})();
-
-    })();
-</script>
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2025/07/03/qLFy9.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url(https://img.picgo.net/2025/04/05/2025-2-22fe10c0c4fb1bc202.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="page-site-info"><h1 id="site-title"></h1></div></header><main class="layout" id="content-inner"><div id="page"><div class="container" id="article-container"><h1>c++Server 架构与模块细节（面试版）</h1>
+<p>本文档用于面试场景，目标是帮助你在 5~15 分钟内清晰讲解项目的整体设计、核心模块实现细节、可被深挖的问题、与 Go + Gin 的差异以及改进方向。</p>
+<hr>
+<h2 id="1-项目定位与设计目标">1. 项目定位与设计目标</h2>
+<p><code>c++Server</code> 是一个轻量级 C++ HTTP 服务框架，当前具备：</p>
+<ul>
+<li>HTTP 服务接入与请求分发</li>
+<li>路由与中间件机制</li>
+<li>请求解析（query/form/json/multipart）</li>
+<li>响应构建（json/text/file/fileStream）</li>
+<li>线程池并发模型</li>
+<li>协程与调度器基础设施（跨平台）</li>
+<li>MySQL / Redis 连接器</li>
+<li>JWT 与密码哈希</li>
+<li>基础日志与崩溃处理</li>
+</ul>
+<p>项目特点是“底层可控、模块化清晰、可跨平台”，但在工业化能力（连接池、可观测性、协议完备性）上仍有演进空间。</p>
+<hr>
+<h2 id="2-总体架构分层">2. 总体架构分层</h2>
+<h3 id="2-1-分层视图">2.1 分层视图</h3>
+<ol>
+<li>
+<p><strong>接入层（Network / HTTP）</strong></p>
+<ul>
+<li>监听端口、accept 连接、读取请求、解析协议、回写响应</li>
+<li>关键实现：<code>src/Server.cpp</code>、<code>include/Server.h</code></li>
+</ul>
+</li>
+<li>
+<p><strong>并发调度层（ThreadPool / Coroutine）</strong></p>
+<ul>
+<li>线程池并发执行连接任务</li>
+<li>协程与调度器提供用户态协作式调度能力</li>
+<li>关键实现：<code>src/Threadpool.cpp</code>、<code>include/Coroutine.h</code>、<code>src/Coroutine.cpp</code></li>
+</ul>
+</li>
+<li>
+<p><strong>路由与处理层（Router / Handler / Middleware）</strong></p>
+<ul>
+<li>method + path 路由命中</li>
+<li>全局与路由级 middleware 链</li>
+<li>handler 负责业务逻辑并填充 <code>Response</code></li>
+<li>关键实现：<code>src/route.cpp</code>、<code>src/handlers/common_handler.cpp</code></li>
+</ul>
+</li>
+<li>
+<p><strong>基础设施层（JSON / DB / Redis / JWT / Config / Log）</strong></p>
+<ul>
+<li>JSON 解析序列化、MySQL/Redis 操作、鉴权与加密、日志、配置</li>
+<li>关键实现：<code>include/JsonValue.h</code>、<code>include/DBConnector.h</code>、<code>include/RDConnector.h</code>、<code>include/jwt.h</code>、<code>include/ApiSender.h</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="2-2-依赖关系（简版）">2.2 依赖关系（简版）</h3>
+<ul>
+<li><code>main</code> -&gt; <code>Server</code> + <code>registerRoutes</code></li>
+<li><code>Server</code> -&gt; <code>ThreadPool</code></li>
+<li><code>Server::parseRequest</code> -&gt; <code>Request::parseBody</code> -&gt; <code>JsonValue</code></li>
+<li><code>handler</code> -&gt; <code>Response</code></li>
+<li>业务侧可调用 <code>DBConnector</code> / <code>RdConnector</code> / <code>JWT</code> / <code>ApiSender</code></li>
+<li><code>Server</code> / <code>Response</code> / 其他模块 -&gt; <code>Log</code></li>
+</ul>
+<hr>
+<h2 id="3-请求处理主链路（面试必背）">3. 请求处理主链路（面试必背）</h2>
+<h3 id="3-1-启动阶段">3.1 启动阶段</h3>
+<ol>
+<li><code>main.cpp</code> 中创建 <code>Server</code> 实例</li>
+<li>调用 <code>registerRoutes(app)</code> 注册路由</li>
+<li><code>app.run()</code> 进入监听循环</li>
+</ol>
+<h3 id="3-2-运行阶段（核心流程）">3.2 运行阶段（核心流程）</h3>
+<ol>
+<li><code>Server::run()</code> 创建监听 socket（IPv4/IPv6）</li>
+<li><code>accept()</code> 获取客户端连接</li>
+<li>将连接处理函数投递到线程池：<code>threadpool_.addTask(&amp;Server::handleClient, ...)</code></li>
+<li><code>handleClient()</code> 从 socket 读取请求数据：
+<ul>
+<li>先读取并解析 header</li>
+<li>从 <code>Content-Length</code> 得到 body 长度，继续读取 body</li>
+</ul>
+</li>
+<li><code>parseRequest()</code> 解析请求行、header、query</li>
+<li><code>request.parseBody()</code> 按 <code>Content-Type</code> 解析 body</li>
+<li>执行 middleware 链（全局 + 路由级）</li>
+<li><code>findRoute(method, path)</code> 命中 handler 并执行</li>
+<li><code>buildResponse(response)</code> 构建 HTTP 报文并 <code>send</code></li>
+<li>关闭连接或结束处理</li>
+</ol>
+<h3 id="3-3-请求数据结构">3.3 请求数据结构</h3>
+<p><code>Request</code> 关键字段：</p>
+<ul>
+<li><code>method</code>, <code>path</code>, <code>headers</code>, <code>body</code></li>
+<li><code>queryParams</code></li>
+<li><code>bodyParams</code></li>
+<li><code>jsonBody</code></li>
+<li><code>uploadedFiles</code></li>
+</ul>
+<p><code>Response</code> 关键字段：</p>
+<ul>
+<li><code>statusCode</code>, <code>headers</code>, <code>body</code></li>
+<li><code>streamWriter</code>（用于大文件流式输出）</li>
+</ul>
+<hr>
+<h2 id="4-核心模块细节">4. 核心模块细节</h2>
+<h2 id="4-1-协程与调度器模块（Coroutine-Scheduler）">4.1 协程与调度器模块（Coroutine / Scheduler）</h2>
+<h3 id="职责">职责</h3>
+<ul>
+<li>提供用户态协程上下文切换</li>
+<li>提供任务提交、工作窃取、时间片抢占基础能力</li>
+<li>跨平台实现（Linux <code>ucontext</code>，Windows Fiber）</li>
+</ul>
+<h3 id="关键类型与函数">关键类型与函数</h3>
+<ul>
+<li><code>Coroutine</code>
+<ul>
+<li><code>resume()</code></li>
+<li><code>suspend()</code></li>
+<li><code>state()</code></li>
+</ul>
+</li>
+<li><code>Scheduler</code>
+<ul>
+<li><code>submit()</code> / <code>go()</code></li>
+<li><code>start()</code> / <code>stop()</code></li>
+<li><code>run_on_worker_thread()</code></li>
+<li><code>configureTimeSlice()</code></li>
+<li><code>shouldPreempt()</code></li>
+</ul>
+</li>
+<li><code>yield()</code> / <code>yield_now()</code></li>
+</ul>
+<h3 id="当前状态（面试建议说法）">当前状态（面试建议说法）</h3>
+<ul>
+<li>协程基础设施完整，支持平台差异封装与调度队列。</li>
+<li>但在 HTTP 主链路中仍以线程池同步处理为主，协程尚未全面承载 I/O 处理链路。</li>
+</ul>
+<hr>
+<h2 id="4-2-线程池模块（ThreadPool）">4.2 线程池模块（ThreadPool）</h2>
+<h3 id="职责-2">职责</h3>
+<ul>
+<li>管理 worker 线程</li>
+<li>提供线程安全任务队列</li>
+<li>支撑连接并发处理和异步任务执行</li>
+</ul>
+<h3 id="关键实现点">关键实现点</h3>
+<ul>
+<li><code>maxTasks_ = 10000</code>：限制队列长度，防止无限堆积</li>
+<li><code>addTask()</code>：线程安全入队，支持可变参数绑定</li>
+<li>worker 循环：<code>cv_.wait -&gt; pop task -&gt; execute</code></li>
+</ul>
+<h3 id="面试可讲的权衡">面试可讲的权衡</h3>
+<ul>
+<li>优点：实现稳定、易理解、适合快速搭建服务并发框架</li>
+<li>不足：阻塞 I/O 场景下线程开销较大；队列满时拒绝策略较基础</li>
+</ul>
+<hr>
+<h2 id="4-3-服务器模块（Server）">4.3 服务器模块（Server）</h2>
+<h3 id="职责-3">职责</h3>
+<ul>
+<li>网络接入（监听、accept）</li>
+<li>HTTP 请求解析</li>
+<li>路由与 middleware 执行</li>
+<li>响应报文构建与发送</li>
+</ul>
+<h3 id="关键函数">关键函数</h3>
+<ul>
+<li><code>run()</code></li>
+<li><code>handleClient()</code> / <code>handleClientIPv6()</code></li>
+<li><code>parseRequest()</code></li>
+<li><code>findRoute()</code></li>
+<li><code>buildResponse()</code></li>
+<li><code>addRoute()</code>, <code>get/post/put/del()</code></li>
+<li><code>use()</code>（全局中间件）</li>
+</ul>
+<h3 id="请求解析支持">请求解析支持</h3>
+<ul>
+<li>Query 参数</li>
+<li><code>application/x-www-form-urlencoded</code></li>
+<li><code>application/json</code></li>
+<li><code>multipart/form-data</code>（含文件）</li>
+<li><code>text/plain</code> / <code>xml</code> / 自动类型检测</li>
+</ul>
+<h3 id="响应能力">响应能力</h3>
+<ul>
+<li><code>json()</code> / <code>text()</code> / <code>success()</code> / <code>error()</code></li>
+<li><code>file()</code>：整文件加载响应</li>
+<li><code>fileStream()</code>：分块流式输出（更适合大文件）</li>
+</ul>
+<hr>
+<h2 id="4-4-路由与中间件模块">4.4 路由与中间件模块</h2>
+<h3 id="路由机制">路由机制</h3>
+<ul>
+<li>核心结构是 <code>method -&gt; path -&gt; RouteEntry</code></li>
+<li>路径匹配当前为精确匹配</li>
+<li>支持 <code>RouterGroup</code> 前缀分组</li>
+</ul>
+<h3 id="Middleware-机制">Middleware 机制</h3>
+<ul>
+<li>类型：<code>std::function&lt;bool(const Request&amp;, Response&amp;)&gt;</code></li>
+<li>执行链：全局 middleware -&gt; 路由 middleware -&gt; handler</li>
+<li>middleware 返回 <code>false</code> 时可中断后续执行</li>
+</ul>
+<h3 id="当前业务路由">当前业务路由</h3>
+<ul>
+<li>根路径（GET/POST）</li>
+<li>文件下载接口（普通下载 + 流式下载）</li>
+</ul>
+<hr>
+<h2 id="4-5-JSON-模块（JsonValue）">4.5 JSON 模块（JsonValue）</h2>
+<h3 id="职责-4">职责</h3>
+<ul>
+<li>提供 JSON 数据模型（null/string/number/bool/object/array）</li>
+<li>支持 JSON 字符串解析与序列化</li>
+</ul>
+<h3 id="关键能力">关键能力</h3>
+<ul>
+<li><code>fromJson()</code></li>
+<li><code>toJson()</code></li>
+<li>递归解析：
+<ul>
+<li><code>parseValue()</code></li>
+<li><code>parseObject()</code></li>
+<li><code>parseArray()</code></li>
+<li><code>parseString()</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="实现特征">实现特征</h3>
+<ul>
+<li>手写递归下降解析，兼容常见 JSON 语法</li>
+<li>支持转义字符与基础数值格式</li>
+</ul>
+<h3 id="面试要点">面试要点</h3>
+<ul>
+<li>优势：可控、无外部依赖、便于按需扩展</li>
+<li>风险：复杂 JSON 边界、深层嵌套、性能与成熟库仍有差距</li>
+</ul>
+<hr>
+<h2 id="4-6-数据库模块（DBConnector-Model）">4.6 数据库模块（DBConnector / Model）</h2>
+<h3 id="职责-5">职责</h3>
+<ul>
+<li>MySQL 连接管理</li>
+<li>SQL 查询与执行封装</li>
+<li>错误信息记录</li>
+</ul>
+<h3 id="关键函数-2">关键函数</h3>
+<ul>
+<li><code>DBConnector::initInstance()</code></li>
+<li><code>DBConnector::getInstance()</code></li>
+<li><code>connect()</code></li>
+<li><code>query()</code></li>
+<li><code>execute()</code></li>
+<li><code>escapeSqlLiteral()</code></li>
+</ul>
+<h3 id="设计现状">设计现状</h3>
+<ul>
+<li>单例模式管理连接参数与连接句柄</li>
+<li>提供通用二维结果结构（<code>vector&lt;map&lt;string,string&gt;&gt;</code>）</li>
+</ul>
+<h3 id="面试风险点">面试风险点</h3>
+<ul>
+<li>当前偏“单连接模型”，高并发下扩展性与线程安全策略需加强</li>
+<li>缺少连接池、超时分级、重试策略、事务抽象层</li>
+</ul>
+<hr>
+<h2 id="4-7-Redis-模块（RdConnector）">4.7 Redis 模块（RdConnector）</h2>
+<h3 id="职责-6">职责</h3>
+<ul>
+<li>Redis 连接管理与基础 KV 操作</li>
+</ul>
+<h3 id="关键函数-3">关键函数</h3>
+<ul>
+<li><code>connect()</code></li>
+<li><code>get()</code></li>
+<li><code>set()</code> / <code>set(..., expireSeconds)</code></li>
+<li><code>exists()</code></li>
+<li><code>del()</code></li>
+<li><code>getError()</code></li>
+</ul>
+<h3 id="面试要点-2">面试要点</h3>
+<ul>
+<li>已覆盖常见缓存基础能力</li>
+<li>工业化增强方向：连接池、超时重试、pipeline、集群/哨兵支持</li>
+</ul>
+<hr>
+<h2 id="4-8-API-发送模块（ApiSender）">4.8 API 发送模块（ApiSender）</h2>
+<h3 id="职责-7">职责</h3>
+<ul>
+<li>向外部 HTTP API 发起请求（同步/异步）</li>
+<li>支持 GET/POST/PUT/DELETE/PATCH</li>
+<li>支持回调</li>
+</ul>
+<h3 id="关键接口">关键接口</h3>
+<ul>
+<li><code>request()</code>（异步通用）</li>
+<li><code>requestSync()</code>（同步）</li>
+<li><code>get/post/put/del/patch()</code></li>
+<li><code>doRequest()</code>（底层执行）</li>
+</ul>
+<h3 id="实现特征-2">实现特征</h3>
+<ul>
+<li>内部可用线程池执行异步任务</li>
+<li>封装 <code>ApiResponse &#123; statusCode, body, error, success &#125;</code></li>
+</ul>
+<hr>
+<h2 id="4-9-加密与鉴权模块（JWT）">4.9 加密与鉴权模块（JWT）</h2>
+<h3 id="职责-8">职责</h3>
+<ul>
+<li>JWT 令牌生成与校验（HS256）</li>
+<li>claims 解析</li>
+<li>密码哈希与验证</li>
+</ul>
+<h3 id="关键接口-2">关键接口</h3>
+<ul>
+<li><code>generateToken()</code></li>
+<li><code>verifyToken()</code></li>
+<li><code>parseClaims()</code></li>
+<li><code>encrypt_password()</code></li>
+<li><code>verify_password()</code></li>
+</ul>
+<h3 id="安全实现点">安全实现点</h3>
+<ul>
+<li>包含 <code>constant_time_compare</code>（常量时间比较）</li>
+<li>支持默认 TTL 与自定义 claims</li>
+</ul>
+<h3 id="面试建议">面试建议</h3>
+<ul>
+<li>明确说明令牌生命周期管理、密钥加载方式、过期校验策略</li>
+<li>说明后续可接入更成熟安全库与密钥管理方案</li>
+</ul>
+<hr>
+<h2 id="4-10-配置、日志、稳定性模块">4.10 配置、日志、稳定性模块</h2>
+<h3 id="配置">配置</h3>
+<ul>
+<li><code>Config</code> + <code>YamlParser</code> 用于读取配置项</li>
+<li>面试可强调“配置化替代硬编码”思路</li>
+</ul>
+<h3 id="日志">日志</h3>
+<ul>
+<li><code>Log</code> 提供基础文件日志写入</li>
+<li>当前适合基础排障，后续可升级为结构化日志与分级日志</li>
+</ul>
+<h3 id="稳定性">稳定性</h3>
+<ul>
+<li><code>CrashHandler</code> 负责崩溃兜底与异常场景处理</li>
+<li>可作为“工程可靠性意识”的加分点</li>
+</ul>
+<hr>
+<h2 id="5-关键时序图（文字版）">5. 关键时序图（文字版）</h2>
+<ol>
+<li>Client 发送 HTTP 请求到 Server</li>
+<li>Server 接受连接并投递线程池任务</li>
+<li>Worker 线程执行 <code>handleClient</code></li>
+<li>解析 header/body，构建 <code>Request</code></li>
+<li>执行 middleware 链</li>
+<li>路由匹配并执行 handler</li>
+<li>handler 访问 DB/Redis/JWT/Json 等模块</li>
+<li>构建 <code>Response</code> 并回写 socket</li>
+<li>记录日志并结束连接处理</li>
+</ol>
+<hr>
+<h2 id="6-面试高频深挖点（按优先级）">6. 面试高频深挖点（按优先级）</h2>
+<ol>
+<li><strong>并发模型</strong>：为何采用线程池？协程为何未完全接管主链路？</li>
+<li><strong>HTTP 兼容性</strong>：<code>Content-Length</code> 处理、长连接策略、边界条件与异常包处理</li>
+<li><strong>路由能力</strong>：精确匹配 vs 参数路由，如何扩展 REST 友好能力</li>
+<li><strong>数据库与缓存</strong>：单连接模型在高并发场景的问题与演进路径</li>
+<li><strong>安全性</strong>：JWT 签名校验、密码哈希、下载接口路径安全</li>
+<li><strong>可观测性</strong>：如何定位慢请求、错误高峰、资源瓶颈</li>
+<li><strong>跨平台设计</strong>：Windows/Linux 差异抽象与维护成本</li>
+</ol>
+<hr>
+<h2 id="7-与-Go-Gin-的对比（面试表达模板）">7. 与 Go + Gin 的对比（面试表达模板）</h2>
+<h3 id="当前项目优势">当前项目优势</h3>
+<ul>
+<li>对底层网络与并发策略可控</li>
+<li>C++ 生态下便于做高性能定制</li>
+<li>可作为“从 0 到 1 搭建服务器核心”的工程能力证明</li>
+</ul>
+<h3 id="相对不足">相对不足</h3>
+<ul>
+<li>协程与 I/O 尚未完全协同</li>
+<li>DB/Redis 缺连接池与成熟治理能力</li>
+<li>路由、中间件生态能力弱于 Gin</li>
+<li>可观测性与运维链路未形成完整闭环</li>
+</ul>
+<h3 id="一句话总结">一句话总结</h3>
+<p>“Go + Gin 在工业化能力上开箱即用更成熟；本项目的价值在于底层机制可控与可深度定制，但需要继续补齐池化、可观测、协议完备性等能力。”</p>
+<hr>
+<h2 id="8-改进路线图（可直接回答‘下一步怎么做’）">8. 改进路线图（可直接回答‘下一步怎么做’）</h2>
+<h3 id="短期（1周）">短期（1周）</h3>
+<ul>
+<li>配置全面接入启动流程（端口、DB、Redis、JWT）</li>
+<li>增加健康检查与统一错误响应</li>
+<li>增强日志字段（request_id、latency、status）</li>
+</ul>
+<h3 id="中期（1个月）">中期（1个月）</h3>
+<ul>
+<li>MySQL/Redis 连接池化与超时重试机制</li>
+<li>补参数路由、统一上下文对象、标准中间件链</li>
+<li>压测基线与回归指标（QPS/P95/P99）</li>
+</ul>
+<h3 id="长期（1季度）">长期（1季度）</h3>
+<ul>
+<li>事件驱动 I/O（epoll/IOCP）与协程协同</li>
+<li>Metrics + Tracing + 集中日志完整可观测体系</li>
+<li>容器化部署与发布治理（探针、滚动发布、回滚）</li>
+</ul>
+<hr>
+<h2 id="9-面试速背版（30秒）">9. 面试速背版（30秒）</h2>
+<p>“这个项目是一个 C++ 轻量 HTTP 服务框架，分接入层、并发调度层、路由处理层和基础设施层。主链路是 <code>accept -&gt; 线程池 -&gt; 请求解析 -&gt; middleware -&gt; handler -&gt; 响应回写</code>。我重点做了协程调度、线程池、JSON 解析、DB/Redis 接入、JWT 认证这些基础能力。当前优势是底层机制可控，短板是连接池、可观测和协议完备性，我的改进方案是短期配置化和健康检查，中期池化和中间件标准化，长期把事件驱动 I/O 与协程打通并完善运维体系。”</p>
 </div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">8</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/c5efe575.html" title="软工集市后端解析文档"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/07/03/qSIRL.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="软工集市后端解析文档"/></a><div class="content"><a class="title" href="/posts/c5efe575.html" title="软工集市后端解析文档">软工集市后端解析文档</a><time datetime="2026-04-28T11:51:00.000Z" title="发表于 2026-04-28 19:51:00">2026-04-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/8a8e8e04.html" title="Linux源码"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/07/03/qLrtm.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux源码"/></a><div class="content"><a class="title" href="/posts/8a8e8e04.html" title="Linux源码">Linux源码</a><time datetime="2026-03-17T16:00:00.000Z" title="发表于 2026-03-18 00:00:00">2026-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/bc9ae956.html" title="数据结构与算法实现"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/12/20/ClnnUM.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据结构与算法实现"/></a><div class="content"><a class="title" href="/posts/bc9ae956.html" title="数据结构与算法实现">数据结构与算法实现</a><time datetime="2025-12-28T10:00:00.000Z" title="发表于 2025-12-28 18:00:00">2025-12-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/a6d4d6d1.html" title="JavaGame实现笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/12/20/Cln2Wr.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaGame实现笔记"/></a><div class="content"><a class="title" href="/posts/a6d4d6d1.html" title="JavaGame实现笔记">JavaGame实现笔记</a><time datetime="2025-12-25T04:24:02.000Z" title="发表于 2025-12-25 12:24:02">2025-12-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/e329799.html" title="C++后端服务器实现笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://i.imgs.ovh/2025/12/03/CsbqBg.md.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="C++后端服务器实现笔记"/></a><div class="content"><a class="title" href="/posts/e329799.html" title="C++后端服务器实现笔记">C++后端服务器实现笔记</a><time datetime="2025-12-01T08:00:00.000Z" title="发表于 2025-12-01 16:00:00">2025-12-01</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
