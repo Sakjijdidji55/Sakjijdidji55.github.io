@@ -1,0 +1,549 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>deepseek-harness P1 改造：从官方开源到个人特化版 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言 deepseek-harness（下称 dsh）官方版已经走到 0.1.0-rc.5 并在 npm 公开发布，但它始终是一个「通用产品」：测试套件、质量门、双语文档、示例 demo 一应俱全，产品形态是绑在 127.0.0.1 上的回环 Web GUI。对我而言，官方形态并不合身——我需要的是一个「自己说了算」的个人特化版：仓库删掉不需要的工程负担，把产品面拆成「PC 执行 + 服务器控制">
+<meta property="og:type" content="article">
+<meta property="og:title" content="deepseek-harness P1 改造：从官方开源到个人特化版">
+<meta property="og:url" content="https://sakjijdidji55.github.io/posts/4bf3fe64.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="前言 deepseek-harness（下称 dsh）官方版已经走到 0.1.0-rc.5 并在 npm 公开发布，但它始终是一个「通用产品」：测试套件、质量门、双语文档、示例 demo 一应俱全，产品形态是绑在 127.0.0.1 上的回环 Web GUI。对我而言，官方形态并不合身——我需要的是一个「自己说了算」的个人特化版：仓库删掉不需要的工程负担，把产品面拆成「PC 执行 + 服务器控制">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ssemarket.cn/image-api/i/images/2026/08/22/9fa87027-c105-496b-9ad7-372ccea7ca20.png">
+<meta property="article:published_time" content="2026-08-21T18:30:00.000Z">
+<meta property="article:modified_time" content="2026-08-22T04:38:34.243Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="deepseek-harness">
+<meta property="article:tag" content="项目改造">
+<meta property="article:tag" content="控制面">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ssemarket.cn/image-api/i/images/2026/08/22/9fa87027-c105-496b-9ad7-372ccea7ca20.png"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "deepseek-harness P1 改造：从官方开源到个人特化版",
+  "url": "https://sakjijdidji55.github.io/posts/4bf3fe64.html",
+  "image": "https://ssemarket.cn/image-api/i/images/2026/08/22/9fa87027-c105-496b-9ad7-372ccea7ca20.png",
+  "datePublished": "2026-08-21T18:30:00.000Z",
+  "dateModified": "2026-08-22T04:38:34.243Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "欣冻",
+      "url": "https://sakjijdidji55.github.io/"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/posts/4bf3fe64.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'deepseek-harness P1 改造：从官方开源到个人特化版',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(https://ssemarket.cn/image-api/i/images/2026/08/22/9fa87027-c105-496b-9ad7-372ccea7ca20.png);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a><a class="nav-page-title" href="/"><span class="site-name">deepseek-harness P1 改造：从官方开源到个人特化版</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-home"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">deepseek-harness P1 改造：从官方开源到个人特化版</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-08-21T18:30:00.000Z" title="发表于 2026-08-22 02:30:00">2026-08-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-08-22T04:38:34.243Z" title="更新于 2026-08-22 12:38:34">2026-08-22</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h2 id="前言">前言</h2>
+<p>deepseek-harness（下称 dsh）官方版已经走到 <code>0.1.0-rc.5</code> 并在 npm 公开发布，但它始终是一个「通用产品」：测试套件、质量门、双语文档、示例 demo 一应俱全，产品形态是绑在 <code>127.0.0.1</code> 上的回环 Web GUI。对我而言，官方形态并不合身——我需要的是一个「自己说了算」的个人特化版：仓库删掉不需要的工程负担，把产品面拆成「PC 执行 + 服务器控制 + 手机/管理台展示」三层，同时安全底线一条都不能松。</p>
+<p>这一轮 P1 改造的成果，就是把这套想法全部落地：从官方 fork 出个人 Gitee 特化版，完成分账号控制面的 P0/P1（控制面后端、管理台、手机工作台）、桌面壳、局域网直连工作通道、PC→手机文件、主题皮肤、<code>harness_control</code> 工具等一系列工作。这篇文章记录整个 P1 的改造思路与落地细节。</p>
+<blockquote>
+<p><strong>下载体验</strong>：P1 改造后的打包版本已发布到 Gitee Releases —— <a target="_blank" rel="noopener" href="https://gitee.com/xindonhub/deepseek-harness/releases/tag/v0.1.0-rc.7">deepseek-harness v0.1.0-rc.7</a>，桌面安装包及相关产物可到该页面直接下载体验。</p>
+</blockquote>
+<h2 id="一、为什么要改造：回环-GUI-的天花板">一、为什么要改造：回环 GUI 的天花板</h2>
+<p>dsh 的产品 GUI 是一个回环 Web 应用：<code>dsh web</code> 只绑 <code>127.0.0.1</code>，页面和 <code>/api</code> 都在本机。这带来两个问题：</p>
+<ol>
+<li><strong>手机打不开</strong>：<code>127.0.0.1</code> 只在 PC 上有效，出门在外根本没法驱动 PC 上的 Harness 干活。</li>
+<li><strong>不能直接发布</strong>：<code>/api</code> 可以驱动 <code>session.prompt</code>，而 prompt 能触发工具，包括 bash——把这样一个 Host 挂上公网、前面再加个登录，本质上是 RCE 级控制面。之前已经做过「本地控制面加固」和「API 浏览器信任边界」来收口这个问题。</li>
+</ol>
+<p>所以改造的目标不是「把 dsh web 发布出去」，而是拆成三个不同的产品：</p>
+<ul>
+<li><strong>手机</strong>：驱动 <strong>桌面</strong> Harness 干活（工具、工作区、沙箱都在 PC 上跑），完成后把文件拉到手机。</li>
+<li><strong>服务器</strong>：一个管理台（Cursot 类），看余额、用量、worker 健康——它 <strong>不</strong> 承载 agent 会话。</li>
+<li><strong>PC</strong>：原样的回环强力 GUI，加一个桌面壳。</li>
+</ul>
+<p>另外还有一条硬约束：<code>DEEPSEEK_API_KEY</code> 永远留在 PC 上，控制面不能变成密钥柜，也不能变成第二套 Harness 运行时。</p>
+<h2 id="二、整体架构：三层平面">二、整体架构：三层平面</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">手机工作台                   管理台 (control-web)</span><br><span class="line">  session / approval / files     usage / balance / workers</span><br><span class="line">        |  HTTPS + WSS(audience=mobile)  |  HTTPS(audience=dashboard)</span><br><span class="line">        +---------------+----------------+</span><br><span class="line">                        v</span><br><span class="line">              控制面 (profile `control`)</span><br><span class="line">                        ^</span><br><span class="line">                        |  出站 WSS (设备凭据)</span><br><span class="line">                        |</span><br><span class="line">              本地 worker (`dsh web` + control-worker 插件)</span><br><span class="line">                        |</span><br><span class="line">              回环 / 桌面 GUI（完整 Harness）</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>平面</th>
+<th>进程</th>
+<th>绑定</th>
+<th>audience</th>
+<th>Agent UI</th>
+<th>跑工具</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>执行</td>
+<td><code>dsh --profile web</code></td>
+<td><code>127.0.0.1</code></td>
+<td>loopback</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>控制</td>
+<td><code>dsh --profile control</code></td>
+<td>公网 HTTPS（反代 TLS）</td>
+<td>server</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>管理台</td>
+<td><code>apps/control-web</code></td>
+<td>控制面源</td>
+<td>dashboard</td>
+<td>否</td>
+<td>否</td>
+</tr>
+<tr>
+<td>手机</td>
+<td><code>apps/mobile</code></td>
+<td>控制面源</td>
+<td>mobile</td>
+<td>是（远程）</td>
+<td>否（worker 执行）</td>
+</tr>
+</tbody>
+</table>
+<p>关键点：<strong>worker 永远是出站拨号</strong>。PC 上不开任何入站端口、不绑 <code>0.0.0.0</code>，它主动向控制面建立 <code>/ws/worker</code> 长连接。这样仓库依然可以只绑回环，控制面成为唯一的「信号 + 转发」中枢。同时 token 带 audience：dashboard 令牌拿到的所有转发工作方法（<code>session.*</code>、<code>approval.*</code>、<code>artifact.*</code>）都是 <code>audience-refused</code>，管理台 XSS 也变不成 <code>session.prompt</code>。</p>
+<h2 id="三、P0：控制面后端与管理台">三、P0：控制面后端与管理台</h2>
+<h3 id="3-1-profile-control">3.1 <code>profile control</code></h3>
+<p><code>dsh control</code> 是 <code>--profile control</code> 的启动别名。它只叠 <code>@deepseek-ai/dsh-control-server</code> bundle，<strong>不叠 <code>dsh-base</code></strong>——所以控制面进程里没有工具、没有 AgentLoop、没有 Host GUI、没有 composer，<code>GET /</code> 只是一页无 composer 的健康页。默认监听 <code>127.0.0.1:4090</code>；<code>--host</code> 允许非回环，因为这个源已经认证了（TLS 由运维的反向代理终结）。这个特例写进了提案，<strong>不会</strong>放松 <code>profile web</code> 的 <code>WebServer.Config.host</code>。</p>
+<h3 id="3-2-Token-身份：没有用户名密码">3.2 Token 身份：没有用户名密码</h3>
+<p>控制面为每台 PC 存储三个秘密的 SHA-256：</p>
+<ul>
+<li><code>workerSecret</code>：worker 出站拨号用；</li>
+<li><code>dashboardToken</code>：管理台兑换后冻结为 <code>dashboard</code> audience；</li>
+<li><code>mobileToken</code>：手机兑换后冻结为 <code>mobile</code> audience。</li>
+</ul>
+<p><code>token.redeem</code> 会按哈希匹配把 audience 冻结在 token 上，<code>dashboard</code> 令牌永远只能看用量/余额/worker，<code>mobile</code> 令牌也只能看自己账户的用量摘要。租户 id 就是 <code>workerId</code>，天然隔离开不同 PC。</p>
+<p>权威落地流程是什么？</p>
+<ol>
+<li>PC 上 Settings → 插件 → <strong>Control plane</strong>，填控制面源 URL 和显示名；</li>
+<li>保存时若无已存秘密，<code>POST worker.claim</code> 拿到三件套，写入 <code>$DSH_HOME/control/worker.json</code>（目录 <code>0700</code>、文件 <code>0600</code>，在工作区外）；</li>
+<li>已存的秘密除非勾选 <strong>Reissue tokens</strong> 永不替换；</li>
+<li>手机/管理台粘贴各自 token 兑换；</li>
+<li>worker 用 workerSecret 建出站 WSS，每 30 秒心跳并推送用量摘要。</li>
+</ol>
+<h3 id="3-3-用量仓库（SQLite）">3.3 用量仓库（SQLite）</h3>
+<p>控制面用 SQLite 当事实表：<code>SCHEMA_VERSION 2</code>、application id <code>0x44534843</code>。增量 usage 行复用 <code>TokenUsageProjection</code> 字段名，<code>billedInputTokens = uncached input + cache read + cache write</code>；另有 workers 表和最新的 balance 快照。仓库<strong>永不接收 API Key</strong>——dashboard 看的是 worker 推上来的最后快照而不是自己去查余额。</p>
+<p>每个 <code>turn/end</code> 后，worker 插件读 <code>sessionProjections</code> 的 <code>tokenUsage</code>，减去上一次推送的总数，<code>POST usage.ingest</code> 推送非零增量；每 5 分钟用 <code>ctx.credentials</code>（或进程环境）解析出 <code>DEEPSEEK_API_KEY</code>，调 <code>https://api.deepseek.com/user/balance</code>（<code>redirect: 'error'</code>）推 <code>usage.balance.push</code>。失败静默跳过。</p>
+<h3 id="3-4-管理台-control-web">3.4 管理台 control-web</h3>
+<p><code>apps/control-web</code> 是 Vite SPA（<code>@deepseek-ai/dsh-control-web</code>），只说管理台方法：<code>token.redeem/logout/whoami</code>、<code>worker.list/revoke/describe</code>、<code>usage.query/usage.balance</code>。它的 client 里<strong>没有</strong> <code>session.*</code>、<code>approval.*</code>、<code>artifact.*</code>、<code>worker.claim</code> 或 <code>usage.ingest</code>。</p>
+<p>有意思的是多 PC 方案：本地 fleet（<code>localStorage</code>）可以挂多个 dashboard token，每个仓库方法都按「谁认领了那台 PC」的作用域隔离，SPA 把所有挂载 token 的 worker/usage/balance 并集起来展示。页面三块：</p>
+<ul>
+<li><strong>Overview</strong>：本月（UTC）已计费+输出 token、在线 worker 数、每台机器的最后一次余额快照；</li>
+<li><strong>Usage</strong>：图表 + 表格，粒度 day/week/month，可按机器、provider、model、workspace、session 过滤；</li>
+<li><strong>Machines</strong>：在线/离线卡片、挂载另一个 token、从本浏览器摘除、吊销凭据。</li>
+</ul>
+<p>离线机器显示最后快照和它的时间戳，明确标注「数据可能陈旧」。</p>
+<h2 id="四、P1：手机工作台（mobile-work-console）">四、P1：手机工作台（mobile work console）</h2>
+<h3 id="4-1-形态与路由">4.1 形态与路由</h3>
+<p><code>apps/mobile</code> 是 Vite SPA（<code>@deepseek-ai/dsh-mobile</code>），外面包一层 <strong>Capacitor</strong>（<code>capacitor.config.json</code>，<code>webDir: dist</code>）。当初提案里否决了 React Native——用 Capacitor 包 SPA，以后可以在不改协议的前提下用原生 widget 替换壳。</p>
+<p>页面全是 hash 路由：<code>#/login</code>、<code>#/devices</code>、<code>#/add</code>、<code>#/sessions</code>、<code>#/browse</code>、<code>#/browse/&lt;path&gt;</code>、<code>#/session/:id</code>。Android 硬件返回键和手势返回都走这套栈，不是在 session 列表就退出。每个认领的 PC 一个 <code>mobile</code> token，本地存 profile book（<code>dsh-mobile.profiles</code>）；主页是 PC 选择器，用 <code>token.whoami</code> + <code>worker.list</code> 判断在线/离线/无效：控制面不可达是 offline，<code>unauthenticated</code> 是 invalid。</p>
+<h3 id="4-2-能干的事">4.2 能干的事</h3>
+<p>手机端从「会话」到「文件」一条龙：</p>
+<ul>
+<li><code>workspace.list</code> / <code>browse</code> / <code>roots</code>：浏览 PC 文件夹（手机没有 OS 文件夹选择器，选的就是 PC 上的完整路径；不存在则 <code>session.create</code> 递归 mkdir 再建 workspace）；</li>
+<li><code>session.list</code> / <code>create</code> / <code>rename</code> / <code>archive</code> / <code>prompt</code> / <code>cancel</code> / <code>steer</code> / <code>models</code> / <code>selectModel</code> / <code>history</code> / <code>stats</code>；</li>
+<li><code>approval.pending</code> / <code>resolve</code>，<code>question.pending</code> / <code>resolve</code>（回答 <code>ask_user_question</code>）；</li>
+<li><code>artifact.list</code> / <code>get</code>：拉取 PC 产物到手机。</li>
+</ul>
+<p>发图走 <code>PUT /api/prompt.spool</code>，再在 <code>session.prompt</code> / <code>steer</code> 里引用 <code>&#123; spoolId &#125;</code>，图片类型和大小沿用 Host 附件准入（png/jpeg/webp/gif，5 MiB）。任意写入会话 cwd 的能力<strong>不上手机</strong>。</p>
+<p>反向：它<strong>不能</strong>调 <code>artifact.offer</code>（offer 是桌面点击）、不能 <code>worker.claim</code>、不能碰 Host 特权方法、没有 HMR、不能写 <code>themeAssets</code>。<code>dsh-web-frontend</code> 的 conversation 包也不导入——手机端自己写了一个 <code>transcript.ts</code>，把中继过来的 <code>session/event</code> 帧折叠成本地行。</p>
+<h3 id="4-3-会话页：三层壳">4.3 会话页：三层壳</h3>
+<p>打开的会话页是三层结构：pinned 头部（返回、标题、worker 在线状态、语言/归档 overflow 菜单）、唯一滚动的 transcript、pinned composer。</p>
+<p>折叠规则：<code>source.kind === 'user'</code>（或缺 kind）→ 用户气泡；其他 <code>user/message</code> → 上下文行；<code>reasoning-delta</code> → 思考块；<code>tool/call</code> + <code>tool/result</code> 用 <code>callId</code> 合并成一行；未知事件类型忽略。历史先加载，mux 帧序号 ≤ 当前页最后 seq 的跳过，防止直播 <code>text-delta</code> 覆盖。渲染是本地 markdown 子集（标题、列表、围栏、GFM 表格、内联代码、链接），<code>streaming</code> 时行尾有光标；未闭合的 fence 按代码块渲染到文末；表格在气泡内横向滚动。</p>
+<p>细节都很「手机」：所有折叠行 44px 命中区；模型选择/推理强度是底部 sheet；composer 上方常驻 <code>session.stats</code> 占用条（上下文窗口已知时是 meter，外加 cache-hit 与 billed in/out）；<code>session.stats</code> 失败保留最后一次好值；<code>visualViewport</code> 高度变化让 composer 顶住软键盘。</p>
+<h3 id="4-4-事件流">4.4 事件流</h3>
+<p>控制面对 <code>mobile</code> token 开放 <code>GET /api/events.work</code>（query token 或 cookie/Bearer）。握手先发 <code>work/subscribed</code>，没有 live worker socket 则发 <code>work/offline</code>；worker 在线时，<code>session/event</code>、<code>approval/*</code>、<code>question/*</code> 经 <code>broadcastWorkMux</code> 扇出。掉线自动重连 mux。</p>
+<p>历史有个坑：<code>session.history</code> 页要 compact 到 1 MiB 的 worker WebSocket 上限里，所以 PC 端去掉工具视图、settled 块和 projections 再翻页，手机端先读 16 条再补 <code>session.models</code>、<code>session.stats</code>、<code>artifact.list</code>。空占位符会等这次读取成功才消失。</p>
+<h2 id="五、PC-→-手机文件">五、PC → 手机文件</h2>
+<p>手机干活干完，文件怎么到设备？方案是 <strong>spool + 拉取</strong>，不是全量镜像：</p>
+<ul>
+<li><code>artifact.list</code> / <code>get</code>：mobile 工作方法；<code>artifact.offer</code> 只属于 worker（桌面点击）；</li>
+<li>字节不走 RPC 信封，走 <code>PUT /api/artifact.spool</code>（worker Bearer）+ <code>GET /api/artifact.bytes</code>（mobile）；下载成功 200 后控制面删掉 blob，转瞬即逝，不是文件柜；每账号并发 spool 上限 8；</li>
+<li>路径策略在 worker 侧按会话 cwd 解析：拒绝 <code>.env</code> / <code>.env.*</code> / <code>credentials</code> / <code>$DSH_HOME</code> / cwd 逃逸，拒绝超过 50 MiB；</li>
+<li>允许的来源：成功 mutation 工具的 <code>locations</code>（diff 卡片或泛化 <code>edit</code>），加桌面显式「Send to phone」（<code>session.offerToPhone</code> 是回环特权 RPC；<code>host.describe.canOfferToPhone</code> 只在控制面配对时 true）。bash 直接产生的文件不在 chips 里，但 Host RPC 仍可发送 cwd 内任意文件。</li>
+</ul>
+<h2 id="六、桌面壳：轻薄原生窗口">六、桌面壳：轻薄原生窗口</h2>
+<p><code>apps/desktop</code> 是一个 <strong>Tauri 2</strong> 项目，Windows 用 WebView2、macOS 用 WKWebView——<strong>不</strong>打包 Chromium（Electron、Wails+Chromium 都被否决）。Host 依然是 Node/Cordis 的 <code>dsh --profile web</code>，窗口只是 OS WebView 包住它，页面 origin 仍是 <code>http://127.0.0.1:&lt;port&gt;</code>，所以 <code>/api</code>、两个下行 WebSocket（<code>events.mux</code>/<code>events.host</code>）、主题皮肤、Client 插件全部和 Chrome 行为一致。</p>
+<p>壳以 sidecar 方式拉起 Host（<code>--desktop-parent</code>），从 stdout 读一行 JSON 就绪记录（端口、origin、listen secret——只在父进程内存里），然后导航过去。设计上刻意做成「普通应用」：没有地址栏，窗口标题是 <strong>Deepseek</strong>（默认名，<code>ui-app-shell</code> 设置里可改），但 F12 能打开的是平台 WebView 检查器，地址、Network 一目了然——发布构建特意启用 Tauri 的 <code>devtools</code> feature，行为和浏览器一致而不是被阉割的 WebView。</p>
+<p>关闭按钮 = 隐藏窗口 + 系统托盘（菜单：<strong>显示窗口</strong> / <strong>退出</strong>；托盘图标创建失败则关闭直接退出）。Windows 安装包是 NSIS（<code>installMode: currentUser</code>，<code>webviewInstallMode: embedBootstrapper</code>，没装 WebView2 的机器也能装），<code>pnpm pack:desktop</code> 会集结 portable Node + <code>pnpm deploy @deepseek-ai/dsh</code>（含前端 dist）进 runtime 再打包。</p>
+<p>更新走 <strong>Gitee Releases</strong>：<code>appUpdate.check</code> / <code>download</code> 用 Gitee API v5（<code>releases/latest</code> → attach_files → 下载），匹配固定文件名 <code>Deepseek-&#123;version&#125;-windows-x64.exe</code>，同时 attach <code>latest.json</code> 防截断下载；匿名 API 限流时回退 <code>/releases/download/&#123;tag&#125;/latest.json</code>。产品不内置任何个人访问令牌。<code>appUpdate.apply</code> 只在打包环境（<code>DSH_DESKTOP_PACKAGED=1</code>）里启动安装器并退出 Host。</p>
+<h2 id="七、LAN-直连工作通道">七、LAN 直连工作通道</h2>
+<p>手机上且和 PC 同一个 Wi-Fi 时，走公网中继其实很亏：每个 prompt、每个流帧、每页 history 都要经过代理绕一圈，还有 1 MiB WebSocket 上限压历史。但发布 <code>dsh web</code> 到 LAN 又绝不允许。折中方案是 <strong>work-only 直连 socket</strong>：</p>
+<ul>
+<li>worker 在它所真正拥有的每个 RFC1918 接口地址（<code>10/8</code>、<code>172.16/12</code>、<code>192.168/16</code>；拒绝回环、link-local、CGNAT <code>100.64/10</code>、公网）上绑一个 <strong>HTTP</strong> 工作 socket，端口 <code>0</code> 随机；没有 all-interfaces 监听，也不是 Host webserver（不是 3080）；</li>
+<li>心跳 <code>worker.heartbeat</code> 附带 <code>&#123; lan: [&#123;address, port&#125;], lanKey &#125;</code>——<code>lanKey</code> 是 32 随机字节 base64url，<strong>进程本地</strong>，SQLite 不存；仓库只在 <code>WorkerHub</code> 内存里持有，socket 断、吊销或心跳省略 <code>lan</code> 就清除；</li>
+<li><code>worker.lan.candidates</code>（仅 account/mobile audience）返回该 token 的 accountId 端点和一张 <strong>30 秒 HMAC 票据</strong>（<code>exp.nonce.hmac</code>，HMAC-SHA256(exp.nonce, lanKey)）；dashboard 令牌 <code>audience-refused</code>；worker A 的 mobile token 看不到 worker B 的地址；</li>
+<li>手机在自己的逻辑里：whoami/worker.list 确认在线后，调 <code>worker.lan.candidates</code>，对候选端点 <code>GET /health</code> 做约 2 秒竞速；成功就把工作 unary 和 mux 切到 <code>http://address:port</code>，网络错误或 <code>unauthenticated</code> 再退回仓库源，<strong>不登出</strong>。<code>token.*</code>、<code>worker.list/describe</code>、<code>worker.lan.candidates</code> 永远走仓库；请求无子网扫描。</li>
+</ul>
+<p>一个坦诚的边界：LAN socket 是 HTTP。Capacitor 和浏览器没法在 <code>fetch</code>/<code>WebSocket</code> 上 pin 一个临时自签证书，所以 <code>fingerprint</code> 为空字符串，TLS pinning 留给后面的切片。</p>
+<h2 id="八、其他-P1-内容">八、其他 P1 内容</h2>
+<ul>
+<li><strong>主题皮肤</strong>：<code>ui-theme</code> 扩展出 Skin 段（<code>settings.section</code> id <code>skin</code>）。四个二进制槽位（背景 + 按钮三态）存 <code>$DSH_HOME/theme-assets</code>，magic-byte 白名单 JPEG/PNG/WebP/GIF/MP4/WebM（SVG 拒绝；按钮槽拒绝视频），GET/HEAD 支持 byte range 让视频背景能 seek。按钮预设 <code>default/sharp/pill/glass/neon/custom</code>，custom 用 CSS <code>border-image</code> 9-slice（<code>slice</code>+<code>fill</code>+<code>stretch</code>），角落不压扁、边缘可缩放；蓝 whale 图标与设置对话框带 <code>data-dsh-brand</code> 免于被皮肤规则重绘。推理强度控件 <code>effortControl</code> 支持 <code>slider</code> / <code>menu</code>。</li>
+<li><strong><code>harness_control</code> 工具</strong>：<code>@deepseek-ai/dsh-tool-harness-control</code>，allowlist 动作集（调会话设置、切模型、开 workspace、建会话、<code>compact</code>、UI focus 等），但<strong>永远读不到凭据</strong>——credentials、<code>.env</code>、provider key 命名空间不可达。活动模型选择从私有 ApiProxy WeakMap 挪进 <code>@deepseek-ai/dsh-agent-model-selection</code>（<code>ctx.agentModelSelections</code>），Host RPC 和工具共用同一引用；UI 聚焦走 Cordis <code>harness/session-focus</code> 事件，ApiProxy 转发为 <code>host/session-focus</code>，客户端 <code>sessions.open</code>。</li>
+<li><strong>Web 搜索流式与 fetch 加固、多模态（手机/桌面）、插件目录清单、上下文占用常显、会话打开与设置 RPC 延迟优化、移动端历史空白/延迟修复、安卓返回栈与桌面静默启动</strong> 等一票体验与稳定性项。</li>
+<li><strong>打包与部署</strong>：<code>pnpm pack:mobile-apk</code> 出本地 debug APK（<code>assembleDebug</code>，覆盖黑鲸启动图标、<code>versionName</code>/<code>versionCode</code> 由 package.json 派生；<code>apps/mobile/android/</code> 保持 gitignored）；SSE Deploy 用 <code>pnpm pack:sdpy-control</code> 填出 <code>deploy/sdpy-dsh-control</code>（compose 两个服务：<code>web</code> 放 SPA、<code>api</code> 放仓库，SQLite 与 spool 文件落 <code>/data</code> 绑定挂载）。</li>
+</ul>
+<h2 id="九、安全边界回顾">九、安全边界回顾</h2>
+<p>整轮改造最绷紧的就是这条线：</p>
+<table>
+<thead>
+<tr>
+<th>边界</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dsh web</code> 只绑回环</td>
+<td><code>profile web</code> 的 host 不松；LAN 是独立 work-only socket</td>
+</tr>
+<tr>
+<td>控制面无工具无 composer</td>
+<td><code>control</code> 不叠 <code>dsh-base</code>；<code>GET /</code> 只是健康页</td>
+</tr>
+<tr>
+<td>dashboard 不能驱动工作</td>
+<td>audience 门控 + client 源边界测试</td>
+</tr>
+<tr>
+<td>手机不能碰 Host 特权</td>
+<td>协议 allowlist + <code>apps/mobile</code> source-boundary 扫描</td>
+</tr>
+<tr>
+<td>API key 不出 PC</td>
+<td>控制面只存 balance 快照；worker 用 <code>ctx.credentials</code> 解析后即时使用</td>
+</tr>
+<tr>
+<td>worker secret 不进模型</td>
+<td>不是 session event、不是 prompt 段、不是 <code>DSH_WEB_URL</code>；<code>fetch</code> 对控制面 host 名 <code>blockFetchHostname</code>，<code>$DSH_HOME/control</code> 加入 sandbox <code>hidePaths</code></td>
+</tr>
+<tr>
+<td>手机不读 <code>.env</code></td>
+<td>artifact 路径策略在 worker 侧按 cwd 解析，拒绝秘密文件名与逃逸</td>
+</tr>
+</tbody>
+</table>
+<h2 id="十、下一步">十、下一步</h2>
+<p>P2 已经写在提案里：control-web 插件市场、软工集市 OAuth（桌面 + 手机 + dashboard）、为后续 coding-plan 售卖准备的 entitlement 钩子、持续 UI/UX。P3 是运维向：refresh token 轮换、revoke-all、审批/文件就绪的 OS 推送、用量告警、商店版移动端构建。LAN 的 TLS pinning 也留在后面。</p>
+<p>P1 至此收工：官方开源树被我改成了「PC 干活、手机遥控、服务器记账」的三层产品，全程没有把任何密钥挪出桌面。</p>
+<hr>
+<p><em>本文为个人项目改造记录，事实细节以仓库 <code>.agents/notes</code> 中的实施记录为准。</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://sakjijdidji55.github.io">欣冻</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://sakjijdidji55.github.io/posts/4bf3fe64.html">https://sakjijdidji55.github.io/posts/4bf3fe64.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://sakjijdidji55.github.io" target="_blank">迷路的小朋友</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/deepseek-harness/">deepseek-harness</a><a class="post-meta__tags" href="/tags/%E9%A1%B9%E7%9B%AE%E6%94%B9%E9%80%A0/">项目改造</a><a class="post-meta__tags" href="/tags/%E6%8E%A7%E5%88%B6%E9%9D%A2/">控制面</a></div><div class="post-share"><div class="social-share" data-image="https://ssemarket.cn/image-api/i/images/2026/08/22/9fa87027-c105-496b-9ad7-372ccea7ca20.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/posts/c5efe575.html" title="软工集市后端解析文档"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://ssemarket.cn/image-api/i/images/2026/08/15/8f37c20d-5cb8-4139-8684-fbae9ac4d18d.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">软工集市后端解析文档</div></div><div class="info-2"><div class="info-item-1">一，SSE Market 后端 API 深度解析（APIMD） 1. 服务概览  技术栈：Go + Gin + GORM + MySQL + Redis + WebSocket 启动入口：main.go 监听端口：8080 静态资源：  /uploads -&gt; public/uploads /resized -&gt; public/resized   路由注册：route/routes.go  2. 鉴权与访问控制 2.1 三种鉴权模式   普通用户 JWT（AuthMiddleware）  适用：大多数 /api/auth/* 接口 Header：Authorization: Bearer &lt;token&gt; WebSocket 兼容：可通过 query 参数 token    管理员 JWT（AuthMiddleware_admin）  适用：管理员接口（封禁、删用户、管理员管理等） Header：Authorization: Bearer &lt;admin_token&gt;    OAuth2 Access...</div></div></div></a></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">欣冻</div><div class="author-info-description">博客, 技术, 生活</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">29</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%94%B9%E9%80%A0%EF%BC%9A%E5%9B%9E%E7%8E%AF-GUI-%E7%9A%84%E5%A4%A9%E8%8A%B1%E6%9D%BF"><span class="toc-number">2.</span> <span class="toc-text">一、为什么要改造：回环 GUI 的天花板</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%95%B4%E4%BD%93%E6%9E%B6%E6%9E%84%EF%BC%9A%E4%B8%89%E5%B1%82%E5%B9%B3%E9%9D%A2"><span class="toc-number">3.</span> <span class="toc-text">二、整体架构：三层平面</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81P0%EF%BC%9A%E6%8E%A7%E5%88%B6%E9%9D%A2%E5%90%8E%E7%AB%AF%E4%B8%8E%E7%AE%A1%E7%90%86%E5%8F%B0"><span class="toc-number">4.</span> <span class="toc-text">三、P0：控制面后端与管理台</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-profile-control"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 profile control</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Token-%E8%BA%AB%E4%BB%BD%EF%BC%9A%E6%B2%A1%E6%9C%89%E7%94%A8%E6%88%B7%E5%90%8D%E5%AF%86%E7%A0%81"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 Token 身份：没有用户名密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E7%94%A8%E9%87%8F%E4%BB%93%E5%BA%93%EF%BC%88SQLite%EF%BC%89"><span class="toc-number">4.3.</span> <span class="toc-text">3.3 用量仓库（SQLite）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E7%AE%A1%E7%90%86%E5%8F%B0-control-web"><span class="toc-number">4.4.</span> <span class="toc-text">3.4 管理台 control-web</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81P1%EF%BC%9A%E6%89%8B%E6%9C%BA%E5%B7%A5%E4%BD%9C%E5%8F%B0%EF%BC%88mobile-work-console%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">四、P1：手机工作台（mobile work console）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%BD%A2%E6%80%81%E4%B8%8E%E8%B7%AF%E7%94%B1"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 形态与路由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E8%83%BD%E5%B9%B2%E7%9A%84%E4%BA%8B"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 能干的事</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E4%BC%9A%E8%AF%9D%E9%A1%B5%EF%BC%9A%E4%B8%89%E5%B1%82%E5%A3%B3"><span class="toc-number">5.3.</span> <span class="toc-text">4.3 会话页：三层壳</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="toc-number">5.4.</span> <span class="toc-text">4.4 事件流</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81PC-%E2%86%92-%E6%89%8B%E6%9C%BA%E6%96%87%E4%BB%B6"><span class="toc-number">6.</span> <span class="toc-text">五、PC → 手机文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%A1%8C%E9%9D%A2%E5%A3%B3%EF%BC%9A%E8%BD%BB%E8%96%84%E5%8E%9F%E7%94%9F%E7%AA%97%E5%8F%A3"><span class="toc-number">7.</span> <span class="toc-text">六、桌面壳：轻薄原生窗口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81LAN-%E7%9B%B4%E8%BF%9E%E5%B7%A5%E4%BD%9C%E9%80%9A%E9%81%93"><span class="toc-number">8.</span> <span class="toc-text">七、LAN 直连工作通道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%85%B6%E4%BB%96-P1-%E5%86%85%E5%AE%B9"><span class="toc-number">9.</span> <span class="toc-text">八、其他 P1 内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%AE%89%E5%85%A8%E8%BE%B9%E7%95%8C%E5%9B%9E%E9%A1%BE"><span class="toc-number">10.</span> <span class="toc-text">九、安全边界回顾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E4%B8%8B%E4%B8%80%E6%AD%A5"><span class="toc-number">11.</span> <span class="toc-text">十、下一步</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/4bf3fe64.html" title="deepseek-harness P1 改造：从官方开源到个人特化版"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://ssemarket.cn/image-api/i/images/2026/08/22/9fa87027-c105-496b-9ad7-372ccea7ca20.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="deepseek-harness P1 改造：从官方开源到个人特化版"/></a><div class="content"><a class="title" href="/posts/4bf3fe64.html" title="deepseek-harness P1 改造：从官方开源到个人特化版">deepseek-harness P1 改造：从官方开源到个人特化版</a><time datetime="2026-08-21T18:30:00.000Z" title="发表于 2026-08-22 02:30:00">2026-08-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/c5efe575.html" title="软工集市后端解析文档"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://ssemarket.cn/image-api/i/images/2026/08/15/8f37c20d-5cb8-4139-8684-fbae9ac4d18d.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="软工集市后端解析文档"/></a><div class="content"><a class="title" href="/posts/c5efe575.html" title="软工集市后端解析文档">软工集市后端解析文档</a><time datetime="2026-04-28T11:51:00.000Z" title="发表于 2026-04-28 19:51:00">2026-04-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/8a8e8e04.html" title="Linux源码"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://ssemarket.cn/image-api/i/images/2026/08/15/0973e2bd-f0c5-4b42-bd1d-8b374c0a7fab.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux源码"/></a><div class="content"><a class="title" href="/posts/8a8e8e04.html" title="Linux源码">Linux源码</a><time datetime="2026-03-17T16:00:00.000Z" title="发表于 2026-03-18 00:00:00">2026-03-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/bc9ae956.html" title="数据结构与算法实现"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://ssemarket.cn/image-api/i/images/2026/08/15/419ae3fb-1f7f-453e-b452-e0013d22c123.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据结构与算法实现"/></a><div class="content"><a class="title" href="/posts/bc9ae956.html" title="数据结构与算法实现">数据结构与算法实现</a><time datetime="2025-12-28T10:00:00.000Z" title="发表于 2025-12-28 18:00:00">2025-12-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/a6d4d6d1.html" title="JavaGame实现笔记"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://ssemarket.cn/image-api/i/images/2026/08/15/299e2bd5-1a3d-496a-8ce6-ac8dd3e58296.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaGame实现笔记"/></a><div class="content"><a class="title" href="/posts/a6d4d6d1.html" title="JavaGame实现笔记">JavaGame实现笔记</a><time datetime="2025-12-25T04:24:02.000Z" title="发表于 2025-12-25 12:24:02">2025-12-25</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://blog-twikoo.xindon.top/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://blog-twikoo.xindon.top/',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://cdn.jsdelivr.net/npm/twikoo/dist/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><script src="https://cdn.jsdelivr.net/npm/mermaid@10.2.4/dist/mermaid.min.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
