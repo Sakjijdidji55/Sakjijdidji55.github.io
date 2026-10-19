@@ -1,0 +1,658 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Coroutine 函数手册 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="C++ 后端服务器框架 · Coroutine 函数手册">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Coroutine 函数手册">
+<meta property="og:url" content="https://sakjijdidji55.github.io/books/cpp-server-framework/coroutine-functions/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="C++ 后端服务器框架 · Coroutine 函数手册">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2025-12-01T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/books/cpp-server-framework/coroutine-functions/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Coroutine 函数手册',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">Coroutine 函数手册</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">Coroutine 函数手册</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="cpp-server-framework" data-chapter="coroutine-functions" data-total="22" data-prev="/books/cpp-server-framework/channel-functions/" data-next="/books/cpp-server-framework/crash-functions/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/books/cpp-server-framework/">C++ 后端服务器框架</a><div class="book-sidebar-sub">22 章 · 约 1 小时 21 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 22</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选章节..." data-book-filter aria-label="筛选章节"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">概览</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="architecture"><a class="book-chapter-link" href="/books/cpp-server-framework/architecture/" data-chapter-link="architecture"><span class="book-chapter-index">01</span><span class="book-chapter-name">架构与面试讲解</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="modules-index"><a class="book-chapter-link" href="/books/cpp-server-framework/modules-index/" data-chapter-link="modules-index"><span class="book-chapter-index">02</span><span class="book-chapter-name">模块文档索引</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">模块设计</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="channel"><a class="book-chapter-link" href="/books/cpp-server-framework/channel/" data-chapter-link="channel"><span class="book-chapter-index">03</span><span class="book-chapter-name">Channel 通道</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="coroutine"><a class="book-chapter-link" href="/books/cpp-server-framework/coroutine/" data-chapter-link="coroutine"><span class="book-chapter-index">04</span><span class="book-chapter-name">Coroutine 协程</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="crash"><a class="book-chapter-link" href="/books/cpp-server-framework/crash/" data-chapter-link="crash"><span class="book-chapter-index">05</span><span class="book-chapter-name">Crash 崩溃处理</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="db-connector"><a class="book-chapter-link" href="/books/cpp-server-framework/db-connector/" data-chapter-link="db-connector"><span class="book-chapter-index">06</span><span class="book-chapter-name">DBConnector 数据库连接</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="email-sender"><a class="book-chapter-link" href="/books/cpp-server-framework/email-sender/" data-chapter-link="email-sender"><span class="book-chapter-index">07</span><span class="book-chapter-name">EmailSender 邮件发送</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="json-object-view"><a class="book-chapter-link" href="/books/cpp-server-framework/json-object-view/" data-chapter-link="json-object-view"><span class="book-chapter-index">08</span><span class="book-chapter-name">JsonObjectView JSON 视图</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="jwt"><a class="book-chapter-link" href="/books/cpp-server-framework/jwt/" data-chapter-link="jwt"><span class="book-chapter-index">09</span><span class="book-chapter-name">JWT 鉴权</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="rd-connector"><a class="book-chapter-link" href="/books/cpp-server-framework/rd-connector/" data-chapter-link="rd-connector"><span class="book-chapter-index">10</span><span class="book-chapter-name">RDConnector Redis 连接</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="server"><a class="book-chapter-link" href="/books/cpp-server-framework/server/" data-chapter-link="server"><span class="book-chapter-index">11</span><span class="book-chapter-name">Server 服务主链路</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="threadpool"><a class="book-chapter-link" href="/books/cpp-server-framework/threadpool/" data-chapter-link="threadpool"><span class="book-chapter-index">12</span><span class="book-chapter-name">Threadpool 线程池</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="yaml-parser"><a class="book-chapter-link" href="/books/cpp-server-framework/yaml-parser/" data-chapter-link="yaml-parser"><span class="book-chapter-index">13</span><span class="book-chapter-name">YamlParser 配置解析</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">函数级手册</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="channel-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/channel-functions/" data-chapter-link="channel-functions"><span class="book-chapter-index">14</span><span class="book-chapter-name">Channel 函数手册</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="coroutine-functions"><a class="book-chapter-link is-current" href="/books/cpp-server-framework/coroutine-functions/" data-chapter-link="coroutine-functions" aria-current="page"><span class="book-chapter-index">15</span><span class="book-chapter-name">Coroutine 函数手册</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="crash-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/crash-functions/" data-chapter-link="crash-functions"><span class="book-chapter-index">16</span><span class="book-chapter-name">Crash 函数手册</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="db-connector-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/db-connector-functions/" data-chapter-link="db-connector-functions"><span class="book-chapter-index">17</span><span class="book-chapter-name">DBConnector 函数手册</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="email-sender-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/email-sender-functions/" data-chapter-link="email-sender-functions"><span class="book-chapter-index">18</span><span class="book-chapter-name">EmailSender 函数手册</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="json-object-view-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/json-object-view-functions/" data-chapter-link="json-object-view-functions"><span class="book-chapter-index">19</span><span class="book-chapter-name">JsonObjectView 函数手册</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="jwt-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/jwt-functions/" data-chapter-link="jwt-functions"><span class="book-chapter-index">20</span><span class="book-chapter-name">JWT 函数手册</span><span class="book-chapter-time">7′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="rd-connector-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/rd-connector-functions/" data-chapter-link="rd-connector-functions"><span class="book-chapter-index">21</span><span class="book-chapter-name">RDConnector 函数手册</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="server-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/server-functions/" data-chapter-link="server-functions"><span class="book-chapter-index">22</span><span class="book-chapter-name">Server 函数手册</span><span class="book-chapter-time">8′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/books/"><i class="fas fa-arrow-left"></i> 返回书架</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开章节目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/books/cpp-server-framework/">C++ 后端服务器框架</a><i class="fas fa-angle-right"></i><span>Coroutine 函数手册</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">CHAPTER 15</span><h1>Coroutine 函数手册</h1><div class="book-chapter-meta">9 分钟阅读 · 2,223 字</div></div><p>依据源码：<code>include/Coroutine.h</code>、<code>src/Coroutine.cpp</code>。</p>
+<p>本文按「符号 → 签名 → 作用 → 执行步骤 → 前置/后置条件 → 平台差异 → 边界与面试点」逐条说明。</p>
+<hr>
+<h2 id="0-全局常量与线程局部变量">0. 全局常量与线程局部变量</h2>
+<h3 id="constexpr-size-t-kDefaultStackSize（Coroutine-cpp）"><code>constexpr size_t kDefaultStackSize</code>（<code>Coroutine.cpp</code>）</h3>
+<ul>
+<li><strong>值</strong>：<code>128 * 1024</code>（128 KiB）</li>
+<li><strong>用途</strong>：协程栈大小（Linux <code>ucontext</code> 栈、<code>CreateFiber</code> 栈参数）</li>
+</ul>
+<h3 id="线程局部（TLS）变量（Coroutine-cpp-定义，Coroutine-h-声明）">线程局部（TLS）变量（<code>Coroutine.cpp</code> 定义，<code>Coroutine.h</code> 声明）</h3>
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>类型</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tls_current_coro</code></td>
+<td><code>Coroutine*</code></td>
+<td>当前正在运行的协程；<code>resume</code> 入口设置，<code>suspend</code> 返回调度器后可能被清空</td>
+</tr>
+<tr>
+<td><code>tls_current_scheduler</code></td>
+<td><code>Scheduler*</code></td>
+<td>当前 worker 线程关联的调度器实例</td>
+</tr>
+<tr>
+<td><code>tls_current_worker</code></td>
+<td><code>SchedulerWorker*</code></td>
+<td>当前线程对应的 worker 结构（本地队列、抢占标记）</td>
+</tr>
+<tr>
+<td><code>tls_scheduler_ctx</code></td>
+<td><code>ucontext_t</code></td>
+<td><strong>仅 Linux</strong>：调度器侧上下文，<code>swapcontext</code> 的另一端</td>
+</tr>
+<tr>
+<td><code>tls_scheduler_fiber</code></td>
+<td><code>LPVOID</code></td>
+<td><strong>仅 Windows</strong>：由 <code>ConvertThreadToFiber</code> 得到的“调度器 fiber”</td>
+</tr>
+</tbody>
+</table>
+<p><strong>面试点</strong>：协程切换依赖 TLS；跨线程 <code>resume</code> 同一 <code>Coroutine</code> 在本实现中<strong>未做约束</strong>，设计上应在<strong>固定 worker 线程</strong>上驱动。</p>
+<hr>
+<h2 id="1-struct-SchedulerWorker">1. <code>struct SchedulerWorker</code></h2>
+<p><strong>定义位置</strong>：<code>include/Coroutine.h</code></p>
+<table>
+<thead>
+<tr>
+<th>成员</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>th</code></td>
+<td>该 worker 的 <code>std::thread</code></td>
+</tr>
+<tr>
+<td><code>localQueue</code></td>
+<td>本 worker 优先消费的协程队列（<code>deque&lt;shared_ptr&lt;Coroutine&gt;&gt;</code>）</td>
+</tr>
+<tr>
+<td><code>localMtx</code></td>
+<td>保护 <code>localQueue</code></td>
+</tr>
+<tr>
+<td><code>preemptRequested</code></td>
+<td>抢占标记；<code>preemptLoop</code> 周期性置 <code>true</code>，<code>shouldPreempt</code> 读并清零</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="2-enum-class-CoroutineState">2. <code>enum class CoroutineState</code></h2>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>READY</code></td>
+<td>已创建，尚未首次 <code>resume</code> 跑完或刚创建</td>
+</tr>
+<tr>
+<td><code>RUNNING</code></td>
+<td><code>resume</code> 中，已进入协程体</td>
+</tr>
+<tr>
+<td><code>SUSPEND</code></td>
+<td><code>suspend</code> 后挂起，可再次 <code>resume</code></td>
+</tr>
+<tr>
+<td><code>DONE</code></td>
+<td>协程函数执行完毕；<code>resume</code> 会直接返回</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="3-类-Coroutine">3. 类 <code>Coroutine</code></h2>
+<h3 id="3-1-explicit-Coroutine-Func-func">3.1 <code>explicit Coroutine(Func func)</code></h3>
+<ul>
+<li><strong>签名</strong>：<code>Coroutine::Coroutine(Func func)</code>，<code>Func = std::function&lt;void()&gt;</code></li>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L34–50</li>
+<li><strong>作用</strong>：构造协程对象并初始化平台相关的上下文与入口。</li>
+</ul>
+<p><strong>Linux（<code>CBSF_USE_UCONTEXT</code>）步骤</strong>：</p>
+<ol>
+<li><code>state_ = READY</code></li>
+<li>分配 <code>stack_</code>，大小 <code>kDefaultStackSize</code></li>
+<li><code>getcontext(&amp;ctx_)</code>，失败抛 <code>runtime_error(&quot;getcontext failed&quot;)</code></li>
+<li>设置 <code>ctx_.uc_stack</code> 指向栈与大小，<code>uc_link = nullptr</code></li>
+<li><code>makecontext(&amp;ctx_, entry, 1, this)</code>，入口为静态 <code>entry</code></li>
+</ol>
+<p><strong>Windows（<code>CBSF_USE_FIBER</code>）步骤</strong>：</p>
+<ol>
+<li><code>CreateFiber(kDefaultStackSize, fiberEntry, this)</code></li>
+<li>失败抛 <code>runtime_error(&quot;CreateFiber failed&quot;)</code></li>
+</ol>
+<p><strong>异常</strong>：构造失败抛 <code>std::runtime_error</code>。</p>
+<p><strong>面试点</strong>：栈固定 128KB，深递归或大局部数组可能栈溢出。</p>
+<hr>
+<h3 id="3-2-Coroutine">3.2 <code>~Coroutine()</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L52–56</li>
+<li><strong>作用</strong>：释放 Windows Fiber（<code>DeleteFiber</code>）。</li>
+<li><strong>Linux</strong>：析构中<strong>不</strong>释放 <code>ucontext</code> 资源（栈由 <code>unique_ptr</code> 管理）；无额外系统调用。</li>
+</ul>
+<hr>
+<h3 id="3-3-Coroutine-Coroutine-other-noexcept">3.3 <code>Coroutine(Coroutine&amp;&amp; other) noexcept</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L58–73</li>
+<li><strong>作用</strong>：移动构造；转移 <code>func_</code>、状态与平台上下文/栈。</li>
+<li><strong>副作用</strong>：<code>other.state_ = DONE</code>；Windows 上 <code>other.fiber_ = nullptr</code>，避免双重 <code>DeleteFiber</code>。</li>
+</ul>
+<p><strong>注意</strong>：移动后原对象处于“不可用/已完成”语义，避免再 <code>resume</code>。</p>
+<hr>
+<h3 id="3-4-void-resume">3.4 <code>void resume()</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L75–90</li>
+<li><strong>作用</strong>：从<strong>当前调度器上下文</strong>切换到本协程上下文并开始/继续执行。</li>
+</ul>
+<p><strong>前置条件（隐含）</strong>：</p>
+<ul>
+<li><code>state_ != DONE</code>，否则直接返回。</li>
+<li><code>tls_current_scheduler != nullptr</code>，否则直接返回（无法切回调度器）。</li>
+</ul>
+<p><strong>步骤</strong>：</p>
+<ol>
+<li><code>state_ = RUNNING</code></li>
+<li><code>tls_current_coro = this</code></li>
+<li><strong>Linux</strong>：<code>swapcontext(&amp;tls_scheduler_ctx, &amp;ctx_)</code></li>
+<li><strong>Windows</strong>：<code>SwitchToFiber(fiber_)</code></li>
+<li>从 <code>suspend</code> 返回后：若 <code>tls_current_coro == this</code>，则置 <code>tls_current_coro = nullptr</code></li>
+</ol>
+<p><strong>面试点</strong>：</p>
+<ul>
+<li><code>resume</code> 必须在已设置 <code>tls_current_scheduler</code> 的线程中调用（通常即 <code>run_on_worker_thread</code>）。</li>
+<li>Linux 路径依赖 <code>tls_scheduler_ctx</code> 在首次 <code>swapcontext</code> 前已处于合法状态（见下文「实现注意」）。</li>
+</ul>
+<hr>
+<h3 id="3-5-void-suspend">3.5 <code>void suspend()</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L92–106</li>
+<li><strong>作用</strong>：从协程切回调度器上下文。</li>
+</ul>
+<p><strong>前置条件</strong>：<code>tls_current_scheduler != nullptr</code>，否则直接返回。</p>
+<p><strong>步骤</strong>：</p>
+<ol>
+<li>若 <code>state_ == RUNNING</code>，则改为 <code>SUSPEND</code></li>
+<li><strong>Linux</strong>：<code>swapcontext(&amp;ctx_, &amp;tls_scheduler_ctx)</code></li>
+<li><strong>Windows</strong>：若 <code>tls_scheduler_fiber</code> 非空，则 <code>SwitchToFiber(tls_scheduler_fiber)</code></li>
+</ol>
+<p><strong>面试点</strong>：<code>DONE</code> 后 <code>entry</code> 仍会调用 <code>suspend()</code>，此时 <code>state_</code> 已是 <code>DONE</code>，<code>suspend</code> 不会把状态改回 <code>SUSPEND</code>，但仍会切回调度器 fiber。</p>
+<hr>
+<h3 id="3-6-CoroutineState-state-const">3.6 <code>CoroutineState state() const</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>include/Coroutine.h</code> L65</li>
+<li><strong>作用</strong>：返回当前状态枚举。</li>
+</ul>
+<hr>
+<h3 id="3-7-static-void-Coroutine-entry-intptr-t-arg-（Linux，私有）">3.7 <code>static void Coroutine::entry(intptr_t arg)</code>（Linux，私有）</h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L15–22</li>
+<li><strong>作用</strong>：<code>makecontext</code> 的 C 风格入口；<code>arg</code> 为 <code>this</code> 指针。</li>
+</ul>
+<p><strong>步骤</strong>：</p>
+<ol>
+<li><code>coro = reinterpret_cast&lt;Coroutine*&gt;(arg)</code></li>
+<li>若 <code>coro-&gt;func_</code> 非空则调用</li>
+<li><code>coro-&gt;state_ = DONE</code></li>
+<li><code>coro-&gt;suspend()</code> 切回调度器</li>
+</ol>
+<hr>
+<h3 id="3-8-static-void-WINAPI-Coroutine-fiberEntry-LPVOID-lpParameter-（Windows，私有）">3.8 <code>static void WINAPI Coroutine::fiberEntry(LPVOID lpParameter)</code>（Windows，私有）</h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L24–31</li>
+<li><strong>作用</strong>：与 <code>entry</code> 等价，Fiber 回调形式。</li>
+</ul>
+<hr>
+<h2 id="4-类-Scheduler">4. 类 <code>Scheduler</code></h2>
+<h3 id="4-1-static-Scheduler-instance">4.1 <code>static Scheduler&amp; instance()</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>include/Coroutine.h</code> L88–91</li>
+<li><strong>作用</strong>：Meyers 单例，进程内唯一 <code>Scheduler</code>。</li>
+</ul>
+<hr>
+<h3 id="4-2-template-typename-F-typename-Args-void-submit-F-f-Args-args">4.2 <code>template&lt;typename F, typename... Args&gt; void submit(F&amp;&amp; f, Args&amp;&amp;... args)</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>include/Coroutine.h</code> L93–97</li>
+<li><strong>作用</strong>：将可调用对象打包为 <code>std::function&lt;void()&gt;</code>，封装进 <code>Coroutine</code>，提交到 <code>submitTask</code>。</li>
+</ul>
+<p><strong>实现细节</strong>：</p>
+<ul>
+<li><code>std::bind(std::forward&lt;F&gt;(f), std::forward&lt;Args&gt;(args)...)</code></li>
+<li><code>submitTask(std::make_shared&lt;Coroutine&gt;(std::move(task)))</code></li>
+</ul>
+<p><strong>面试点</strong>：<code>std::bind</code> 对重载、引用包装等边界需注意；与 <code>ThreadPool</code> 头里“无参不用 bind”的注释是不同文件的选择。</p>
+<hr>
+<h3 id="4-3-template-typename-F-typename-Args-void-go-F-f-Args-args">4.3 <code>template&lt;typename F, typename... Args&gt; void go(F&amp;&amp; f, Args&amp;&amp;... args)</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>include/Coroutine.h</code> L99–102</li>
+<li><strong>作用</strong>：<code>submit</code> 的别名。</li>
+</ul>
+<hr>
+<h3 id="4-4-void-submitTask-std-shared-ptr-Coroutine-coro-（私有）">4.4 <code>void submitTask(std::shared_ptr&lt;Coroutine&gt; coro)</code>（私有）</h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L109–126</li>
+<li><strong>作用</strong>：入队一个协程任务并唤醒 worker。</li>
+</ul>
+<p><strong>步骤</strong>：</p>
+<ol>
+<li>若 <code>!running_.load()</code>，调用 <code>start(1)</code> 隐式启动调度器</li>
+<li>若当前线程 TLS：<code>tls_current_scheduler == this</code> 且 <code>tls_current_worker</code> 非空<br>
+→ 加锁 <code>tls_current_worker-&gt;localMtx</code>，<code>localQueue.emplace_back(move(coro))</code></li>
+<li>否则<br>
+→ 加锁 <code>globalMtx_</code>，<code>globalQueue_.emplace_back(move(coro))</code></li>
+<li><code>cv_.notify_one()</code></li>
+</ol>
+<p><strong>面试点</strong>：同调度器实例上，在 worker 内 <code>submit</code> 会<strong>优先进本地队列</strong>，有利于局部性。</p>
+<hr>
+<h3 id="4-5-std-shared-ptr-Coroutine-popLocalTask-SchedulerWorker-worker-（私有）">4.5 <code>std::shared_ptr&lt;Coroutine&gt; popLocalTask(SchedulerWorker&amp; worker)</code>（私有）</h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L128–134</li>
+<li><strong>作用</strong>：从指定 worker 的本地队列<strong>队首</strong>弹出一个协程；空则 <code>nullptr</code>。</li>
+</ul>
+<hr>
+<h3 id="4-6-std-shared-ptr-Coroutine-popGlobalTask-（私有）">4.6 <code>std::shared_ptr&lt;Coroutine&gt; popGlobalTask()</code>（私有）</h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L136–142</li>
+<li><strong>作用</strong>：从全局队列<strong>队首</strong>弹出；空则 <code>nullptr</code>。</li>
+</ul>
+<hr>
+<h3 id="4-7-std-shared-ptr-Coroutine-stealTask-SchedulerWorker-self-（私有）">4.7 <code>std::shared_ptr&lt;Coroutine&gt; stealTask(SchedulerWorker&amp; self)</code>（私有）</h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L144–154</li>
+<li><strong>作用</strong>：工作窃取：遍历其他 worker，从其本地队列<strong>队尾</strong>偷一个任务。</li>
+</ul>
+<p><strong>面试点</strong>：队首本地、队尾窃取是常见策略，减少与本地 pop 的冲突。</p>
+<hr>
+<h3 id="4-8-void-start-size-t-workerCount-hardware-concurrency">4.8 <code>void start(size_t workerCount = hardware_concurrency())</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L156–180</li>
+<li><strong>作用</strong>：启动调度器：创建 <code>workerCount</code> 个 worker 线程 + 1 个抢占线程。</li>
+</ul>
+<p><strong>步骤</strong>：</p>
+<ol>
+<li><code>workerCount == 0</code> 时改为 <code>1</code></li>
+<li><code>running_.compare_exchange_strong(false, true)</code>，已为 true 则<strong>直接返回</strong>（幂等）</li>
+<li><code>workers_.clear()</code>，预分配，逐个 <code>make_unique&lt;SchedulerWorker&gt;()</code></li>
+<li>每个 worker：<code>w-&gt;th = thread{ [this,w]{ tls_current_worker=w; run_on_worker_thread(); tls_current_worker=nullptr; } }</code></li>
+<li><code>preemptThread_ = thread{ [this]{ preemptLoop(); } }</code></li>
+</ol>
+<p><strong>异常</strong>：<code>run_on_worker_thread</code> 内 Windows 上 <code>ConvertThreadToFiber</code> 失败会抛异常（见 4.12）。</p>
+<hr>
+<h3 id="4-9-void-stop">4.9 <code>void stop()</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L182–201</li>
+<li><strong>作用</strong>：停止调度器并回收线程。</li>
+</ul>
+<p><strong>步骤</strong>：</p>
+<ol>
+<li><code>running_.compare_exchange_strong(true, false)</code>，已为 false 则直接返回</li>
+<li><code>cv_.notify_all()</code> 唤醒等待中的 worker</li>
+<li><code>join</code> <code>preemptThread_</code></li>
+<li>对每个 worker <code>join</code> <code>th</code></li>
+<li>加锁清空 <code>globalQueue_</code></li>
+<li><code>workers_.clear()</code></li>
+</ol>
+<p><strong>注意</strong>：析构 <code>~Scheduler()</code> 会调用 <code>stop()</code>，确保进程退出时线程收敛。</p>
+<hr>
+<h3 id="4-10-void-configureTimeSlice-std-chrono-milliseconds-slice">4.10 <code>void configureTimeSlice(std::chrono::milliseconds slice)</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L203–206</li>
+<li><strong>作用</strong>：设置 <code>preemptLoop</code> 的睡眠间隔；<code>slice.count() &lt;= 0</code> 则忽略。</li>
+</ul>
+<hr>
+<h3 id="4-11-bool-shouldPreempt-const">4.11 <code>bool shouldPreempt() const</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L208–211</li>
+<li><strong>作用</strong>：若当前 TLS 属于本调度器且 <code>tls_current_worker</code> 有效，则<strong>原子地</strong>读取并清除该 worker 的 <code>preemptRequested</code>。</li>
+</ul>
+<p><strong>返回</strong>：是否需要让出（给 <code>safe_point</code> 用）。</p>
+<hr>
+<h3 id="4-12-void-run-on-worker-thread">4.12 <code>void run_on_worker_thread()</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L222–277</li>
+<li><strong>作用</strong>：worker 线程主循环：取任务、<code>resume</code>、未结束则重新入本地队列。</li>
+</ul>
+<p><strong>步骤概要</strong>：</p>
+<ol>
+<li><code>tls_current_scheduler = this</code></li>
+<li><strong>Windows</strong>：<code>tls_scheduler_fiber = ConvertThreadToFiber(nullptr)</code>，失败抛 <code>runtime_error(&quot;ConvertThreadToFiber failed&quot;)</code></li>
+<li>若 <code>tls_current_worker == nullptr</code>，则指向栈上 <code>fallbackWorker</code>（兼容非标准调用路径）</li>
+<li><strong>循环</strong>：
+<ul>
+<li><code>coro = popLocal → popGlobal → steal</code></li>
+<li>若无任务：<code>unique_lock(globalMtx_)</code>，<code>sleepingWorkers_++</code>，<code>cv_.wait</code> 直到 <code>!running</code> 或全局队列非空，<code>sleepingWorkers_--</code>；若 <code>!running</code> 则 <code>break</code></li>
+<li>若有任务且状态为 <code>READY</code> 或 <code>SUSPEND</code>：调用 <code>coro-&gt;resume()</code></li>
+<li>若 <code>coro-&gt;state() != DONE</code>：锁本地队列 <code>push_back</code>，<code>notify_one</code></li>
+</ul>
+</li>
+<li>退出循环后：<strong>Windows</strong> <code>ConvertFiberToThread()</code> 清理 fiber</li>
+<li>清空 <code>tls_current_coro</code>、<code>tls_current_scheduler</code>；若用过 <code>fallbackWorker</code> 则清空 <code>tls_current_worker</code></li>
+</ol>
+<p><strong>面试点</strong>：</p>
+<ul>
+<li>未完成协程重新入<strong>本地</strong>队列，而不是全局队列。</li>
+<li>等待条件仅用 <code>globalQueue_.empty()</code>，本地队列有任务时不会通过 <code>cv</code> 唤醒（依赖正在运行的 worker 自己处理；窃取者依赖其他 worker 活跃）。</li>
+</ul>
+<hr>
+<h3 id="4-13-void-preemptLoop-（私有）">4.13 <code>void preemptLoop()</code>（私有）</h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L213–220</li>
+<li><strong>作用</strong>：独立线程循环：每 <code>timeSlice_</code> 睡眠一次，给所有 worker 的 <code>preemptRequested</code> 置 <code>true</code>。</li>
+</ul>
+<p><strong>面试点</strong>：这是<strong>协作式抢占提示</strong>，不是操作系统抢占；协程需 <code>safe_point</code>/<code>yield</code> 才真正让出。</p>
+<hr>
+<h2 id="5-自由函数">5. 自由函数</h2>
+<h3 id="5-1-inline-void-yield-inline-void-yield-now">5.1 <code>inline void yield()</code> / <code>inline void yield_now()</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>include/Coroutine.h</code> L131–137</li>
+<li><strong>作用</strong>：若 <code>tls_current_coro</code> 非空，调用其 <code>suspend()</code>。</li>
+</ul>
+<p><strong>区别</strong>：当前二者实现完全相同。</p>
+<hr>
+<h3 id="5-2-void-safe-point">5.2 <code>void safe_point()</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L279–285</li>
+<li><strong>作用</strong>：若当前在调度器上且存在当前协程，并且 <code>shouldPreempt()</code> 为真，则 <code>yield()</code>。</li>
+</ul>
+<hr>
+<h3 id="5-3-void-sleep-for-std-chrono-milliseconds-dur">5.3 <code>void sleep_for(std::chrono::milliseconds dur)</code></h3>
+<ul>
+<li><strong>文件</strong>：<code>src/Coroutine.cpp</code> L287–290</li>
+<li><strong>作用</strong>：<code>std::this_thread::sleep_for(dur)</code> 后调用 <code>safe_point()</code>。</li>
+</ul>
+<p><strong>面试点</strong>：这会阻塞<strong>整个 OS 线程</strong>，不是“只挂起当前协程”；长睡眠会占用 worker。</p>
+<hr>
+<h2 id="6-实现注意（Linux-ucontext-与代码审阅）">6. 实现注意（Linux <code>ucontext</code> 与代码审阅）</h2>
+<p>在 <code>resume</code>/<code>suspend</code> 中使用 <code>swapcontext(&amp;tls_scheduler_ctx, &amp;ctx_)</code> 与 <code>swapcontext(&amp;ctx_, &amp;tls_scheduler_ctx)</code>。</p>
+<p>标准用法通常需要在 worker 线程首次切入协程前，对 <code>tls_scheduler_ctx</code> 执行一次 <code>getcontext</code>，以便 <code>swapcontext</code> 有合法的“调度器保存点”。<strong>当前 <code>run_on_worker_thread</code> 的 Linux 分支未展示该初始化</strong>（与 Windows 显式 <code>ConvertThreadToFiber</code> 不对称）。</p>
+<p><strong>文档建议</strong>：若在 Linux 上实际跑通，需对照你本地是否另有补丁或编译宏；面试时可答：“ucontext 路径需要保证 scheduler 上下文已 <code>getcontext</code> 引导，否则首次切换行为未定义。”</p>
+<hr>
+<h2 id="7-与-Server-的调用关系（便于串联记忆）">7. 与 <code>Server</code> 的调用关系（便于串联记忆）</h2>
+<p><code>Server::run</code> 中会：</p>
+<ul>
+<li><code>Scheduler::instance().configureTimeSlice(...)</code></li>
+<li><code>Scheduler::instance().start(...)</code></li>
+</ul>
+<p>HTTP 连接处理仍主要走 <code>ThreadPool::handleClient</code>；协程调度器在旁路运行，业务协程需自行 <code>submit</code> 使用。</p>
+<hr>
+<p>下一模块若要同样粒度，可直接说模块名（例如 <strong>Server</strong> 或 <strong>Threadpool</strong>），我按本文件结构继续写 <code>docs/modules/detail/&lt;Module&gt;_FUNCTIONS.md</code>。</p>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本章已读</span></button><a class="book-btn book-btn-ghost" href="/books/cpp-server-framework/"><i class="fas fa-list"></i> 全部章节</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/books/cpp-server-framework/channel-functions/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一章</span><strong>Channel 函数手册</strong></a><a class="book-pager-link next" href="/books/cpp-server-framework/crash-functions/"><span class="book-pager-dir">下一章 <i class="fas fa-arrow-right"></i></span><strong>Crash 函数手册</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-2"><a class="book-toc-link" href="#0-%E5%85%A8%E5%B1%80%E5%B8%B8%E9%87%8F%E4%B8%8E%E7%BA%BF%E7%A8%8B%E5%B1%80%E9%83%A8%E5%8F%98%E9%87%8F">0. 全局常量与线程局部变量</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#constexpr-size-t-kDefaultStackSize%EF%BC%88Coroutine-cpp%EF%BC%89">constexpr size_t kDefaultStackSize （ Coroutine.cpp ）</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%B1%80%E9%83%A8%EF%BC%88TLS%EF%BC%89%E5%8F%98%E9%87%8F%EF%BC%88Coroutine-cpp-%E5%AE%9A%E4%B9%89%EF%BC%8CCoroutine-h-%E5%A3%B0%E6%98%8E%EF%BC%89">线程局部（TLS）变量（ Coroutine.cpp 定义， Coroutine.h 声明）</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#1-struct-SchedulerWorker">1. struct SchedulerWorker</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-enum-class-CoroutineState">2. enum class CoroutineState</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#3-%E7%B1%BB-Coroutine">3. 类 Coroutine</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#3-1-explicit-Coroutine-Func-func">3.1 explicit Coroutine(Func func)</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#3-2-Coroutine">3.2 ~Coroutine()</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#3-3-Coroutine-Coroutine-other-noexcept">3.3 Coroutine(Coroutine other) noexcept</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#3-4-void-resume">3.4 void resume()</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#3-5-void-suspend">3.5 void suspend()</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#3-6-CoroutineState-state-const">3.6 CoroutineState state() const</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#3-7-static-void-Coroutine-entry-intptr-t-arg-%EF%BC%88Linux%EF%BC%8C%E7%A7%81%E6%9C%89%EF%BC%89">3.7 static void Coroutine::entry(intptr_t arg) （Linux，私有）</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#3-8-static-void-WINAPI-Coroutine-fiberEntry-LPVOID-lpParameter-%EF%BC%88Windows%EF%BC%8C%E7%A7%81%E6%9C%89%EF%BC%89">3.8 static void WINAPI Coroutine::fiberEntry(LPVOID lpParameter) （Windows，私有）</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#4-%E7%B1%BB-Scheduler">4. 类 Scheduler</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-1-static-Scheduler-instance">4.1 static Scheduler instance()</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-2-template-typename-F-typename-Args-void-submit-F-f-Args-args">4.2 template typename F, typename... Args void submit(F f, Args ... args)</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-3-template-typename-F-typename-Args-void-go-F-f-Args-args">4.3 template typename F, typename... Args void go(F f, Args ... args)</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-4-void-submitTask-std-shared-ptr-Coroutine-coro-%EF%BC%88%E7%A7%81%E6%9C%89%EF%BC%89">4.4 void submitTask(std::shared_ptr Coroutine coro) （私有）</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-5-std-shared-ptr-Coroutine-popLocalTask-SchedulerWorker-worker-%EF%BC%88%E7%A7%81%E6%9C%89%EF%BC%89">4.5 std::shared_ptr Coroutine popLocalTask(SchedulerWorker worker) （私有）</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-6-std-shared-ptr-Coroutine-popGlobalTask-%EF%BC%88%E7%A7%81%E6%9C%89%EF%BC%89">4.6 std::shared_ptr Coroutine popGlobalTask() （私有）</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-7-std-shared-ptr-Coroutine-stealTask-SchedulerWorker-self-%EF%BC%88%E7%A7%81%E6%9C%89%EF%BC%89">4.7 std::shared_ptr Coroutine stealTask(SchedulerWorker self) （私有）</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-8-void-start-size-t-workerCount-hardware-concurrency">4.8 void start(size_t workerCount = hardware_concurrency())</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-9-void-stop">4.9 void stop()</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-10-void-configureTimeSlice-std-chrono-milliseconds-slice">4.10 void configureTimeSlice(std::chrono::milliseconds slice)</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-11-bool-shouldPreempt-const">4.11 bool shouldPreempt() const</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-12-void-run-on-worker-thread">4.12 void run_on_worker_thread()</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#4-13-void-preemptLoop-%EF%BC%88%E7%A7%81%E6%9C%89%EF%BC%89">4.13 void preemptLoop() （私有）</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-%E8%87%AA%E7%94%B1%E5%87%BD%E6%95%B0">5. 自由函数</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#5-1-inline-void-yield-inline-void-yield-now">5.1 inline void yield() / inline void yield_now()</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#5-2-void-safe-point">5.2 void safe_point()</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#5-3-void-sleep-for-std-chrono-milliseconds-dur">5.3 void sleep_for(std::chrono::milliseconds dur)</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#6-%E5%AE%9E%E7%8E%B0%E6%B3%A8%E6%84%8F%EF%BC%88Linux-ucontext-%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%AE%A1%E9%98%85%EF%BC%89">6. 实现注意（Linux ucontext 与代码审阅）</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-%E4%B8%8E-Server-%E7%9A%84%E8%B0%83%E7%94%A8%E5%85%B3%E7%B3%BB%EF%BC%88%E4%BE%BF%E4%BA%8E%E4%B8%B2%E8%81%94%E8%AE%B0%E5%BF%86%EF%BC%89">7. 与 Server 的调用关系（便于串联记忆）</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

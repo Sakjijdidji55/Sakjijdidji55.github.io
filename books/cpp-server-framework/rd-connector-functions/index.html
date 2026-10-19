@@ -1,0 +1,532 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>RDConnector 函数手册 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="C++ 后端服务器框架 · RDConnector 函数手册">
+<meta property="og:type" content="website">
+<meta property="og:title" content="RDConnector 函数手册">
+<meta property="og:url" content="https://sakjijdidji55.github.io/books/cpp-server-framework/rd-connector-functions/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="C++ 后端服务器框架 · RDConnector 函数手册">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2025-12-01T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/books/cpp-server-framework/rd-connector-functions/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'RDConnector 函数手册',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">RDConnector 函数手册</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">RDConnector 函数手册</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="cpp-server-framework" data-chapter="rd-connector-functions" data-total="22" data-prev="/books/cpp-server-framework/jwt-functions/" data-next="/books/cpp-server-framework/server-functions/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/books/cpp-server-framework/">C++ 后端服务器框架</a><div class="book-sidebar-sub">22 章 · 约 1 小时 21 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 22</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选章节..." data-book-filter aria-label="筛选章节"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">概览</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="architecture"><a class="book-chapter-link" href="/books/cpp-server-framework/architecture/" data-chapter-link="architecture"><span class="book-chapter-index">01</span><span class="book-chapter-name">架构与面试讲解</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="modules-index"><a class="book-chapter-link" href="/books/cpp-server-framework/modules-index/" data-chapter-link="modules-index"><span class="book-chapter-index">02</span><span class="book-chapter-name">模块文档索引</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">模块设计</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="channel"><a class="book-chapter-link" href="/books/cpp-server-framework/channel/" data-chapter-link="channel"><span class="book-chapter-index">03</span><span class="book-chapter-name">Channel 通道</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="coroutine"><a class="book-chapter-link" href="/books/cpp-server-framework/coroutine/" data-chapter-link="coroutine"><span class="book-chapter-index">04</span><span class="book-chapter-name">Coroutine 协程</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="crash"><a class="book-chapter-link" href="/books/cpp-server-framework/crash/" data-chapter-link="crash"><span class="book-chapter-index">05</span><span class="book-chapter-name">Crash 崩溃处理</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="db-connector"><a class="book-chapter-link" href="/books/cpp-server-framework/db-connector/" data-chapter-link="db-connector"><span class="book-chapter-index">06</span><span class="book-chapter-name">DBConnector 数据库连接</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="email-sender"><a class="book-chapter-link" href="/books/cpp-server-framework/email-sender/" data-chapter-link="email-sender"><span class="book-chapter-index">07</span><span class="book-chapter-name">EmailSender 邮件发送</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="json-object-view"><a class="book-chapter-link" href="/books/cpp-server-framework/json-object-view/" data-chapter-link="json-object-view"><span class="book-chapter-index">08</span><span class="book-chapter-name">JsonObjectView JSON 视图</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="jwt"><a class="book-chapter-link" href="/books/cpp-server-framework/jwt/" data-chapter-link="jwt"><span class="book-chapter-index">09</span><span class="book-chapter-name">JWT 鉴权</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="rd-connector"><a class="book-chapter-link" href="/books/cpp-server-framework/rd-connector/" data-chapter-link="rd-connector"><span class="book-chapter-index">10</span><span class="book-chapter-name">RDConnector Redis 连接</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="server"><a class="book-chapter-link" href="/books/cpp-server-framework/server/" data-chapter-link="server"><span class="book-chapter-index">11</span><span class="book-chapter-name">Server 服务主链路</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="threadpool"><a class="book-chapter-link" href="/books/cpp-server-framework/threadpool/" data-chapter-link="threadpool"><span class="book-chapter-index">12</span><span class="book-chapter-name">Threadpool 线程池</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="yaml-parser"><a class="book-chapter-link" href="/books/cpp-server-framework/yaml-parser/" data-chapter-link="yaml-parser"><span class="book-chapter-index">13</span><span class="book-chapter-name">YamlParser 配置解析</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">函数级手册</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="channel-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/channel-functions/" data-chapter-link="channel-functions"><span class="book-chapter-index">14</span><span class="book-chapter-name">Channel 函数手册</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="coroutine-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/coroutine-functions/" data-chapter-link="coroutine-functions"><span class="book-chapter-index">15</span><span class="book-chapter-name">Coroutine 函数手册</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="crash-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/crash-functions/" data-chapter-link="crash-functions"><span class="book-chapter-index">16</span><span class="book-chapter-name">Crash 函数手册</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="db-connector-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/db-connector-functions/" data-chapter-link="db-connector-functions"><span class="book-chapter-index">17</span><span class="book-chapter-name">DBConnector 函数手册</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="email-sender-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/email-sender-functions/" data-chapter-link="email-sender-functions"><span class="book-chapter-index">18</span><span class="book-chapter-name">EmailSender 函数手册</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="json-object-view-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/json-object-view-functions/" data-chapter-link="json-object-view-functions"><span class="book-chapter-index">19</span><span class="book-chapter-name">JsonObjectView 函数手册</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="jwt-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/jwt-functions/" data-chapter-link="jwt-functions"><span class="book-chapter-index">20</span><span class="book-chapter-name">JWT 函数手册</span><span class="book-chapter-time">7′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="rd-connector-functions"><a class="book-chapter-link is-current" href="/books/cpp-server-framework/rd-connector-functions/" data-chapter-link="rd-connector-functions" aria-current="page"><span class="book-chapter-index">21</span><span class="book-chapter-name">RDConnector 函数手册</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="server-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/server-functions/" data-chapter-link="server-functions"><span class="book-chapter-index">22</span><span class="book-chapter-name">Server 函数手册</span><span class="book-chapter-time">8′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/books/"><i class="fas fa-arrow-left"></i> 返回书架</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开章节目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/books/cpp-server-framework/">C++ 后端服务器框架</a><i class="fas fa-angle-right"></i><span>RDConnector 函数手册</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">CHAPTER 21</span><h1>RDConnector 函数手册</h1><div class="book-chapter-meta">4 分钟阅读 · 975 字</div></div><p>依据源码：<code>include/RDConnector.h</code>、<code>src/RDConnector.cpp</code>。</p>
+<hr>
+<h2 id="0-模块定位">0. 模块定位</h2>
+<p><code>RdConnector</code> 是基于 <code>hiredis</code> 的轻量 Redis 封装，提供：</p>
+<ul>
+<li>连接与认证</li>
+<li>数据库选择</li>
+<li>基础 KV 操作：<code>get/set/setex/exists/del</code></li>
+<li>连接错误信息获取</li>
+</ul>
+<hr>
+<h2 id="1-数据成员与生命周期">1. 数据成员与生命周期</h2>
+<h3 id="成员">成员</h3>
+<ul>
+<li><code>host_</code>, <code>port_</code>, <code>password_</code>, <code>db</code></li>
+<li><code>redisContext* context</code></li>
+<li><code>static RdConnector* instance_</code></li>
+</ul>
+<h3 id="构造函数">构造函数</h3>
+<p><code>RdConnector(std::string host, std::string port, std::string password, int db)</code></p>
+<ul>
+<li>仅保存参数，<code>context = nullptr</code></li>
+<li>不主动建连</li>
+</ul>
+<h3 id="析构函数">析构函数</h3>
+<p><code>~RdConnector()</code></p>
+<ul>
+<li>若 <code>context != nullptr</code>：
+<ul>
+<li><code>redisFree(context)</code></li>
+<li><code>context = nullptr</code></li>
+<li>打印 <code>&quot;redis context free&quot;</code></li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-单例语义说明">2. 单例语义说明</h2>
+<h3 id="static-RdConnector-instance"><code>static RdConnector* instance_</code></h3>
+<ul>
+<li>初始为 <code>nullptr</code></li>
+<li>在 <code>connect()</code> 成功后，若 <code>instance_ == nullptr</code>，置为 <code>this</code></li>
+<li><code>getInstance()</code> 仅返回静态指针，不负责创建</li>
+</ul>
+<blockquote>
+<p>这不是严格工厂单例，而是“首次成功连接对象成为全局实例”的约束模式。</p>
+</blockquote>
+<hr>
+<h2 id="3-连接流程">3. 连接流程</h2>
+<h3 id="bool-connect"><code>bool connect()</code></h3>
+<h4 id="作用">作用</h4>
+<p>建立到 Redis 的连接，并可选执行 AUTH 与 SELECT。</p>
+<h4 id="执行步骤">执行步骤</h4>
+<ol>
+<li>
+<p><strong>实例唯一性检查</strong></p>
+<ul>
+<li>若 <code>instance_ != nullptr &amp;&amp; instance_ != this</code>：
+<ul>
+<li>打印 <code>&quot;Only one instance of RdConnector is allowed.&quot;</code></li>
+<li>返回 <code>false</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>清理旧连接</strong></p>
+<ul>
+<li>若 <code>context != nullptr</code>：
+<ul>
+<li><code>redisFree(context)</code>，<code>context = nullptr</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>端口解析</strong></p>
+<ul>
+<li><code>std::stoi(port_)</code></li>
+<li>异常时打印“端口格式错误”，返回 <code>false</code></li>
+</ul>
+</li>
+<li>
+<p><strong>建立连接</strong></p>
+<ul>
+<li><code>context = redisConnect(host_.c_str(), port)</code></li>
+<li>若 <code>context == nullptr || context-&gt;err</code>：
+<ul>
+<li>打印连接失败信息</li>
+<li>返回 <code>false</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>认证（可选）</strong></p>
+<ul>
+<li>若 <code>password_</code> 非空：
+<ul>
+<li><code>redisCommand(&quot;AUTH %s&quot;, password_)</code></li>
+<li>reply 为 null 或 error 时：
+<ul>
+<li>打印失败</li>
+<li><code>redisFree(context)</code>，<code>context = nullptr</code></li>
+<li><code>freeReplyObject(reply)</code></li>
+<li>返回 <code>false</code></li>
+</ul>
+</li>
+<li>成功时释放 <code>reply</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>切库（可选）</strong></p>
+<ul>
+<li>若 <code>db != 0</code>：
+<ul>
+<li><code>redisCommand(&quot;SELECT %d&quot;, db)</code></li>
+<li>失败处理同上（释放 context + reply，返回 false）</li>
+<li>成功释放 <code>reply</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>设置全局实例</strong></p>
+<ul>
+<li>若 <code>instance_ == nullptr</code>，则 <code>instance_ = this</code></li>
+</ul>
+</li>
+<li>
+<p>返回 <code>true</code></p>
+</li>
+</ol>
+<h4 id="风险点">风险点</h4>
+<ul>
+<li><code>freeReplyObject(reply)</code> 在某些失败路径上可能接收到 <code>nullptr</code>，<code>hiredis</code> 一般容忍，但最好显式判空。</li>
+<li>当前无连接超时与重连策略。</li>
+</ul>
+<hr>
+<h2 id="4-读操作">4. 读操作</h2>
+<h3 id="std-string-get-const-std-string-key"><code>std::string get(const std::string&amp; key)</code></h3>
+<h4 id="逻辑">逻辑</h4>
+<ol>
+<li>若 <code>context == nullptr</code>：打印“未连接”，返回空字符串</li>
+<li>执行 <code>GET key</code></li>
+<li>reply 为 null 或 error：打印失败，释放 reply，返回空字符串</li>
+<li>按 reply 类型处理：
+<ul>
+<li><code>REDIS_REPLY_STRING</code>：返回 <code>reply-&gt;str</code></li>
+<li><code>REDIS_REPLY_NIL</code>：返回 <code>&quot;&quot;</code>（键不存在）</li>
+<li>其他类型：打印异常类型，返回 <code>&quot;&quot;</code></li>
+</ul>
+</li>
+<li>释放 reply</li>
+</ol>
+<h4 id="语义提醒">语义提醒</h4>
+<ul>
+<li>“键不存在”与“命令失败”都可能返回空字符串，调用方需结合日志或后续 <code>exists</code> 判断。</li>
+</ul>
+<hr>
+<h2 id="5-写操作">5. 写操作</h2>
+<h3 id="5-1-bool-set-const-std-string-key-const-std-string-value">5.1 <code>bool set(const std::string&amp; key, const std::string&amp; value)</code></h3>
+<h4 id="逻辑-2">逻辑</h4>
+<ol>
+<li>检查连接，未连接返回 false</li>
+<li>执行 <code>SET key value</code></li>
+<li>reply null 或 error：打印并返回 false</li>
+<li>判断成功条件：
+<ul>
+<li><code>reply-&gt;type == REDIS_REPLY_STATUS</code></li>
+<li><code>reply-&gt;str == &quot;OK&quot;</code></li>
+</ul>
+</li>
+<li>失败时打印 <code>SET 命令失败</code></li>
+<li>释放 reply，返回 <code>success</code></li>
+</ol>
+<hr>
+<h3 id="5-2-bool-set-const-std-string-key-const-std-string-value-int-expireSeconds">5.2 <code>bool set(const std::string&amp; key, const std::string&amp; value, int expireSeconds)</code></h3>
+<h4 id="逻辑-3">逻辑</h4>
+<ol>
+<li>检查连接，未连接 false</li>
+<li>校验 <code>expireSeconds &gt; 0</code>，否则 false</li>
+<li>执行 <code>SETEX key expireSeconds value</code></li>
+<li>reply null 或 error -&gt; false</li>
+<li>成功条件同上（STATUS + “OK”）</li>
+<li>释放 reply，返回结果</li>
+</ol>
+<hr>
+<h2 id="6-存在性检查">6. 存在性检查</h2>
+<h3 id="bool-exists-const-std-string-key"><code>bool exists(const std::string&amp; key)</code></h3>
+<h4 id="逻辑-4">逻辑</h4>
+<ol>
+<li>检查连接</li>
+<li>执行 <code>EXISTS key</code></li>
+<li>reply null 或 error -&gt; false</li>
+<li>若 <code>reply-&gt;type == REDIS_REPLY_INTEGER</code>：
+<ul>
+<li><code>reply-&gt;integer == 1</code> -&gt; true</li>
+<li>否则 false</li>
+</ul>
+</li>
+<li>类型异常时打印告警</li>
+<li>释放 reply</li>
+</ol>
+<hr>
+<h2 id="7-删除操作">7. 删除操作</h2>
+<h3 id="bool-del-const-std-string-key"><code>bool del(const std::string&amp; key)</code></h3>
+<h4 id="逻辑-5">逻辑</h4>
+<ol>
+<li>检查连接</li>
+<li>执行 <code>DEL key</code></li>
+<li>reply null -&gt; false</li>
+<li>若 <code>REDIS_REPLY_ERROR</code> -&gt; false</li>
+<li>若类型不是 <code>REDIS_REPLY_INTEGER</code> -&gt; false</li>
+<li>否则返回 true</li>
+<li>释放 reply</li>
+</ol>
+<h4 id="语义说明">语义说明</h4>
+<ul>
+<li>当前实现“DEL 返回整数类型即视为成功”，不区分删除 0 个还是 &gt;0 个键。</li>
+</ul>
+<hr>
+<h2 id="8-实例与错误读取接口">8. 实例与错误读取接口</h2>
+<h3 id="static-RdConnector-getInstance"><code>static RdConnector* getInstance()</code></h3>
+<ul>
+<li>直接返回 <code>instance_</code></li>
+<li>若未成功连接过，可能为 <code>nullptr</code></li>
+</ul>
+<h3 id="std-string-getError"><code>std::string getError()</code></h3>
+<ul>
+<li>若 <code>context == nullptr</code>：返回 <code>&quot;未初始化连接&quot;</code></li>
+<li>否则返回 <code>context-&gt;errstr</code></li>
+</ul>
+<hr>
+<h2 id="9-并发与线程安全">9. 并发与线程安全</h2>
+<p>当前类内部<strong>没有</strong>显式互斥保护：</p>
+<ul>
+<li>多线程共享同一个 <code>RdConnector</code>/<code>redisContext</code> 调用 <code>redisCommand</code> 可能有并发风险</li>
+<li>建议每线程独立连接或引入连接池</li>
+</ul>
+<hr>
+<h2 id="10-面试可讲的改进方向">10. 面试可讲的改进方向</h2>
+<ol>
+<li>引入连接池与自动重连</li>
+<li>增加超时配置（连接/读写）</li>
+<li>增加批量命令与 pipeline</li>
+<li>明确返回语义（键不存在 vs 执行失败）</li>
+<li>增强错误模型（错误码 + 文本）</li>
+</ol>
+<hr>
+<h2 id="下一模块（顺序）">下一模块（顺序）</h2>
+<p><strong>Server</strong> → <code>docs/modules/detail/Server_FUNCTIONS.md</code></p>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本章已读</span></button><a class="book-btn book-btn-ghost" href="/books/cpp-server-framework/"><i class="fas fa-list"></i> 全部章节</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/books/cpp-server-framework/jwt-functions/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一章</span><strong>JWT 函数手册</strong></a><a class="book-pager-link next" href="/books/cpp-server-framework/server-functions/"><span class="book-pager-dir">下一章 <i class="fas fa-arrow-right"></i></span><strong>Server 函数手册</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-2"><a class="book-toc-link" href="#0-%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%BD%8D">0. 模块定位</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#1-%E6%95%B0%E6%8D%AE%E6%88%90%E5%91%98%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">1. 数据成员与生命周期</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%88%90%E5%91%98">成员</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0">构造函数</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0">析构函数</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-%E5%8D%95%E4%BE%8B%E8%AF%AD%E4%B9%89%E8%AF%B4%E6%98%8E">2. 单例语义说明</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#static-RdConnector-instance">static RdConnector* instance_</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#3-%E8%BF%9E%E6%8E%A5%E6%B5%81%E7%A8%8B">3. 连接流程</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#bool-connect">bool connect()</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E4%BD%9C%E7%94%A8">作用</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4">执行步骤</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E9%A3%8E%E9%99%A9%E7%82%B9">风险点</a></li></ul></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#4-%E8%AF%BB%E6%93%8D%E4%BD%9C">4. 读操作</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#std-string-get-const-std-string-key">std::string get(const std::string key)</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E9%80%BB%E8%BE%91">逻辑</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E8%AF%AD%E4%B9%89%E6%8F%90%E9%86%92">语义提醒</a></li></ul></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-%E5%86%99%E6%93%8D%E4%BD%9C">5. 写操作</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#5-1-bool-set-const-std-string-key-const-std-string-value">5.1 bool set(const std::string key, const std::string value)</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E9%80%BB%E8%BE%91-2">逻辑</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#5-2-bool-set-const-std-string-key-const-std-string-value-int-expireSeconds">5.2 bool set(const std::string key, const std::string value, int expireSeconds)</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E9%80%BB%E8%BE%91-3">逻辑</a></li></ul></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#6-%E5%AD%98%E5%9C%A8%E6%80%A7%E6%A3%80%E6%9F%A5">6. 存在性检查</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#bool-exists-const-std-string-key">bool exists(const std::string key)</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E9%80%BB%E8%BE%91-4">逻辑</a></li></ul></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-%E5%88%A0%E9%99%A4%E6%93%8D%E4%BD%9C">7. 删除操作</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#bool-del-const-std-string-key">bool del(const std::string key)</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E9%80%BB%E8%BE%91-5">逻辑</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E8%AF%AD%E4%B9%89%E8%AF%B4%E6%98%8E">语义说明</a></li></ul></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#8-%E5%AE%9E%E4%BE%8B%E4%B8%8E%E9%94%99%E8%AF%AF%E8%AF%BB%E5%8F%96%E6%8E%A5%E5%8F%A3">8. 实例与错误读取接口</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#static-RdConnector-getInstance">static RdConnector* getInstance()</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#std-string-getError">std::string getError()</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#9-%E5%B9%B6%E5%8F%91%E4%B8%8E%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8">9. 并发与线程安全</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#10-%E9%9D%A2%E8%AF%95%E5%8F%AF%E8%AE%B2%E7%9A%84%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91">10. 面试可讲的改进方向</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#%E4%B8%8B%E4%B8%80%E6%A8%A1%E5%9D%97%EF%BC%88%E9%A1%BA%E5%BA%8F%EF%BC%89">下一模块（顺序）</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

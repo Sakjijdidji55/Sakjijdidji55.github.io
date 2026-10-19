@@ -1,0 +1,289 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>从零构建大语言模型 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="逐章精读《Build a Large Language Model (From Scratch)》，从 Transformer 基础、文本处理、注意力机制，一路走到预训练、微调与 LoRA。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="从零构建大语言模型">
+<meta property="og:url" content="https://sakjijdidji55.github.io/books/llm-from-scratch/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="逐章精读《Build a Large Language Model (From Scratch)》，从 Transformer 基础、文本处理、注意力机制，一路走到预训练、微调与 LoRA。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2025-10-26T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/books/llm-from-scratch/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '从零构建大语言模型',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">从零构建大语言模型</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">从零构建大语言模型</div><div class="container" id="article-container"><section class="book-home" data-book-home data-book="llm-from-scratch" data-total="12" data-first="/books/llm-from-scratch/01-understanding-llm/" data-last="/books/llm-from-scratch/app-e-lora/"><div class="book-hero"><div class="book-hero-cover"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/books/llm-from-scratch/assets/cover.svg" alt="从零构建大语言模型"><span class="book-hero-cover-glow"></span></div><div class="book-hero-info"><nav class="book-breadcrumb"><a href="/books/">书架</a><i class="fas fa-angle-right"></i><span>从零构建大语言模型</span></nav><h1 class="book-hero-title">从零构建大语言模型</h1><p class="book-hero-subtitle">Build a Large Language Model (From Scratch) 中文精读笔记</p><p class="book-hero-desc">逐章精读《Build a Large Language Model (From Scratch)》，从 Transformer 基础、文本处理、注意力机制，一路走到预训练、微调与 LoRA。</p><div class="book-tag-list"><span class="book-tag">大模型</span><span class="book-tag">Transformer</span><span class="book-tag">PyTorch</span></div><div class="book-hero-meta"><span><i class="fas fa-user-pen"></i>迷路的小朋友</span><span><i class="fas fa-layer-group"></i>12 章</span><span><i class="far fa-clock"></i>约 5 小时 46 分钟</span><span><i class="far fa-calendar-check"></i>更新于 2026-10-19</span><span class="book-status-pill">已完结</span></div><div class="book-hero-actions"><a class="book-btn book-btn-primary" id="book-continue" href="/books/llm-from-scratch/01-understanding-llm/"><i class="fas fa-book-open"></i> 开始阅读</a><div class="book-hero-progress" data-book-progress="llm-from-scratch" data-total="12"><div class="book-progress-track"><i></i></div><span class="book-progress-label">未开始</span></div></div></div></div><div class="book-intro"><h2 id="这本书是什么">这本书是什么</h2>
+<p>这是《Build a Large Language Model (From Scratch)》的中文精读笔记。全书从 Transformer 的基本概念讲起，带你把一个 GPT 风格的模型从零写出来：处理文本、实现多头注意力、搭 GPT 结构、做预训练，最后完成分类微调和指令微调。</p>
+<h2 id="适合谁读">适合谁读</h2>
+<ul>
+<li>想搞懂大模型内部结构，而不只是会调 API 的人</li>
+<li>有 Python 基础、想系统学习 PyTorch 与 Transformer 的人</li>
+<li>正在准备大模型相关面试，需要把细节讲清楚的人</li>
+</ul>
+<h2 id="怎么读">怎么读</h2>
+<p>建议按章节顺序读，代码跟着敲一遍。每章末尾的「本章摘要」可以用来快速复习；附录里的 PyTorch 简介和 LoRA 微调可以按需查阅。</p>
+</div><div class="book-home-grid"><div class="book-home-main"><h2 class="book-section-title"><i class="fas fa-list-ol"></i> 目录</h2><div class="book-home-part"><h3 class="book-home-part-title">正文</h3><ol class="book-home-chapter-list"><li class="book-home-chapter" data-chapter-item="01-understanding-llm"><a href="/books/llm-from-scratch/01-understanding-llm/" data-chapter-link="01-understanding-llm"><span class="book-home-chapter-index">01</span><span class="book-home-chapter-text"><strong>第 1 章 理解大语言模型</strong><small>25 分钟 · 8,059 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li><li class="book-home-chapter" data-chapter-item="02-working-with-text-data"><a href="/books/llm-from-scratch/02-working-with-text-data/" data-chapter-link="02-working-with-text-data"><span class="book-home-chapter-index">02</span><span class="book-home-chapter-text"><strong>第 2 章 处理文本数据</strong><small>37 分钟 · 11,749 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li><li class="book-home-chapter" data-chapter-item="03-coding-attention"><a href="/books/llm-from-scratch/03-coding-attention/" data-chapter-link="03-coding-attention"><span class="book-home-chapter-index">03</span><span class="book-home-chapter-text"><strong>第 3 章 实现注意力机制</strong><small>52 分钟 · 16,736 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li><li class="book-home-chapter" data-chapter-item="04-gpt-from-scratch"><a href="/books/llm-from-scratch/04-gpt-from-scratch/" data-chapter-link="04-gpt-from-scratch"><span class="book-home-chapter-index">04</span><span class="book-home-chapter-text"><strong>第 4 章 从零实现 GPT 模型</strong><small>39 分钟 · 12,274 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li><li class="book-home-chapter" data-chapter-item="05-pretraining"><a href="/books/llm-from-scratch/05-pretraining/" data-chapter-link="05-pretraining"><span class="book-home-chapter-index">05</span><span class="book-home-chapter-text"><strong>第 5 章 在无标记数据上预训练</strong><small>40 分钟 · 12,596 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li><li class="book-home-chapter" data-chapter-item="06-finetuning-classification"><a href="/books/llm-from-scratch/06-finetuning-classification/" data-chapter-link="06-finetuning-classification"><span class="book-home-chapter-index">06</span><span class="book-home-chapter-text"><strong>第 6 章 分类任务微调</strong><small>23 分钟 · 7,406 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li><li class="book-home-chapter" data-chapter-item="07-instruction-finetuning"><a href="/books/llm-from-scratch/07-instruction-finetuning/" data-chapter-link="07-instruction-finetuning"><span class="book-home-chapter-index">07</span><span class="book-home-chapter-text"><strong>第 7 章 指令遵循微调</strong><small>34 分钟 · 10,794 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li></ol></div><div class="book-home-part"><h3 class="book-home-part-title">附录</h3><ol class="book-home-chapter-list"><li class="book-home-chapter" data-chapter-item="app-a-pytorch"><a href="/books/llm-from-scratch/app-a-pytorch/" data-chapter-link="app-a-pytorch"><span class="book-home-chapter-index">08</span><span class="book-home-chapter-text"><strong>附录 A PyTorch 简介</strong><small>55 分钟 · 17,941 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li><li class="book-home-chapter" data-chapter-item="app-b-references"><a href="/books/llm-from-scratch/app-b-references/" data-chapter-link="app-b-references"><span class="book-home-chapter-index">09</span><span class="book-home-chapter-text"><strong>附录 B 参考文献和扩展阅读</strong><small>17 分钟 · 4,644 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li><li class="book-home-chapter" data-chapter-item="app-c-solutions"><a href="/books/llm-from-scratch/app-c-solutions/" data-chapter-link="app-c-solutions"><span class="book-home-chapter-index">10</span><span class="book-home-chapter-text"><strong>附录 C 习题解答</strong><small>8 分钟 · 2,230 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li><li class="book-home-chapter" data-chapter-item="app-d-training-tips"><a href="/books/llm-from-scratch/app-d-training-tips/" data-chapter-link="app-d-training-tips"><span class="book-home-chapter-index">11</span><span class="book-home-chapter-text"><strong>附录 D 训练循环高级技巧</strong><small>6 分钟 · 1,841 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li><li class="book-home-chapter" data-chapter-item="app-e-lora"><a href="/books/llm-from-scratch/app-e-lora/" data-chapter-link="app-e-lora"><span class="book-home-chapter-index">12</span><span class="book-home-chapter-text"><strong>附录 E 使用 LoRA 高效微调</strong><small>14 分钟 · 4,523 字</small></span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span><i class="fas fa-chevron-right book-home-chapter-arrow"></i></a></li></ol></div></div><aside class="book-home-aside"><div class="book-resource-card"><h3><i class="fas fa-folder-open"></i> 配套资料</h3><ul><li><a href="https://github.com/rasbt/LLMs-from-scratch" target="_blank" rel="noopener"><i class="fab fa-github"></i><span>原书配套代码</span><i class="fas fa-arrow-up-right-from-square book-resource-out"></i></a></li><li><a href="https://www.manning.com/books/build-a-large-language-model-from-scratch" target="_blank" rel="noopener"><i class="fas fa-book"></i><span>原书主页</span><i class="fas fa-arrow-up-right-from-square book-resource-out"></i></a></li></ul></div><div class="book-home-note"><h3><i class="fas fa-lightbulb"></i> 阅读提示</h3><p>阅读进度会自动保存在浏览器里；读完一章会自动打勾，也可以手动标记。</p><a href="/books/llm-from-scratch/" class="book-home-note-link">回到书籍首页</a></div></aside></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

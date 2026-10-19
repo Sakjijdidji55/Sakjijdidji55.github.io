@@ -1,0 +1,763 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>附录 E 使用 LoRA 高效微调 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="从零构建大语言模型 · 附录 E 使用 LoRA 高效微调">
+<meta property="og:type" content="website">
+<meta property="og:title" content="附录 E 使用 LoRA 高效微调">
+<meta property="og:url" content="https://sakjijdidji55.github.io/books/llm-from-scratch/app-e-lora/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="从零构建大语言模型 · 附录 E 使用 LoRA 高效微调">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2025-10-26T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/books/llm-from-scratch/app-e-lora/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '附录 E 使用 LoRA 高效微调',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">附录 E 使用 LoRA 高效微调</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">附录 E 使用 LoRA 高效微调</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="llm-from-scratch" data-chapter="app-e-lora" data-total="12" data-prev="/books/llm-from-scratch/app-d-training-tips/" data-next=""><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/books/llm-from-scratch/">从零构建大语言模型</a><div class="book-sidebar-sub">12 章 · 约 5 小时 46 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 12</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选章节..." data-book-filter aria-label="筛选章节"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">正文</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="01-understanding-llm"><a class="book-chapter-link" href="/books/llm-from-scratch/01-understanding-llm/" data-chapter-link="01-understanding-llm"><span class="book-chapter-index">01</span><span class="book-chapter-name">第 1 章 理解大语言模型</span><span class="book-chapter-time">25′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="02-working-with-text-data"><a class="book-chapter-link" href="/books/llm-from-scratch/02-working-with-text-data/" data-chapter-link="02-working-with-text-data"><span class="book-chapter-index">02</span><span class="book-chapter-name">第 2 章 处理文本数据</span><span class="book-chapter-time">37′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="03-coding-attention"><a class="book-chapter-link" href="/books/llm-from-scratch/03-coding-attention/" data-chapter-link="03-coding-attention"><span class="book-chapter-index">03</span><span class="book-chapter-name">第 3 章 实现注意力机制</span><span class="book-chapter-time">52′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="04-gpt-from-scratch"><a class="book-chapter-link" href="/books/llm-from-scratch/04-gpt-from-scratch/" data-chapter-link="04-gpt-from-scratch"><span class="book-chapter-index">04</span><span class="book-chapter-name">第 4 章 从零实现 GPT 模型</span><span class="book-chapter-time">39′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="05-pretraining"><a class="book-chapter-link" href="/books/llm-from-scratch/05-pretraining/" data-chapter-link="05-pretraining"><span class="book-chapter-index">05</span><span class="book-chapter-name">第 5 章 在无标记数据上预训练</span><span class="book-chapter-time">40′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="06-finetuning-classification"><a class="book-chapter-link" href="/books/llm-from-scratch/06-finetuning-classification/" data-chapter-link="06-finetuning-classification"><span class="book-chapter-index">06</span><span class="book-chapter-name">第 6 章 分类任务微调</span><span class="book-chapter-time">23′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="07-instruction-finetuning"><a class="book-chapter-link" href="/books/llm-from-scratch/07-instruction-finetuning/" data-chapter-link="07-instruction-finetuning"><span class="book-chapter-index">07</span><span class="book-chapter-name">第 7 章 指令遵循微调</span><span class="book-chapter-time">34′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app-a-pytorch"><a class="book-chapter-link" href="/books/llm-from-scratch/app-a-pytorch/" data-chapter-link="app-a-pytorch"><span class="book-chapter-index">08</span><span class="book-chapter-name">附录 A PyTorch 简介</span><span class="book-chapter-time">55′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-b-references"><a class="book-chapter-link" href="/books/llm-from-scratch/app-b-references/" data-chapter-link="app-b-references"><span class="book-chapter-index">09</span><span class="book-chapter-name">附录 B 参考文献和扩展阅读</span><span class="book-chapter-time">17′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-c-solutions"><a class="book-chapter-link" href="/books/llm-from-scratch/app-c-solutions/" data-chapter-link="app-c-solutions"><span class="book-chapter-index">10</span><span class="book-chapter-name">附录 C 习题解答</span><span class="book-chapter-time">8′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-d-training-tips"><a class="book-chapter-link" href="/books/llm-from-scratch/app-d-training-tips/" data-chapter-link="app-d-training-tips"><span class="book-chapter-index">11</span><span class="book-chapter-name">附录 D 训练循环高级技巧</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-e-lora"><a class="book-chapter-link is-current" href="/books/llm-from-scratch/app-e-lora/" data-chapter-link="app-e-lora" aria-current="page"><span class="book-chapter-index">12</span><span class="book-chapter-name">附录 E 使用 LoRA 高效微调</span><span class="book-chapter-time">14′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/books/"><i class="fas fa-arrow-left"></i> 返回书架</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开章节目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/books/llm-from-scratch/">从零构建大语言模型</a><i class="fas fa-angle-right"></i><span>附录 E 使用 LoRA 高效微调</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">CHAPTER 12</span><h1>附录 E 使用 LoRA 高效微调</h1><div class="book-chapter-meta">14 分钟阅读 · 4,523 字</div></div><p>本附录介绍低秩适应 (LoRA)，这是最广泛使用的参数高效微调技术之一。在解释 LoRA 背后的主要思想之后，本附录将基于第 6 章中的垃圾邮件分类微调示例并对 LLM 进行微调。然而，需要注意的是，LoRA 微调也适用于第 7 章中讨论的有监督的指令微调。</p>
+
+<h2 id="E-1-LoRA-简介">E.1 LoRA 简介</h2>
+<p>LoRA，即低秩适应，是一种仅调整模型权重参数的一小部分，就可以让预训练模型更好地适应特定（通常较小）数据集的技术。“低秩”指的是将模型调整限制在总权重参数空间的一个较小维度子空间的数学概念，这有效地捕获了训练期间权重参数变化的最具影响力的方向。</p>
+<blockquote>
+<p>[!TIP]</p>
+<p><strong>个人思考：</strong> LoRA技术现在用的比较多，我们该怎么理解LoRA，想象你有一个非常厉害的工具箱（预训练模型），里面有很多工具，可以做各种各样的事情。现在你只想用这个工具箱来修自行车（特定任务）。</p>
+<p>LoRA 就像是给你的工具箱增加了一些专门用来修自行车的“小工具”（模型的一小部分权重参数）。你不需要把整个工具箱里的工具都换掉或者重新学习怎么使用它们，只需要学会用这些新增的“小工具”就行了。</p>
+<p>“低秩”的意思是，这些新增的“小工具”并不是全新的、非常复杂的工具。它们是在已有的工具基础上进行了一些简单的调整或者组合，就能很好地完成修自行车的任务。这就好比你不需要重新发明轮子，只需要给现有的扳手加个特殊的套筒就能拧紧自行车上的螺丝。</p>
+<p>所以，LoRA 的好处就是，它能让预训练模型快速适应新的任务，而且只需要学习和调整很少的“小工具”，这样就更高效、更省资源。</p>
+</blockquote>
+<p>LoRA 方法之所以有用且受欢迎，是因为它能够高效地在特定任务的数据上对大型模型进行微调，从而显著降低了传统微调方法所需的计算成本和资源。</p>
+<p>为了解释 LoRA 的工作原理，假设存在一个与特定层相关联的大型权重矩阵 W。LoRA 可以应用于 LLM 中的所有线性层（稍后将会看到），为了说明，我们先关注单个层。</p>
+<p>在训练深度神经网络时，在反向传播过程中，我们会学习到一个 ΔW 矩阵，它包含了关于我们如何更新原始权重参数的信息，以便在训练过程中最小化损失函数。在本附录的其余部分，我们将使用术语“权重”作为模型权重参数的简称。</p>
+<p>在传统训练和微调中，权重更新矩阵定义如下：</p>
+<p>W<sub>updated</sub> = W + ΔW</p>
+<p>Hu等人提出的 LoRA 方法 (<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2106.09685">https://arxiv.org/abs/2106.09685</a>) 提供了一种更有效的计算权重更新ΔW的替代方法，它学习的是ΔW的近似值：<br>
+ΔW ≈ AB</p>
+<p>其中 A 和 B 是两个远小于 W 的矩阵， AB 表示 A 和 B 之间的矩阵乘法积。使用 LoRA，我们现在可以按如下方式重新定义权重更新矩阵：<br>
+W<sub>updated</sub> = W + AB</p>
+<p>图 E.1 并排展示了完整微调和 LoRA 的权重更新公式。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixE/E.1.png" alt=""></p>
+<p>如果你仔细观察，你可能会注意到图 E.1 中完整微调和 LoRA 的视觉表示与之前呈现的公式略有不同。这种差异归因于矩阵乘法的分配律，该定律允许我们分离原始权重和更新后的权重，而不是将它们组合在一起。例如，在进行常规微调的情况下，以 x 作为输入数据，我们可以将计算按如下表示:</p>
+<p>x ( W + ΔW) = xW + xΔW</p>
+<p>同样，我们也可以将 LoRA 按如下表示：</p>
+<p>x ( W + AB) = xW + xAB</p>
+<p>除了能减少训练期间需要更新的权重数量之外，将 LoRA 权重矩阵与原始模型权重分离的能力使得 LoRA 的实用性更强。这意味着预训练模型的权重可以保持不变，而 LoRA 权重矩阵在训练后使用模型时则可以被动态地应用。</p>
+<blockquote>
+<p>[!TIP]</p>
+<p><strong>个人思考：</strong> 这段描述的关键在于强调<strong>LoRA 的权重是独立于原始模型权重的</strong>，这带来了很多实际的好处。你可以这样理解：</p>
+<p>想象你已经拥有一个非常庞大的、功能强大的模型，它就像一个已经掌握了很多知识和技能的“超级大脑”。现在你想让这个“超级大脑”专注于解决某个特定的问题，比如识别图片中的猫。</p>
+<p><strong>传统的微调</strong>就像是直接调整这个“超级大脑”内部的很多连接和参数，让它更擅长识别猫。这个过程可能会比较复杂，需要大量的计算资源，而且可能会影响它之前学到的其他知识。</p>
+<p><strong>LoRA 的做法则更聪明：</strong></p>
+<p>它不是直接修改“超级大脑”原有的结构，而是在它的基础上<strong>增加了一些非常小的、专门用于识别猫的“插件”或者“补丁”</strong>。这些“插件”就是 LoRA 的权重矩阵（A 和 B）。</p>
+<p>关键在于，这些“插件”是<strong>独立</strong>于“超级大脑”本身的核心知识（原始模型权重）的。这意味着：</p>
+<ol>
+<li><strong>原始的“超级大脑”保持不变：</strong> 它仍然拥有之前学到的所有通用知识。你不需要担心为了让它识别猫而忘记了其他技能。</li>
+<li><strong>“插件”很小，训练起来更快更省资源：</strong> 因为 LoRA 只训练这些新增的“插件”，它们的参数量比原始模型小得多，所以训练起来更快，需要的计算资源也更少。</li>
+<li><strong>可以灵活地切换任务：</strong> 想象一下，你不仅想让这个“超级大脑”识别猫，还想让它识别狗。使用 LoRA，你可以在同一个原始模型的基础上，训练出另一个专门识别狗的“插件”。当你需要识别猫时，就加载猫的“插件”；需要识别狗时，就加载狗的“插件”。原始的“超级大脑”本身不需要改变。</li>
+<li><strong>部署和存储更方便：</strong> 因为原始模型很大，而 LoRA 的“插件”很小，所以你只需要存储原始模型一次，然后为不同的任务存储不同的“插件”就可以了，这样可以节省大量的存储空间。</li>
+</ol>
+</blockquote>
+<p>在实践中，将 LoRA 权重分开非常有用，因为它可以在不需要存储 LLM 的多个完整版本的情况下实现模型定制。这显著降低了存储需求并提高了可伸缩性，因为当为每个特定的客户或应用程序定制 LLM 时，只需要调整和保存较小的 LoRA 矩阵。</p>
+<p>目前我们已经讨论了 LoRA 的全部内容，在接下来的章节中，让我们看看如何使用它来微调 LLM 以进行垃圾邮件分类，类似于第 6 章中的微调示例。</p>
+<h2 id="E-2-准备数据集">E.2 准备数据集</h2>
+<p>在将 LoRA 应用于第 6 章中的垃圾邮件分类示例之前，我们必须加载将要使用的数据集和预训练模型。</p>
+<p>本节中的代码复用了第 6 章中的数据准备工作。（请注意，除了在本节中复用代码之外，我们还可以打开并运行第 6 章的 notebook，然后将 E.4 节中的 LoRA 代码插入到那里。）</p>
+<p>首先，我们下载数据集并将其保存为 CSV 文件：</p>
+<pre><code class="language-python"># Listing E.1 Downloading and preparing the dataset
+
+from pathlib import Path
+import pandas as pd
+from ch06 import (
+    download_and_unzip_spam_data,
+    create_balanced_dataset,
+    random_split
+)
+
+url = &quot;https://archive.ics.uci.edu/static/public/228/sms+spam+collection.zip&quot;
+zip_path = &quot;sms_spam_collection.zip&quot;
+extracted_path = &quot;sms_spam_collection&quot;
+data_file_path = Path(extracted_path) / &quot;SMSSpamCollection.tsv&quot;
+
+download_and_unzip_spam_data(url, zip_path, extracted_path, data_file_path)
+
+df = pd.read_csv(data_file_path, sep=&quot;\t&quot;, header=None, names=[&quot;Label&quot;, &quot;Text&quot;])
+balanced_df = create_balanced_dataset(df)
+balanced_df[&quot;Label&quot;] = balanced_df[&quot;Label&quot;].map({&quot;ham&quot;: 0, &quot;spam&quot;: 1})
+
+train_df, validation_df, test_df = random_split(balanced_df, 0.7, 0.1)
+train_df.to_csv(&quot;train.csv&quot;, index=None)
+validation_df.to_csv(&quot;validation.csv&quot;, index=None)
+test_df.to_csv(&quot;test.csv&quot;, index=None)
+</code></pre>
+<p>接着，我们来创建 <code>SpamDataset</code> 实例：</p>
+<pre><code class="language-python"># Listing E.2 Instantiating PyTorch datasets
+
+import torch
+from torch.utils.data import Dataset
+import tiktoken
+from previous_chapters import SpamDataset
+
+tokenizer = tiktoken.get_encoding(&quot;gpt2&quot;)
+train_dataset = SpamDataset(&quot;train.csv&quot;, max_length=None, tokenizer=tokenizer)
+val_dataset = SpamDataset(&quot;validation.csv&quot;, max_length=train_dataset.max_length,
+tokenizer=tokenizer)
+test_dataset = SpamDataset(&quot;test.csv&quot;, max_length=train_dataset.max_length,
+tokenizer=tokenizer)
+</code></pre>
+<p>在创建 PyTorch 数据集对象之后，我们开始实例化数据加载器：</p>
+<pre><code class="language-python"># Listing E.3 Creating PyTorch data loaders
+
+from torch.utils.data import DataLoader
+
+num_workers = 0
+batch_size = 8
+
+torch.manual_seed(123)
+
+train_loader = DataLoader(
+    dataset=train_dataset,
+    batch_size=batch_size,
+    shuffle=True,
+    num_workers=num_workers,
+    drop_last=True,
+)
+
+val_loader = DataLoader(
+    dataset=val_dataset,
+    batch_size=batch_size,
+    num_workers=num_workers,
+    drop_last=False,
+)
+
+test_loader = DataLoader(
+    dataset=test_dataset,
+    batch_size=batch_size,
+    num_workers=num_workers,
+    drop_last=False,
+)
+</code></pre>
+<p>作为验证步骤，我们遍历数据加载器并检查每个批次是否包含 8 个训练示例，其中每个训练示例包含 120 个 token：</p>
+<pre><code class="language-python">print(&quot;Train loader:&quot;)
+for input_batch, target_batch in train_loader:
+		pass
+  
+print(&quot;Input batch dimensions:&quot;, input_batch.shape)
+print(&quot;Label batch dimensions&quot;, target_batch.shape)
+</code></pre>
+<p>输出如下：</p>
+<pre><code class="language-python">Train loader:
+Input batch dimensions: torch.Size([8, 120])
+Label batch dimensions torch.Size([8])
+</code></pre>
+<p>最后，我们打印每个数据集中的总批次数：</p>
+<pre><code class="language-python">print(f&quot;{len(train_loader)} training batches&quot;)
+print(f&quot;{len(val_loader)} validation batches&quot;)
+print(f&quot;{len(test_loader)} test batches&quot;)
+</code></pre>
+<p>在这种情况下，我们每个数据集拥有的批次数如下：</p>
+<pre><code class="language-python">130 training batches
+19 validation batches
+38 test batches
+</code></pre>
+<h2 id="E-3-初始化模型">E.3 初始化模型</h2>
+<p>本节将复用第 6 章中的代码来加载和准备预训练的 GPT 模型。我们首先下载模型权重，然后将它们加载到 <code>GPTModel</code> 类中：</p>
+<pre><code class="language-python"># Listing E.4 Loading a pretrained GPT model
+
+from gpt_download import download_and_load_gpt2
+from previous_chapters import GPTModel, load_weights_into_gpt
+
+CHOOSE_MODEL = &quot;gpt2-small (124M)&quot;
+INPUT_PROMPT = &quot;Every effort moves&quot;
+
+BASE_CONFIG = {
+    &quot;vocab_size&quot;: 50257, # Vocabulary size
+    &quot;context_length&quot;: 1024, # Context length
+    &quot;drop_rate&quot;: 0.0, # Dropout rate
+    &quot;qkv_bias&quot;: True # Query-key-value bias
+}
+
+model_configs = {
+    &quot;gpt2-small (124M)&quot;: {&quot;emb_dim&quot;: 768, &quot;n_layers&quot;: 12, &quot;n_heads&quot;: 12},
+    &quot;gpt2-medium (355M)&quot;: {&quot;emb_dim&quot;: 1024, &quot;n_layers&quot;: 24, &quot;n_heads&quot;: 16},
+    &quot;gpt2-large (774M)&quot;: {&quot;emb_dim&quot;: 1280, &quot;n_layers&quot;: 36, &quot;n_heads&quot;: 20},
+    &quot;gpt2-xl (1558M)&quot;: {&quot;emb_dim&quot;: 1600, &quot;n_layers&quot;: 48, &quot;n_heads&quot;: 25},
+}
+
+BASE_CONFIG.update(model_configs[CHOOSE_MODEL])
+
+model_size = CHOOSE_MODEL.split(&quot; &quot;)[-1].lstrip(&quot;(&quot;).rstrip(&quot;)&quot;)
+settings, params = download_and_load_gpt2(model_size=model_size, models_dir=&quot;gpt2&quot;)
+
+model = GPTModel(BASE_CONFIG)
+load_weights_into_gpt(model, params)
+model.eval()
+</code></pre>
+<p>为了确保模型已正确加载，让我们再次检查它是否能生成连贯的文本：</p>
+<pre><code class="language-python">from previous_chapters import (
+    generate_text_simple,
+    text_to_token_ids,
+    token_ids_to_text
+)
+
+text_1 = &quot;Every effort moves you&quot;
+
+token_ids = generate_text_simple(
+    model=model,
+    idx=text_to_token_ids(text_1, tokenizer),
+    max_new_tokens=15,
+    context_size=BASE_CONFIG[&quot;context_length&quot;]
+)
+
+print(token_ids_to_text(token_ids, tokenizer))
+</code></pre>
+<p>如下所示，该模型生成了连贯的文本，这表明模型权重已正确加载：</p>
+<pre><code class="language-python">Every effort moves you forward.
+The first step is to understand the importance of your work
+</code></pre>
+<p>接着，我们准备模型以进行分类微调，类似于第 6 章那样替换掉输出层：</p>
+<pre><code class="language-python">torch.manual_seed(123)
+num_classes = 2
+model.out_head = torch.nn.Linear(in_features=768, out_features=num_classes)
+device = torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
+model.to(device)
+</code></pre>
+<p>最后，让我们计算未微调模型的初始分类准确率（我们预计大概为 50%，这意味着该模型尚无法可靠地区分垃圾邮件和非垃圾邮件）：</p>
+<pre><code class="language-python">from ch06 import calc_accuracy_loader
+
+torch.manual_seed(123)
+train_accuracy = calc_accuracy_loader(train_loader, model, device, num_batches=10)
+val_accuracy = calc_accuracy_loader(val_loader, model, device, num_batches=10)
+test_accuracy = calc_accuracy_loader(test_loader, model, device, num_batches=10)
+
+print(f&quot;Training accuracy: {train_accuracy*100:.2f}%&quot;)
+print(f&quot;Validation accuracy: {val_accuracy*100:.2f}%&quot;)
+print(f&quot;Test accuracy: {test_accuracy*100:.2f}%&quot;)
+</code></pre>
+<p>初始预测准确率如下：</p>
+<pre><code class="language-python">Training accuracy: 46.25%
+Validation accuracy: 45.00%
+Test accuracy: 48.75%
+</code></pre>
+<h2 id="E-4-使用-LoRA-高效微调">E.4 使用 LoRA 高效微调</h2>
+<p>在本节中，我们将使用 LoRA 修改和微调 LLM。我们首先初始化一个 <code>LoRALayer</code>，该层会创建矩阵 A 和 B，以及 alpha 缩放因子和秩 ® 设置。</p>
+<p>该层可以接受一个输入并计算相应的输出，如图 E.2 所示。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixE/E.2.png" alt=""></p>
+<p>我们可以通过以下代码来实现图 E.2 中描述的 LoRA 层：</p>
+<pre><code class="language-python"># Listing E.5 Implementing a LoRA layer
+
+import math
+
+class LoRALayer(torch.nn.Module):
+    def __init__(self, in_dim, out_dim, rank, alpha):
+        super().__init__()
+        self.A = torch.nn.Parameter(torch.empty(in_dim, rank))
+        torch.nn.init.kaiming_uniform_(self.A, a=math.sqrt(5))      #A
+        self.B = torch.nn.Parameter(torch.zeros(rank, out_dim))
+        self.alpha = alpha
+    
+    def forward(self, x):
+        x = self.alpha * (x @ self.A @ self.B)
+        return x
+      
+      
+#A 使用与 PyTorch 中线性层相同的初始化方式
+</code></pre>
+<p>在以上代码中，秩决定了矩阵 A 和 B 的内部维度。本质上，这一设置确定了 LoRA 引入的额外参数的数量，用于在模型的适应性和其效率之间通过使用的参数数量进行平衡。</p>
+<p>另一个重要的设置 alpha，用作低秩适应输出的缩放因子。它主要决定了来自适应层的输出对原始层输出的影响程度。这可以看作是一种调节低秩适应对层输出影响的方式。</p>
+<blockquote>
+<p>[!TIP]</p>
+<p><strong>个人思考：</strong> 关于LoRA的重要设置参数，这里讲的不是很清楚，其实这段话解释了 LoRA 方法中两个非常重要的设置：<strong>秩 (rank)</strong> 和 <strong>Alpha</strong>。可以这样理解它们：</p>
+<p><strong>秩 (Rank):</strong></p>
+<ul>
+<li><strong>决定了 LoRA “小工具” 的大小:</strong> 还记得之前我们把 LoRA 比作给预训练模型添加一些专门的“小工具”吗？这里的“秩”就决定了这些“小工具”（更具体地说是矩阵 A 和 B）的内部大小。你可以想象成，秩越大，“小工具”就越复杂，包含的信息就越多。</li>
+<li><strong>影响额外学习的参数数量:</strong> 秩越大，LoRA 引入的需要学习的额外参数就越多。反之，秩越小，需要学习的参数就越少。</li>
+<li><strong>平衡模型的学习能力和效率:</strong>
+<ul>
+<li><strong>秩高一点:</strong> 模型可以学习到更复杂、更细致的针对特定任务的调整，性能可能会更好。但是，需要学习的参数也更多，训练起来可能更慢，更耗费资源。</li>
+<li><strong>秩低一点:</strong> 模型学习的参数更少，训练速度更快，更节省资源。但是，如果秩太低，模型可能没有足够的“能力”来学习到足够好的调整，导致性能不够理想。</li>
+<li><strong>就像给自行车加辅助轮:</strong> 秩就像辅助轮的大小。大的辅助轮（高秩）更容易保持平衡，但可能不够灵活。小的辅助轮（低秩）更灵活，但可能需要更高的骑行技巧。你需要找到一个合适的平衡点。</li>
+</ul>
+</li>
+</ul>
+<p><strong>Alpha:</strong></p>
+<ul>
+<li><strong>LoRA “小工具” 输出的音量调节器:</strong> Alpha 可以看作是一个调节 LoRA 带来的改变有多大的“音量旋钮”。它是一个数字，用来乘以 LoRA “小工具” 的输出结果。</li>
+<li><strong>控制适应层对原始层的影响:</strong> Alpha 的大小决定了 LoRA 学习到的调整对原始模型输出的影响程度。
+<ul>
+<li><strong>Alpha 大一点:</strong> LoRA 带来的改变会更明显，模型会更倾向于学习新的任务。</li>
+<li><strong>Alpha 小一点:</strong> LoRA 带来的改变会更微妙，模型更多地还是依赖于它原本学到的知识，只是做一些微小的调整。</li>
+<li><strong>就像调味品:</strong> Alpha 就像你做菜时放的盐。盐放多了（Alpha 大了），菜的味道变化就大；盐放少了（Alpha 小了），菜的味道变化就小。你需要根据你的口味来调整。</li>
+</ul>
+</li>
+</ul>
+<p><strong>总结一下：</strong></p>
+<ul>
+<li><strong>秩 (Rank)</strong> 决定了 LoRA 可以学习多少新的信息，以及需要多少额外的参数。</li>
+<li><strong>Alpha</strong> 决定了 LoRA 学习到的信息对最终结果的影响有多大。</li>
+</ul>
+<p>这两个参数都需要根据具体的任务和模型进行调整，以达到最佳的性能和效率。</p>
+</blockquote>
+<p>我们目前实现的 <code>LoRALayer</code> 类使我们能够转换层的输入。</p>
+<p>在 LoRA 中，典型的目标是替换现有的线性层，从而允许将权重更新直接应用于预先存在的预训练权重，如图 E.3 所示。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixE/E.3.png" alt=""></p>
+<p>为了集成图 E.3 所示的原始线性层权重，我们现在创建一个 <code>LinearWithLoRA</code> 层。该层利用了之前实现的 <code>LoRALayer</code>，旨在替换神经网络中现有的线性层，例如 <code>GPTModel</code> 中的自注意力模块或前馈模块：</p>
+<pre><code class="language-python"># Listing E.6 A LinearWithLora layer to replace Linear layers
+
+class LinearWithLoRA(torch.nn.Module):
+    def __init__(self, linear, rank, alpha):
+        super().__init__()
+        self.linear = linear
+        self.lora = LoRALayer(
+            linear.in_features, linear.out_features, rank, alpha
+        )
+
+    def forward(self, x):
+   		 return self.linear(x) + self.lora(x)
+</code></pre>
+<p>前面的代码将一个标准的线性层与 <code>LoRALayer</code> 结合在一起。<code>forward</code> 方法通过将原始线性层和 LoRA 层的输出相加来计算最终输出。</p>
+<p>由于权重矩阵 B（在 <code>LoRALayer</code> 中是 <code>self.B</code>）被初始化为零值，矩阵 A 和 B 的乘积将得到一个零矩阵。这确保了该乘法不会改变原始权重，因为加零不会改变它们。</p>
+<p>为了将 LoRA 应用于之前定义的 <code>GPTModel</code>，我们还引入了一个 <code>replace_linear_with_lora</code> 函数。该函数会将模型中所有现有的线性层替换为新创建的 <code>LinearWithLoRA</code> 层：</p>
+<pre><code class="language-python">def replace_linear_with_lora(model, rank, alpha):
+    for name, module in model.named_children():
+        if isinstance(module, torch.nn.Linear):               #A
+            setattr(model, name, LinearWithLoRA(module, rank, alpha))
+        else:                                                 #B
+            replace_linear_with_lora(module, rank, alpha)
+            
+    
+#A 将线性层替换为 LinearWithLoRA
+#B 将相同的函数递归地应用于子模块
+</code></pre>
+<p>我们现在已经实现了所有必要的代码，以将 <code>GPTModel</code> 中的线性层替换为新开发的 <code>LinearWithLoRA</code> 层，从而实现参数高效微调。在接下来的章节中，我们将把 <code>LinearWithLoRA</code> 升级应用于 <code>GPTModel</code> 的多头注意力模块、前馈模块和输出层中的所有线性层，如图 E.4 所示。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixE/E.4.png" alt=""></p>
+<p>在我们应用如图 E.4 所示的 <code>LinearWithLoRA</code> 层升级之前，我们首先需要冻结原始模型的参数：</p>
+<pre><code class="language-python">total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+print(f&quot;Total trainable parameters before: {total_params:,}&quot;)
+
+for param in model.parameters():
+		param.requires_grad = False
+    
+total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+print(f&quot;Total trainable parameters after: {total_params:,}&quot;)
+</code></pre>
+<p>运行代码，可以看到，该模型的所有 1.24 亿个参数现在都不可训练：</p>
+<pre><code class="language-python">Total trainable parameters before: 124,441,346
+Total trainable parameters after: 0
+</code></pre>
+<p>接着，我们使用 <code>replace_linear_with_lora</code> 函数来替换线性层：</p>
+<pre><code class="language-python">replace_linear_with_lora(model, rank=16, alpha=16)
+total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+print(f&quot;Total trainable LoRA parameters: {total_params:,}&quot;)
+</code></pre>
+<p>添加 LoRA 层后，可训练参数的数量如下：</p>
+<pre><code class="language-python">Total trainable LoRA parameters: 2,666,528
+</code></pre>
+<p>如我们所见，使用 LoRA 后，可训练参数的数量减少了近 50 倍。秩和 alpha 一般都默认设置为 16 ，但通常也会增加秩的大小，这从而增加可训练参数的数量。Alpha 通常选择为秩的一半、两倍或相等。</p>
+<p>现在可以通过打印模型架构来验证这些层是否已按预期修改：</p>
+<pre><code class="language-python">device = torch.device(&quot;cuda&quot; if torch.cuda.is_available() else &quot;cpu&quot;)
+model.to(device)
+print(model)
+</code></pre>
+<p>输出如下：</p>
+<pre><code class="language-python">GPTModel(
+  (tok_emb): Embedding(50257, 768)
+  (pos_emb): Embedding(1024, 768)
+  (drop_emb): Dropout(p=0.0, inplace=False)
+  (trf_blocks): Sequential(
+		...
+    (11): TransformerBlock(
+    	(att): MultiHeadAttention(
+   		 (W_query): LinearWithLoRA(
+   			 (linear): Linear(in_features=768, out_features=768, bias=True)
+    		 (lora): LoRALayer()
+    	 )
+      (W_key): LinearWithLoRA(
+        (linear): Linear(in_features=768, out_features=768, bias=True)
+        (lora): LoRALayer()
+      )
+      (W_value): LinearWithLoRA(
+        (linear): Linear(in_features=768, out_features=768, bias=True)
+        (lora): LoRALayer()
+      )
+      (out_proj): LinearWithLoRA(
+        (linear): Linear(in_features=768, out_features=768, bias=True)
+        (lora): LoRALayer()
+      )
+			(dropout): Dropout(p=0.0, inplace=False)
+		)
+    (ff): FeedForward(
+      (layers): Sequential(
+        (0): LinearWithLoRA(
+          (linear): Linear(in_features=768, out_features=3072, bias=True)
+          (lora): LoRALayer()
+        )
+        (1): GELU()
+        (2): LinearWithLoRA(
+          (linear): Linear(in_features=3072, out_features=768, bias=True)
+          (lora): LoRALayer()
+        )
+    	)
+    )
+    (norm1): LayerNorm()
+    (norm2): LayerNorm()
+    (drop_resid): Dropout(p=0.0, inplace=False)
+	 )
+ )
+ (final_norm): LayerNorm()
+ (out_head): LinearWithLoRA(
+   (linear): Linear(in_features=768, out_features=2, bias=True)
+   (lora): LoRALayer()
+ )
+)
+</code></pre>
+<p>通过输出可以看到，模型现在包含了新的 <code>LinearWithLoRA</code> 层，这些层本身包含原始的线性层（我们已将其设置为不可训练）以及我们将要微调的新 LoRA 层。</p>
+<p>然而，在开始微调模型之前，我们先计算一下初始分类准确率：</p>
+<pre><code class="language-python">torch.manual_seed(123)
+train_accuracy = calc_accuracy_loader(train_loader, model, device, num_batches=10)
+val_accuracy = calc_accuracy_loader(val_loader, model, device, num_batches=10)
+test_accuracy = calc_accuracy_loader(test_loader, model, device, num_batches=10)
+
+print(f&quot;Training accuracy: {train_accuracy*100:.2f}%&quot;)
+print(f&quot;Validation accuracy: {val_accuracy*100:.2f}%&quot;)
+print(f&quot;Test accuracy: {test_accuracy*100:.2f}%&quot;)
+</code></pre>
+<p>得到的准确率值如下：</p>
+<pre><code class="language-python">Training accuracy: 46.25%
+Validation accuracy: 45.00%
+Test accuracy: 48.75%
+</code></pre>
+<p>如果将这些准确率与第 6 章中的初始值进行比较，我们会发现它们是相同的。这是因为我们将 LoRA 矩阵 B 初始化为零。因此，矩阵 AB 的乘积得到一个零矩阵。这确保了在开始微调之前，该乘法不会改变原始权重，因为加零不会改变它们。</p>
+<p>现在，让我们进入激动人心的部分，使用第 6 章中的训练函数来微调模型。在 M3 MacBook Air 笔记本电脑上，训练大约需要 15 分钟；而在 V100 或 A100 GPU 上，则不到半分钟：</p>
+<pre><code class="language-python"># Listing E.7 Finetuning a model with LoRA layers
+
+import time
+from ch06 import train_classifier_simple
+
+start_time = time.time()
+torch.manual_seed(123)
+optimizer = torch.optim.AdamW(model.parameters(), lr=5e-5, weight_decay=0.1)
+
+num_epochs = 5
+train_losses, val_losses, train_accs, val_accs, examples_seen = train_classifier_simple(
+    model, train_loader, val_loader, optimizer, device,
+    num_epochs=num_epochs, eval_freq=50, eval_iter=5,
+    tokenizer=tokenizer
+)
+
+end_time = time.time()
+execution_time_minutes = (end_time - start_time) / 60
+print(f&quot;Training completed in {execution_time_minutes:.2f} minutes.&quot;)
+</code></pre>
+<p>在训练过程中可以看到如下输出：</p>
+<pre><code class="language-python">Ep 1 (Step 000000): Train loss 3.820, Val loss 3.462
+Ep 1 (Step 000050): Train loss 0.396, Val loss 0.364
+Ep 1 (Step 000100): Train loss 0.111, Val loss 0.229
+Training accuracy: 97.50% | Validation accuracy: 95.00%
+Ep 2 (Step 000150): Train loss 0.135, Val loss 0.073
+Ep 2 (Step 000200): Train loss 0.008, Val loss 0.052
+Ep 2 (Step 000250): Train loss 0.021, Val loss 0.179
+Training accuracy: 97.50% | Validation accuracy: 97.50%
+Ep 3 (Step 000300): Train loss 0.096, Val loss 0.080
+Ep 3 (Step 000350): Train loss 0.010, Val loss 0.116
+Training accuracy: 97.50% | Validation accuracy: 95.00%
+Ep 4 (Step 000400): Train loss 0.003, Val loss 0.151
+Ep 4 (Step 000450): Train loss 0.008, Val loss 0.077
+Ep 4 (Step 000500): Train loss 0.001, Val loss 0.147
+Training accuracy: 100.00% | Validation accuracy: 97.50%
+Ep 5 (Step 000550): Train loss 0.007, Val loss 0.094
+Ep 5 (Step 000600): Train loss 0.000, Val loss 0.056
+Training accuracy: 100.00% | Validation accuracy: 97.50%
+    
+    
+Training completed in 12.10 minutes.  
+</code></pre>
+<p>请注意，使用 LoRA 训练模型比第 6 章中不使用 LoRA 训练模型花费更长的时间，因为 LoRA 层在正向传播过程中引入了额外的计算。然而，对于更大的模型，当反向传播的成本变得更高时，模型使用LoRA训练的速度通常比不使用LoRA更快。</p>
+<p>可以看到，该模型获得了完美的训练准确率和非常高的验证准确率。我们还可以将损失曲线可视化，以更好地观察训练是否已经收敛。</p>
+<pre><code class="language-python">from ch06 import plot_values
+
+epochs_tensor = torch.linspace(0, num_epochs, len(train_losses))
+examples_seen_tensor = torch.linspace(0, examples_seen, len(train_losses))
+
+plot_values(epochs_tensor, examples_seen_tensor, train_losses, val_losses, label=&quot;loss&quot;)
+</code></pre>
+<p>结果如图 E.5 所示。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://myblog.xindon.top/Image/AppendixE/E.5.png" alt=""></p>
+<p>除了基于图 E.5 中显示的损失曲线评估模型外，我们还要计算在完整训练集、验证集和测试集上的准确率（在训练过程中，我们通过 <code>eval_iter=5</code> 设置从 5 个批次中近似计算了训练集和验证集的准确率）：</p>
+<pre><code class="language-python">from previous_chapters import calc_accuracy_loader
+
+train_accuracy = calc_accuracy_loader(train_loader, model, device)
+val_accuracy = calc_accuracy_loader(val_loader, model, device)
+test_accuracy = calc_accuracy_loader(test_loader, model, device)
+
+print(f&quot;Training accuracy: {train_accuracy*100:.2f}%&quot;)
+print(f&quot;Validation accuracy: {val_accuracy*100:.2f}%&quot;)
+print(f&quot;Test accuracy: {test_accuracy*100:.2f}%&quot;)
+</code></pre>
+<p>最终得到的准确率值如下：</p>
+<pre><code class="language-python">Training accuracy: 100.00%
+Validation accuracy: 96.64%
+Test accuracy: 98.00%
+</code></pre>
+<p>最终得到的准确率表明，该模型在训练集、验证集和测试集上都表现良好。训练准确率达到 100%，表明该模型已完美地学习了训练数据。然而，略低的验证集和测试集准确率（分别为 96.64% 和 97.33%）表明存在轻微的过拟合，因为与训练集相比，该模型在新数据上的泛化能力稍差。总的来说，考虑到我们只微调了相对较少数量的模型权重（270 万个 LoRA 权重，而不是原来的 1.24 亿个模型权重），这个结果已经非常不错。</p>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本章已读</span></button><a class="book-btn book-btn-ghost" href="/books/llm-from-scratch/"><i class="fas fa-list"></i> 全部章节</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/books/llm-from-scratch/app-d-training-tips/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一章</span><strong>附录 D 训练循环高级技巧</strong></a><span class="book-pager-link is-empty"></span></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-2"><a class="book-toc-link" href="#E-1-LoRA-%E7%AE%80%E4%BB%8B">E.1 LoRA 简介</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#E-2-%E5%87%86%E5%A4%87%E6%95%B0%E6%8D%AE%E9%9B%86">E.2 准备数据集</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#E-3-%E5%88%9D%E5%A7%8B%E5%8C%96%E6%A8%A1%E5%9E%8B">E.3 初始化模型</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#E-4-%E4%BD%BF%E7%94%A8-LoRA-%E9%AB%98%E6%95%88%E5%BE%AE%E8%B0%83">E.4 使用 LoRA 高效微调</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

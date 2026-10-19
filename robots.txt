@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sakjijdidji55.github.io/sitemap.xml
+Sitemap: https://sakjijdidji55.github.io/books-sitemap.xml

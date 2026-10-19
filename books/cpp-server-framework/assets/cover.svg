@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 900" role="img" aria-label="C++ 后端服务器框架">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07111f"/>
+      <stop offset="0.55" stop-color="#0c2b3a"/>
+      <stop offset="1" stop-color="#0e7490"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#38bdf8"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+    </pattern>
+    <filter id="blur"><feGaussianBlur stdDeviation="60"/></filter>
+  </defs>
+
+  <rect width="640" height="900" fill="url(#bg)"/>
+  <rect width="640" height="900" fill="url(#grid)"/>
+  <circle cx="560" cy="760" r="160" fill="#22d3ee" opacity=".16" filter="url(#blur)"/>
+  <circle cx="80" cy="120" r="150" fill="#14b8a6" opacity=".12" filter="url(#blur)"/>
+
+  <text x="410" y="350" font-family="'Consolas', 'Courier New', monospace" font-size="300" font-weight="700" fill="#ffffff" opacity=".04">&lt;/&gt;</text>
+
+  <g font-family="'Consolas', 'Courier New', monospace" font-size="16" fill="#5eead4" opacity=".7">
+    <text x="64" y="112">$ ./server --config config.yml</text>
+    <text x="64" y="140" fill="#67e8f9">[info] listening on 0.0.0.0:8080</text>
+  </g>
+
+  <rect x="64" y="190" width="56" height="6" rx="3" fill="url(#line)"/>
+  <text x="64" y="240" font-family="'Segoe UI', Arial, sans-serif" font-size="15" letter-spacing="5" fill="#7dd3fc">BACKEND FRAMEWORK</text>
+
+  <text x="64" y="470" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="66" font-weight="700" fill="#ffffff">C++ 后端</text>
+  <text x="64" y="552" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="66" font-weight="700" fill="#ffffff">服务器框架</text>
+
+  <text x="64" y="612" font-family="'Segoe UI', Arial, sans-serif" font-size="22" fill="#67e8f9">CBSF · Architecture, Modules &amp; API</text>
+
+  <line x1="64" y1="664" x2="576" y2="664" stroke="rgba(255,255,255,.16)"/>
+
+  <text x="64" y="712" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="17" fill="#cbd5e1">架构设计 · 11 个核心模块 · 逐函数实现手册</text>
+
+  <g font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="13" fill="#e2e8f0">
+    <rect x="64" y="748" width="74" height="32" rx="16" fill="rgba(94,234,212,.12)" stroke="rgba(94,234,212,.35)"/>
+    <text x="83" y="769">HTTP</text>
+    <rect x="148" y="748" width="90" height="32" rx="16" fill="rgba(56,189,248,.12)" stroke="rgba(56,189,248,.35)"/>
+    <text x="165" y="769">线程池</text>
+    <rect x="248" y="748" width="74" height="32" rx="16" fill="rgba(94,234,212,.12)" stroke="rgba(94,234,212,.35)"/>
+    <text x="267" y="769">协程</text>
+    <rect x="332" y="748" width="74" height="32" rx="16" fill="rgba(56,189,248,.12)" stroke="rgba(56,189,248,.35)"/>
+    <text x="351" y="769">MySQL</text>
+    <rect x="416" y="748" width="74" height="32" rx="16" fill="rgba(94,234,212,.12)" stroke="rgba(94,234,212,.35)"/>
+    <text x="435" y="769">Redis</text>
+    <rect x="500" y="748" width="60" height="32" rx="16" fill="rgba(56,189,248,.12)" stroke="rgba(56,189,248,.35)"/>
+    <text x="519" y="769">JWT</text>
+  </g>
+
+  <text x="64" y="852" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="16" fill="#94a3b8">迷路的小朋友 · 个人书架</text>
+</svg>

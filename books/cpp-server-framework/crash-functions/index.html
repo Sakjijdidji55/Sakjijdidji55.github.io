@@ -1,0 +1,556 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Crash 函数手册 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="C++ 后端服务器框架 · Crash 函数手册">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Crash 函数手册">
+<meta property="og:url" content="https://sakjijdidji55.github.io/books/cpp-server-framework/crash-functions/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="C++ 后端服务器框架 · Crash 函数手册">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2025-12-01T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/books/cpp-server-framework/crash-functions/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Crash 函数手册',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">Crash 函数手册</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">Crash 函数手册</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="cpp-server-framework" data-chapter="crash-functions" data-total="22" data-prev="/books/cpp-server-framework/coroutine-functions/" data-next="/books/cpp-server-framework/db-connector-functions/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/books/cpp-server-framework/">C++ 后端服务器框架</a><div class="book-sidebar-sub">22 章 · 约 1 小时 21 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 22</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选章节..." data-book-filter aria-label="筛选章节"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">概览</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="architecture"><a class="book-chapter-link" href="/books/cpp-server-framework/architecture/" data-chapter-link="architecture"><span class="book-chapter-index">01</span><span class="book-chapter-name">架构与面试讲解</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="modules-index"><a class="book-chapter-link" href="/books/cpp-server-framework/modules-index/" data-chapter-link="modules-index"><span class="book-chapter-index">02</span><span class="book-chapter-name">模块文档索引</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">模块设计</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="channel"><a class="book-chapter-link" href="/books/cpp-server-framework/channel/" data-chapter-link="channel"><span class="book-chapter-index">03</span><span class="book-chapter-name">Channel 通道</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="coroutine"><a class="book-chapter-link" href="/books/cpp-server-framework/coroutine/" data-chapter-link="coroutine"><span class="book-chapter-index">04</span><span class="book-chapter-name">Coroutine 协程</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="crash"><a class="book-chapter-link" href="/books/cpp-server-framework/crash/" data-chapter-link="crash"><span class="book-chapter-index">05</span><span class="book-chapter-name">Crash 崩溃处理</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="db-connector"><a class="book-chapter-link" href="/books/cpp-server-framework/db-connector/" data-chapter-link="db-connector"><span class="book-chapter-index">06</span><span class="book-chapter-name">DBConnector 数据库连接</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="email-sender"><a class="book-chapter-link" href="/books/cpp-server-framework/email-sender/" data-chapter-link="email-sender"><span class="book-chapter-index">07</span><span class="book-chapter-name">EmailSender 邮件发送</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="json-object-view"><a class="book-chapter-link" href="/books/cpp-server-framework/json-object-view/" data-chapter-link="json-object-view"><span class="book-chapter-index">08</span><span class="book-chapter-name">JsonObjectView JSON 视图</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="jwt"><a class="book-chapter-link" href="/books/cpp-server-framework/jwt/" data-chapter-link="jwt"><span class="book-chapter-index">09</span><span class="book-chapter-name">JWT 鉴权</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="rd-connector"><a class="book-chapter-link" href="/books/cpp-server-framework/rd-connector/" data-chapter-link="rd-connector"><span class="book-chapter-index">10</span><span class="book-chapter-name">RDConnector Redis 连接</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="server"><a class="book-chapter-link" href="/books/cpp-server-framework/server/" data-chapter-link="server"><span class="book-chapter-index">11</span><span class="book-chapter-name">Server 服务主链路</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="threadpool"><a class="book-chapter-link" href="/books/cpp-server-framework/threadpool/" data-chapter-link="threadpool"><span class="book-chapter-index">12</span><span class="book-chapter-name">Threadpool 线程池</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="yaml-parser"><a class="book-chapter-link" href="/books/cpp-server-framework/yaml-parser/" data-chapter-link="yaml-parser"><span class="book-chapter-index">13</span><span class="book-chapter-name">YamlParser 配置解析</span><span class="book-chapter-time">2′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">函数级手册</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="channel-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/channel-functions/" data-chapter-link="channel-functions"><span class="book-chapter-index">14</span><span class="book-chapter-name">Channel 函数手册</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="coroutine-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/coroutine-functions/" data-chapter-link="coroutine-functions"><span class="book-chapter-index">15</span><span class="book-chapter-name">Coroutine 函数手册</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="crash-functions"><a class="book-chapter-link is-current" href="/books/cpp-server-framework/crash-functions/" data-chapter-link="crash-functions" aria-current="page"><span class="book-chapter-index">16</span><span class="book-chapter-name">Crash 函数手册</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="db-connector-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/db-connector-functions/" data-chapter-link="db-connector-functions"><span class="book-chapter-index">17</span><span class="book-chapter-name">DBConnector 函数手册</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="email-sender-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/email-sender-functions/" data-chapter-link="email-sender-functions"><span class="book-chapter-index">18</span><span class="book-chapter-name">EmailSender 函数手册</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="json-object-view-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/json-object-view-functions/" data-chapter-link="json-object-view-functions"><span class="book-chapter-index">19</span><span class="book-chapter-name">JsonObjectView 函数手册</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="jwt-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/jwt-functions/" data-chapter-link="jwt-functions"><span class="book-chapter-index">20</span><span class="book-chapter-name">JWT 函数手册</span><span class="book-chapter-time">7′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="rd-connector-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/rd-connector-functions/" data-chapter-link="rd-connector-functions"><span class="book-chapter-index">21</span><span class="book-chapter-name">RDConnector 函数手册</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="server-functions"><a class="book-chapter-link" href="/books/cpp-server-framework/server-functions/" data-chapter-link="server-functions"><span class="book-chapter-index">22</span><span class="book-chapter-name">Server 函数手册</span><span class="book-chapter-time">8′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/books/"><i class="fas fa-arrow-left"></i> 返回书架</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开章节目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/books/cpp-server-framework/">C++ 后端服务器框架</a><i class="fas fa-angle-right"></i><span>Crash 函数手册</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">CHAPTER 16</span><h1>Crash 函数手册</h1><div class="book-chapter-meta">6 分钟阅读 · 1,575 字</div></div><p>依据源码：<code>include/Crash.h</code>、<code>src/Crash.cpp</code>。</p>
+<hr>
+<h2 id="0-编译器与平台宏（Crash-h-L8–15）">0. 编译器与平台宏（<code>Crash.h</code> L8–15）</h2>
+<p>在 <strong><code>Crash.h</code></strong> 中根据编译器定义以下宏之一（用于 <code>printCrashInfo</code> 分支与日志中的 Compiler 字段）：</p>
+<table>
+<thead>
+<tr>
+<th>宏</th>
+<th>条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>COMPILER_MSVC</code></td>
+<td><code>_MSC_VER</code></td>
+</tr>
+<tr>
+<td><code>COMPILER_MINGW</code></td>
+<td><code>__MINGW32__</code></td>
+</tr>
+<tr>
+<td><code>COMPILER_LINUX</code></td>
+<td><code>__linux__</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意</strong>：<code>printCrashInfo</code> 写日志时还引用了 <code>COMPILER_CLANG</code>、<code>COMPILER_GCC</code>（<code>Crash.cpp</code> L284–287），这些由 <strong>CMake/工程</strong> 定义；若未定义，会落入 <code>Compiler: Unknown</code>。这与头文件三元宏并存，属配置层细节。</p>
+<hr>
+<h2 id="1-类型别名-CleanupCallback">1. 类型别名 <code>CleanupCallback</code></h2>
+<ul>
+<li><strong>定义</strong>：<code>using CleanupCallback = std::function&lt;void()&gt;</code>（<code>Crash.h</code> L39）</li>
+<li><strong>含义</strong>：在崩溃或主动 <code>gracefulExit</code> 时，在进程退出前执行的一段用户逻辑（例如关闭 socket、刷日志）。</li>
+<li><strong>线程语义</strong>：在 <code>gracefulExit</code> 调用栈内<strong>同步</strong>执行；应简短、避免再次死锁。</li>
+</ul>
+<hr>
+<h2 id="2-类-CrashHandler-—-公开接口">2. 类 <code>CrashHandler</code> — 公开接口</h2>
+<h3 id="2-1-static-CrashHandler-instance">2.1 <code>static CrashHandler&amp; instance()</code></h3>
+<ul>
+<li><strong>位置</strong>：<code>Crash.h</code> L44–47</li>
+<li><strong>实现</strong>：Meyers 单例，<code>static CrashHandler handler</code>。</li>
+<li><strong>线程安全</strong>：C++11 起静态局部变量初始化线程安全。</li>
+<li><strong>生命周期</strong>：进程级，不手动销毁。</li>
+</ul>
+<hr>
+<h3 id="2-2-void-init-const-CleanupCallback-cleanupFunc">2.2 <code>void init(const CleanupCallback&amp; cleanupFunc)</code></h3>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L50</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L26–80</li>
+<li><strong>作用</strong>：安装各类崩溃/终止钩子，并保存清理回调。</li>
+</ul>
+<h4 id="步骤拆解">步骤拆解</h4>
+<ol>
+<li><strong>保存回调</strong>：<code>cleanupCallback_ = cleanupFunc</code></li>
+<li><strong>重置退出标志</strong>：<code>isExiting_ = false</code>（允许再次 <code>init</code> 时重新注册语义上“新的一次”；实际项目通常只 <code>init</code> 一次）</li>
+<li><strong><code>std::set_terminate(terminateHandler)</code></strong><br>
+未捕获的 C++ 异常导致 <code>std::terminate</code> 时进入 <code>terminateHandler</code>。</li>
+<li><strong>信号数组</strong>（<code>Crash.cpp</code> L34–44）<br>
+<code>SIGINT, SIGTERM, SIGSEGV, SIGABRT, SIGILL, SIGFPE</code>，Linux 额外 <code>SIGBUS</code>。</li>
+<li><strong>逐个注册信号</strong>
+<ul>
+<li><strong>Windows</strong>：<code>signal(sig, signalHandler)</code>，失败打印 <code>cerr</code></li>
+<li><strong>非 Windows</strong>：<code>sigaction</code>，<code>sa_handler = signalHandler</code>，<code>SA_RESTART</code>，失败打印 <code>cerr</code></li>
+</ul>
+</li>
+<li><strong>平台扩展</strong>
+<ul>
+<li><strong>Windows</strong>：<code>SetUnhandledExceptionFilter(sehExceptionHandler)</code>；<code>SetConsoleCtrlHandler(consoleCtrlHandler, TRUE)</code></li>
+<li><strong>Linux</strong>：再对 <code>SIGQUIT</code> 注册一次 <code>sigaction</code>（与上面相同 handler）</li>
+</ul>
+</li>
+<li>打印：<code>Crash handler initialized successfully</code></li>
+</ol>
+<h4 id="可重复调用行为">可重复调用行为</h4>
+<ul>
+<li>多次 <code>init</code> 会再次 <code>set_terminate</code>、<code>signal</code>/<code>sigaction</code>、Windows 过滤器注册；行为依赖 CRT/OS，<strong>建议进程内只调用一次</strong>。</li>
+</ul>
+<hr>
+<h3 id="2-3-void-gracefulExit-int-exitCode-1-const-std-string-reason-Unknown-crash">2.3 <code>void gracefulExit(int exitCode = 1, const std::string&amp; reason = &quot;Unknown crash&quot;)</code></h3>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L53</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L83–122</li>
+<li><strong>作用</strong>：统一的“崩溃/强制退出”出口：打印、写诊断、执行清理、<strong>立即终止进程</strong>。</li>
+</ul>
+<h4 id="步骤拆解-2">步骤拆解</h4>
+<ol>
+<li><strong><code>isExiting_.exchange(true)</code></strong><br>
+若已为 <code>true</code>，<strong>直接 return</strong>（防止多线程重复进入完整退出流程）。</li>
+<li><strong><code>std::lock_guard&lt;std::mutex&gt; lock(exitMutex_)</code></strong><br>
+序列化退出阶段的日志与清理（与 <code>exchange</code> 配合：只有首个线程做重活）。</li>
+<li><strong>stderr 横幅</strong>：Reason、Exit code。</li>
+<li><strong><code>printCrashInfo(exitCode, reason)</code></strong><br>
+控制台诊断 + 追加写 <code>crash_log.txt</code>（见第 4 节）。</li>
+<li><strong>清理回调</strong><br>
+若 <code>cleanupCallback_</code> 非空：try/catch 包裹调用；清理失败只打日志，不阻止退出。</li>
+<li><strong>终止进程</strong>
+<ul>
+<li><strong>Windows</strong>：<code>ExitProcess(static_cast&lt;UINT&gt;(exitCode))</code></li>
+<li><strong>Linux</strong>：<code>_exit(exitCode)</code></li>
+</ul>
+</li>
+</ol>
+<h4 id="与-exit-的差异">与 <code>exit()</code> 的差异</h4>
+<ul>
+<li><strong><code>_exit</code> / <code>ExitProcess</code></strong>：不运行完整 C++ 静态析构、不刷全量 stdio；适合崩溃路径，避免在已损坏状态下再执行复杂析构。</li>
+</ul>
+<h4 id="面试点">面试点</h4>
+<ul>
+<li>首入者执行清理；其它线程若再触发 <code>gracefulExit</code> 会在 <code>exchange</code> 后直接返回，可能仍在跑业务——需业务层配合停服。</li>
+</ul>
+<hr>
+<h2 id="3-CrashHandler-—-私有成员">3. <code>CrashHandler</code> — 私有成员</h2>
+<table>
+<thead>
+<tr>
+<th>成员</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>CleanupCallback cleanupCallback_</code></td>
+<td><code>init</code> 注入的清理逻辑</td>
+</tr>
+<tr>
+<td><code>std::atomic&lt;bool&gt; isExiting_</code></td>
+<td>是否已进入/完成退出流程的门闩</td>
+</tr>
+<tr>
+<td><code>std::mutex exitMutex_</code></td>
+<td>保护退出阶段临界区</td>
+</tr>
+</tbody>
+</table>
+<h3 id="私有构造-析构">私有构造 / 析构</h3>
+<ul>
+<li><strong><code>CrashHandler()</code></strong>：<code>cleanupCallback_(nullptr)</code>, <code>isExiting_(false)</code></li>
+<li><strong><code>~CrashHandler() = default</code></strong>：单例进程结束时随静态存储期销毁，通常发生在 <code>main</code> 返回之后；崩溃路径已 <code>_exit</code>，往往走不到这里。</li>
+</ul>
+<hr>
+<h2 id="4-static-void-signalHandler-int-sig">4. <code>static void signalHandler(int sig)</code></h2>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L64</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L125–141</li>
+<li><strong>作用</strong>：将信号编号映射为可读 <code>reason</code> 字符串，调用 <code>instance().gracefulExit(sig, reason)</code>。</li>
+</ul>
+<h4 id="映射表">映射表</h4>
+<table>
+<thead>
+<tr>
+<th>信号</th>
+<th>reason 文案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SIGINT</code></td>
+<td>Ctrl+C</td>
+</tr>
+<tr>
+<td><code>SIGTERM</code></td>
+<td>Kill</td>
+</tr>
+<tr>
+<td><code>SIGSEGV</code></td>
+<td>段错误</td>
+</tr>
+<tr>
+<td><code>SIGABRT</code></td>
+<td>abort</td>
+</tr>
+<tr>
+<td><code>SIGILL</code></td>
+<td>非法指令</td>
+</tr>
+<tr>
+<td><code>SIGFPE</code></td>
+<td>浮点异常</td>
+</tr>
+<tr>
+<td>Linux <code>SIGBUS</code></td>
+<td>总线错误</td>
+</tr>
+<tr>
+<td>Linux <code>SIGQUIT</code></td>
+<td>Ctrl+\</td>
+</tr>
+<tr>
+<td>default</td>
+<td>Unknown signal (编号)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注意</strong>：<code>gracefulExit</code> 的第一个参数此处为 <strong><code>sig</code></strong>，在 Linux 上会作为“退出码”传入 <code>_exit(sig)</code>；与业务约定的 0–255 可能不一致，属实现细节。</p>
+<hr>
+<h2 id="5-Windows-专有静态函数">5. Windows 专有静态函数</h2>
+<h3 id="5-1-static-LONG-WINAPI-sehExceptionHandler-EXCEPTION-POINTERS-pException">5.1 <code>static LONG WINAPI sehExceptionHandler(EXCEPTION_POINTERS* pException)</code></h3>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L68</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L144–166</li>
+<li><strong>作用</strong>：未处理 SEH 时由系统调用；解析 <code>ExceptionCode</code>，<code>gracefulExit(code, reason)</code>，返回 <code>EXCEPTION_EXECUTE_HANDLER</code>。</li>
+</ul>
+<h4 id="显式映射的异常码">显式映射的异常码</h4>
+<ul>
+<li><code>EXCEPTION_ACCESS_VIOLATION</code></li>
+<li><code>EXCEPTION_INT_DIVIDE_BY_ZERO</code></li>
+<li><code>EXCEPTION_STACK_OVERFLOW</code></li>
+<li>其他：格式化为十六进制码字符串</li>
+</ul>
+<p><strong>空指针</strong>：若 <code>pException</code> 为空，<code>exceptionCode = 0</code>。</p>
+<hr>
+<h3 id="5-2-static-BOOL-WINAPI-consoleCtrlHandler-DWORD-dwCtrlType">5.2 <code>static BOOL WINAPI consoleCtrlHandler(DWORD dwCtrlType)</code></h3>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L70</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L171–188</li>
+<li><strong>作用</strong>：控制台控制事件（关闭窗口、Ctrl+C、关机等）映射为 reason，调用 <code>gracefulExit((int)dwCtrlType, reason)</code>，返回 <code>TRUE</code>。</li>
+</ul>
+<hr>
+<h2 id="6-static-void-terminateHandler">6. <code>static void terminateHandler()</code></h2>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L74</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L192–202</li>
+<li><strong>作用</strong>：<code>std::terminate</code> 钩子；尝试 <code>throw;</code> 在 <code>terminate</code> 上下文中捕获 <code>std::exception</code> 的 <code>what</code>，否则标记未知类型；最后 <code>gracefulExit(EXIT_FAILURE, reason)</code>。</li>
+</ul>
+<p><strong>限制</strong>：在部分实现中 <code>terminate</code> 时 <code>throw;</code> 行为依赖标准库；此处用于尽力提取信息。</p>
+<hr>
+<h2 id="7-static-void-printCrashInfo-int-sig-const-std-string-reason">7. <code>static void printCrashInfo(int sig, const std::string&amp; reason)</code></h2>
+<ul>
+<li><strong>声明</strong>：<code>Crash.h</code> L77</li>
+<li><strong>定义</strong>：<code>Crash.cpp</code> L220–298</li>
+<li><strong>参数</strong>：
+<ul>
+<li><code>sig</code>：在函数开头 <code>(void)sig</code>，<strong>控制台分支不使用</strong>；仅用于写文件时作为 <code>ExitCode</code> 字段（L277）。</li>
+<li><code>reason</code>：人类可读原因；MinGW 分支会再打一份到 <code>cerr</code>。</li>
+</ul>
+</li>
+</ul>
+<h4 id="控制台输出（条件编译）">控制台输出（条件编译）</h4>
+<ul>
+<li><strong><code>COMPILER_MSVC</code></strong>：打印 Windows/MSVC 标题与时间；注释称 MSVC 栈回溯逻辑省略。</li>
+<li><strong><code>COMPILER_MINGW</code></strong>：时间、reason；<code>SymInitialize</code> + 模块快照打印前 10 个模块基址；提示 MinGW 无完整 SEH 栈回溯。</li>
+<li><strong><code>COMPILER_LINUX</code></strong>：打印 Linux 标题与时间；注释称 Linux 专属回溯省略。</li>
+</ul>
+<h4 id="文件输出（跨分支共用）">文件输出（跨分支共用）</h4>
+<ul>
+<li>追加打开 <strong><code>crash_log.txt</code></strong></li>
+<li>一行：<code>[时间] ExitCode: &lt;sig&gt;, Reason: &lt;reason&gt;</code></li>
+<li>下一行：Compiler 类型（依赖 <code>COMPILER_*</code> 宏组合）</li>
+<li>分隔线 <code>----------------------------------------</code></li>
+</ul>
+<h4 id="辅助函数-formatCurrentTime-（文件内-static）">辅助函数 <code>formatCurrentTime()</code>（文件内 static）</h4>
+<ul>
+<li><strong>位置</strong>：<code>Crash.cpp</code> L205–216</li>
+<li><strong>作用</strong>：<code>localtime_s</code>（Windows）或 <code>localtime_r</code>（Linux），格式 <code>%Y-%m-%d %H:%M:%S</code>。</li>
+</ul>
+<hr>
+<h2 id="8-宏-SAFE-ASSERT-expr">8. 宏 <code>SAFE_ASSERT(expr)</code></h2>
+<ul>
+<li><strong>位置</strong>：<code>Crash.h</code> L88–93</li>
+<li><strong>展开</strong>：若 <code>!(expr)</code>，则 <code>CrashHandler::instance().gracefulExit(1, &quot;Assert failed: &quot; #expr)</code>。</li>
+<li><strong>与 <code>assert()</code> 区别</strong>：不依赖 <code>NDEBUG</code>；失败即走统一崩溃退出与清理（若已 <code>init</code>）。</li>
+</ul>
+<hr>
+<h2 id="9-与-Server-的集成（调用链记忆）">9. 与 <code>Server</code> 的集成（调用链记忆）</h2>
+<p><code>Server</code> 构造函数中典型写法：</p>
+<pre><code class="language-cpp">CrashHandler::instance().init([this]() { this-&gt;cleanup(); });
+</code></pre>
+<p>因此 SIGINT/SIGTERM、未处理异常、Windows SEH/控制台事件等路径最终会尝试执行 <code>Server::cleanup()</code>（在仍安全的前提下）。</p>
+<hr>
+<h2 id="10-异步信号安全（面试高频）">10. 异步信号安全（面试高频）</h2>
+<p>在 <code>signalHandler</code> 中调用 <code>gracefulExit</code>，内部大量使用 <code>iostream</code>、锁、回调——<strong>不属于 POSIX 异步信号安全函数</strong>。</p>
+<ul>
+<li>工程上常见折中：信号处理器只做 <code>write</code>/置原子标志，由主线程收尾。</li>
+<li>本实现优先“统一落盘与清理”，适合服务端工具场景；严谨生产可再分层。</li>
+</ul>
+<hr>
+<h2 id="下一模块（索引顺序）">下一模块（索引顺序）</h2>
+<p><strong>DBConnector</strong> → <code>docs/modules/detail/DBConnector_FUNCTIONS.md</code>。</p>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本章已读</span></button><a class="book-btn book-btn-ghost" href="/books/cpp-server-framework/"><i class="fas fa-list"></i> 全部章节</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/books/cpp-server-framework/coroutine-functions/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一章</span><strong>Coroutine 函数手册</strong></a><a class="book-pager-link next" href="/books/cpp-server-framework/db-connector-functions/"><span class="book-pager-dir">下一章 <i class="fas fa-arrow-right"></i></span><strong>DBConnector 函数手册</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-2"><a class="book-toc-link" href="#0-%E7%BC%96%E8%AF%91%E5%99%A8%E4%B8%8E%E5%B9%B3%E5%8F%B0%E5%AE%8F%EF%BC%88Crash-h-L8%E2%80%9315%EF%BC%89">0. 编译器与平台宏（ Crash.h L8–15）</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#1-%E7%B1%BB%E5%9E%8B%E5%88%AB%E5%90%8D-CleanupCallback">1. 类型别名 CleanupCallback</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-%E7%B1%BB-CrashHandler-%E2%80%94-%E5%85%AC%E5%BC%80%E6%8E%A5%E5%8F%A3">2. 类 CrashHandler — 公开接口</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#2-1-static-CrashHandler-instance">2.1 static CrashHandler instance()</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#2-2-void-init-const-CleanupCallback-cleanupFunc">2.2 void init(const CleanupCallback cleanupFunc)</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E6%AD%A5%E9%AA%A4%E6%8B%86%E8%A7%A3">步骤拆解</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%B0%83%E7%94%A8%E8%A1%8C%E4%B8%BA">可重复调用行为</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#2-3-void-gracefulExit-int-exitCode-1-const-std-string-reason-Unknown-crash">2.3 void gracefulExit(int exitCode = 1, const std::string reason = Unknown crash )</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E6%AD%A5%E9%AA%A4%E6%8B%86%E8%A7%A3-2">步骤拆解</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E4%B8%8E-exit-%E7%9A%84%E5%B7%AE%E5%BC%82">与 exit() 的差异</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E9%9D%A2%E8%AF%95%E7%82%B9">面试点</a></li></ul></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#3-CrashHandler-%E2%80%94-%E7%A7%81%E6%9C%89%E6%88%90%E5%91%98">3. CrashHandler — 私有成员</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%A7%81%E6%9C%89%E6%9E%84%E9%80%A0-%E6%9E%90%E6%9E%84">私有构造 / 析构</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#4-static-void-signalHandler-int-sig">4. static void signalHandler(int sig)</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E6%98%A0%E5%B0%84%E8%A1%A8">映射表</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-Windows-%E4%B8%93%E6%9C%89%E9%9D%99%E6%80%81%E5%87%BD%E6%95%B0">5. Windows 专有静态函数</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#5-1-static-LONG-WINAPI-sehExceptionHandler-EXCEPTION-POINTERS-pException">5.1 static LONG WINAPI sehExceptionHandler(EXCEPTION_POINTERS* pException)</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E6%98%BE%E5%BC%8F%E6%98%A0%E5%B0%84%E7%9A%84%E5%BC%82%E5%B8%B8%E7%A0%81">显式映射的异常码</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#5-2-static-BOOL-WINAPI-consoleCtrlHandler-DWORD-dwCtrlType">5.2 static BOOL WINAPI consoleCtrlHandler(DWORD dwCtrlType)</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#6-static-void-terminateHandler">6. static void terminateHandler()</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-static-void-printCrashInfo-int-sig-const-std-string-reason">7. static void printCrashInfo(int sig, const std::string reason)</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E6%8E%A7%E5%88%B6%E5%8F%B0%E8%BE%93%E5%87%BA%EF%BC%88%E6%9D%A1%E4%BB%B6%E7%BC%96%E8%AF%91%EF%BC%89">控制台输出（条件编译）</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E6%96%87%E4%BB%B6%E8%BE%93%E5%87%BA%EF%BC%88%E8%B7%A8%E5%88%86%E6%94%AF%E5%85%B1%E7%94%A8%EF%BC%89">文件输出（跨分支共用）</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E8%BE%85%E5%8A%A9%E5%87%BD%E6%95%B0-formatCurrentTime-%EF%BC%88%E6%96%87%E4%BB%B6%E5%86%85-static%EF%BC%89">辅助函数 formatCurrentTime() （文件内 static）</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#8-%E5%AE%8F-SAFE-ASSERT-expr">8. 宏 SAFE_ASSERT(expr)</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#9-%E4%B8%8E-Server-%E7%9A%84%E9%9B%86%E6%88%90%EF%BC%88%E8%B0%83%E7%94%A8%E9%93%BE%E8%AE%B0%E5%BF%86%EF%BC%89">9. 与 Server 的集成（调用链记忆）</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#10-%E5%BC%82%E6%AD%A5%E4%BF%A1%E5%8F%B7%E5%AE%89%E5%85%A8%EF%BC%88%E9%9D%A2%E8%AF%95%E9%AB%98%E9%A2%91%EF%BC%89">10. 异步信号安全（面试高频）</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#%E4%B8%8B%E4%B8%80%E6%A8%A1%E5%9D%97%EF%BC%88%E7%B4%A2%E5%BC%95%E9%A1%BA%E5%BA%8F%EF%BC%89">下一模块（索引顺序）</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
