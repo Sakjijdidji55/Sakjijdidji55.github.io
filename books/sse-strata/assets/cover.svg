@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 900" role="img" aria-label="MoE 大模型低成本部署框架">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#070d14"/>
+      <stop offset="0.55" stop-color="#0d2530"/>
+      <stop offset="1" stop-color="#123c43"/>
+    </linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="1" stop-color="#fbbf24"/>
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+    </pattern>
+    <filter id="blur"><feGaussianBlur stdDeviation="64"/></filter>
+  </defs>
+
+  <rect width="640" height="900" fill="url(#bg)"/>
+  <rect width="640" height="900" fill="url(#grid)"/>
+  <circle cx="536" cy="128" r="148" fill="#2dd4bf" opacity=".16" filter="url(#blur)"/>
+  <circle cx="96" cy="772" r="168" fill="#f59e0b" opacity=".12" filter="url(#blur)"/>
+
+  <text x="196" y="342" font-family="'Segoe UI', Arial, sans-serif" font-size="104" font-weight="700"
+        fill="#ffffff" opacity=".05">92.5 ms</text>
+
+  <!-- 一帧解码的毫秒账：70.0 CPU / 21.1 门铃 / 1.6 GPU -->
+  <g opacity=".9">
+    <rect x="64" y="676" width="352" height="10" rx="5" fill="#0f172a" stroke="rgba(94,234,212,.25)"/>
+    <rect x="64" y="676" width="269" height="10" rx="5" fill="#2dd4bf" opacity=".85"/>
+    <rect x="333" y="676" width="81" height="10" fill="#38bdf8" opacity=".75"/>
+    <rect x="414" y="676" width="2" height="10" fill="#fbbf24"/>
+    <g font-family="'Segoe UI', Arial, sans-serif" font-size="11" fill="#7c8ba1" letter-spacing=".5">
+      <text x="64" y="704">CPU 专家 70.0</text>
+      <text x="212" y="704">门铃 21.1</text>
+      <text x="316" y="704">GPU 1.6</text>
+    </g>
+  </g>
+
+  <text x="64" y="118" font-family="'Segoe UI', Arial, sans-serif" font-size="15" letter-spacing="5" fill="#5eead4">SSE-STRATA</text>
+  <text x="64" y="148" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="16" letter-spacing="2" fill="#8fa3b8">2 × RTX 4090D · 长上下文推理服务 · 系统全书</text>
+
+  <rect x="64" y="194" width="56" height="6" rx="3" fill="url(#line)"/>
+
+  <text x="64" y="418" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="60" font-weight="700" fill="#ffffff">MoE 大模型</text>
+  <text x="64" y="500" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="60" font-weight="700" fill="#ffffff">低成本部署框架</text>
+
+  <text x="64" y="558" font-family="'Segoe UI', Arial, sans-serif" font-size="19" fill="#5eead4">Strata — Low-Cost MoE Serving</text>
+  <text x="64" y="588" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="15" fill="#94a3b8">资源固定，服务质量靠工程挣出来</text>
+
+  <line x1="64" y1="624" x2="576" y2="624" stroke="rgba(255,255,255,.14)"/>
+
+  <text x="64" y="655" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="14" fill="#7c8ba1">一帧解码 92.5 ms 的去向</text>
+
+  <g font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="14" fill="#e2e8f0">
+    <rect x="64" y="740" width="96" height="34" rx="17" fill="rgba(94,234,212,.12)" stroke="rgba(94,234,212,.35)"/>
+    <text x="86" y="762">推理服务</text>
+    <rect x="172" y="740" width="110" height="34" rx="17" fill="rgba(56,189,248,.12)" stroke="rgba(56,189,248,.32)"/>
+    <text x="194" y="762">源码走读</text>
+    <rect x="294" y="740" width="96" height="34" rx="17" fill="rgba(251,191,36,.12)" stroke="rgba(251,191,36,.32)"/>
+    <text x="316" y="762">事故复盘</text>
+  </g>
+
+  <text x="64" y="852" font-family="'Microsoft YaHei', 'PingFang SC', sans-serif" font-size="16" fill="#94a3b8">迷路的小朋友 · 个人书架</text>
+</svg>

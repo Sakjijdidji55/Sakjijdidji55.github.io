@@ -1,0 +1,803 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第 5 章 网关：检索组装与漂移重建 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MoE 大模型低成本部署框架 · 第 5 章 网关：检索组装与漂移重建">
+<meta property="og:type" content="website">
+<meta property="og:title" content="第 5 章 网关：检索组装与漂移重建">
+<meta property="og:url" content="https://sakjijdidji55.github.io/books/sse-strata/05-gateway-retrieval/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="MoE 大模型低成本部署框架 · 第 5 章 网关：检索组装与漂移重建">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-10-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-21T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/books/sse-strata/05-gateway-retrieval/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第 5 章 网关：检索组装与漂移重建',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">第 5 章 网关：检索组装与漂移重建</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">第 5 章 网关：检索组装与漂移重建</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-strata" data-chapter="05-gateway-retrieval" data-total="25" data-prev="/books/sse-strata/04-gateway-routing/" data-next="/books/sse-strata/06-engine-startup/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/books/sse-strata/">MoE 大模型低成本部署框架</a><div class="book-sidebar-sub">25 章 · 约 5 小时 17 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 25</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选章节..." data-book-filter aria-label="筛选章节"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="intro"><a class="book-chapter-link" href="/books/sse-strata/intro/" data-chapter-link="intro"><span class="book-chapter-index">00</span><span class="book-chapter-name">导言：这本书回答什么</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 1 部 全景与约束</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="01-overview"><a class="book-chapter-link" href="/books/sse-strata/01-overview/" data-chapter-link="01-overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">第 1 章 这套系统是什么</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="02-constraints"><a class="book-chapter-link" href="/books/sse-strata/02-constraints/" data-chapter-link="02-constraints"><span class="book-chapter-index">02</span><span class="book-chapter-name">第 2 章 硬约束如何塑造了设计</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 2 部 请求的一生</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="03-request-lifecycle"><a class="book-chapter-link" href="/books/sse-strata/03-request-lifecycle/" data-chapter-link="03-request-lifecycle"><span class="book-chapter-index">03</span><span class="book-chapter-name">第 3 章 一个请求的一生</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 3 部 RAG 网关：唯一公网面</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="04-gateway-routing"><a class="book-chapter-link" href="/books/sse-strata/04-gateway-routing/" data-chapter-link="04-gateway-routing"><span class="book-chapter-index">04</span><span class="book-chapter-name">第 4 章 网关：分流与守卫</span><span class="book-chapter-time">19′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="05-gateway-retrieval"><a class="book-chapter-link is-current" href="/books/sse-strata/05-gateway-retrieval/" data-chapter-link="05-gateway-retrieval" aria-current="page"><span class="book-chapter-index">05</span><span class="book-chapter-name">第 5 章 网关：检索组装与漂移重建</span><span class="book-chapter-time">15′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 4 部 引擎内核</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="06-engine-startup"><a class="book-chapter-link" href="/books/sse-strata/06-engine-startup/" data-chapter-link="06-engine-startup"><span class="book-chapter-index">06</span><span class="book-chapter-name">第 6 章 引擎启动与内存计划</span><span class="book-chapter-time">18′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="07-expert-tiers"><a class="book-chapter-link" href="/books/sse-strata/07-expert-tiers/" data-chapter-link="07-expert-tiers"><span class="book-chapter-index">07</span><span class="book-chapter-name">第 7 章 专家：三级存储与命中率</span><span class="book-chapter-time">20′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="08-forward-pass"><a class="book-chapter-link" href="/books/sse-strata/08-forward-pass/" data-chapter-link="08-forward-pass"><span class="book-chapter-index">08</span><span class="book-chapter-name">第 8 章 前向通路：内核、量化与 CUDA 图</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="09-prefill"><a class="book-chapter-link" href="/books/sse-strata/09-prefill/" data-chapter-link="09-prefill"><span class="book-chapter-index">09</span><span class="book-chapter-name">第 9 章 prefill：最大的瓶颈</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="10-speculative-decode"><a class="book-chapter-link" href="/books/sse-strata/10-speculative-decode/" data-chapter-link="10-speculative-decode"><span class="book-chapter-index">10</span><span class="book-chapter-name">第 10 章 投机解码与批槽</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="11-layer-split"><a class="book-chapter-link" href="/books/sse-strata/11-layer-split/" data-chapter-link="11-layer-split"><span class="book-chapter-index">11</span><span class="book-chapter-name">第 11 章 多卡与层切分</span><span class="book-chapter-time">13′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 5 部 会话记忆</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="12-prefix-cache"><a class="book-chapter-link" href="/books/sse-strata/12-prefix-cache/" data-chapter-link="12-prefix-cache"><span class="book-chapter-index">12</span><span class="book-chapter-name">第 12 章 前缀缓存与会话停车</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 6 部 测试台与数字</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="13-benchmark-rig"><a class="book-chapter-link" href="/books/sse-strata/13-benchmark-rig/" data-chapter-link="13-benchmark-rig"><span class="book-chapter-index">13</span><span class="book-chapter-name">第 13 章 测试台：数字是怎么挣出来的</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="14-measured-numbers"><a class="book-chapter-link" href="/books/sse-strata/14-measured-numbers/" data-chapter-link="14-measured-numbers"><span class="book-chapter-index">14</span><span class="book-chapter-name">第 14 章 实测数字总表</span><span class="book-chapter-time">20′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 7 部 运维</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="15-deploy-topology"><a class="book-chapter-link" href="/books/sse-strata/15-deploy-topology/" data-chapter-link="15-deploy-topology"><span class="book-chapter-index">15</span><span class="book-chapter-name">第 15 章 部署与进程拓扑</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="16-engine-switch"><a class="book-chapter-link" href="/books/sse-strata/16-engine-switch/" data-chapter-link="16-engine-switch"><span class="book-chapter-index">16</span><span class="book-chapter-name">第 16 章 引擎切换与停机边界</span><span class="book-chapter-time">14′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="17-redlines"><a class="book-chapter-link" href="/books/sse-strata/17-redlines/" data-chapter-link="17-redlines"><span class="book-chapter-index">17</span><span class="book-chapter-name">第 17 章 红线与协作约定</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 8 部 复盘与前方</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="18-incidents"><a class="book-chapter-link" href="/books/sse-strata/18-incidents/" data-chapter-link="18-incidents"><span class="book-chapter-index">18</span><span class="book-chapter-name">第 18 章 事故复盘</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="19-open-questions"><a class="book-chapter-link" href="/books/sse-strata/19-open-questions/" data-chapter-link="19-open-questions"><span class="book-chapter-index">19</span><span class="book-chapter-name">第 19 章 未解问题与路线图</span><span class="book-chapter-time">13′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 9 部 解剖与动刀（10-21 增补）</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="20-decode-window"><a class="book-chapter-link" href="/books/sse-strata/20-decode-window/" data-chapter-link="20-decode-window"><span class="book-chapter-index">20</span><span class="book-chapter-name">第 20 章 解码窗口的解剖：那 92.5 毫秒去哪了</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="21-refactor-handbook"><a class="book-chapter-link" href="/books/sse-strata/21-refactor-handbook/" data-chapter-link="21-refactor-handbook"><span class="book-chapter-index">21</span><span class="book-chapter-name">第 21 章 改造手册：M0–M4</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app-a-source-map"><a class="book-chapter-link" href="/books/sse-strata/app-a-source-map/" data-chapter-link="app-a-source-map"><span class="book-chapter-index">23</span><span class="book-chapter-name">附录 A 源码入口地图</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-b-knobs"><a class="book-chapter-link" href="/books/sse-strata/app-b-knobs/" data-chapter-link="app-b-knobs"><span class="book-chapter-index">24</span><span class="book-chapter-name">附录 B 旋钮表</span><span class="book-chapter-time">15′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-c-glossary"><a class="book-chapter-link" href="/books/sse-strata/app-c-glossary/" data-chapter-link="app-c-glossary"><span class="book-chapter-index">25</span><span class="book-chapter-name">附录 C 名词表</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/books/"><i class="fas fa-arrow-left"></i> 返回书架</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开章节目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/books/sse-strata/">MoE 大模型低成本部署框架</a><i class="fas fa-angle-right"></i><span>第 5 章 网关：检索组装与漂移重建</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">CHAPTER 05</span><h1>第 5 章 网关：检索组装与漂移重建</h1><div class="book-chapter-meta">15 分钟阅读 · 4,506 字</div></div><blockquote>
+<p>这一章是 1M 能力的全部机制。引擎原生窗口硬固定 262144、超窗即 400、从不截断，<br>
+所以「1M」这件事完全发生在 <code>~/rag-proxy/rag_proxy.py</code> 里。<br>
+本章按组装的实际顺序走：分块 → 嵌入 → 检索打分 → 渲染 → 漂移判据 → 预算收敛，<br>
+每一段都给出参数取值与它被定成这个值的实测理由。</p>
+</blockquote>
+<hr>
+<h2 id="5-1-组装的总公式">5.1 组装的总公式</h2>
+<p><code>assemble</code>（<code>rag_proxy.py:1181</code>）的预算分配是整个机制的骨架：</p>
+<pre><code class="language-python">gen_reserve = min(body.get(&quot;max_tokens&quot;) or CFG[&quot;gen_reserve_default&quot;], CFG[&quot;gen_reserve_max&quot;])
+budget      = CFG[&quot;max_context&quot;] - CFG[&quot;ctx_slack&quot;] - gen_reserve
+
+turns  = parse_turns(messages)
+recent, recent_turns, recent_msg_idx, recent_tokens = recent_window(messages, turns, CFG[&quot;recent_window_tokens&quot;])
+
+head_tokens    = system + system消息 + tools 的 JSON
+memory_budget  = max(0, budget - head_tokens - recent_tokens - CFG[&quot;memory_min_tokens&quot;])
+</code></pre>
+<p>翻译成一句话：</p>
+<pre><code>262144 窗口
+  − 8      ctx_slack（计数残差缓冲）
+  − 8192   默认输出预留（gen_reserve_default，上限 32768）
+  − 系统提示词与工具定义（逐字保留，绝不进检索）
+  − 65536  最近逐字窗口（回合对齐）
+  − 4096   memory_min_tokens（检索块的最低保底）
+  ────────────────────────────
+  = memory_budget   检索块预算
+</code></pre>
+<p><strong>送进引擎的永远 ≤ 262144。</strong> 这就是「1M 会话」的全部实现方式：<br>
+模型看到的永远是一个 256K 窗口，其中 65K 是逐字的最近历史，其余是检索出来的片段。</p>
+<p>文件开头对这件事的表述（<code>:19-20</code>）：</p>
+<blockquote>
+<p>最近逐字窗口（回合对齐，不会停在回合中间）+ 检索块（更早历史，按原始次序渲染并带回合结构标签）；<br>
+<strong>检索块在 TTL 内保持稳定</strong>（前缀缓存友好），只在 TTL 到期 / 窗口将满时重建。</p>
+</blockquote>
+<hr>
+<h2 id="5-2-分块：一个结构单元-一块">5.2 分块：一个结构单元 = 一块</h2>
+<p><code>parse_turns</code>（<code>:525</code>）把消息流解析成回合，<code>Unit</code>（<code>:495</code>）是结构单元：<br>
+<strong>一条用户输入、一次工具调用、一次工具返回、一段回答，各成一个单元</strong>。<br>
+<code>chunk_turn</code>（<code>:630</code>）把一个回合切成块，规则是「一个结构单元 = 一块，块绝不跨回合」。</p>
+<p>只有当单条消息本身超过 <code>chunk_tokens = 768</code> 时，才按自然边界再切成 <code>part / n_parts</code>。<br>
+切分顺序是 <strong>行 → 段 → 句</strong>（<code>split_unit</code>，<code>:570</code>）。</p>
+<h3 id="为什么不合并相邻单元">为什么不合并相邻单元</h3>
+<p>这是本章最值得学的决策过程。合并相邻单元看起来更自然（上下文更完整），<br>
+但它有一个致命副作用，docstring 写得很直白：</p>
+<blockquote>
+<p>为什么不在块里合并相邻单元（实测过，见 <code>test_chunking.py §7</code> 与 <code>README §5e</code>）：<br>
+合并会让<strong>进行中的回合</strong>每来一条消息就把最后一块重新切一遍——<br>
+40 轮真实 agent 会话逐条到达要白做 100 次嵌入、留下 100 个陈旧块<br>
+（陈旧块还留在检索索引里当候选，等于自己给自己加噪声）。<br>
+<strong>逐单元成块是唯一的零重嵌策略</strong>：一条消息一旦到达就不再变，它的块边界与哈希从此恒定，向量直接复用。<br>
+回合的连贯性不靠「合并进同一块」来保证，而由 <code>render_block</code> 的回合标签 + <code>expand_context</code> 的结构补全<br>
+在组装时还原——<strong>切分负责稳定，渲染负责语序</strong>。</p>
+</blockquote>
+<p>这段包含三个可复用的工程判断：</p>
+<ol>
+<li><strong>增量场景下，「稳定」比「完整」更值钱</strong>。陈旧块不只是浪费算力，它会留在检索索引里当候选，主动污染后续每一次检索。</li>
+<li>完整性可以在<strong>渲染阶段</strong>补回来，代价小得多。</li>
+<li>这个结论是<strong>实测出来的</strong>，并且测试文件与 README 章节都留了出处。</li>
+</ol>
+<h3 id="切口的历史事故">切口的历史事故</h3>
+<p><code>split_unit</code>（<code>:573</code>）记下旧版的一个具体 bug：</p>
+<blockquote>
+<p>旧版是「768 token 字符窗口 + 128 字符重叠」，实测把 <code>…retry=2\nline 27…</code> 切成下一块的第一行</p>
+</blockquote>
+<p>现在的做法是按自然边界切，<code>target = max(400, target_tokens * CFG[&quot;chars_per_token&quot;])</code>。<br>
+<code>trim_at_line_tail</code>（<code>:601</code>）负责尾部截断时「把切口往前挪到行首」——<br>
+注释补了一句：「最近窗口里的巨型消息也别从行中间开始」。</p>
+<p><strong>代码里保留失败样例的原文</strong>（<code>…retry=2\nline 27…</code>）是很好的习惯：<br>
+下一个人看到这段就不会再犯同样的错，而且能验证修复是否真的有效。</p>
+<hr>
+<h2 id="5-3-最近逐字窗口：回合对齐（recent-window，-916）">5.3 最近逐字窗口：回合对齐（<code>recent_window</code>，<code>:916</code>）</h2>
+<p>从后往前按<strong>整回合</strong>收集逐字保留的消息，预算 <code>recent_window_tokens = 65536</code>。</p>
+<p>docstring 给出了这条规则的由来：</p>
+<blockquote>
+<p>回合对齐是关键：旧版按单条消息从后往前装，窗口可能停在回合中间——<br>
+模型看到一个孤零零的工具返回，不知道它由哪个工具调用产生、回答的是哪个问题（语序失真的另一半来源）。<br>
+这里窗口边界永远落在回合边界上：要么整回合在窗口里，要么整回合交给检索。</p>
+</blockquote>
+<p>「孤零零的工具返回」这个描述非常准确：模型看到一段没有调用者的工具输出，<br>
+就会开始猜测它属于哪个调用，这正是幻觉的一种成因。</p>
+<h3 id="巨型回合的兜底">巨型回合的兜底</h3>
+<p>同一个 docstring 还处理了一个边界情况：</p>
+<blockquote>
+<p>最后一个回合本身就超预算时（一次性灌入的巨型回合）：先从头部<strong>整单元整单元地</strong>丢，<br>
+只剩一条还装不下时才在那条消息内部按行截尾；被剪掉的部分仍在会话分块里，可由检索块按相关性召回<br>
+（否则组装完全失效：检索拿不到候选，请求原样超窗被引擎 400 拒绝）。</p>
+</blockquote>
+<p>注意括号里那句：<strong>否则组装完全失效</strong>。剪掉的内容必须仍然可检索，<br>
+否则「压缩最近窗口」这个动作本身就会把内容彻底丢掉。</p>
+<hr>
+<h2 id="5-4-嵌入：异步、批量、可降级">5.4 嵌入：异步、批量、可降级</h2>
+<ul>
+<li><code>embed_texts</code>（<code>:692</code>）调用 <code>config.json</code> 的 <code>embed_url</code>（<code>http://10.42.0.67:8080/embeddings</code>，模型 <code>bge-m3</code>）。</li>
+<li><code>embedding_worker</code>（<code>:703</code>）是后台线程，<code>embed_batch = 16</code>，<code>embed_timeout_s = 30</code>，<code>embed_wait_s = 120</code>。</li>
+<li><code>enqueue_embed</code>（<code>:744</code>）在分块后把新块排队嵌入；计数器 <code>embeds_queued</code> / <code>embeds_done</code> / <code>embed_errors</code>。</li>
+<li>查询向量有缓存（<code>EMB_CACHE</code> + <code>EMB_LOCK</code>）。</li>
+</ul>
+<p><strong>嵌入是异步的</strong>，这意味着一个真实后果：新到的块可能还没有向量。<br>
+<code>build_memory_block</code> 对此的处理是（<code>:1096</code> 附近）：</p>
+<blockquote>
+<p><code>query embedding not ready - degrading</code> → 返回空检索块</p>
+</blockquote>
+<p>也就是「这一轮没有检索块，只有最近窗口」，请求照常成功。<br>
+这就是 §4.8 那条降级承诺在代码里的具体落点。</p>
+<hr>
+<h2 id="5-5-检索打分：三路加权-MMR">5.5 检索打分：三路加权 + MMR</h2>
+<p><code>build_memory_block</code>（<code>:1049</code>）的打分链路：</p>
+<pre><code class="language-python">cands = cosine_matrix(sess, qv)                    # 全部块 vs 查询向量
+cands = 排除已在最近窗口里的回合
+cands.sort(by cosine); cands = cands[:200]         # retrieve_candidates
+top   = cands[:200]                                # rerank_candidates
+rr    = rerank(query, [c.text for c in top])       # bge-reranker-v2-m3
+
+recency = exp(-(n - c.idx) / max(32.0, n * 0.5))
+s = 0.55 * rerank + 0.30 * recency + 0.15 * role_weight(role)
+</code></pre>
+<p><code>role_weight</code>（<code>:975</code>）：<code>user 1.0</code>、<code>assistant 0.8</code>、<code>system 0.5</code>、<code>tool 0.4</code>。</p>
+<p><strong>用户说的话权重最高，工具返回权重最低</strong>——这个取值反映了一个判断：<br>
+在 agent 会话里，工具输出量大而信息密度低，用户消息才是意图所在。</p>
+<p><code>recency</code> 用指数衰减，半衰期随会话长度自适应（分母 <code>max(32, n*0.5)</code>），<br>
+会话越长，近因衰减越慢。这是为了避免长会话里「只有最后几十轮可被检索」的退化。</p>
+<h3 id="MMR-去冗余">MMR 去冗余</h3>
+<pre><code class="language-python">lam = 0.7   # mmr_lambda
+# 贪心选：λ * 相关分 − (1−λ) * 与已选块的最高相似度（用 chunk 自己的向量）
+</code></pre>
+<p>注释说明目的：<strong>防同一话题刷屏</strong>。填充文本高度相似时，没有 MMR 就会选出十几个近似重复的块，<br>
+挤掉真正不同的证据。</p>
+<h3 id="重排器不可用时：置-0，不用余弦顶替">重排器不可用时：置 0，不用余弦顶替</h3>
+<p>这段注释（<code>:1116</code>）是全书最想推荐的一处判断：</p>
+<blockquote>
+<p>重排器不可用 → 没有重排分（这里保持原行为：<strong>置 0 而不是拿余弦顶替</strong>）。<br>
+⚠ 这会让总分退化成「最近优先」：早期事实即使余弦明显更高（<strong>实测 0.73 vs 0.43</strong>）也选不上。<br>
+这是<strong>行为选择</strong>，不是记录功能的一部分，所以没有擅自改；现象与判定办法写在<br>
+<code>~/docs/services/rag-config-testing.md §7</code>，记录页的「检索回来的块」能直接看出来。</p>
+</blockquote>
+<p>三件事值得学：</p>
+<ol>
+<li><strong>不同量纲的分数不能互换。</strong> 余弦与重排分不可比，顶替会产生一个「看起来在工作、实际排序已变形」的系统。</li>
+<li>作者明知这个退化有害（⚠ 那段），但<strong>没有顺手改</strong>，因为它属于行为策略、不属于 bug 修复。</li>
+<li>退化的<strong>判定办法</strong>被写进文档并指向了可观察的位置（记录页）。</li>
+</ol>
+<p>同时它也暴露了一个缺口：<code>COUNTERS</code> 里没有 <code>rerank_unavailable</code>，这条降级发生时运维并不知道。<br>
+第 19 章把它列为观测盲区。</p>
+<hr>
+<h2 id="5-6-渲染：块顺序-回合顺序（render-block，-980）">5.6 渲染：块顺序 = 回合顺序（<code>render_block</code>，<code>:980</code>）</h2>
+<pre><code>[Earlier conversation excerpts retrieved for the current question]
+
+--- turn 12 · user → assistant(tool_call: vault_get) → tool_result ---
+[user]
+...
+[tool_result part 1/3]
+...
+</code></pre>
+<p>docstring：</p>
+<blockquote>
+<p>按<strong>原始先后顺序</strong>渲染检索块，每换一条回合打一行结构标签。<br>
+块顺序 = 回合顺序（<strong>不是分数顺序</strong>），模型读到的仍是事情发生的次序；<br>
+结构标签（<code>user → assistant(tool_call: vault_get) → tool_result</code>）让每个片段带上出处——<br>
+这正是 §2.6「张冠李戴」的对症处理：片段可归属，模型就不容易把相似事实从别的回合搬过来。</p>
+</blockquote>
+<p><strong>按分数排序检索结果是最常见的 RAG 错误之一。</strong> 它把时间线打乱，<br>
+模型会把「A 回合里发生的事」归因到「B 回合」。这里显式按 <code>(turn, idx, part)</code> 排序，<br>
+并给每个片段打上出处标签。</p>
+<p><code>expand_context</code>（<code>:1000</code>）做结构补全：选中一个块后，按 <code>context_expand_ratio = 0.25</code><br>
+把它的相邻块也带上，避免「只拿到答案的一半」。</p>
+<hr>
+<h2 id="5-7-漂移重建：这一章的核心判据">5.7 漂移重建：这一章的核心判据</h2>
+<h3 id="问题：TTL-判据看不见「块还有没有用」">问题：TTL 判据看不见「块还有没有用」</h3>
+<p>组装块在 <code>assembly_ttl_s = 10800</code>（3 小时）内复用，这是前缀缓存友好的关键。<br>
+但复用判据只看时间与窗口，<strong>不看块对当前问题还有没有用</strong>。代码注释给出了这个缺口造成的实测后果（<code>:1214</code> 起）：</p>
+<blockquote>
+<p>覆盖度判据：TTL 判定只看时间与窗口，<strong>不看块对当前问题还有没有用</strong>——<br>
+提问阶段于是拿到灌入阶段为别的查询建好的旧块<br>
+（<strong>实测同一份语料 TTL=3h 时召回从 6/6 掉到 0/6</strong>）。</p>
+</blockquote>
+<p><strong>6/6 → 0/6。</strong> 同一份语料、同一个测试，仅仅因为「块是早先为别的问题建的」，召回全部归零。<br>
+这就是漂移重建存在的理由。</p>
+<h3 id="为什么用重排器，而不用嵌入余弦">为什么用重排器，而不用嵌入余弦</h3>
+<p>同一段注释接着说：</p>
+<blockquote>
+<p>判据用<strong>重排器</strong>问一句：「这个块里有没有真能回答当前问题的内容？」分数最高那块都答不上 → 重建。<br>
+为什么不用嵌入余弦：句式相同的事实块它分不开（<strong>实测 0.70 vs 0.48</strong>，块里塞满填充后差距更小，<br>
+于是「全历史更好 vs 块内最好」几乎永远不超阈值——<strong>实测 23 次组装只触发 1 次重建，召回 2/6</strong>）；<br>
+重排器是交叉编码器，同一组文档<strong>实测 0.80 vs 0.0004</strong>。</p>
+</blockquote>
+<p>这组数字是全书最有说服力的一处对比：</p>
+<table>
+<thead>
+<tr>
+<th>判据</th>
+<th>同一组文档的两类得分</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>嵌入余弦</td>
+<td>0.70 vs 0.48</td>
+<td>差距太小，23 次组装只触发 1 次重建，召回 2/6</td>
+</tr>
+<tr>
+<td>交叉编码重排</td>
+<td>0.80 vs 0.0004</td>
+<td>差距悬殊，判据可用</td>
+</tr>
+</tbody>
+</table>
+<p><strong>嵌入模型衡量「像不像」，交叉编码器衡量「答不答得上」。</strong> 漂移判据需要的是后者。</p>
+<h3 id="实现与代价">实现与代价</h3>
+<pre><code class="language-python">fresh = sess.stable_block and (now - sess.stable_block_at &lt; CFG[&quot;assembly_ttl_s&quot;])
+need_compact = memory_budget &lt;= 0        # 最近窗口已吃满预算：必须重建
+if fresh and not need_compact and CFG.get(&quot;block_drift_rebuild&quot;) and chosen:
+    docs = [c.text[:600] for c in chosen[:128]]      # block_check_chars / block_check_docs
+    sc = rerank(q, docs)
+    if sc and max(sc) &lt; CFG[&quot;block_relevance_min&quot;]:  # 0.30
+        fresh = False
+        COUNTERS[&quot;block_rebuilds&quot;] += 1
+</code></pre>
+<p>注释把代价也算清了：</p>
+<blockquote>
+<p>代价：每次超窗请求多一次重排调用（块内优先级最高的 ≤128 块、每块截 600 字符），<br>
+换来的是「同话题追问照旧复用（前缀缓存不动），只有真漏了才付重建的钱」。</p>
+</blockquote>
+<p><strong>判据的成本被刻意压到最低</strong>：只重排块内优先级最高的 128 块、每块只取前 600 字符。<br>
+判相关性够用，且便宜。</p>
+<h3 id="为什么复用这么重要">为什么复用这么重要</h3>
+<p><code>rag_proxy.py:1932</code> 的注释给了量化后果：</p>
+<blockquote>
+<p>随后同会话生成从「复用前缀」退化为「整段重读」（<strong>实测 TTFT 0.1s→0.4s+，长提示更甚</strong>）。</p>
+</blockquote>
+<p>而第 2 章约束 6 给的是另一个方向的数字：64K 提示词复用 13.4 秒、重读 0.79 秒……<br>
+准确说，<code>docs/项目背景与问题总览.md</code> §4 记的是「复用把 64k 提示词 TTFT 从 13.4s 降到 0.79s」。<br>
+两个数字方向一致：<strong>复用与重读之间差一个数量级</strong>。组装块之所以要 TTL 内稳定，全部理由就在这里。</p>
+<hr>
+<h2 id="5-8-预算收敛：必须装得下（assemble-内两轮循环）">5.8 预算收敛：必须装得下（<code>assemble</code> 内两轮循环）</h2>
+<h3 id="第一轮：丢块（-1283-起，最多-4-轮）">第一轮：丢块（<code>:1283</code> 起，最多 4 轮）</h3>
+<p>超预算时先砍检索块，每轮保留 70%：</p>
+<pre><code class="language-python">keep_n = max(1, int(len(chosen) * 0.7))
+info[&quot;shrunk&quot;] = f&quot;-{dropped} blocks&quot;
+</code></pre>
+<p>4 轮砍完仍超预算，就整个丢掉检索块：<code>info[&quot;shrunk&quot;] = &quot;block dropped&quot;</code>。</p>
+<h3 id="第二轮：砍消息（-1301-起，最多-64-轮）">第二轮：砍消息（<code>:1301</code> 起，最多 64 轮）</h3>
+<p>注释写得非常硬：</p>
+<blockquote>
+<p>最后一道保险：丢块之后仍超预算（估算偏差 / 计数不可用 / 图片展开）时继续砍，<strong>必须收敛到装得下</strong>：<br>
+先把最长的非 system 消息从头部砍（砍掉的头部内容仍在会话分块里，检索还能带回），<br>
+没有可砍的大消息了就丢最近窗口里最旧的整条消息。引擎对超窗请求直接 400、从不截断，<br>
+所以这里<strong>绝不能「砍不动就作罢」</strong>——那正是把 400 交回客户端的那条路。</p>
+</blockquote>
+<p>策略顺序很清楚：先砍最长的非 system 消息（保留尾部 60%，最少 2048 字符，按行截尾），<br>
+再丢最近窗口里最旧的整条。system 消息全程不动。</p>
+<p>砍无可砍时，注释写明交给窗口守卫压 <code>max_tokens</code> 兜底。</p>
+<h3 id="落账口径：拿不准就往大算">落账口径：拿不准就往大算</h3>
+<p><code>:1331</code> 的注释：</p>
+<blockquote>
+<p>组装结果按<strong>引擎口径</strong>落账：精确计数 + 图片展开；计数不可用时用<strong>上界</strong>估算。<br>
+拿不准的数字一律往大算——它直接决定 <code>clamp_max_tokens</code> 给客户端留多少 <code>max_tokens</code>，<br>
+往小算就会放行一个引擎必然 400 的请求（生产实测：网关记 219,021、引擎数到 231,775 → 400）。</p>
+</blockquote>
+<p><strong>不确定时的偏差方向要选对。</strong> 这里往大算的代价是「客户端少拿一点输出预算」，<br>
+往小算的代价是「请求被引擎拒」。前者可接受，后者不可。</p>
+<hr>
+<h2 id="5-9-参数总表">5.9 参数总表</h2>
+<p><code>config.json</code> 的取值（2026-10-19 实测），按机制分组：</p>
+<p><strong>窗口与预算</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>max_context</code></td>
+<td>262144</td>
+<td>引擎原生窗口</td>
+</tr>
+<tr>
+<td><code>ctx_slack</code></td>
+<td>8</td>
+<td>计数残差缓冲</td>
+</tr>
+<tr>
+<td><code>gen_reserve_default</code> / <code>gen_reserve_max</code></td>
+<td>8192 / 32768</td>
+<td>输出预留</td>
+</tr>
+<tr>
+<td><code>recent_window_tokens</code></td>
+<td>65536</td>
+<td>最近逐字窗口</td>
+</tr>
+<tr>
+<td><code>memory_min_tokens</code></td>
+<td>4096</td>
+<td>检索块最低保底</td>
+</tr>
+<tr>
+<td><code>query_max_tokens</code></td>
+<td>2048</td>
+<td>查询串上限</td>
+</tr>
+<tr>
+<td><code>clamp_margin_tokens</code> / <code>clamp_margin_div</code></td>
+<td>512 / 64</td>
+<td>钳制余量</td>
+</tr>
+<tr>
+<td><code>retry_on_overfit</code></td>
+<td>True</td>
+<td>照引擎 400 答复重发</td>
+</tr>
+</tbody>
+</table>
+<p><strong>分块</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>structure_chunking</code></td>
+<td>True</td>
+</tr>
+<tr>
+<td><code>chunk_tokens</code> / <code>chunk_overlap_tokens</code></td>
+<td>768 / 128</td>
+</tr>
+<tr>
+<td><code>chars_per_token</code></td>
+<td>2.5</td>
+</tr>
+<tr>
+<td><code>tok_per_char_cjk</code> / <code>_digit</code> / <code>_other</code></td>
+<td>1.05 / 1.05 / 0.7</td>
+</tr>
+<tr>
+<td><code>msg_overhead_tokens</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td><code>image_tokens</code></td>
+<td>1024</td>
+</tr>
+</tbody>
+</table>
+<p><strong>检索与打分</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>embed_url</code> / <code>embed_model</code></td>
+<td><code>10.42.0.67:8080/embeddings</code> / <code>bge-m3</code></td>
+</tr>
+<tr>
+<td><code>rerank_url</code></td>
+<td><code>10.42.0.91:8080/v1/rerank</code></td>
+</tr>
+<tr>
+<td><code>retrieve_candidates</code> / <code>rerank_candidates</code></td>
+<td>200 / 200</td>
+</tr>
+<tr>
+<td><code>mmr_lambda</code></td>
+<td>0.7</td>
+</tr>
+<tr>
+<td><code>score_w_rerank</code> / <code>score_w_recency</code> / <code>score_w_role</code></td>
+<td>0.55 / 0.30 / 0.15</td>
+</tr>
+<tr>
+<td><code>context_expand_ratio</code></td>
+<td>0.25</td>
+</tr>
+<tr>
+<td><code>embed_batch</code> / <code>embed_timeout_s</code> / <code>embed_wait_s</code></td>
+<td>16 / 30 / 120</td>
+</tr>
+<tr>
+<td><code>rerank_timeout_s</code> / <code>count_timeout_s</code></td>
+<td>30 / 10</td>
+</tr>
+</tbody>
+</table>
+<p><strong>复用与漂移</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>assembly_ttl_s</code></td>
+<td>10800（3h）</td>
+</tr>
+<tr>
+<td><code>rerank_cache_ttl_s</code></td>
+<td>10800</td>
+</tr>
+<tr>
+<td><code>block_drift_rebuild</code></td>
+<td>True</td>
+</tr>
+<tr>
+<td><code>block_relevance_min</code></td>
+<td>0.30</td>
+</tr>
+<tr>
+<td><code>block_check_docs</code> / <code>block_check_chars</code></td>
+<td>128 / 600</td>
+</tr>
+<tr>
+<td><code>session_ttl_s</code> / <code>max_sessions</code></td>
+<td>86400（24h） / 64</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>口径提醒</strong>：早期调研稿把 <code>assembly_ttl_s</code> 记成 1800 秒、<code>session_ttl_s</code> 记成 1800 秒，<br>
+与实际 <code>config.json</code> 不符。本书以实测配置文件为准。</p>
+</blockquote>
+<hr>
+<h2 id="5-10-这套机制在哪里失败">5.10 这套机制在哪里失败</h2>
+<p>机制讲完，必须讲它做不到的事，否则这一章会变成宣传。</p>
+<p><strong>BABILong：15 题对 2 题</strong>（<code>bench/1M上下文精度测试报告-2026-10-07.md</code>）。<br>
+<strong>生产 300 轮长会话：7 个散落事实召回 3 个</strong>（<code>docs/reports/上下文召回测试.md</code>）。<br>
+<strong>NIAH 网格：15/15 全对</strong>（同一份报告）。</p>
+<p>三组数字放在一起才有意义：</p>
+<ul>
+<li>NIAH 测的是「一句话埋在长文本里，能不能找到」——检索组装对此完全够用。</li>
+<li>BABILong 测的是「需要跨全文做推理/聚合的任务」——检索组装对此不够。</li>
+<li>生产 300 轮测的是「事实散落在真实对话里」——召回率 43%。</li>
+</ul>
+<p><strong>失败模式是「自信地答错」</strong>（<code>docs/项目背景与问题总览.md</code> 问题 #2）。<br>
+检索没召回相关块时，模型不会说「我不知道」，它会基于最近窗口编一个合理答案。</p>
+<p>根因在机制本身：当填充文本彼此相似时，检索会偏向<strong>最近的</strong>块<br>
+（<code>score_w_recency = 0.30</code> 与近因指数衰减都在推这个方向），远处的事实就丢了。<br>
+MMR 与角色权重能缓解，不能消除。</p>
+<p><strong>所以第 1 章那句推论要在这里落地：1M 能力等于检索能力。</strong><br>
+网关这套机制把「能不能跑」解决了，「准不准」取决于嵌入与重排的质量，<br>
+而那是一个尚未做到位的环节。第 19 章把这条列为未解问题 #2。</p>
+<hr>
+<h2 id="5-11-本章小结">5.11 本章小结</h2>
+<ul>
+<li>组装公式：262144 − 8 − 输出预留 − 系统/工具 − 65536 最近窗口 − 4096 保底 = 检索块预算。</li>
+<li>分块以<strong>结构单元</strong>为粒度、绝不跨回合，理由是<strong>零重嵌</strong>；合并相邻单元会产生陈旧块并污染检索索引。</li>
+<li>最近窗口按<strong>整回合</strong>对齐，避免模型看到「孤零零的工具返回」。</li>
+<li>打分三路加权（0.55 重排 + 0.30 近因 + 0.15 角色）+ MMR λ=0.7 去冗余。</li>
+<li>重排器不可用时置 0 而不用余弦顶替：量纲不可比，宁可显式退化。代价是排序退化为近因优先，且无计数器。</li>
+<li>渲染按回合顺序而非分数顺序，带出处标签，对症「张冠李戴」。</li>
+<li>漂移重建用交叉编码器问「这块答得上眼当前问题吗」，阈值 0.30，只查 128 块 × 600 字符。<br>
+嵌入余弦做不到（0.70 vs 0.48 对比 0.80 vs 0.0004）。</li>
+<li>两轮收敛保证「必须装得下」；不确定数字一律往大算。</li>
+<li>这套机制让 1M 能跑，但 BABILong 2/15 与生产 3/7 说明「准不准」还没解决。</li>
+</ul>
+<p><strong>下一章</strong>：<a href="06-%E5%BC%95%E6%93%8E%E5%90%AF%E5%8A%A8%E4%B8%8E%E5%86%85%E5%AD%98%E8%AE%A1%E5%88%92.md">06 引擎启动与内存计划</a> —— 进入 C++ 引擎内部。</p>
+<h3 id="本章出处">本章出处</h3>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>组装公式与预算</td>
+<td><code>rag_proxy.py:1181-1200</code></td>
+</tr>
+<tr>
+<td>结构单元成块与零重嵌理由</td>
+<td><code>rag_proxy.py:630-645</code> docstring；<code>test_chunking.py §7</code>、<code>README §5e</code></td>
+</tr>
+<tr>
+<td>旧切口的 bug 样例</td>
+<td><code>rag_proxy.py:573</code></td>
+</tr>
+<tr>
+<td>回合对齐理由</td>
+<td><code>rag_proxy.py:916-930</code> docstring</td>
+</tr>
+<tr>
+<td>三路加权与 MMR</td>
+<td><code>rag_proxy.py:1116-1145</code>；<code>config.json</code></td>
+</tr>
+<tr>
+<td>重排不可用时置 0</td>
+<td><code>rag_proxy.py:1116</code>；<code>~/docs/services/rag-config-testing.md §7</code></td>
+</tr>
+<tr>
+<td>渲染按回合顺序</td>
+<td><code>rag_proxy.py:980</code> docstring</td>
+</tr>
+<tr>
+<td>漂移重建判据与实测数字</td>
+<td><code>rag_proxy.py:1214-1235</code> 注释（6/6→0/6；0.70 vs 0.48；23 次触发 1 次、召回 2/6；0.80 vs 0.0004）</td>
+</tr>
+<tr>
+<td>复用 vs 重读的 TTFT</td>
+<td><code>rag_proxy.py:1932</code>（0.1s→0.4s+）；<code>docs/项目背景与问题总览.md</code> §4（13.4s→0.79s）</td>
+</tr>
+<tr>
+<td>收敛循环</td>
+<td><code>rag_proxy.py:1283-1335</code></td>
+</tr>
+<tr>
+<td>BABILong 2/15、NIAH 15/15、生产 3/7</td>
+<td><code>bench/1M上下文精度测试报告-2026-10-07.md</code>、<code>docs/reports/上下文召回测试.md</code></td>
+</tr>
+</tbody>
+</table>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本章已读</span></button><a class="book-btn book-btn-ghost" href="/books/sse-strata/"><i class="fas fa-list"></i> 全部章节</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/books/sse-strata/04-gateway-routing/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一章</span><strong>第 4 章 网关：分流与守卫</strong></a><a class="book-pager-link next" href="/books/sse-strata/06-engine-startup/"><span class="book-pager-dir">下一章 <i class="fas fa-arrow-right"></i></span><strong>第 6 章 引擎启动与内存计划</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-1-%E7%BB%84%E8%A3%85%E7%9A%84%E6%80%BB%E5%85%AC%E5%BC%8F">5.1 组装的总公式</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-2-%E5%88%86%E5%9D%97%EF%BC%9A%E4%B8%80%E4%B8%AA%E7%BB%93%E6%9E%84%E5%8D%95%E5%85%83-%E4%B8%80%E5%9D%97">5.2 分块：一个结构单元 = 一块</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%88%E5%B9%B6%E7%9B%B8%E9%82%BB%E5%8D%95%E5%85%83">为什么不合并相邻单元</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%88%87%E5%8F%A3%E7%9A%84%E5%8E%86%E5%8F%B2%E4%BA%8B%E6%95%85">切口的历史事故</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-3-%E6%9C%80%E8%BF%91%E9%80%90%E5%AD%97%E7%AA%97%E5%8F%A3%EF%BC%9A%E5%9B%9E%E5%90%88%E5%AF%B9%E9%BD%90%EF%BC%88recent-window%EF%BC%8C-916%EF%BC%89">5.3 最近逐字窗口：回合对齐（ recent_window ， :916 ）</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%B7%A8%E5%9E%8B%E5%9B%9E%E5%90%88%E7%9A%84%E5%85%9C%E5%BA%95">巨型回合的兜底</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-4-%E5%B5%8C%E5%85%A5%EF%BC%9A%E5%BC%82%E6%AD%A5%E3%80%81%E6%89%B9%E9%87%8F%E3%80%81%E5%8F%AF%E9%99%8D%E7%BA%A7">5.4 嵌入：异步、批量、可降级</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-5-%E6%A3%80%E7%B4%A2%E6%89%93%E5%88%86%EF%BC%9A%E4%B8%89%E8%B7%AF%E5%8A%A0%E6%9D%83-MMR">5.5 检索打分：三路加权 + MMR</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#MMR-%E5%8E%BB%E5%86%97%E4%BD%99">MMR 去冗余</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E9%87%8D%E6%8E%92%E5%99%A8%E4%B8%8D%E5%8F%AF%E7%94%A8%E6%97%B6%EF%BC%9A%E7%BD%AE-0%EF%BC%8C%E4%B8%8D%E7%94%A8%E4%BD%99%E5%BC%A6%E9%A1%B6%E6%9B%BF">重排器不可用时：置 0，不用余弦顶替</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-6-%E6%B8%B2%E6%9F%93%EF%BC%9A%E5%9D%97%E9%A1%BA%E5%BA%8F-%E5%9B%9E%E5%90%88%E9%A1%BA%E5%BA%8F%EF%BC%88render-block%EF%BC%8C-980%EF%BC%89">5.6 渲染：块顺序 = 回合顺序（ render_block ， :980 ）</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-7-%E6%BC%82%E7%A7%BB%E9%87%8D%E5%BB%BA%EF%BC%9A%E8%BF%99%E4%B8%80%E7%AB%A0%E7%9A%84%E6%A0%B8%E5%BF%83%E5%88%A4%E6%8D%AE">5.7 漂移重建：这一章的核心判据</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E9%97%AE%E9%A2%98%EF%BC%9ATTL-%E5%88%A4%E6%8D%AE%E7%9C%8B%E4%B8%8D%E8%A7%81%E3%80%8C%E5%9D%97%E8%BF%98%E6%9C%89%E6%B2%A1%E6%9C%89%E7%94%A8%E3%80%8D">问题：TTL 判据看不见「块还有没有用」</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8%E9%87%8D%E6%8E%92%E5%99%A8%EF%BC%8C%E8%80%8C%E4%B8%8D%E7%94%A8%E5%B5%8C%E5%85%A5%E4%BD%99%E5%BC%A6">为什么用重排器，而不用嵌入余弦</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%8E%E4%BB%A3%E4%BB%B7">实现与代价</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%A4%8D%E7%94%A8%E8%BF%99%E4%B9%88%E9%87%8D%E8%A6%81">为什么复用这么重要</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-8-%E9%A2%84%E7%AE%97%E6%94%B6%E6%95%9B%EF%BC%9A%E5%BF%85%E9%A1%BB%E8%A3%85%E5%BE%97%E4%B8%8B%EF%BC%88assemble-%E5%86%85%E4%B8%A4%E8%BD%AE%E5%BE%AA%E7%8E%AF%EF%BC%89">5.8 预算收敛：必须装得下（ assemble 内两轮循环）</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%AC%AC%E4%B8%80%E8%BD%AE%EF%BC%9A%E4%B8%A2%E5%9D%97%EF%BC%88-1283-%E8%B5%B7%EF%BC%8C%E6%9C%80%E5%A4%9A-4-%E8%BD%AE%EF%BC%89">第一轮：丢块（ :1283 起，最多 4 轮）</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%AC%AC%E4%BA%8C%E8%BD%AE%EF%BC%9A%E7%A0%8D%E6%B6%88%E6%81%AF%EF%BC%88-1301-%E8%B5%B7%EF%BC%8C%E6%9C%80%E5%A4%9A-64-%E8%BD%AE%EF%BC%89">第二轮：砍消息（ :1301 起，最多 64 轮）</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E8%90%BD%E8%B4%A6%E5%8F%A3%E5%BE%84%EF%BC%9A%E6%8B%BF%E4%B8%8D%E5%87%86%E5%B0%B1%E5%BE%80%E5%A4%A7%E7%AE%97">落账口径：拿不准就往大算</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-9-%E5%8F%82%E6%95%B0%E6%80%BB%E8%A1%A8">5.9 参数总表</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-10-%E8%BF%99%E5%A5%97%E6%9C%BA%E5%88%B6%E5%9C%A8%E5%93%AA%E9%87%8C%E5%A4%B1%E8%B4%A5">5.10 这套机制在哪里失败</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#5-11-%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93">5.11 本章小结</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%9C%AC%E7%AB%A0%E5%87%BA%E5%A4%84">本章出处</a></li></ul></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

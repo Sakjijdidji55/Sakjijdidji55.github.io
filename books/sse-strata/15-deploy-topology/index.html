@@ -1,0 +1,651 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第 15 章 部署与进程拓扑 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MoE 大模型低成本部署框架 · 第 15 章 部署与进程拓扑">
+<meta property="og:type" content="website">
+<meta property="og:title" content="第 15 章 部署与进程拓扑">
+<meta property="og:url" content="https://sakjijdidji55.github.io/books/sse-strata/15-deploy-topology/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="MoE 大模型低成本部署框架 · 第 15 章 部署与进程拓扑">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-10-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-21T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/books/sse-strata/15-deploy-topology/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第 15 章 部署与进程拓扑',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">第 15 章 部署与进程拓扑</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">第 15 章 部署与进程拓扑</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-strata" data-chapter="15-deploy-topology" data-total="25" data-prev="/books/sse-strata/14-measured-numbers/" data-next="/books/sse-strata/16-engine-switch/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/books/sse-strata/">MoE 大模型低成本部署框架</a><div class="book-sidebar-sub">25 章 · 约 5 小时 17 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 25</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选章节..." data-book-filter aria-label="筛选章节"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="intro"><a class="book-chapter-link" href="/books/sse-strata/intro/" data-chapter-link="intro"><span class="book-chapter-index">00</span><span class="book-chapter-name">导言：这本书回答什么</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 1 部 全景与约束</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="01-overview"><a class="book-chapter-link" href="/books/sse-strata/01-overview/" data-chapter-link="01-overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">第 1 章 这套系统是什么</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="02-constraints"><a class="book-chapter-link" href="/books/sse-strata/02-constraints/" data-chapter-link="02-constraints"><span class="book-chapter-index">02</span><span class="book-chapter-name">第 2 章 硬约束如何塑造了设计</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 2 部 请求的一生</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="03-request-lifecycle"><a class="book-chapter-link" href="/books/sse-strata/03-request-lifecycle/" data-chapter-link="03-request-lifecycle"><span class="book-chapter-index">03</span><span class="book-chapter-name">第 3 章 一个请求的一生</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 3 部 RAG 网关：唯一公网面</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="04-gateway-routing"><a class="book-chapter-link" href="/books/sse-strata/04-gateway-routing/" data-chapter-link="04-gateway-routing"><span class="book-chapter-index">04</span><span class="book-chapter-name">第 4 章 网关：分流与守卫</span><span class="book-chapter-time">19′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="05-gateway-retrieval"><a class="book-chapter-link" href="/books/sse-strata/05-gateway-retrieval/" data-chapter-link="05-gateway-retrieval"><span class="book-chapter-index">05</span><span class="book-chapter-name">第 5 章 网关：检索组装与漂移重建</span><span class="book-chapter-time">15′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 4 部 引擎内核</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="06-engine-startup"><a class="book-chapter-link" href="/books/sse-strata/06-engine-startup/" data-chapter-link="06-engine-startup"><span class="book-chapter-index">06</span><span class="book-chapter-name">第 6 章 引擎启动与内存计划</span><span class="book-chapter-time">18′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="07-expert-tiers"><a class="book-chapter-link" href="/books/sse-strata/07-expert-tiers/" data-chapter-link="07-expert-tiers"><span class="book-chapter-index">07</span><span class="book-chapter-name">第 7 章 专家：三级存储与命中率</span><span class="book-chapter-time">20′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="08-forward-pass"><a class="book-chapter-link" href="/books/sse-strata/08-forward-pass/" data-chapter-link="08-forward-pass"><span class="book-chapter-index">08</span><span class="book-chapter-name">第 8 章 前向通路：内核、量化与 CUDA 图</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="09-prefill"><a class="book-chapter-link" href="/books/sse-strata/09-prefill/" data-chapter-link="09-prefill"><span class="book-chapter-index">09</span><span class="book-chapter-name">第 9 章 prefill：最大的瓶颈</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="10-speculative-decode"><a class="book-chapter-link" href="/books/sse-strata/10-speculative-decode/" data-chapter-link="10-speculative-decode"><span class="book-chapter-index">10</span><span class="book-chapter-name">第 10 章 投机解码与批槽</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="11-layer-split"><a class="book-chapter-link" href="/books/sse-strata/11-layer-split/" data-chapter-link="11-layer-split"><span class="book-chapter-index">11</span><span class="book-chapter-name">第 11 章 多卡与层切分</span><span class="book-chapter-time">13′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 5 部 会话记忆</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="12-prefix-cache"><a class="book-chapter-link" href="/books/sse-strata/12-prefix-cache/" data-chapter-link="12-prefix-cache"><span class="book-chapter-index">12</span><span class="book-chapter-name">第 12 章 前缀缓存与会话停车</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 6 部 测试台与数字</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="13-benchmark-rig"><a class="book-chapter-link" href="/books/sse-strata/13-benchmark-rig/" data-chapter-link="13-benchmark-rig"><span class="book-chapter-index">13</span><span class="book-chapter-name">第 13 章 测试台：数字是怎么挣出来的</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="14-measured-numbers"><a class="book-chapter-link" href="/books/sse-strata/14-measured-numbers/" data-chapter-link="14-measured-numbers"><span class="book-chapter-index">14</span><span class="book-chapter-name">第 14 章 实测数字总表</span><span class="book-chapter-time">20′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 7 部 运维</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="15-deploy-topology"><a class="book-chapter-link is-current" href="/books/sse-strata/15-deploy-topology/" data-chapter-link="15-deploy-topology" aria-current="page"><span class="book-chapter-index">15</span><span class="book-chapter-name">第 15 章 部署与进程拓扑</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="16-engine-switch"><a class="book-chapter-link" href="/books/sse-strata/16-engine-switch/" data-chapter-link="16-engine-switch"><span class="book-chapter-index">16</span><span class="book-chapter-name">第 16 章 引擎切换与停机边界</span><span class="book-chapter-time">14′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="17-redlines"><a class="book-chapter-link" href="/books/sse-strata/17-redlines/" data-chapter-link="17-redlines"><span class="book-chapter-index">17</span><span class="book-chapter-name">第 17 章 红线与协作约定</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 8 部 复盘与前方</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="18-incidents"><a class="book-chapter-link" href="/books/sse-strata/18-incidents/" data-chapter-link="18-incidents"><span class="book-chapter-index">18</span><span class="book-chapter-name">第 18 章 事故复盘</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="19-open-questions"><a class="book-chapter-link" href="/books/sse-strata/19-open-questions/" data-chapter-link="19-open-questions"><span class="book-chapter-index">19</span><span class="book-chapter-name">第 19 章 未解问题与路线图</span><span class="book-chapter-time">13′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 9 部 解剖与动刀（10-21 增补）</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="20-decode-window"><a class="book-chapter-link" href="/books/sse-strata/20-decode-window/" data-chapter-link="20-decode-window"><span class="book-chapter-index">20</span><span class="book-chapter-name">第 20 章 解码窗口的解剖：那 92.5 毫秒去哪了</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="21-refactor-handbook"><a class="book-chapter-link" href="/books/sse-strata/21-refactor-handbook/" data-chapter-link="21-refactor-handbook"><span class="book-chapter-index">21</span><span class="book-chapter-name">第 21 章 改造手册：M0–M4</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app-a-source-map"><a class="book-chapter-link" href="/books/sse-strata/app-a-source-map/" data-chapter-link="app-a-source-map"><span class="book-chapter-index">23</span><span class="book-chapter-name">附录 A 源码入口地图</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-b-knobs"><a class="book-chapter-link" href="/books/sse-strata/app-b-knobs/" data-chapter-link="app-b-knobs"><span class="book-chapter-index">24</span><span class="book-chapter-name">附录 B 旋钮表</span><span class="book-chapter-time">15′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-c-glossary"><a class="book-chapter-link" href="/books/sse-strata/app-c-glossary/" data-chapter-link="app-c-glossary"><span class="book-chapter-index">25</span><span class="book-chapter-name">附录 C 名词表</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/books/"><i class="fas fa-arrow-left"></i> 返回书架</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开章节目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/books/sse-strata/">MoE 大模型低成本部署框架</a><i class="fas fa-angle-right"></i><span>第 15 章 部署与进程拓扑</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">CHAPTER 15</span><h1>第 15 章 部署与进程拓扑</h1><div class="book-chapter-meta">10 分钟阅读 · 2,309 字</div></div><blockquote>
+<p>这一章回答运维层面的问题：<strong>机器上到底跑着哪几个进程、谁拉起谁、改一个参数要重启谁、<br>
+Pod 重建后会发生什么</strong>。所有事实来自 2026-10-19 当场读盘（<code>supervisord.conf</code>、<code>run-*.sh</code>、<br>
+<code>deploy/engines/</code>、<code>ss -ltnp</code>、日志目录 <code>ls</code>）。</p>
+</blockquote>
+<hr>
+<h2 id="15-1-拓扑：五个进程、三个端口">15.1 拓扑：五个进程、三个端口</h2>
+<pre><code>Pod（K3s，命名空间 clouds）
+│  PID1 = tini → bash → sshd
+│
+├─ supervisord（-c ~/deploy/supervisord.conf）
+│   ├─ rag-proxy      python rag-proxy/rag_proxy.py --config rag-proxy/config.json   → 0.0.0.0:8080  ← 唯一公网面
+│   ├─ strata-a       Strata/run-iq3_xxs-a.sh   → taskset 0-15  python serve/server.py --port 8091   → 127.0.0.1:8091（快道 A）
+│   ├─ strata-b       Strata/run-iq3_xxs-b.sh   → taskset 38-53 python serve/server.py --port 8092   → 127.0.0.1:8092（普道 B）
+│   ├─ strata         Strata/run-iq3_xxs.sh（单实例布局用，dual 下不启）
+│   └─ layout-restore Strata/layout-restore.sh（一次性，autorestart=false）
+│
+├─ 每个 serve 进程内部再 fork 子进程：
+│   ├─ 引擎 C++ 子进程（strata --serve --pack …，A 用 SSEStraBed/build/strata，B 用 Strata/build/strata）
+│   └─ strata-vision 常驻图像编码器（llama.cpp mtmd + mmproj，配置里有 &quot;vision&quot; 时才起）
+│
+└─ 对外链路：Pod :8080 → Service(NodePort) → frps 中继（TLS 在此终结）→ 公网
+   22 端口 = SSH。8091/8092 只绑 127.0.0.1，外部不可达。
+</code></pre>
+<p><code>ss -ltnp</code> 实测（2026-10-19）只有三个业务监听：<strong>0.0.0.0:8080</strong>、<strong>127.0.0.1:8091</strong>、<strong>127.0.0.1:8092</strong>。<br>
+没有 8090——那是双 lane 之前单实例布局的端口（13 章 §13.1 的过期默认值）。</p>
+<h2 id="15-2-supervisord-的五个程序">15.2 supervisord 的五个程序</h2>
+<p><code>~/deploy/supervisord.conf</code>（<strong>平台维护的目录约定，但这份 conf 是本项目自己写的</strong>；<br>
+<code>~/deploy/supervisord.conf</code> 里 <code>[unix_http_server] file=…/deploy/supervisor.sock</code>）：</p>
+<table>
+<thead>
+<tr>
+<th>program</th>
+<th>命令</th>
+<th>autostart</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>strata</code></td>
+<td><code>Strata/run-iq3_xxs.sh</code></td>
+<td><strong>true</strong></td>
+<td>单实例（含 split 布局）用；dual 布局下被 <code>layout.sh dual</code> 停掉</td>
+</tr>
+<tr>
+<td><code>strata-a</code></td>
+<td><code>Strata/run-iq3_xxs-a.sh</code></td>
+<td><strong>false</strong></td>
+<td>conf 注释原文：“实验布局：每卡一个实例（<code>layout.sh dual</code> 时才启动）”</td>
+</tr>
+<tr>
+<td><code>strata-b</code></td>
+<td><code>Strata/run-iq3_xxs-b.sh</code></td>
+<td><strong>false</strong></td>
+<td>同上</td>
+</tr>
+<tr>
+<td><code>rag-proxy</code></td>
+<td><code>Strata/.venv/bin/python rag-proxy/rag_proxy.py --config rag-proxy/config.json</code></td>
+<td>true</td>
+<td><code>startsecs=5</code>、<code>stopwaitsecs=15</code></td>
+</tr>
+<tr>
+<td><code>layout-restore</code></td>
+<td><code>Strata/layout-restore.sh</code></td>
+<td>true，<strong>autorestart=false、startsecs=0</strong></td>
+<td>一次性脚本：pod 重建后把 dual 恢复回来</td>
+</tr>
+</tbody>
+</table>
+<p>共同参数（五程序一致，proxy 的 stopwaitsecs 更短）：</p>
+<pre><code>directory=&lt;各程序工作目录&gt;   autorestart=true   startsecs=15   startretries=3
+stopasgroup=true   killasgroup=true   stopsignal=TERM   stopwaitsecs=30
+stdout/stderr → ~/deploy/logs/&lt;name&gt;.{out,err}.log   （maxbytes=20MB，backups=3）
+environment=HF_ENDPOINT=&quot;https://hf-mirror.com&quot;
+</code></pre>
+<p><code>startsecs=15</code> 对引擎进程是有意义的：引擎要先把权重/PLE 摸进页缓存才算&quot;起来了&quot;，<br>
+15 秒内不退出才算成功；<code>killasgroup=true</code> 保证 <code>supervisorctl stop</code> 能把 serve 与它 fork 的<br>
+引擎、vision 子进程一起收掉（否则留下孤儿引擎占着 GPU）。</p>
+<h2 id="15-3-薄分发器：run-sh-只决定-跑哪套引擎">15.3 薄分发器：<code>run-*.sh</code> 只决定&quot;跑哪套引擎&quot;</h2>
+<p><code>Strata/run-iq3_xxs-b.sh</code> 全文（A 道同构）：</p>
+<pre><code class="language-sh">#!/bin/sh
+# 引擎分发器（B lane / GPU1 / 8092）。
+# 实际跑哪个引擎由 ~/deploy/engines/active-b.env 决定（switch_engine.py 写入）。
+# 没有这个文件时，行为与原来的直接启动完全一致。
+ENVF=/home/cloud/deploy/engines/active-b.env
+[ -f &quot;$ENVF&quot; ] &amp;&amp; . &quot;$ENVF&quot;
+: &quot;${ENGINE_NAME:=legacy}&quot;
+: &quot;${PYTHON:=/home/cloud/Strata/.venv/bin/python}&quot;
+: &quot;${SERVER_PY:=/home/cloud/Strata/serve/server.py}&quot;
+: &quot;${CONFIG:=/home/cloud/Strata/strata-iq3_xxs-b.json}&quot;
+: &quot;${CWD:=/home/cloud/Strata}&quot;
+: &quot;${TASKSET:=38-53}&quot;
+: &quot;${PORT:=8092}&quot;
+cd &quot;$CWD&quot; || exit 1
+exec taskset -c &quot;$TASKSET&quot; &quot;$PYTHON&quot; &quot;$SERVER_PY&quot; --engine strata --config &quot;$CONFIG&quot; --port &quot;$PORT&quot; --open
+</code></pre>
+<p><strong>这个设计有三层意义</strong>：</p>
+<ol>
+<li>supervisord 的 command <strong>永远不变</strong> → 换引擎不需要 <code>supervisorctl update</code>，也不需要改平台维护的目录；</li>
+<li><code>TASKSET</code> 是<strong>变量而不是硬编码</strong>，但它有默认值（A <code>0-15</code>、B <code>38-53</code>）——<br>
+11 章的钉核纪律在脚本层有兜底，但<strong>任何覆盖它的 <code>active-*.env</code> 都要复查</strong>（17 章红线 1）；</li>
+<li><code>exec</code> 让分发器变成进程本身，supervisord 的 PID 追踪与 <code>killasgroup</code> 才有效。</li>
+</ol>
+<p><strong>当前两条 lane 的实际取值</strong>（读 <code>deploy/engines/</code> 当场核实）：</p>
+<table>
+<thead>
+<tr>
+<th>lane</th>
+<th><code>active-&lt;lane&gt;.env</code></th>
+<th>生效配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A（快道）</strong></td>
+<td><strong>存在</strong>（<code>active-a.env</code>，0600，274 B，文件头注释 “written by switch_engine.py at 2026-10-17 20:44:35”）</td>
+<td><code>ENGINE_NAME=ssebed</code>、<code>CONFIG=deploy/engines/profiles/ssebed/strata-a.json</code>、<code>CWD=/home/cloud/SSEStraBed</code>、<code>TASKSET=0-15</code>、<code>PORT=8091</code></td>
+</tr>
+<tr>
+<td><strong>B（普道）</strong></td>
+<td><strong>2026-10-21 13:46 起存在</strong>（<code>active-b.env</code>，0600，275 B，文件头 “written by switch_engine.py at 2026-10-21 13:46:50”）</td>
+<td><code>ENGINE_NAME=ssebed</code>、<code>CONFIG=deploy/engines/profiles/ssebed/strata-b.json</code>、<code>CWD=/home/cloud/SSEStraBed</code>、<code>TASKSET=38-53</code>、<code>PORT=8092</code></td>
+</tr>
+</tbody>
+</table>
+<p>→ <strong>这就是&quot;两条 lane 的版本由 <code>active-&lt;lane&gt;.env</code> 决定&quot;的机制真相</strong>（引擎版本字段与构建号见 16 章）。<br>
+10-21 之前 B 道没有这个文件、走脚本默认 legacy；当天中午 <code>switch_engine.py switch ssebed --lanes b</code> 把它写成<br>
+ssebed，两条 lane 从此跑同一份 <code>build 5</code> 二进制（现状快照 <code>docs/reports/CURRENT-VERSION-2026-10-21.md</code>）。<br>
+<code>deploy/engines/switch.lock</code> 是个 0 字节残留文件（2026-10-17 12:44），不是运行中的锁。</p>
+<h2 id="15-4-两套-profile：legacy-与-ssebed">15.4 两套 profile：legacy 与 ssebed</h2>
+<p><code>deploy/engines/profiles/&lt;name&gt;/profile.json</code> 描述&quot;这套引擎在哪、二进制是谁、每条 lane 用哪份配置&quot;：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>legacy</th>
+<th>ssebed</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>home</code></td>
+<td><code>/home/cloud/Strata</code></td>
+<td><code>/home/cloud/SSEStraBed</code></td>
+</tr>
+<tr>
+<td><code>binary</code></td>
+<td><code>/home/cloud/Strata/build/strata</code></td>
+<td><code>/home/cloud/SSEStraBed/build/strata</code></td>
+</tr>
+<tr>
+<td><code>server_py</code></td>
+<td><code>/home/cloud/Strata/serve/server.py</code></td>
+<td><strong>同一个文件</strong>（服务层不随引擎换）</td>
+</tr>
+<tr>
+<td><code>python</code></td>
+<td><code>/home/cloud/Strata/.venv/bin/python</code></td>
+<td>同一个 venv</td>
+</tr>
+<tr>
+<td>lane a</td>
+<td>port 8091 / taskset 0-15 / gpu 0 / <code>Strata/strata-iq3_xxs-a.json</code></td>
+<td>port 8091 / taskset 0-15 / gpu 0 / <code>profiles/ssebed/strata-a.json</code></td>
+</tr>
+<tr>
+<td>lane b</td>
+<td>port 8092 / taskset 38-53 / gpu 1 / <code>Strata/strata-iq3_xxs-b.json</code></td>
+<td>port 8092 / taskset 38-53 / gpu 1 / <code>profiles/ssebed/strata-b.json</code></td>
+</tr>
+<tr>
+<td><code>vision_exe</code></td>
+<td><code>/home/cloud/Strata/engine/strata-vision</code></td>
+<td>同一个</td>
+</tr>
+</tbody>
+</table>
+<p><strong>要点</strong>：换引擎只换 <code>binary</code> + <code>config</code>（+ <code>CWD</code>），<strong>服务层 Python 与 venv 不变</strong>。<br>
+这就是为什么&quot;引擎切换&quot;能做成按 lane 滚动而不是整体重部署（16 章）。</p>
+<p>配置文件里含明文 api_key（引擎自身的鉴权）——<strong>值不进书、不进 git</strong>（17 章红线 4）；<br>
+<code>profiles/ssebed/strata-*.json</code> 权限是 0600。</p>
+<h2 id="15-5-布局切换与自动恢复">15.5 布局切换与自动恢复</h2>
+<p><code>Strata/layout.sh dual|split|status</code>（注释原文）：</p>
+<pre><code>#   layout.sh dual    每卡一个独立实例：GPU0→8091、GPU1→8092，网关按会话粘性分流
+#   layout.sh split   现生产：一个实例跨两卡分层切分（8090）
+#   layout.sh status  看当前是哪套、各实例健康
+# 切换会停服：dual 起两个实例各需 2-3 分钟加载。
+</code></pre>
+<blockquote>
+<p>⚠️ <strong>注释里的&quot;现生产&quot;已经过期</strong>：<code>~/deploy/layout.mode</code> 当前内容是 <strong><code>dual</code></strong>（2026-10-10 起），<br>
+split 才是可回退的实验布局。脚本注释没跟着改——读脚本时要带着这个警觉（18 章&quot;注释腐烂&quot;）。</p>
+</blockquote>
+<p><code>dual</code> 分支做的事（顺序有意义）：</p>
+<pre><code>echo dual &gt; ~/deploy/layout.mode
+supervisorctl reread &amp;&amp; update          # 让 conf 变更生效
+stop strata                             # 先停切分实例，腾出两张卡
+set_proxy dual                          # 改 rag-proxy/config.json：upstream=8091，upstreams=[8091,8092]
+restart rag-proxy                       # 网关读新上游表
+start strata-a ; start strata-b        # 两个实例并行加载（各 2-3 分钟）
+轮询 /health 最多 60 次 × 5s，两个都 ok 才算完
+</code></pre>
+<p><code>split</code> 分支是镜像操作（stop a/b → set_proxy split → restart rag-proxy → start strata → 轮询 8090）。</p>
+<p><strong><code>layout-restore.sh</code> 全文只有四行逻辑</strong>：</p>
+<pre><code class="language-bash">MODE=$(cat /home/cloud/deploy/layout.mode 2&gt;/dev/null || echo split)
+if [ &quot;$MODE&quot; = dual ] &amp;&amp; ! curl -sf --max-time 5 -H &quot;Authorization: Bearer $(cat ~/logs/strata-api-key.txt)&quot; \
+      http://127.0.0.1:8091/health &gt;/dev/null; then
+  /home/cloud/Strata/layout.sh dual
+fi
+</code></pre>
+<p>它存在的原因写在注释里：<strong>dual 的 a/b 是 <code>autostart=false</code>，不恢复就断链</strong>——<br>
+pod 重建后 supervisord 只会自动起 <code>strata</code> 与 <code>rag-proxy</code>，两条 lane 不会自己活过来。</p>
+<h2 id="15-6-日志与留档：谁写哪">15.6 日志与留档：谁写哪</h2>
+<table>
+<thead>
+<tr>
+<th>路径</th>
+<th>内容</th>
+<th>谁写</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>~/deploy/logs/&lt;program&gt;.{out,err}.log</code>（maxbytes 20MB × 3 backups）</td>
+<td>进程 stdout/stderr</td>
+<td>supervisord</td>
+</tr>
+<tr>
+<td><code>~/deploy/logs/supervisord.log</code></td>
+<td>supervisor 自身</td>
+<td>supervisord</td>
+</tr>
+<tr>
+<td><code>~/Strata/strata-iq3_xxs-b.log</code>（52 MB，2026-10-19 17:36 仍在写）</td>
+<td><strong>B lane 引擎明细</strong>：<code>prompt N = R reused + F read</code>、<code>conversation cache: … evictions=K</code>、命中率、KV streaming</td>
+<td>引擎（legacy 配置里的 <code>log</code> 字段）</td>
+</tr>
+<tr>
+<td><code>~/SSEStraBed/logs/strata-iq3_xxs-a.log</code></td>
+<td><strong>A lane 引擎明细</strong>（ssebed 配置 <code>&quot;log&quot;: &quot;/home/cloud/SSEStraBed/logs/…&quot;</code>）</td>
+<td>引擎</td>
+</tr>
+<tr>
+<td><code>~/Strata/strata-iq3_xxs-a.log</code>（最后写于 2026-10-17 12:27）</td>
+<td>A lane 换引擎<strong>之前</strong>的日志，已停更</td>
+<td>旧配置</td>
+</tr>
+<tr>
+<td><code>~/logs/infer-segs/&lt;日期&gt;/seg-*.jsonl.gz</code></td>
+<td>每请求留档分段（gzip）</td>
+<td>serve 的 <code>infer_store</code></td>
+</tr>
+<tr>
+<td><code>~/logs/infer.db</code>（+ <code>-wal</code> / <code>-shm</code>）</td>
+<td>请求留档索引（SQLite WAL）</td>
+<td>serve</td>
+</tr>
+<tr>
+<td><code>~/logs/chats/</code></td>
+<td>会话记录</td>
+<td>服务层</td>
+</tr>
+<tr>
+<td><code>~/logs/strata-api-key.txt</code></td>
+<td>引擎鉴权 key（<strong>不进书、不进 git</strong>）</td>
+<td>部署时生成</td>
+</tr>
+<tr>
+<td><code>~/logs/minio-upload-*.log</code></td>
+<td>每次 MinIO 备份的上传日志</td>
+<td>备份脚本</td>
+</tr>
+<tr>
+<td><code>~/bench/runs/…</code></td>
+<td>压测原始数据（13 章）</td>
+<td>压测台</td>
+</tr>
+</tbody>
+</table>
+<p><strong>取证时的对齐技巧</strong>（12 章 §12.7 说过，这里再钉一次）：引擎明细行<strong>没有时间戳</strong>，<br>
+要跨进程对齐必须借 <code>~/deploy/logs/rag-proxy.out.log</code> 里的 <code>ctx[...]</code> 时间戳。</p>
+<h2 id="15-7-Pod-重建时会发生什么">15.7 Pod 重建时会发生什么</h2>
+<p>按 <code>memory: pod-deploy-mechanism</code>（PID1 cmdline 里藏着的行为，代码里看不到）：</p>
+<ol>
+<li><code>/home/cloud</code> 是持久化 hostPath → 代码、配置、日志、<code>layout.mode</code>、<code>active-*.env</code> 都还在；</li>
+<li>PID1（tini→bash→sshd）自动校验 <code>~/deploy/supervisord.pid</code>（用 <code>/proc/&lt;pid&gt;/cmdline</code> 防陈旧 pidfile 误判），<br>
+conf 存在就 <code>supervisord -c</code>；</li>
+<li>supervisord 起 <code>strata</code>（autostart=true）、<code>rag-proxy</code>、<code>layout-restore</code>；</li>
+<li><code>layout-restore</code> 发现 <code>layout.mode=dual</code> 且 8091 不健康 → 跑 <code>layout.sh dual</code> → 起 a/b、改代理上游、重启代理；</li>
+<li>引擎重新加载模型（<strong>分钟级</strong>，15.9）；</li>
+<li><strong>内存态全丢</strong>：网关的会话/嵌入缓存/组装块、引擎的 prompt 检查点与停车（12 章）——<br>
+第一个请求必然冷读。</li>
+</ol>
+<p><strong>要现场重载配置</strong>：<code>supervisorctl -c ~/deploy/supervisord.conf reread / update / restart &lt;name&gt;</code>。</p>
+<h2 id="15-8-一个与文档不符的事实：context-json-不在">15.8 一个与文档不符的事实：<code>context.json</code> 不在</h2>
+<p><a target="_blank" rel="noopener" href="http://CLAUDE.md">CLAUDE.md</a> §4 说平台把上下文写进 <code>~/deploy/context.json</code>。<strong>2026-10-19 实测：该文件不存在</strong><br>
+（<code>find /home/cloud /shared -maxdepth 5 -name context.json</code> 无结果），裸 SSH shell 里<br>
+<code>$PORT</code> / <code>$PUBLIC_URL</code> / <code>$GPU_IDS</code> 等也全部为空——这与 <a target="_blank" rel="noopener" href="http://CLAUDE.md">CLAUDE.md</a> §4 自己的提醒一致<br>
+（“SSH 进来的裸 shell 通常看不到这些变量，它们只给 supervisor 拉起的部署进程”）。</p>
+<p><strong>本书的硬件事实因此不引 context.json</strong>，改用可当场复核的来源：<br>
+<code>/sys/fs/cgroup/cpu.max</code>（32 核）、<code>/proc/meminfo</code>（216 GiB）、<code>nvidia-smi</code>（2×4090D 24G）、<br>
+<code>/shared/pressure/pressure.json</code>（宿主机负载）。<br>
+需要公网地址时用 <code>$PUBLIC_URL</code>（部署进程内）而不是硬编码（<a target="_blank" rel="noopener" href="http://CLAUDE.md">CLAUDE.md</a> §1）。</p>
+<h2 id="15-9-改一个东西要重启谁（代价表）">15.9 改一个东西要重启谁（代价表）</h2>
+<table>
+<thead>
+<tr>
+<th>改动</th>
+<th>动作</th>
+<th>停机代价</th>
+<th>是否需用户同意</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网关路由 / 守卫 / 文档抽取（<code>rag-proxy/config.json</code>、<code>rag_proxy.py</code>）</td>
+<td><code>supervisorctl restart rag-proxy</code></td>
+<td><strong>秒级</strong>（10-19 15:33 那次即如此）</td>
+<td>需要（服务对外在线）</td>
+</tr>
+<tr>
+<td>服务层参数（<code>serve/server.py</code>、lane 的 <code>*.json</code>，如 <code>fit_max_tokens</code>）</td>
+<td>重启该 lane（<code>restart strata-a</code>）</td>
+<td><strong>1–13 分钟</strong>（模型重载）</td>
+<td>需要</td>
+</tr>
+<tr>
+<td>换引擎二进制（legacy ↔ ssebed）</td>
+<td><code>switch_engine.py</code> 写 <code>active-&lt;lane&gt;.env</code> + 重启该 lane</td>
+<td>1–3 分钟（设计口径）；实测 A 冷启动 <strong>6 分 36 秒</strong></td>
+<td>需要</td>
+</tr>
+<tr>
+<td>换布局（dual ↔ split）</td>
+<td><code>layout.sh</code></td>
+<td>两实例各 2–3 分钟加载，<strong>期间该 lane 不可用</strong></td>
+<td>需要</td>
+</tr>
+<tr>
+<td>改 <code>taskset</code> 核段</td>
+<td>改 <code>run-*.sh</code> 或 <code>active-*.env</code></td>
+<td>同上，且<strong>错了会崩回 9 tok/s</strong></td>
+<td>需要 + 复查</td>
+</tr>
+<tr>
+<td>只改前端静态文件（<code>Strata/serve/web/</code>）</td>
+<td>无需重启（serve 直接读盘）</td>
+<td>0</td>
+<td>否（但要确认构建产物路径）</td>
+</tr>
+<tr>
+<td>引擎 C++ 源码</td>
+<td>重编 + 换二进制 + 重启 lane</td>
+<td>编译 + 1–3 分钟</td>
+<td>需要</td>
+</tr>
+</tbody>
+</table>
+<p><strong>网关重启与引擎重启的代价差三个数量级</strong>——这是&quot;把逻辑尽量往网关放&quot;的运维理由（04 章），<br>
+也是本项目当天能修完窗口守卫事故、而四个 prefill 旋钮拖到今天的原因。</p>
+<h2 id="15-10-本章小结">15.10 本章小结</h2>
+<ul>
+<li>五个 supervisord 程序 + 每个 serve fork 出的引擎与 vision 子进程；<strong>公网只有 :8080</strong>。</li>
+<li><code>run-*.sh</code> 是薄分发器：supervisord 的 command 永不变，换引擎只是写一个 <code>active-&lt;lane&gt;.env</code>。<br>
+<strong>10-21 之前 B lane 没有这个文件</strong>，跑的是 legacy 默认值；当天补上后两条 lane 同跑 ssebed <code>build 5</code>。</li>
+<li>布局状态存在 <code>~/deploy/layout.mode</code>（当前 <code>dual</code>），<code>layout-restore.sh</code> 负责 pod 重建后把它接回来；<br>
+<code>layout.sh</code> 的注释里&quot;split 是现生产&quot;已过期。</li>
+<li>日志分三层：supervisord 的 out/err、引擎明细（A 在 <code>SSEStraBed/logs/</code>、B 在 <code>Strata/</code>）、<br>
+请求留档（<code>~/logs/infer-segs</code> + <code>infer.db</code>）。跨层对齐靠代理时间戳。</li>
+<li><strong>重启代价决定改动落点</strong>：网关秒级、引擎分钟级。凡是能放进网关的，就不要放进引擎。</li>
+</ul>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本章已读</span></button><a class="book-btn book-btn-ghost" href="/books/sse-strata/"><i class="fas fa-list"></i> 全部章节</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/books/sse-strata/14-measured-numbers/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一章</span><strong>第 14 章 实测数字总表</strong></a><a class="book-pager-link next" href="/books/sse-strata/16-engine-switch/"><span class="book-pager-dir">下一章 <i class="fas fa-arrow-right"></i></span><strong>第 16 章 引擎切换与停机边界</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-2"><a class="book-toc-link" href="#15-1-%E6%8B%93%E6%89%91%EF%BC%9A%E4%BA%94%E4%B8%AA%E8%BF%9B%E7%A8%8B%E3%80%81%E4%B8%89%E4%B8%AA%E7%AB%AF%E5%8F%A3">15.1 拓扑：五个进程、三个端口</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#15-2-supervisord-%E7%9A%84%E4%BA%94%E4%B8%AA%E7%A8%8B%E5%BA%8F">15.2 supervisord 的五个程序</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#15-3-%E8%96%84%E5%88%86%E5%8F%91%E5%99%A8%EF%BC%9Arun-sh-%E5%8F%AA%E5%86%B3%E5%AE%9A-%E8%B7%91%E5%93%AA%E5%A5%97%E5%BC%95%E6%93%8E">15.3 薄分发器： run-*.sh 只决定 跑哪套引擎</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#15-4-%E4%B8%A4%E5%A5%97-profile%EF%BC%9Alegacy-%E4%B8%8E-ssebed">15.4 两套 profile：legacy 与 ssebed</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#15-5-%E5%B8%83%E5%B1%80%E5%88%87%E6%8D%A2%E4%B8%8E%E8%87%AA%E5%8A%A8%E6%81%A2%E5%A4%8D">15.5 布局切换与自动恢复</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#15-6-%E6%97%A5%E5%BF%97%E4%B8%8E%E7%95%99%E6%A1%A3%EF%BC%9A%E8%B0%81%E5%86%99%E5%93%AA">15.6 日志与留档：谁写哪</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#15-7-Pod-%E9%87%8D%E5%BB%BA%E6%97%B6%E4%BC%9A%E5%8F%91%E7%94%9F%E4%BB%80%E4%B9%88">15.7 Pod 重建时会发生什么</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#15-8-%E4%B8%80%E4%B8%AA%E4%B8%8E%E6%96%87%E6%A1%A3%E4%B8%8D%E7%AC%A6%E7%9A%84%E4%BA%8B%E5%AE%9E%EF%BC%9Acontext-json-%E4%B8%8D%E5%9C%A8">15.8 一个与文档不符的事实： context.json 不在</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#15-9-%E6%94%B9%E4%B8%80%E4%B8%AA%E4%B8%9C%E8%A5%BF%E8%A6%81%E9%87%8D%E5%90%AF%E8%B0%81%EF%BC%88%E4%BB%A3%E4%BB%B7%E8%A1%A8%EF%BC%89">15.9 改一个东西要重启谁（代价表）</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#15-10-%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93">15.10 本章小结</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

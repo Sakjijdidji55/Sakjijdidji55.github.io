@@ -1,0 +1,755 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第 7 章 专家：三级存储与命中率 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MoE 大模型低成本部署框架 · 第 7 章 专家：三级存储与命中率">
+<meta property="og:type" content="website">
+<meta property="og:title" content="第 7 章 专家：三级存储与命中率">
+<meta property="og:url" content="https://sakjijdidji55.github.io/books/sse-strata/07-expert-tiers/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="MoE 大模型低成本部署框架 · 第 7 章 专家：三级存储与命中率">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-10-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-21T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/books/sse-strata/07-expert-tiers/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第 7 章 专家：三级存储与命中率',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">第 7 章 专家：三级存储与命中率</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">第 7 章 专家：三级存储与命中率</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-strata" data-chapter="07-expert-tiers" data-total="25" data-prev="/books/sse-strata/06-engine-startup/" data-next="/books/sse-strata/08-forward-pass/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/books/sse-strata/">MoE 大模型低成本部署框架</a><div class="book-sidebar-sub">25 章 · 约 5 小时 17 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 25</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选章节..." data-book-filter aria-label="筛选章节"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="intro"><a class="book-chapter-link" href="/books/sse-strata/intro/" data-chapter-link="intro"><span class="book-chapter-index">00</span><span class="book-chapter-name">导言：这本书回答什么</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 1 部 全景与约束</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="01-overview"><a class="book-chapter-link" href="/books/sse-strata/01-overview/" data-chapter-link="01-overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">第 1 章 这套系统是什么</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="02-constraints"><a class="book-chapter-link" href="/books/sse-strata/02-constraints/" data-chapter-link="02-constraints"><span class="book-chapter-index">02</span><span class="book-chapter-name">第 2 章 硬约束如何塑造了设计</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 2 部 请求的一生</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="03-request-lifecycle"><a class="book-chapter-link" href="/books/sse-strata/03-request-lifecycle/" data-chapter-link="03-request-lifecycle"><span class="book-chapter-index">03</span><span class="book-chapter-name">第 3 章 一个请求的一生</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 3 部 RAG 网关：唯一公网面</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="04-gateway-routing"><a class="book-chapter-link" href="/books/sse-strata/04-gateway-routing/" data-chapter-link="04-gateway-routing"><span class="book-chapter-index">04</span><span class="book-chapter-name">第 4 章 网关：分流与守卫</span><span class="book-chapter-time">19′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="05-gateway-retrieval"><a class="book-chapter-link" href="/books/sse-strata/05-gateway-retrieval/" data-chapter-link="05-gateway-retrieval"><span class="book-chapter-index">05</span><span class="book-chapter-name">第 5 章 网关：检索组装与漂移重建</span><span class="book-chapter-time">15′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 4 部 引擎内核</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="06-engine-startup"><a class="book-chapter-link" href="/books/sse-strata/06-engine-startup/" data-chapter-link="06-engine-startup"><span class="book-chapter-index">06</span><span class="book-chapter-name">第 6 章 引擎启动与内存计划</span><span class="book-chapter-time">18′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="07-expert-tiers"><a class="book-chapter-link is-current" href="/books/sse-strata/07-expert-tiers/" data-chapter-link="07-expert-tiers" aria-current="page"><span class="book-chapter-index">07</span><span class="book-chapter-name">第 7 章 专家：三级存储与命中率</span><span class="book-chapter-time">20′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="08-forward-pass"><a class="book-chapter-link" href="/books/sse-strata/08-forward-pass/" data-chapter-link="08-forward-pass"><span class="book-chapter-index">08</span><span class="book-chapter-name">第 8 章 前向通路：内核、量化与 CUDA 图</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="09-prefill"><a class="book-chapter-link" href="/books/sse-strata/09-prefill/" data-chapter-link="09-prefill"><span class="book-chapter-index">09</span><span class="book-chapter-name">第 9 章 prefill：最大的瓶颈</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="10-speculative-decode"><a class="book-chapter-link" href="/books/sse-strata/10-speculative-decode/" data-chapter-link="10-speculative-decode"><span class="book-chapter-index">10</span><span class="book-chapter-name">第 10 章 投机解码与批槽</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="11-layer-split"><a class="book-chapter-link" href="/books/sse-strata/11-layer-split/" data-chapter-link="11-layer-split"><span class="book-chapter-index">11</span><span class="book-chapter-name">第 11 章 多卡与层切分</span><span class="book-chapter-time">13′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 5 部 会话记忆</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="12-prefix-cache"><a class="book-chapter-link" href="/books/sse-strata/12-prefix-cache/" data-chapter-link="12-prefix-cache"><span class="book-chapter-index">12</span><span class="book-chapter-name">第 12 章 前缀缓存与会话停车</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 6 部 测试台与数字</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="13-benchmark-rig"><a class="book-chapter-link" href="/books/sse-strata/13-benchmark-rig/" data-chapter-link="13-benchmark-rig"><span class="book-chapter-index">13</span><span class="book-chapter-name">第 13 章 测试台：数字是怎么挣出来的</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="14-measured-numbers"><a class="book-chapter-link" href="/books/sse-strata/14-measured-numbers/" data-chapter-link="14-measured-numbers"><span class="book-chapter-index">14</span><span class="book-chapter-name">第 14 章 实测数字总表</span><span class="book-chapter-time">20′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 7 部 运维</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="15-deploy-topology"><a class="book-chapter-link" href="/books/sse-strata/15-deploy-topology/" data-chapter-link="15-deploy-topology"><span class="book-chapter-index">15</span><span class="book-chapter-name">第 15 章 部署与进程拓扑</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="16-engine-switch"><a class="book-chapter-link" href="/books/sse-strata/16-engine-switch/" data-chapter-link="16-engine-switch"><span class="book-chapter-index">16</span><span class="book-chapter-name">第 16 章 引擎切换与停机边界</span><span class="book-chapter-time">14′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="17-redlines"><a class="book-chapter-link" href="/books/sse-strata/17-redlines/" data-chapter-link="17-redlines"><span class="book-chapter-index">17</span><span class="book-chapter-name">第 17 章 红线与协作约定</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 8 部 复盘与前方</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="18-incidents"><a class="book-chapter-link" href="/books/sse-strata/18-incidents/" data-chapter-link="18-incidents"><span class="book-chapter-index">18</span><span class="book-chapter-name">第 18 章 事故复盘</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="19-open-questions"><a class="book-chapter-link" href="/books/sse-strata/19-open-questions/" data-chapter-link="19-open-questions"><span class="book-chapter-index">19</span><span class="book-chapter-name">第 19 章 未解问题与路线图</span><span class="book-chapter-time">13′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 9 部 解剖与动刀（10-21 增补）</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="20-decode-window"><a class="book-chapter-link" href="/books/sse-strata/20-decode-window/" data-chapter-link="20-decode-window"><span class="book-chapter-index">20</span><span class="book-chapter-name">第 20 章 解码窗口的解剖：那 92.5 毫秒去哪了</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="21-refactor-handbook"><a class="book-chapter-link" href="/books/sse-strata/21-refactor-handbook/" data-chapter-link="21-refactor-handbook"><span class="book-chapter-index">21</span><span class="book-chapter-name">第 21 章 改造手册：M0–M4</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app-a-source-map"><a class="book-chapter-link" href="/books/sse-strata/app-a-source-map/" data-chapter-link="app-a-source-map"><span class="book-chapter-index">23</span><span class="book-chapter-name">附录 A 源码入口地图</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-b-knobs"><a class="book-chapter-link" href="/books/sse-strata/app-b-knobs/" data-chapter-link="app-b-knobs"><span class="book-chapter-index">24</span><span class="book-chapter-name">附录 B 旋钮表</span><span class="book-chapter-time">15′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-c-glossary"><a class="book-chapter-link" href="/books/sse-strata/app-c-glossary/" data-chapter-link="app-c-glossary"><span class="book-chapter-index">25</span><span class="book-chapter-name">附录 C 名词表</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/books/"><i class="fas fa-arrow-left"></i> 返回书架</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开章节目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/books/sse-strata/">MoE 大模型低成本部署框架</a><i class="fas fa-angle-right"></i><span>第 7 章 专家：三级存储与命中率</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">CHAPTER 07</span><h1>第 7 章 专家：三级存储与命中率</h1><div class="book-chapter-meta">20 分钟阅读 · 4,690 字</div></div><blockquote>
+<p>这一章讲这台机器上<strong>最大的单项成本</strong>，以及围绕它建立的一整套测量与决策。<br>
+核心文件：<code>include/strata/core/expert_cache.hpp</code>、<code>include/strata/core/expert_source.hpp</code>、<br>
+<code>src/kernels/cpu/pool.hpp</code>、<code>src/kernels/cuda/s2_expert_grouped.cu</code>。</p>
+</blockquote>
+<hr>
+<h2 id="7-1-问题有多大：引擎自己算的账">7.1 问题有多大：引擎自己算的账</h2>
+<p><code>expert_cache.hpp</code> 开头有一段标题就叫 <strong>WHY THIS EXISTS, IN ONE PARAGRAPH</strong> 的注释，<br>
+这是全书最重要的一段量化论证：</p>
+<blockquote>
+<p>The CPU expert pool is the engine’s largest single cost: measured,<br>
+<strong>663.6 MB of expert bytes per token at ~40 GB/s = 16.2 ms</strong>, on a token of ~53 ms, and<br>
+<code>test_expert_pool</code> says the pipeline hides <strong>1.055 ms of 19.035</strong> -<br>
+<strong>the CPU work is 96% exposed because the residual chain is strictly serial.</strong><br>
+The only way past it is to stop reading those bytes: put some of the 48 × 512 experts in VRAM<br>
+and let the GPU compute them, so the CPU reads only the misses.</p>
+</blockquote>
+<p>拆开看：</p>
+<table>
+<thead>
+<tr>
+<th>量</th>
+<th>值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>每 token 要读的专家字节</td>
+<td>663.6 MB</td>
+<td>48 层 × 10 专家 × 每专家 blob</td>
+</tr>
+<tr>
+<td>CPU 内存带宽</td>
+<td>~40 GB/s</td>
+<td>实际能达到的读速</td>
+</tr>
+<tr>
+<td>由此得到的时间</td>
+<td>16.2 ms</td>
+<td>纯读专家</td>
+</tr>
+<tr>
+<td>一个 token 总耗时</td>
+<td>~53 ms</td>
+<td>端到端</td>
+</tr>
+<tr>
+<td>流水线隐藏掉的时间</td>
+<td>1.055 ms / 19.035 ms</td>
+<td><strong>96% 暴露</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>「96% 暴露」是这一章的关键数字。</strong> 直觉上多线程 CPU 池可以和 GPU 重叠，<br>
+但门控残差链是严格串行的：下一层要等这一层的专家结果。所以重叠几乎没有发生。</p>
+<p>「唯一的出路是停止读这些字节」——这句话决定了后面所有的设计。</p>
+<hr>
+<h2 id="7-2-三级存储">7.2 三级存储</h2>
+<pre><code>第 1 级  VRAM 热缓存      4105 槽（auto 算出）      命中 → GPU 直接算
+第 2 级  RAM 全量 arena   42.9 GB 专家              未命中 → CPU 内核读
+第 3 级  磁盘             只读 /shared              内存不足时回落
+</code></pre>
+<p>第 2 级的总量来自 <code>native_experts.txt</code> 头部：<code>n_expert 512, total 42912972800</code>（约 42.9 GB）。</p>
+<p>第 3 级在本 Pod 上基本不可用（约束 4：机械盘随机读是性能命门），<br>
+所以引擎提供了 <code>--resident-experts</code> / <code>--resident-cpu-experts</code> 把 GPU 没装下的专家一次性读进 RAM<br>
+（<code>generate.cpp:4118</code>）：</p>
+<blockquote>
+<p>the experts the GPU cache does not hold are copied from <code>experts.bin</code> into RAM once, so no decode or prompt<br>
+step reads the file (<strong>the plain mmap mode reads them through the OS file cache, which a small-RAM PC keeps<br>
+giving back to the SSD</strong>).</p>
+</blockquote>
+<p>括号里那句是本项目的通用教训：<strong>依赖 OS 页缓存的前提是内存真的够</strong>。<br>
+内存紧张时 OS 会把缓存换出去，于是「mmap 应该够快」这个假设悄悄失效。</p>
+<hr>
+<h2 id="7-3-命中率：一个被测量方法救过的数字">7.3 命中率：一个被测量方法救过的数字</h2>
+<p><code>expert_cache.hpp</code> 接着写：</p>
+<blockquote>
+<p><strong>THE DESIGN IS SIZED AGAINST MEASUREMENTS, NOT AGAINST THE PLAN’S ASSUMPTIONS.</strong><br>
+<code>h_expert</code> at 4,105 slots, <strong>ten-fold leave-one-out: 0.6447 [0.6110, 0.6750]</strong> (<code>tools/routing_kfold.py</code>).<br>
+The 0.6573 the README published is <strong>in-sample</strong> and 0.4720 measured a single-prompt <strong>CORPUS</strong>, not the metric.</p>
+</blockquote>
+<p>三个数字，三种测量方法，结论差别很大：</p>
+<table>
+<thead>
+<tr>
+<th>数字</th>
+<th>方法</th>
+<th>问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.6573</td>
+<td>样本内（in-sample）</td>
+<td>用训练数据评估自己，偏高</td>
+</tr>
+<tr>
+<td>0.4720</td>
+<td>单一 prompt 语料</td>
+<td>测的是「语料」不是「指标」</td>
+</tr>
+<tr>
+<td><strong>0.6447 [0.6110, 0.6750]</strong></td>
+<td><strong>十折留一交叉验证</strong></td>
+<td>可信，带置信区间</td>
+</tr>
+</tbody>
+</table>
+<p><strong>同一件事的三个数字，只有带置信区间的那个能用来做设计决策。</strong><br>
+README 里那个 0.6573 曾经被发表过——它没有错到离谱，但它不足以支撑「开 4105 个槽」这种决定。</p>
+<h3 id="显存够不够：实测优先于计划">显存够不够：实测优先于计划</h3>
+<blockquote>
+<p>VRAM, measured on a live run rather than at startup: <strong>6414 MiB free</strong> with the engine at steady state,<br>
+against <strong>5413 MiB</strong> for 4,105 slots. It fits, with ~1 GB spare.<br>
+<code>strata-device</code>’s planner agrees and says FITS, <strong>but the planner runs before the dense arena exists</strong>,<br>
+so the live figure is the one that counts.</p>
+</blockquote>
+<p>规划器算出的结论与实测一致，但<strong>它算的时机不对</strong>（在 dense arena 存在之前）。<br>
+所以本书把这条写成规则：<strong>任何显存预算都要有一次「稳态实测」作为最终依据。</strong></p>
+<h3 id="为什么必须三路切分">为什么必须三路切分</h3>
+<blockquote>
+<p><code>h_layer</code> held-out is <strong>0.0456</strong> - only 4.6% of (layer, token) pairs have all ten experts resident -<br>
+so this cannot be a per-layer grouped kernel and <strong>the three-way split is not an optimisation</strong>.</p>
+</blockquote>
+<p>这是「用测量否决一个更简单的方案」的干净例子。按层做分组内核看起来更整齐，<br>
+但只有 4.6% 的层能凑齐全部 10 个常驻专家，剩下 95.4% 都要走混合路径。<br>
+所以「把命中的和未命中的分开处理」不是优化，是必需。</p>
+<hr>
+<h2 id="7-4-注释腐烂：一处已核实的过时说明">7.4 注释腐烂：一处已核实的过时说明</h2>
+<p><code>expert_cache.hpp</code> 里有一段 <strong>WHAT THIS FILE IS AND IS NOT, TODAY</strong>：</p>
+<blockquote>
+<p>It is the SLOT STORAGE and the RESIDENCY TABLE … It does <strong>not</strong> yet compute anything -<br>
+<strong><code>moe_hit_grouped_s2</code> does not exist</strong> and the hit/miss split is not wired into the graph -<br>
+so with the cache on and nothing consuming it, <strong>the engine is slower by the fill cost and faster by nothing.</strong><br>
+That is stated here rather than discovered from a benchmark, and it is why <code>--expert-cache</code> defaults to 0.</p>
+</blockquote>
+<p><strong>这段话今天已经不成立了。</strong> 本书核实：</p>
+<ul>
+<li><code>moe_hit_grouped_s2</code> <strong>存在</strong>，并有专门的对照测试 <code>src/kernels/s2_expert_grouped_parity.cpp:10-12</code><br>
+（三个变体：host count / device count / verify window 多 token）。</li>
+<li>命中路径在 <code>generate.cpp:3401-3447</code> 被完整接线，<code>mem_mark(&quot;the R4 hit path&quot;)</code> 在 <code>:3447</code>。</li>
+<li>启动时会打印 <code>R4 hit path ON - resident experts are computed on the GPU</code>。</li>
+<li><code>--expert-cache</code> 的帮助文本给出了实测收益（见 §7.5）。</li>
+</ul>
+<p><strong>这段注释本身写得非常好</strong>——它明确说了「今天它还不计算任何东西」，<br>
+并解释了为什么默认值是 0。它的问题只是<strong>没有随代码更新</strong>。</p>
+<p>本书把这一处保留下来，作为一条纪律：</p>
+<blockquote>
+<p><strong>带时间状态的注释（“today”、“not yet”、“currently”）在代码变更时必须同步改，否则它会变成误导。</strong><br>
+读代码时看到这类词，先去验证它今天还成立不成立。</p>
+</blockquote>
+<p>生产配置用的是 <code>--expert-cache auto</code>（不是默认的 0），这也印证了状态已经变化。</p>
+<hr>
+<h2 id="7-5-槽位分配策略：2-97-与-70-4-的差别">7.5 槽位分配策略：2.97% 与 70.4% 的差别</h2>
+<p><code>--expert-cache</code> 帮助文本里记了一个非常值得学的失败：</p>
+<blockquote>
+<p><code>--expert-cache-per-layer</code> R4.2g: give each layer its OWN slots instead of letting the first position<br>
+take all of them. The default policy fills in arrival order from one shared counter, so<br>
+<strong>256 slots went to ~26 layers of position 0</strong> and measured <strong>2.97%</strong>.<br>
+Per-layer, the same routing gives <strong>21.4%</strong> at 8 slots/layer and <strong>70.4%</strong> at 64.</p>
+</blockquote>
+<p>同一个缓存、同样的路由，只是分配策略不同：</p>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>槽数</th>
+<th>命中率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全局共享计数器、按到达顺序填</td>
+<td>256</td>
+<td><strong>2.97%</strong></td>
+</tr>
+<tr>
+<td>每层独立槽位</td>
+<td>8/层</td>
+<td>21.4%</td>
+</tr>
+<tr>
+<td>每层独立槽位</td>
+<td>64/层</td>
+<td><strong>70.4%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>失败原因一句话：<strong>「按到达顺序填」会让最先到达的位置吃掉全部容量。</strong><br>
+48 层 × 512 专家这种结构下，「到达顺序」几乎等价于「层号顺序」，<br>
+于是 256 个槽集中给了约 26 层的 position 0，其余层一个都没有。</p>
+<p><strong>任何「按到达顺序分配有限资源」的策略，都要先问一句：到达顺序会不会系统性偏向某一类。</strong></p>
+<p>配套的 profile 填充也修过同类问题（<code>generate.cpp:3169</code>，issue <code>#369</code>）：</p>
+<blockquote>
+<p>per layer, a full layer skips only its own pairs - each layer takes its hottest experts until its range is full<br>
+(<strong>one full layer used to end the whole fill, leaving most layers empty</strong>)</p>
+</blockquote>
+<h3 id="实测收益">实测收益</h3>
+<p><code>--expert-cache</code> 帮助文本给出的数字：</p>
+<blockquote>
+<p><code>--expert-cache N</code> R4: keep N expert blobs resident in VRAM and compute their rows on the GPU via<br>
+<code>moe_hit_grouped_s2</code>. DEFAULT 0. Measured at 4096 slots with <code>--expert-cache-per-layer</code>:<br>
+<strong>54.4% hits, CPU pool drain 19.1 → 10.3 ms/token, -2.7 ms/token end to end.</strong></p>
+</blockquote>
+<p>对照 §7.1 的账：CPU 池从 19.1 ms/token 降到 10.3 ms/token，端到端省 2.7 ms/token。<br>
+注意<strong>端到端省的比 CPU 池省的少</strong>（2.7 对 8.8）——因为省下来的 CPU 时间有一部分本来就被 GPU 掩盖了。<br>
+<strong>「某个组件快了 8.8 ms」不等于「整体快 8.8 ms」</strong>，这条换算关系值得记住。</p>
+<hr>
+<h2 id="7-6-契约：expert-source-hpp-的三条「错法」">7.6 契约：<code>expert_source.hpp</code> 的三条「错法」</h2>
+<p><code>expert_source.hpp</code> 头部把它的职责写得很克制：</p>
+<blockquote>
+<p>Nothing here is clever, and that is the point: the pool, the kernel and the loop are each already verified,<br>
+so this file has exactly one job - <strong>get the CONTRACT between them right.</strong><br>
+THE CONTRACT, and each clause is a way to be wrong:</p>
+</blockquote>
+<h3 id="条款一：x-f-每层是同一个-pinned-缓冲区">条款一：<code>x_f</code> 每层是同一个 pinned 缓冲区</h3>
+<blockquote>
+<p>Its ADDRESS never changes, so the <code>ActQ</code> cannot be cached by pointer -<br>
+a cache keyed on <code>x_f</code> would quantize layer 0 and reuse it for all 47 remaining layers,<br>
+which is a <strong>finite, plausible, completely wrong token</strong>. There is no cache here at all:<br>
+the conversion is one 2560-element pass against a 0.3 ms/layer budget,<br>
+and <strong>a correct answer is worth more than the microseconds.</strong></p>
+</blockquote>
+<p>「finite, plausible, completely wrong」这个描述非常精准：结果不是 NaN、不是崩溃，<br>
+是一个完全合理但错误的 token。这类错误最难被发现。</p>
+<p>而且注释明确给出了取舍：省这点微秒不值得，正确更重要。</p>
+<h3 id="条款二：池不乘-router-权重">条款二：池不乘 router 权重</h3>
+<blockquote>
+<p><strong>THE POOL DOES NOT APPLY THE ROUTER WEIGHT.</strong> <code>moe_combine</code> (<code>src/core/layer.cpp:479</code>) sums<br>
+<code>w[i] * parts[i]</code> on the device. <code>ExpertJob::weight</code> is a diagnostic field; setting it here would<br>
+<strong>apply the weight twice, which is invisible in a single layer and compounds over 48.</strong></p>
+</blockquote>
+<p>「单层不可见、48 层累积」——这是分布式责任系统里最典型的 bug 形态。<br>
+字段名看起来该填，填了就错。注释把「这个字段只用于诊断」写死，是防止复发的唯一办法。</p>
+<h3 id="条款三：内核几何由-artifact-固定">条款三：内核几何由 artifact 固定</h3>
+<blockquote>
+<p><strong>THE KERNEL’S GEOMETRY IS FIXED BY THE ARTIFACT</strong> (<code>H = 2560</code>, <code>FF = 640</code>, <code>BLOB = 1,382,400</code>).<br>
+A different <code>n_embd</code> or a different expert width is <strong>REFUSED rather than mis-indexed</strong>,<br>
+because the blob’s internal offsets are compile-time constants and<br>
+reading a 640-wide expert as a 2560-wide one <strong>walks off the end into the next expert’s bytes without faulting.</strong></p>
+</blockquote>
+<p>「不报错、直接读进下一个专家的字节里」——所以必须显式拒绝。<br>
+这与第 06 章「形状在加载时断言」是同一原则的两处落点。</p>
+<blockquote>
+<p><strong>口径提醒</strong>：<code>BLOB = 1,382,400</code> 是 CPU 内核布局里的常量，而 <code>native_experts.txt</code> 里第 0 层 blob 是<br>
+1,868,800、第 1 层是 1,305,600。两套数字口径不同（内核布局 vs 文件里的原生量化 blob），<br>
+读代码时不要把它们当成同一个数。</p>
+</blockquote>
+<hr>
+<h2 id="7-7-CPU-池：线程数与「宿主线程也下场」">7.7 CPU 池：线程数与「宿主线程也下场」</h2>
+<p><code>--pool-workers</code> 帮助文本：</p>
+<blockquote>
+<p>R2.2: CPU expert pool worker count. Default 0 = every physical core except the one the host loop spins on<br>
+(with <code>--pool-affinity auto</code> or p-cores on a hybrid CPU: P-cores minus 1).</p>
+</blockquote>
+<p>以及一个 A/B 开关：</p>
+<blockquote>
+<p><code>--no-host-worker</code> R2.2: the A/B arm. By default <strong>the HOST THREAD joins the drain</strong>, so the pool is<br>
+six threads on six cores instead of five plus an idle core; this flag restores the five-worker form<br>
+for comparison on <code>pool phases</code>.</p>
+</blockquote>
+<p>「宿主线程也下场干活」听起来显然更好，但代码保留了 A/B 对照臂，<br>
+让它可以被测量而不是被默认接受。<strong>每个「显然更好」的优化都留一个开关来验证它确实更好。</strong></p>
+<p>生产用 <code>--pool-workers 13</code>（理由见第 2 章约束 2 与第 18 章的 9 tok/s 事故）。</p>
+<hr>
+<h2 id="7-8-PLE-表：页缓存的访问模式">7.8 PLE 表：页缓存的访问模式</h2>
+<p>PLE（逐层位置嵌入表，约 28.8 GB）走 <code>--ple-io ram</code>。相关的 A/B 开关：</p>
+<blockquote>
+<p><code>--no-ple-prefetch</code> A/B arm: read the PLE table’s sixteen rows one at a time, instead of<br>
+issuing them in one <code>PrefetchVirtualMemory</code> call.</p>
+</blockquote>
+<p>一次 <code>PrefetchVirtualMemory</code> 把 16 行一起声明，比逐行随机读对页缓存友好得多。<br>
+这条是约束 4（mlock 不可用）逼出来的具体手法：<strong>改变访问模式，而不是改变存储位置。</strong></p>
+<hr>
+<h2 id="7-9-命中率怎么被测量：用引擎自己的路由">7.9 命中率怎么被测量：用引擎自己的路由</h2>
+<p><code>generate.cpp:7682</code> 的注释给出了测量原则：</p>
+<blockquote>
+<p><strong>R4’s DISPATCH MEASUREMENT: h, ON THE ENGINE’S OWN ROUTING.</strong><br>
+No offline trace, no corpus question, no k-fold - <strong>these are the ids the router actually produced on this run.</strong><br>
+Reported as hits/lookups so it can be read directly as the h the cache would deliver,<br>
+and alongside <code>refused</code> so <strong>a full cache is visible rather than silently capping the rate.</strong></p>
+</blockquote>
+<p>输出形态：</p>
+<pre><code>R4 overlap                &lt;n&gt; of &lt;m&gt; layers the hit work was DONE when the pool returned
+R4 expert-cache hits      &lt;hits&gt; of &lt;lookups&gt; = 0.xxxx   (&lt;admitted&gt; admitted, &lt;refused&gt; refused, cache xx.xx% full)
+</code></pre>
+<p>两个细节值得学：</p>
+<ol>
+<li><strong>离线 trace 与在线路由的分布不同</strong>，所以设计期用 k-fold 估、运行期必须用引擎自己的路由复核。</li>
+<li><strong>把 <code>refused</code> 一起报出来</strong>。缓存满了会压低命中率，如果不报 <code>refused</code>，<br>
+读数字的人会以为「命中率就是 0.4」，而实际是「缓存满了、被截断了」。<br>
+<strong>让「容量限制」在指标里可见，是指标设计的基本要求。</strong></li>
+</ol>
+<p><code>R4 overlap</code> 那一行直接量化了 §7.1 说的「96% 暴露」到底还剩多少暴露。</p>
+<hr>
+<h2 id="7-10-跨卡专家层">7.10 跨卡专家层</h2>
+<p><code>--peer-device N</code> 把第二张卡当成一个自适应的专家缓存层：</p>
+<blockquote>
+<p>a second GPU as an adaptive expert-cache tier (rows over P2P; it also computes its experts’ prompt rows).<br>
+<strong>Not with <code>--layer-split</code> or <code>--expert-cache-device1..3</code>.</strong> Default output unchanged without it.</p>
+</blockquote>
+<p>配套旋钮：<code>--peer-reserve-mib</code>（默认 600）、<code>--peer-slots</code>（默认「装得下多少」）、<br>
+<code>--peer-adapt-swaps</code>、<code>--peer-prefill-rows</code>（默认一半 chunk × top-k，0 = prompt 路径留在主卡）。</p>
+<p><code>generate.cpp:3346</code>：</p>
+<blockquote>
+<p>Multi-GPU: the second GPU’s expert tier, filled with <strong>the ranked pairs the primary does not hold</strong></p>
+</blockquote>
+<p>——第二张卡填的是主卡没装下的那部分，两级缓存互补而不是重复。</p>
+<p>还有 <code>--expert-cache-device1..3</code> 与 <code>--expert-cache-remote-placement stripe|layer</code><br>
+（按 rank 条纹分布 vs 按整层分布）。</p>
+<p><strong>注意 <code>--peer-device</code> 与 <code>--layer-split</code> 互斥</strong>，这条限制是第 11 章「对称共享专家池走不通」的直接原因。</p>
+<hr>
+<h2 id="7-11-本章小结">7.11 本章小结</h2>
+<ul>
+<li>最大单项成本：每 token 读 663.6 MB 专家字节 ≈ 16.2 ms，而流水线只掩盖了 1.055/19.035 ms，<strong>96% 暴露</strong>。</li>
+<li>三级存储：VRAM 热缓存（4105 槽）→ RAM 全量 arena（42.9 GB）→ 磁盘（本 Pod 上基本不可用）。</li>
+<li>命中率必须用留一交叉验证测：0.6447 [0.6110, 0.6750]；样本内的 0.6573 与单语料的 0.4720 都不能用于设计。</li>
+<li>显存预算要有稳态实测（6414 MiB 空闲 vs 5413 MiB 需要）；规划器算的时机不对。</li>
+<li><code>h_layer</code> 只有 0.0456，所以命中/未命中三路切分是必需而非优化。</li>
+<li><strong><code>expert_cache.hpp</code> 的「<code>moe_hit_grouped_s2</code> 还不存在」已经过时</strong>：内核存在、已接线、已实测。带时间状态的注释要随代码更新。</li>
+<li>槽位分配策略决定一切：全局到达顺序 2.97% → 每层独立 21.4%（8/层）→ 70.4%（64/层）。</li>
+<li>实测收益：4096 槽 + per-layer → 54.4% 命中，CPU 池 19.1→10.3 ms/token，端到端 −2.7 ms/token。<br>
+<strong>组件省 8.8 ms ≠ 整体省 8.8 ms。</strong></li>
+<li>三条契约条款各自对应一种「错法」：按指针缓存激活、重复乘 router 权重、几何不匹配时不报错。</li>
+<li><code>--no-host-worker</code> / <code>--no-ple-prefetch</code> 这类 A/B 开关的作用是把「显然更好」变成可验证。</li>
+<li>命中率要用引擎自己的路由测，并且必须把 <code>refused</code> 一起报出来。</li>
+<li><code>--peer-device</code> 与 <code>--layer-split</code> 互斥，这条限制决定了第 11 章的结论。</li>
+</ul>
+<p><strong>下一章</strong>：<a href="08-%E5%89%8D%E5%90%91%E9%80%9A%E8%B7%AF%E4%B8%8E%E5%86%85%E6%A0%B8.md">08 前向通路：内核、量化与图</a> —— 48 层到底在算什么。</p>
+<h3 id="本章出处">本章出处</h3>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>出处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>663.6 MB / 16.2 ms / 96% 暴露</td>
+<td><code>include/strata/core/expert_cache.hpp</code> 头部；<code>test_expert_pool</code></td>
+</tr>
+<tr>
+<td>0.6447 [0.6110, 0.6750]</td>
+<td><code>tools/routing_kfold.py</code>，十折留一</td>
+</tr>
+<tr>
+<td>6414 MiB vs 5413 MiB</td>
+<td><code>expert_cache.hpp</code> 头部（稳态实测）</td>
+</tr>
+<tr>
+<td>h_layer 0.0456</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>注释已过时</td>
+<td>本次核实：<code>src/kernels/s2_expert_grouped_parity.cpp:10-12</code>、<code>generate.cpp:3401-3447</code></td>
+</tr>
+<tr>
+<td>2.97% / 21.4% / 70.4%</td>
+<td><code>generate.cpp</code> 的 <code>--expert-cache-per-layer</code> 帮助文本</td>
+</tr>
+<tr>
+<td>54.4% / 19.1→10.3 / −2.7</td>
+<td><code>generate.cpp</code> 的 <code>--expert-cache</code> 帮助文本</td>
+</tr>
+<tr>
+<td>三条契约条款</td>
+<td><code>include/strata/core/expert_source.hpp</code> 头部；<code>src/core/layer.cpp:479</code></td>
+</tr>
+<tr>
+<td>池线程与宿主下场</td>
+<td><code>generate.cpp</code> 的 <code>--pool-workers</code> / <code>--no-host-worker</code> 帮助文本</td>
+</tr>
+<tr>
+<td>PLE 预取 A/B</td>
+<td><code>generate.cpp</code> 的 <code>--no-ple-prefetch</code> 帮助文本</td>
+</tr>
+<tr>
+<td>在线命中率测量与 refused</td>
+<td><code>generate.cpp:7682</code></td>
+</tr>
+<tr>
+<td>跨卡专家层</td>
+<td><code>generate.cpp</code> 的 <code>--peer-device</code> 帮助文本；<code>generate.cpp:3346</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="7-12-2026-10-21-复核增补：三级调度在代码里的真实形态">7.12 2026-10-21 复核增补：三级调度在代码里的真实形态</h2>
+<p>本章前半写的是<strong>设计意图与测量方法</strong>（来自头文件注释与帮助文本）。换到 <code>SSEStraBed</code> 逐行复核后，<br>
+补上四件<strong>只有读实现才知道</strong>的事，其中第三件直接决定了并发天花板。</p>
+<h3 id="①-三级决策每层做一次，是一行除法">① 三级决策每层做一次，是一行除法</h3>
+<p><code>src/core/expert_source.cpp:3376-3413</code>：</p>
+<pre><code class="language-cpp">const bool pcie_ok = d.pcie_num &gt; 0 &amp;&amp; d.src-&gt;pcie_layer(d.layers);   // 本层能不能走 PCIe
+const int  m = pcie_ok ? (nmiss * d.pcie_num) &gt;&gt; 8 : 0;               // 分给 PCIe 的未命中数
+const uint8_t* dma_src[64];                                          // PCIe 取数的源指针，最多 64 个
+...
+if (miss_rank &gt;= nmiss - m &amp;&amp; fetches &lt; P.staging_cap &amp;&amp; fetches &lt; 64) { ... }
+</code></pre>
+<p><code>d.pcie_num</code> 是 <code>--pcie-frac × 256</code>（<code>&gt;&gt; 8</code> 就是除以 256）。也就是：<br>
+<strong>&quot;给 PCIe 55%&quot;不是策略，是一次整数乘法。</strong></p>
+<p><code>--pcie-frac</code> 的默认值不是一个数而是一条链：基值 0.55（原生包），<br>
+<strong>启动时先实测 PCIe 带宽再修正它</strong>（<code>generate.cpp:413/2064-2077</code>）。<br>
+lane A 实测：<code>PCIe probe: 22.7 GB/s host-&gt;device (best of 22.6 22.7 22.6 22.6) -&gt; pcie_frac 0.55 (default 0.55)</code>。<br>
+本机带宽足够，所以修正后仍是 0.55。</p>
+<blockquote>
+<p>注意与 §7.1 的口径差：那里用&quot;<strong>每 token 漏读量 × 30 GB/s</strong>&quot;反解斜率，<br>
+这里引擎自报的是 <strong>22.7 GB/s</strong> 的裸拷贝。两者不是同一个量（前者含分组/staging 开销的等效值）。<br>
+<strong>引用 PCIe 带宽时请说明是哪一个</strong>，否则 30 vs 22.7 会变成一场没有意义的争论。</p>
+</blockquote>
+<h3 id="②-硬上限-kStagingBlobs-16">② 硬上限 <code>kStagingBlobs = 16</code></h3>
+<pre><code class="language-cpp">// include/strata/core/verify.hpp:357
+static constexpr int64_t kStagingBlobs = 16;   // 暂存区可容纳的专家块数
+</code></pre>
+<p>它决定<strong>一帧最多有几个未命中专家能走 PCIe 快档</strong>。分配在 <code>Verifier::init</code>：</p>
+<pre><code class="language-cpp">staging_ = b.take&lt;uint8_t&gt;((uint64_t) kStagingBlobs * strata::kernels::cpu::expert_layout().max_blob);  // verify.cpp:336
+sink_.staging_cap = kStagingBlobs;                                                                     // verify.cpp:365
+</code></pre>
+<p>两个推论：</p>
+<ol>
+<li><strong>只分配一次、单卡一份</strong>（不是每会话一份）⇒ 16 → 32 的显存代价是 <strong>+30 MB</strong>，不是 ×并发数。</li>
+<li>一帧 4 行 × 10 专家 = 40 个未命中，<code>--pcie-frac 0.55</code> 想送 22 个过去，<strong>实际只能送 16 个</strong>；<br>
+第 17 个起<strong>全部落回最慢的 CPU 档</strong>。这就是&quot;并发一高就慢&quot;的机械原因（20 章 20.6）。</li>
+</ol>
+<p><strong><code>16</code> 这个数字不在任何运维文档里，只在源码里。</strong> 这是本章最值得抄走的一条经验。</p>
+<h3 id="③-实测的三级配比（那行-strata-batch-的后半段）">③ 实测的三级配比（那行 <code>strata batch:</code> 的后半段）</h3>
+<p>引擎汇总行末尾的三个数（<code>per layer-window: CPU experts / VRAM hits / PCIe</code>）<br>
+<strong>是计数，不是毫秒</strong>——每个（窗口 × 层）各有多少个专家。两个真实样本：</p>
+<table>
+<thead>
+<tr>
+<th>负载</th>
+<th>CPU experts</th>
+<th>VRAM hits</th>
+<th>PCIe</th>
+<th>读法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>热态（4 行、短上下文）</td>
+<td>2.20</td>
+<td><strong>36.30</strong></td>
+<td>1.83</td>
+<td>几乎全命中，CPU 段不是瓶颈</td>
+</tr>
+<tr>
+<td>重载（2.84 行、cache 冷）</td>
+<td><strong>5.38</strong></td>
+<td>18.36</td>
+<td>5.41</td>
+<td>命中掉一半，CPU 段顶上来</td>
+</tr>
+</tbody>
+</table>
+<p>在 <code>batch_step</code> 打出的行上，三者之和 ≈ <code>行数 × top-10</code>（<code>2.20+36.30+1.83 = 40.33 ≈ 4 行 × 10</code>）。<br>
+<strong>它告诉你命中率，不告诉你时间</strong>——把它当毫秒读会得出完全错误的账（20.4 记了这次踩坑）。</p>
+<blockquote>
+<p><strong>但在 <code>chain_step</code> 打出的行上这条校验不成立</strong>：那类行的 <code>avg rows</code> 字段其实是<br>
+<strong>每窗口提交的 token 数</strong>（<code>generate.cpp:5894</code> 每提交一个就 <code>++bt_rows</code>），不是行数。<br>
+见过一条 <code>avg 6.62</code> 的行，<code>CPU+VRAM+PCIe = 146</code>，用 6.62 去对账会得出&quot;命中 220%&quot;。<br>
+正确做法：<code>chain</code> 行的分母用 <code>S × L</code>（≤16），<code>batch</code> 行才用 <code>avg rows</code>。</p>
+</blockquote>
+<h3 id="④-命中率的斜率，以及-每-1pp-该怎么用">④ 命中率的斜率，以及&quot;每 +1pp&quot;该怎么用</h3>
+<p><code>--expert-cache</code> 的帮助文本给的是 4096 槽 → 54.4% 命中、CPU 池 19.1→10.3 ms/token、端到端 −2.7 ms/token<br>
+（§7.5）。本机现役配置更高（6434 槽 / 10.42 GiB），日志当日命中 <strong>88.6%</strong><br>
+（<code>decode expert cache hit rate: 88.6% (92150 hits / 103951 lookups)</code>）。</p>
+<p>按 22.7 GB/s 折算，每 +1pp 命中 ≈ 省 0.32 ms 的漏读，即 <strong>≈ +3% 吞吐</strong>。<br>
+但别把这 3% 直接乘到&quot;提到 95% 就能 +20%&quot;上——分母会变（命中率高到一定程度后，<br>
+剩下的都是最冷的专家，且 CPU 段已经从关键路径上退下去）。<strong>斜率是局部的，不是全局的。</strong></p>
+<blockquote>
+<p><strong>增补后的结论</strong>：三级存储的设计意图没变（§7.1–7.11 仍然有效），<br>
+但真正的并发天花板不在&quot;显存能装多少专家&quot;，而在 <strong><code>kStagingBlobs = 16</code> 这个没人写进文档的常量</strong>。</p>
+</blockquote>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本章已读</span></button><a class="book-btn book-btn-ghost" href="/books/sse-strata/"><i class="fas fa-list"></i> 全部章节</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/books/sse-strata/06-engine-startup/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一章</span><strong>第 6 章 引擎启动与内存计划</strong></a><a class="book-pager-link next" href="/books/sse-strata/08-forward-pass/"><span class="book-pager-dir">下一章 <i class="fas fa-arrow-right"></i></span><strong>第 8 章 前向通路：内核、量化与 CUDA 图</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-1-%E9%97%AE%E9%A2%98%E6%9C%89%E5%A4%9A%E5%A4%A7%EF%BC%9A%E5%BC%95%E6%93%8E%E8%87%AA%E5%B7%B1%E7%AE%97%E7%9A%84%E8%B4%A6">7.1 问题有多大：引擎自己算的账</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-2-%E4%B8%89%E7%BA%A7%E5%AD%98%E5%82%A8">7.2 三级存储</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-3-%E5%91%BD%E4%B8%AD%E7%8E%87%EF%BC%9A%E4%B8%80%E4%B8%AA%E8%A2%AB%E6%B5%8B%E9%87%8F%E6%96%B9%E6%B3%95%E6%95%91%E8%BF%87%E7%9A%84%E6%95%B0%E5%AD%97">7.3 命中率：一个被测量方法救过的数字</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%98%BE%E5%AD%98%E5%A4%9F%E4%B8%8D%E5%A4%9F%EF%BC%9A%E5%AE%9E%E6%B5%8B%E4%BC%98%E5%85%88%E4%BA%8E%E8%AE%A1%E5%88%92">显存够不够：实测优先于计划</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%85%E9%A1%BB%E4%B8%89%E8%B7%AF%E5%88%87%E5%88%86">为什么必须三路切分</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-4-%E6%B3%A8%E9%87%8A%E8%85%90%E7%83%82%EF%BC%9A%E4%B8%80%E5%A4%84%E5%B7%B2%E6%A0%B8%E5%AE%9E%E7%9A%84%E8%BF%87%E6%97%B6%E8%AF%B4%E6%98%8E">7.4 注释腐烂：一处已核实的过时说明</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-5-%E6%A7%BD%E4%BD%8D%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5%EF%BC%9A2-97-%E4%B8%8E-70-4-%E7%9A%84%E5%B7%AE%E5%88%AB">7.5 槽位分配策略：2.97% 与 70.4% 的差别</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%AE%9E%E6%B5%8B%E6%94%B6%E7%9B%8A">实测收益</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-6-%E5%A5%91%E7%BA%A6%EF%BC%9Aexpert-source-hpp-%E7%9A%84%E4%B8%89%E6%9D%A1%E3%80%8C%E9%94%99%E6%B3%95%E3%80%8D">7.6 契约： expert_source.hpp 的三条「错法」</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%9D%A1%E6%AC%BE%E4%B8%80%EF%BC%9Ax-f-%E6%AF%8F%E5%B1%82%E6%98%AF%E5%90%8C%E4%B8%80%E4%B8%AA-pinned-%E7%BC%93%E5%86%B2%E5%8C%BA">条款一： x_f 每层是同一个 pinned 缓冲区</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%9D%A1%E6%AC%BE%E4%BA%8C%EF%BC%9A%E6%B1%A0%E4%B8%8D%E4%B9%98-router-%E6%9D%83%E9%87%8D">条款二：池不乘 router 权重</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%9D%A1%E6%AC%BE%E4%B8%89%EF%BC%9A%E5%86%85%E6%A0%B8%E5%87%A0%E4%BD%95%E7%94%B1-artifact-%E5%9B%BA%E5%AE%9A">条款三：内核几何由 artifact 固定</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-7-CPU-%E6%B1%A0%EF%BC%9A%E7%BA%BF%E7%A8%8B%E6%95%B0%E4%B8%8E%E3%80%8C%E5%AE%BF%E4%B8%BB%E7%BA%BF%E7%A8%8B%E4%B9%9F%E4%B8%8B%E5%9C%BA%E3%80%8D">7.7 CPU 池：线程数与「宿主线程也下场」</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-8-PLE-%E8%A1%A8%EF%BC%9A%E9%A1%B5%E7%BC%93%E5%AD%98%E7%9A%84%E8%AE%BF%E9%97%AE%E6%A8%A1%E5%BC%8F">7.8 PLE 表：页缓存的访问模式</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-9-%E5%91%BD%E4%B8%AD%E7%8E%87%E6%80%8E%E4%B9%88%E8%A2%AB%E6%B5%8B%E9%87%8F%EF%BC%9A%E7%94%A8%E5%BC%95%E6%93%8E%E8%87%AA%E5%B7%B1%E7%9A%84%E8%B7%AF%E7%94%B1">7.9 命中率怎么被测量：用引擎自己的路由</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-10-%E8%B7%A8%E5%8D%A1%E4%B8%93%E5%AE%B6%E5%B1%82">7.10 跨卡专家层</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-11-%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93">7.11 本章小结</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%9C%AC%E7%AB%A0%E5%87%BA%E5%A4%84">本章出处</a></li></ul></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#7-12-2026-10-21-%E5%A4%8D%E6%A0%B8%E5%A2%9E%E8%A1%A5%EF%BC%9A%E4%B8%89%E7%BA%A7%E8%B0%83%E5%BA%A6%E5%9C%A8%E4%BB%A3%E7%A0%81%E9%87%8C%E7%9A%84%E7%9C%9F%E5%AE%9E%E5%BD%A2%E6%80%81">7.12 2026-10-21 复核增补：三级调度在代码里的真实形态</a><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E2%91%A0-%E4%B8%89%E7%BA%A7%E5%86%B3%E7%AD%96%E6%AF%8F%E5%B1%82%E5%81%9A%E4%B8%80%E6%AC%A1%EF%BC%8C%E6%98%AF%E4%B8%80%E8%A1%8C%E9%99%A4%E6%B3%95">① 三级决策每层做一次，是一行除法</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E2%91%A1-%E7%A1%AC%E4%B8%8A%E9%99%90-kStagingBlobs-16">② 硬上限 kStagingBlobs = 16</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E2%91%A2-%E5%AE%9E%E6%B5%8B%E7%9A%84%E4%B8%89%E7%BA%A7%E9%85%8D%E6%AF%94%EF%BC%88%E9%82%A3%E8%A1%8C-strata-batch-%E7%9A%84%E5%90%8E%E5%8D%8A%E6%AE%B5%EF%BC%89">③ 实测的三级配比（那行 strata batch: 的后半段）</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E2%91%A3-%E5%91%BD%E4%B8%AD%E7%8E%87%E7%9A%84%E6%96%9C%E7%8E%87%EF%BC%8C%E4%BB%A5%E5%8F%8A-%E6%AF%8F-1pp-%E8%AF%A5%E6%80%8E%E4%B9%88%E7%94%A8">④ 命中率的斜率，以及 每 +1pp 该怎么用</a></li></ul></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

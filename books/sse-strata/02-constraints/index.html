@@ -1,0 +1,636 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>第 2 章 硬约束如何塑造了设计 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="MoE 大模型低成本部署框架 · 第 2 章 硬约束如何塑造了设计">
+<meta property="og:type" content="website">
+<meta property="og:title" content="第 2 章 硬约束如何塑造了设计">
+<meta property="og:url" content="https://sakjijdidji55.github.io/books/sse-strata/02-constraints/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="MoE 大模型低成本部署框架 · 第 2 章 硬约束如何塑造了设计">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-10-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-10-21T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/books/sse-strata/02-constraints/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '第 2 章 硬约束如何塑造了设计',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">31</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">54</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">第 2 章 硬约束如何塑造了设计</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">第 2 章 硬约束如何塑造了设计</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-strata" data-chapter="02-constraints" data-total="25" data-prev="/books/sse-strata/01-overview/" data-next="/books/sse-strata/03-request-lifecycle/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/books/sse-strata/">MoE 大模型低成本部署框架</a><div class="book-sidebar-sub">25 章 · 约 5 小时 17 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 25</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选章节..." data-book-filter aria-label="筛选章节"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="intro"><a class="book-chapter-link" href="/books/sse-strata/intro/" data-chapter-link="intro"><span class="book-chapter-index">00</span><span class="book-chapter-name">导言：这本书回答什么</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 1 部 全景与约束</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="01-overview"><a class="book-chapter-link" href="/books/sse-strata/01-overview/" data-chapter-link="01-overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">第 1 章 这套系统是什么</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="02-constraints"><a class="book-chapter-link is-current" href="/books/sse-strata/02-constraints/" data-chapter-link="02-constraints" aria-current="page"><span class="book-chapter-index">02</span><span class="book-chapter-name">第 2 章 硬约束如何塑造了设计</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 2 部 请求的一生</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="03-request-lifecycle"><a class="book-chapter-link" href="/books/sse-strata/03-request-lifecycle/" data-chapter-link="03-request-lifecycle"><span class="book-chapter-index">03</span><span class="book-chapter-name">第 3 章 一个请求的一生</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 3 部 RAG 网关：唯一公网面</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="04-gateway-routing"><a class="book-chapter-link" href="/books/sse-strata/04-gateway-routing/" data-chapter-link="04-gateway-routing"><span class="book-chapter-index">04</span><span class="book-chapter-name">第 4 章 网关：分流与守卫</span><span class="book-chapter-time">19′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="05-gateway-retrieval"><a class="book-chapter-link" href="/books/sse-strata/05-gateway-retrieval/" data-chapter-link="05-gateway-retrieval"><span class="book-chapter-index">05</span><span class="book-chapter-name">第 5 章 网关：检索组装与漂移重建</span><span class="book-chapter-time">15′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 4 部 引擎内核</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="06-engine-startup"><a class="book-chapter-link" href="/books/sse-strata/06-engine-startup/" data-chapter-link="06-engine-startup"><span class="book-chapter-index">06</span><span class="book-chapter-name">第 6 章 引擎启动与内存计划</span><span class="book-chapter-time">18′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="07-expert-tiers"><a class="book-chapter-link" href="/books/sse-strata/07-expert-tiers/" data-chapter-link="07-expert-tiers"><span class="book-chapter-index">07</span><span class="book-chapter-name">第 7 章 专家：三级存储与命中率</span><span class="book-chapter-time">20′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="08-forward-pass"><a class="book-chapter-link" href="/books/sse-strata/08-forward-pass/" data-chapter-link="08-forward-pass"><span class="book-chapter-index">08</span><span class="book-chapter-name">第 8 章 前向通路：内核、量化与 CUDA 图</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="09-prefill"><a class="book-chapter-link" href="/books/sse-strata/09-prefill/" data-chapter-link="09-prefill"><span class="book-chapter-index">09</span><span class="book-chapter-name">第 9 章 prefill：最大的瓶颈</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="10-speculative-decode"><a class="book-chapter-link" href="/books/sse-strata/10-speculative-decode/" data-chapter-link="10-speculative-decode"><span class="book-chapter-index">10</span><span class="book-chapter-name">第 10 章 投机解码与批槽</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="11-layer-split"><a class="book-chapter-link" href="/books/sse-strata/11-layer-split/" data-chapter-link="11-layer-split"><span class="book-chapter-index">11</span><span class="book-chapter-name">第 11 章 多卡与层切分</span><span class="book-chapter-time">13′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 5 部 会话记忆</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="12-prefix-cache"><a class="book-chapter-link" href="/books/sse-strata/12-prefix-cache/" data-chapter-link="12-prefix-cache"><span class="book-chapter-index">12</span><span class="book-chapter-name">第 12 章 前缀缓存与会话停车</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 6 部 测试台与数字</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="13-benchmark-rig"><a class="book-chapter-link" href="/books/sse-strata/13-benchmark-rig/" data-chapter-link="13-benchmark-rig"><span class="book-chapter-index">13</span><span class="book-chapter-name">第 13 章 测试台：数字是怎么挣出来的</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="14-measured-numbers"><a class="book-chapter-link" href="/books/sse-strata/14-measured-numbers/" data-chapter-link="14-measured-numbers"><span class="book-chapter-index">14</span><span class="book-chapter-name">第 14 章 实测数字总表</span><span class="book-chapter-time">20′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 7 部 运维</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="15-deploy-topology"><a class="book-chapter-link" href="/books/sse-strata/15-deploy-topology/" data-chapter-link="15-deploy-topology"><span class="book-chapter-index">15</span><span class="book-chapter-name">第 15 章 部署与进程拓扑</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="16-engine-switch"><a class="book-chapter-link" href="/books/sse-strata/16-engine-switch/" data-chapter-link="16-engine-switch"><span class="book-chapter-index">16</span><span class="book-chapter-name">第 16 章 引擎切换与停机边界</span><span class="book-chapter-time">14′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="17-redlines"><a class="book-chapter-link" href="/books/sse-strata/17-redlines/" data-chapter-link="17-redlines"><span class="book-chapter-index">17</span><span class="book-chapter-name">第 17 章 红线与协作约定</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 8 部 复盘与前方</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="18-incidents"><a class="book-chapter-link" href="/books/sse-strata/18-incidents/" data-chapter-link="18-incidents"><span class="book-chapter-index">18</span><span class="book-chapter-name">第 18 章 事故复盘</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="19-open-questions"><a class="book-chapter-link" href="/books/sse-strata/19-open-questions/" data-chapter-link="19-open-questions"><span class="book-chapter-index">19</span><span class="book-chapter-name">第 19 章 未解问题与路线图</span><span class="book-chapter-time">13′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">第 9 部 解剖与动刀（10-21 增补）</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="20-decode-window"><a class="book-chapter-link" href="/books/sse-strata/20-decode-window/" data-chapter-link="20-decode-window"><span class="book-chapter-index">20</span><span class="book-chapter-name">第 20 章 解码窗口的解剖：那 92.5 毫秒去哪了</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="21-refactor-handbook"><a class="book-chapter-link" href="/books/sse-strata/21-refactor-handbook/" data-chapter-link="21-refactor-handbook"><span class="book-chapter-index">21</span><span class="book-chapter-name">第 21 章 改造手册：M0–M4</span><span class="book-chapter-time">11′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app-a-source-map"><a class="book-chapter-link" href="/books/sse-strata/app-a-source-map/" data-chapter-link="app-a-source-map"><span class="book-chapter-index">23</span><span class="book-chapter-name">附录 A 源码入口地图</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-b-knobs"><a class="book-chapter-link" href="/books/sse-strata/app-b-knobs/" data-chapter-link="app-b-knobs"><span class="book-chapter-index">24</span><span class="book-chapter-name">附录 B 旋钮表</span><span class="book-chapter-time">15′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="app-c-glossary"><a class="book-chapter-link" href="/books/sse-strata/app-c-glossary/" data-chapter-link="app-c-glossary"><span class="book-chapter-index">25</span><span class="book-chapter-name">附录 C 名词表</span><span class="book-chapter-time">12′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/books/"><i class="fas fa-arrow-left"></i> 返回书架</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开章节目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/books/sse-strata/">MoE 大模型低成本部署框架</a><i class="fas fa-angle-right"></i><span>第 2 章 硬约束如何塑造了设计</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">CHAPTER 02</span><h1>第 2 章 硬约束如何塑造了设计</h1><div class="book-chapter-meta">12 分钟阅读 · 3,505 字</div></div><blockquote>
+<p>本章素材：<code>docs/项目背景与问题总览.md</code> §3.1、§8（2026-10-15 核实口径）、<br>
+<code>docs/deployment/POD-ENV-NOTES.md</code>（踩坑时间线）、<code>docs/plans/方案猜想.md</code>（已否决方案）<br>
+本章是全书的因果中枢。第 3～12 章的每一个设计，几乎都能回溯到这里的一条约束。</p>
+</blockquote>
+<hr>
+<h2 id="2-1-约束清单">2.1 约束清单</h2>
+<p>先摆出全部十一条。它们都是<strong>改不了</strong>的——改不了的意思是：试图违反它的代价，比绕开它的代价更高。</p>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>约束</th>
+<th>具体数字</th>
+<th>绕开它的手段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>原生窗口硬固定</td>
+<td>262144，引擎从不截断、超窗即 400</td>
+<td>网关检索组装</td>
+</tr>
+<tr>
+<td>2</td>
+<td>CPU 配额与可见核数不一致</td>
+<td>cgroup 32 核，<code>nproc</code> 看到 76</td>
+<td>显式 <code>--pool-workers</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>钉核是命门</td>
+<td>不 <code>taskset</code> 会掉到 9 tok/s</td>
+<td>每 lane 一段独立核区间</td>
+</tr>
+<tr>
+<td>4</td>
+<td><code>mlock</code> 不可用</td>
+<td>硬限 8 MB</td>
+<td>PLE 走页缓存 + 顺序访问</td>
+</tr>
+<tr>
+<td>5</td>
+<td>只有一个公网端口</td>
+<td>8080</td>
+<td>网关模式，引擎只听回环</td>
+</tr>
+<tr>
+<td>6</td>
+<td>前缀缓存决定 TTFT</td>
+<td>数量级差异</td>
+<td>组装块 TTL 内稳定复用</td>
+</tr>
+<tr>
+<td>7</td>
+<td>GPU 是唯一硬瓶颈</td>
+<td>解码速度与上下文长度几乎无关</td>
+<td>把代价集中到 prefill 上治理</td>
+</tr>
+<tr>
+<td>8</td>
+<td>内存悬顶</td>
+<td>双实例已用 ~170 / 216 GiB</td>
+<td>停车准入检查 + 物理内存地板</td>
+</tr>
+<tr>
+<td>9</td>
+<td>服务对外在线</td>
+<td>改引擎配置 = 重启 = 停服</td>
+<td>分层改动成本，能改上层就不改下层</td>
+</tr>
+<tr>
+<td>10</td>
+<td>网关全内存无持久化</td>
+<td>重启即清空会话与嵌入缓存</td>
+<td>已知缺陷，待设计</td>
+</tr>
+<tr>
+<td>11</td>
+<td>serve 模式强制 MTP</td>
+<td>缺 <code>--spec/--mtp/--prefill</code> 直接 <code>exit 2</code></td>
+<td>没有「关掉 MTP 跑基线」这条路</td>
+</tr>
+</tbody>
+</table>
+<p>下面逐条讲它逼出了什么。</p>
+<hr>
+<h2 id="2-2-约束-1：窗口硬固定-262144，超窗即-400">2.2 约束 1：窗口硬固定 262144，超窗即 400</h2>
+<p>引擎的窗口是一个硬数字。引擎对自己的窗口采取「要么完整装得下，要么明确拒绝」的策略：<br>
+它不会悄悄丢掉一段历史，也不会截断后继续生成。</p>
+<p>这条约束的后果很直接：用户粘贴 300K token，引擎会返回 400。而服务对外承诺「永不 400 拒」。</p>
+<p>于是 1M 能力只能放到引擎外面。这就是第 5 章的全部内容：网关把超窗历史压缩成<br>
+「最近窗口逐字 + 检索块」，让引擎永远收到 ≤262144。</p>
+<p><strong>为什么引擎侧扩窗口没有被采纳？</strong> <code>docs/plans/方案猜想.md</code> 与<br>
+<code>docs/plans/LONG-CONTEXT-RAG-PLAN.md</code> 都算过这笔账：把原生窗口扩到 1M，代价落在 KV 缓存与<br>
+PLE 表上，而这两块已经吃满了 24G 显存与 216 GiB 内存的余量。相比之下，检索组装的代价是<br>
+「召回质量可能不够」——一个可测量的软代价，比一个会直接把服务打爆的硬代价更容易接受。<br>
+这个取舍在第 19 章被重新列为待决问题。</p>
+<hr>
+<h2 id="2-3-约束-2：cgroup-32-核，容器看到-76-核">2.3 约束 2：cgroup 32 核，容器看到 76 核</h2>
+<p>这是本项目最隐蔽的一条约束，也是最容易让人写出「看起来正常、跑起来崩」的代码的地方。</p>
+<p>容器里 <code>nproc</code> 报 76。这是宿主机的物理核数。真实的配额在 cgroup 里：</p>
+<pre><code>cpu.max = 3200000/100000     # 每 100ms 周期允许 3200ms CPU 时间 = 32 核
+</code></pre>
+<p>于是开 76 个线程去抢 32 核的配额，后果会被内核的 CFS 调度器周期性掐死：所有线程一起跑满<br>
+配额，然后一起被冻结到下一个周期，宏观表现是吞吐剧烈抖动。</p>
+<p>应对手段是一个引擎参数：</p>
+<pre><code>--pool-workers 13
+</code></pre>
+<p>为什么是 13？因为一台机器上跑<strong>两个</strong>引擎，每个引擎的 CPU 专家池都要吃核，<br>
+两个 13 加上 Python 服务层、网关、嵌入/重排服务、tokenizer、系统，<br>
+剩下给别的。这个数字是试出来的。</p>
+<p><strong>一个必须记住的推论</strong>：任何「按硬件能力自动决定线程数」的代码，在这个 Pod 里都是错的。<br>
+引擎必须被显式告知配额。</p>
+<hr>
+<h2 id="2-4-约束-3：钉核是命门">2.4 约束 3：钉核是命门</h2>
+<p>两个引擎各自有一份 CPU 专家池。如果它们自由调度在全部 76 个可见核上，会互相抢。</p>
+<p>实测后果（见 §2.9 事故复盘）：solo 解码掉到 <strong>9.3 tok/s</strong>。</p>
+<p>所以每个 lane 被 <code>taskset</code> 钉到一段独立的核区间：</p>
+<pre><code>strata-a  →  taskset -c 0-15
+strata-b  →  taskset -c 38-53
+</code></pre>
+<p>（出处：<code>~/Strata/run-iq3_xxs-a.sh</code> / <code>-b.sh</code>，2026-10-17 版本）</p>
+<p>注意两段区间中间留了 16–37 这段空隙。这段空隙留给 Python 服务层、网关、嵌入服务、<br>
+以及引擎自己的主线程与 CUDA 驱动线程。</p>
+<p>钉核在这个项目里的地位是<strong>正确性前提</strong>：不钉核时两个引擎会互相踩，性能曲线出现无法解释的<br>
+断崖。排障时第一个该问的问题是「两个引擎的核区间重叠了吗」。</p>
+<hr>
+<h2 id="2-5-约束-4：mlock-不可用">2.5 约束 4：<code>mlock</code> 不可用</h2>
+<p><code>mlock</code> 是把内存页钉在物理内存里、不让它被换出的系统调用。这个 Pod 里它的硬限是 8 MB——<br>
+等于不可用。</p>
+<p>这对 PLE 表（28.8 GiB）是致命的：如果这 28.8 GiB 被换出，每次 PLE 查表都要走磁盘。</p>
+<p>应对手段分两半：</p>
+<p><strong>一半是参数</strong>：<code>--ple-io ram</code> 把 PLE 表放在 RAM 而不是每次读磁盘。</p>
+<p><strong>另一半是访问模式</strong>：既然页可能被换出，就让访问模式尽量是页缓存擅长的样子。<br>
+PLE 是逐层查表，访问序列由 token 序列决定。引擎侧的优化方向是让同一层的查表在时间上聚簇，<br>
+减少跨页跳跃。</p>
+<p>这条约束的产物是第 7 章会讲到的一个现象：PLE 随机读延迟 <strong>6.9 ms</strong> 是性能命门。<br>
+它看起来是内存问题，实际会通过 PLE 随机读间接打到解码速度上。这也是 §2.10 内存悬顶<br>
+必须当成硬约束来对待的原因。</p>
+<hr>
+<h2 id="2-6-约束-5：只有一个公网端口-8080">2.6 约束 5：只有一个公网端口 8080</h2>
+<p>平台只给一个公网端口（frps 中继，TLS 在中继侧终结）。</p>
+<p>于是所有能力必须挤进一个入口：OpenAI 协议、Anthropic 协议、健康检查、并发监控、<br>
+多模态、鉴权——全部走 8080。</p>
+<p>这条约束直接生成了网关模式：</p>
+<pre><code>公网 :8080  →  rag-proxy（唯一监听公网的进程）
+                 ├→ 127.0.0.1:8091  strata-a
+                 └→ 127.0.0.1:8092  strata-b
+</code></pre>
+<p>引擎只听回环。这带来一个附带的好处：引擎不需要自己处理鉴权、Host 校验、跨站防护——<br>
+这些全在网关做一次。附带的好处之二：排障时可以直接 <code>curl 127.0.0.1:8091</code> 绕过网关，<br>
+把问题切成「网关的」和「引擎的」两半。</p>
+<hr>
+<h2 id="2-7-约束-6：前缀缓存决定-TTFT（数量级差异）">2.7 约束 6：前缀缓存决定 TTFT（数量级差异）</h2>
+<p>这是全书最应该被记住的一个实测事实：</p>
+<blockquote>
+<p>同一个 64K token 的提示词，前缀可复用时 TTFT <strong>0.79 s</strong>，不可复用时 <strong>13.4 s</strong>。<br>
+（出处：<code>docs/deployment/Strata-双卡部署全景.md</code>）</p>
+</blockquote>
+<p><strong>17 倍。</strong> 这是数量级级别的差异，属于优化手段里收益最大的一类。于是它反过来约束了网关的设计：</p>
+<ul>
+<li>组装块必须在 TTL 内<strong>稳定复用</strong>。如果每次请求都重新检索、重新拼一遍历史，前缀就变了，<br>
+引擎就要重读整段——TTFT 从 0.79 s 回到 13.4 s。</li>
+<li>所以「组装块」是一个有生命周期的对象，而每次请求的临时产物。第 5 章会给出它的 TTL、<br>
+复用条件、以及重建判据。</li>
+</ul>
+<p>这是第 5 章「漂移重建」判据存在的真正理由：它的目标是在「旧组装块对当前问题已经没用了」<br>
+和「旧组装块还能复用、复用能省 17 倍 TTFT」之间做判断。判据偏向后者，因为省下的那一头是数量级。</p>
+<hr>
+<h2 id="2-8-约束-7：GPU-是唯一硬瓶颈，代价全在-prefill">2.8 约束 7：GPU 是唯一硬瓶颈，代价全在 prefill</h2>
+<p>一个反直觉的实测结论：</p>
+<blockquote>
+<p>解码速度几乎与上下文长度无关。</p>
+</blockquote>
+<p>从 8K 到 254K，解码 tok/s 变化很小。真正随长度爆炸的是 prefill：</p>
+<table>
+<thead>
+<tr>
+<th>提示词长度</th>
+<th>prefill 耗时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>64K</td>
+<td>13.4 s（不可复用）</td>
+</tr>
+<tr>
+<td>254K</td>
+<td>81–91 s</td>
+</tr>
+</tbody>
+</table>
+<p>（出处：<code>docs/项目背景与问题总览.md</code> §5 问题 #1、<code>docs/deployment/Strata-双卡部署全景.md</code>）</p>
+<p>这条约束决定了性能优化的主攻方向：prefill 的次数。第 9 章（prefill 串行）与<br>
+第 12 章（前缀复用与停车）都在处理这同一件事。</p>
+<p>它也解释了为什么「换更小量化冲并发」这条路被否决：量化影响的是每个 token 的计算量，<br>
+而瓶颈在「读提示词要读多少遍」。</p>
+<hr>
+<h2 id="2-9-约束-8：内存悬顶">2.9 约束 8：内存悬顶</h2>
+<p>216 GiB 内存，双实例已用约 170 GiB。剩下约 46 GiB。</p>
+<p>会话停车缓存的预算是 <code>--conversation-cache-mib 8192</code>（8 GiB）、<code>--conversation-cache-slots 20</code>。<br>
+一份停车快照约 4.7 GiB。</p>
+<p>于是「停车」这个动作必须带准入检查：快照本身是否超预算、物理内存是否还剩够地板、<br>
+捕获之后是否仍然够。引擎侧对应 <code>conversation_memory_admit</code> 与<br>
+<code>conversation_available_memory</code>（<code>src/core/conversation_*.cpp</code>），<br>
+检查失败就在日志里说明为什么放弃。这套检查的必要性很直白：不查就会 OOM。</p>
+<p>这条约束直接生成了第 12 章的驱逐机制与「快照 4.7G &gt; 8GiB 预算 → 全天驱逐 2508 次」这个事故。</p>
+<hr>
+<h2 id="2-10-约束-9：服务对外在线，改引擎-停服">2.10 约束 9：服务对外在线，改引擎 = 停服</h2>
+<p>这条约束决定了团队的分工方式。改动成本是分层的：</p>
+<pre><code>改 Python 服务层      → 不用重编，不用停服（前端连重启都不用）
+改网关               → 只需重启 rag-proxy，引擎不动
+改引擎               → 必须停服窗口
+</code></pre>
+<p>于是团队的工作方式被排成一个明确的优先级：能在上层解决的，绝不往下走一层。</p>
+<p>这条分层也解释了为什么可观测性被列为前置工作：很多问题（并发下的 timings、批槽状态、<br>
+prefill 排队）需要在引擎侧加输出，而加输出就要重启，而重启要停服窗口。<br>
+于是「先在上层凑合观测」成了常态，而凑合观测又让定位变慢。这个循环是第 19 章的主线之一。</p>
+<hr>
+<h2 id="2-11-约束-10：网关全内存无持久化">2.11 约束 10：网关全内存无持久化</h2>
+<p>网关的会话状态、嵌入缓存、组装块全在内存里。进程重启，全部清空。</p>
+<p>这是已知缺陷。它的后果在约束 6 的语境下尤其贵：网关重启 → 组装块消失 →<br>
+下一个请求的前缀变了 → 引擎重读整段 → TTFT 回到 13.4 s 那一档。</p>
+<p>也就是说，网关重启的代价会通过前缀缓存放大到引擎侧。这条约束目前没有被解决，<br>
+列在 <code>docs/项目背景与问题总览.md</code> §6.2 的盲区清单里。</p>
+<hr>
+<h2 id="2-12-约束-11：serve-模式强制-MTP">2.12 约束 11：serve 模式强制 MTP</h2>
+<p>引擎的 serve 模式要求 <code>--spec T</code>、<code>--mtp DIR</code>、<code>--prefill CHUNK</code> 三个参数齐备，<br>
+缺任何一个直接 <code>exit 2</code>（<code>src/program/generate.cpp:4182</code>）。</p>
+<p>于是「关掉 MTP 跑一个干净基线」这个实验做不了。想做 A/B，只能在「MTP 开」的前提下比较<br>
+MTP 的不同配置（<code>--spec 4</code> vs <code>--spec 6</code>、<code>--batch-mtp</code> 开与关）。</p>
+<p>这条约束对方法论的影响比它看起来大：它限制了你能问什么问题。</p>
+<hr>
+<h2 id="2-13-已否决的路：为什么「更简单的样子」走不通">2.13 已否决的路：为什么「更简单的样子」走不通</h2>
+<p>回答「为什么系统长成这个样子」，最有力的证据是那些试过并被放弃的替代方案。</p>
+<table>
+<thead>
+<tr>
+<th>曾经考虑的方案</th>
+<th>结论</th>
+<th>真正的原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>同型号单卡实例扩吞吐</td>
+<td>先否决，后翻案为现生产</td>
+<td>当时 solo 掉到 9.3 tok/s，真因是两个引擎的 CPU 专家池抢核，<code>taskset</code> 钉核即解决</td>
+</tr>
+<tr>
+<td>双卡各跑 dense + 对称共享专家池</td>
+<td>不推进</td>
+<td>引擎不支持对称共享专家池：<code>--peer-device</code> 是主从形态，且不能与 <code>--layer-split</code> 并用</td>
+</tr>
+<tr>
+<td>Q2_0 量化</td>
+<td>排除</td>
+<td>质量不可接受；做「真·快通道」时可重新评估</td>
+</tr>
+<tr>
+<td>Coder 变体模型</td>
+<td>不建议</td>
+<td>中文明显变差，本服务中文为主</td>
+</tr>
+<tr>
+<td>抢占式高速通道</td>
+<td>不选</td>
+<td>代价是在途请求被取消；最终选了插队式（忙时降级为批速度）</td>
+</tr>
+<tr>
+<td>换更小量化冲并发目标</td>
+<td>不可达</td>
+<td>本机聚合天花板 ~145–170 tok/s，要达标只能加卡</td>
+</tr>
+</tbody>
+</table>
+<p>（出处：<code>docs/项目背景与问题总览.md</code> §9、<code>docs/plans/方案猜想.md</code>）</p>
+<p>第一条值得单独讲，因为它是这个项目最重要的一次认知修正。</p>
+<p>早期结论是「同型号双实例没用，因为两张卡各自跑一个 125B 引擎会互相抢资源」。<br>
+这个结论被实测支持：solo 掉到 9.3 tok/s。</p>
+<p>后来发现慢的原因在 CPU 核争抢上。两个引擎各自有一份 CPU 专家池，各自按 <code>nproc</code> 开线程，<br>
+两者在同一个 cgroup 配额里互相抢。钉核之后，同型号双实例立刻成立，成为今天的生产布局。</p>
+<p>这条修正的价值在于方法论：一个被「实测」支持的结论，可能测的是另一个变量的效应。<br>
+这也是第 17 章「测量纪律」为什么要求 A/B 交替顺序、要求逐 token 一致性校验。</p>
+<hr>
+<h2 id="2-14-本章小结">2.14 本章小结</h2>
+<p>十一条约束，各自逼出一个设计：</p>
+<table>
+<thead>
+<tr>
+<th>约束</th>
+<th>逼出的设计</th>
+<th>详见</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>窗口硬固定 262144</td>
+<td>网关检索组装</td>
+<td>第 5 章</td>
+</tr>
+<tr>
+<td>cgroup 32 核 / 看到 76 核</td>
+<td>显式 <code>--pool-workers 13</code></td>
+<td>第 15 章</td>
+</tr>
+<tr>
+<td>钉核是命门</td>
+<td>每 lane 独立核区间</td>
+<td>第 15 章、第 18 章</td>
+</tr>
+<tr>
+<td><code>mlock</code> 不可用</td>
+<td><code>--ple-io ram</code> + 页缓存友好的访问模式</td>
+<td>第 7 章</td>
+</tr>
+<tr>
+<td>只有一个公网端口</td>
+<td>网关模式，引擎只听回环</td>
+<td>第 4 章</td>
+</tr>
+<tr>
+<td>前缀缓存决定 TTFT</td>
+<td>组装块 TTL 稳定复用、漂移重建判据</td>
+<td>第 5 章</td>
+</tr>
+<tr>
+<td>代价全在 prefill</td>
+<td>主攻「prefill 次数」而非速度</td>
+<td>第 9、12 章</td>
+</tr>
+<tr>
+<td>内存悬顶</td>
+<td>停车准入检查 + 物理内存地板</td>
+<td>第 12 章</td>
+</tr>
+<tr>
+<td>改引擎 = 停服</td>
+<td>分层改动成本、可观测性前置</td>
+<td>第 16、19 章</td>
+</tr>
+<tr>
+<td>网关无持久化</td>
+<td>已知缺陷，待设计</td>
+<td>第 19 章</td>
+</tr>
+<tr>
+<td>serve 强制 MTP</td>
+<td>A/B 只能在 MTP 开的前提下做</td>
+<td>第 13 章</td>
+</tr>
+</tbody>
+</table>
+<p><strong>读完本章应该能回答</strong>：为什么系统长成这个样子。答案在约束与设计的对应关系里。</p>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本章已读</span></button><a class="book-btn book-btn-ghost" href="/books/sse-strata/"><i class="fas fa-list"></i> 全部章节</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/books/sse-strata/01-overview/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一章</span><strong>第 1 章 这套系统是什么</strong></a><a class="book-pager-link next" href="/books/sse-strata/03-request-lifecycle/"><span class="book-pager-dir">下一章 <i class="fas fa-arrow-right"></i></span><strong>第 3 章 一个请求的一生</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-1-%E7%BA%A6%E6%9D%9F%E6%B8%85%E5%8D%95">2.1 约束清单</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-2-%E7%BA%A6%E6%9D%9F-1%EF%BC%9A%E7%AA%97%E5%8F%A3%E7%A1%AC%E5%9B%BA%E5%AE%9A-262144%EF%BC%8C%E8%B6%85%E7%AA%97%E5%8D%B3-400">2.2 约束 1：窗口硬固定 262144，超窗即 400</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-3-%E7%BA%A6%E6%9D%9F-2%EF%BC%9Acgroup-32-%E6%A0%B8%EF%BC%8C%E5%AE%B9%E5%99%A8%E7%9C%8B%E5%88%B0-76-%E6%A0%B8">2.3 约束 2：cgroup 32 核，容器看到 76 核</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-4-%E7%BA%A6%E6%9D%9F-3%EF%BC%9A%E9%92%89%E6%A0%B8%E6%98%AF%E5%91%BD%E9%97%A8">2.4 约束 3：钉核是命门</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-5-%E7%BA%A6%E6%9D%9F-4%EF%BC%9Amlock-%E4%B8%8D%E5%8F%AF%E7%94%A8">2.5 约束 4： mlock 不可用</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-6-%E7%BA%A6%E6%9D%9F-5%EF%BC%9A%E5%8F%AA%E6%9C%89%E4%B8%80%E4%B8%AA%E5%85%AC%E7%BD%91%E7%AB%AF%E5%8F%A3-8080">2.6 约束 5：只有一个公网端口 8080</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-7-%E7%BA%A6%E6%9D%9F-6%EF%BC%9A%E5%89%8D%E7%BC%80%E7%BC%93%E5%AD%98%E5%86%B3%E5%AE%9A-TTFT%EF%BC%88%E6%95%B0%E9%87%8F%E7%BA%A7%E5%B7%AE%E5%BC%82%EF%BC%89">2.7 约束 6：前缀缓存决定 TTFT（数量级差异）</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-8-%E7%BA%A6%E6%9D%9F-7%EF%BC%9AGPU-%E6%98%AF%E5%94%AF%E4%B8%80%E7%A1%AC%E7%93%B6%E9%A2%88%EF%BC%8C%E4%BB%A3%E4%BB%B7%E5%85%A8%E5%9C%A8-prefill">2.8 约束 7：GPU 是唯一硬瓶颈，代价全在 prefill</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-9-%E7%BA%A6%E6%9D%9F-8%EF%BC%9A%E5%86%85%E5%AD%98%E6%82%AC%E9%A1%B6">2.9 约束 8：内存悬顶</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-10-%E7%BA%A6%E6%9D%9F-9%EF%BC%9A%E6%9C%8D%E5%8A%A1%E5%AF%B9%E5%A4%96%E5%9C%A8%E7%BA%BF%EF%BC%8C%E6%94%B9%E5%BC%95%E6%93%8E-%E5%81%9C%E6%9C%8D">2.10 约束 9：服务对外在线，改引擎 = 停服</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-11-%E7%BA%A6%E6%9D%9F-10%EF%BC%9A%E7%BD%91%E5%85%B3%E5%85%A8%E5%86%85%E5%AD%98%E6%97%A0%E6%8C%81%E4%B9%85%E5%8C%96">2.11 约束 10：网关全内存无持久化</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-12-%E7%BA%A6%E6%9D%9F-11%EF%BC%9Aserve-%E6%A8%A1%E5%BC%8F%E5%BC%BA%E5%88%B6-MTP">2.12 约束 11：serve 模式强制 MTP</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-13-%E5%B7%B2%E5%90%A6%E5%86%B3%E7%9A%84%E8%B7%AF%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E3%80%8C%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E6%A0%B7%E5%AD%90%E3%80%8D%E8%B5%B0%E4%B8%8D%E9%80%9A">2.13 已否决的路：为什么「更简单的样子」走不通</a></li><li class="book-toc-item level-2"><a class="book-toc-link" href="#2-14-%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93">2.14 本章小结</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://unpkg.zhimg.com/hexo-butterfly-footer-beautify@1.0.0/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
