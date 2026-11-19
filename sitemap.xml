@@ -92,7 +92,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/posts/4729e793.html</loc>
+    <loc>https://sakjijdidji55.github.io/posts/b83b8c5f.html</loc>
     
     <lastmod>2026-10-19</lastmod>
     
@@ -101,7 +101,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/posts/b83b8c5f.html</loc>
+    <loc>https://sakjijdidji55.github.io/posts/4729e793.html</loc>
     
     <lastmod>2026-10-19</lastmod>
     
@@ -155,15 +155,6 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/posts/479512bc.html</loc>
-    
-    <lastmod>2026-10-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://sakjijdidji55.github.io/posts/3a6c8b24.html</loc>
     
     <lastmod>2026-10-19</lastmod>
@@ -173,7 +164,16 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/posts/4a318d91.html</loc>
+    <loc>https://sakjijdidji55.github.io/posts/479512bc.html</loc>
+    
+    <lastmod>2026-10-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/posts/c7c83056.html</loc>
     
     <lastmod>2026-10-19</lastmod>
     
@@ -191,7 +191,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/posts/c7c83056.html</loc>
+    <loc>https://sakjijdidji55.github.io/posts/4a318d91.html</loc>
     
     <lastmod>2026-10-19</lastmod>
     
@@ -245,7 +245,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/posts/8a8e8e04.html</loc>
+    <loc>https://sakjijdidji55.github.io/posts/a6d4d6d1.html</loc>
     
     <lastmod>2026-10-19</lastmod>
     
@@ -254,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/posts/a6d4d6d1.html</loc>
+    <loc>https://sakjijdidji55.github.io/posts/8a8e8e04.html</loc>
     
     <lastmod>2026-10-19</lastmod>
     
@@ -272,7 +272,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/posts/fc1c519d.html</loc>
+    <loc>https://sakjijdidji55.github.io/posts/d4aa23dc.html</loc>
     
     <lastmod>2026-10-19</lastmod>
     
@@ -281,7 +281,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/posts/d4aa23dc.html</loc>
+    <loc>https://sakjijdidji55.github.io/posts/fc1c519d.html</loc>
     
     <lastmod>2026-10-19</lastmod>
     
@@ -335,6 +335,27 @@
 
   
   <url>
+    <loc>https://sakjijdidji55.github.io/tags/Java/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://sakjijdidji55.github.io/tags/Linux/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -370,34 +391,6 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/tags/Java/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E6%B8%B8%E6%88%8F%E5%BC%80%E5%8F%91/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/c-language/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://sakjijdidji55.github.io/tags/cpp/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -419,42 +412,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/tags/Transformer/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/DeepSeek-Harness/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/AI%E5%B7%A5%E5%85%B7/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E9%A1%B9%E7%9B%AE%E6%94%B9%E9%80%A0/</loc>
+    <loc>https://sakjijdidji55.github.io/tags/c-language/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -482,49 +440,28 @@
   </url>
   
   <url>
+    <loc>https://sakjijdidji55.github.io/tags/Transformer/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://sakjijdidji55.github.io/tags/Hexo/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/GitHub-Pages/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E5%BB%BA%E7%AB%99/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E7%9F%AD%E7%AF%87/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E6%95%85%E4%BA%8B/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/Python/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/Pygame/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -545,7 +482,56 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/tags/LeetCode/</loc>
+    <loc>https://sakjijdidji55.github.io/tags/GitHub-Pages/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E5%BB%BA%E7%AB%99/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/DeepSeek-Harness/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/AI%E5%B7%A5%E5%85%B7/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E9%A1%B9%E7%9B%AE%E6%94%B9%E9%80%A0/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/Python/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/Pygame/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -553,6 +539,27 @@
   
   <url>
     <loc>https://sakjijdidji55.github.io/tags/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E7%9F%AD%E7%AF%87/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E6%95%85%E4%BA%8B/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/LeetCode/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -573,13 +580,6 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://sakjijdidji55.github.io/tags/%E5%9B%9E%E6%BA%AF/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -588,6 +588,13 @@
   
   <url>
     <loc>https://sakjijdidji55.github.io/tags/%E6%90%9C%E7%B4%A2/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E5%9B%BE%E8%AE%BA/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -615,13 +622,6 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E5%9B%BE%E8%AE%BA/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://sakjijdidji55.github.io/tags/%E6%8E%92%E5%BA%8F/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -643,13 +643,6 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://sakjijdidji55.github.io/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -657,7 +650,28 @@
   </url>
   
   <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://sakjijdidji55.github.io/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E8%BD%AF%E5%B7%A5%E5%9F%BA%E5%BB%BA/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/tags/%E8%BD%AF%E5%B7%A5%E9%9B%86%E5%B8%82/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -679,20 +693,6 @@
   
   <url>
     <loc>https://sakjijdidji55.github.io/tags/%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E8%BD%AF%E5%B7%A5%E5%9F%BA%E5%BB%BA/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/tags/%E8%BD%AF%E5%B7%A5%E9%9B%86%E5%B8%82/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -729,6 +729,13 @@
 
   
   <url>
+    <loc>https://sakjijdidji55.github.io/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://sakjijdidji55.github.io/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -743,7 +750,14 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/</loc>
+    <loc>https://sakjijdidji55.github.io/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/cpp/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/Java/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -771,63 +785,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/Java/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://sakjijdidji55.github.io/categories/%E5%BB%BA%E7%AB%99%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C%E8%AF%AD%E8%A8%80/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/%E7%9F%AD%E7%AF%87/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/Python/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/categories/%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/cpp/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -841,6 +799,41 @@
   </url>
   
   <url>
+    <loc>https://sakjijdidji55.github.io/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/Python/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/categories/%E7%94%9F%E6%B4%BB%E9%9A%8F%E7%AC%94/%E7%9F%AD%E7%AF%87/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/C%E8%AF%AD%E8%A8%80/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/categories/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://sakjijdidji55.github.io/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -848,14 +841,7 @@
   </url>
   
   <url>
-    <loc>https://sakjijdidji55.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2/</loc>
-    <lastmod>2026-11-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://sakjijdidji55.github.io/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/%E8%BD%AF%E5%B7%A5%E9%9B%86%E5%B8%82/</loc>
+    <loc>https://sakjijdidji55.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E5%A4%A7%E6%A8%A1%E5%9E%8B/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -884,6 +870,20 @@
   
   <url>
     <loc>https://sakjijdidji55.github.io/categories/%E7%AE%97%E6%B3%95/%E6%95%B0%E5%AD%A6/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/categories/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E6%88%98/%E8%BD%AF%E5%B7%A5%E9%9B%86%E5%B8%82/</loc>
+    <lastmod>2026-11-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://sakjijdidji55.github.io/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E6%A8%A1%E5%9E%8B%E9%83%A8%E7%BD%B2/</loc>
     <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
