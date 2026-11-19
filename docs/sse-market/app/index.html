@@ -1,0 +1,702 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>07 App：六平台与九种产物 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="软工集市专题 · 07 App：六平台与九种产物">
+<meta property="og:type" content="website">
+<meta property="og:title" content="07 App：六平台与九种产物">
+<meta property="og:url" content="https://sakjijdidji55.github.io/docs/sse-market/app/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="软工集市专题 · 07 App：六平台与九种产物">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-11-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/docs/sse-market/app/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '07 App：六平台与九种产物',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">07 App：六平台与九种产物</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">07 App：六平台与九种产物</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-market" data-chapter="app" data-total="14" data-prev="/docs/sse-market/imagebed/" data-next="/docs/sse-market/join/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/docs/sse-market/">软工集市专题</a><div class="book-sidebar-sub">14 篇 · 1 小时 30 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 14</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选篇目..." data-book-filter aria-label="筛选篇目"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="history"><a class="book-chapter-link" href="/docs/sse-market/history/" data-chapter-link="history"><span class="book-chapter-index">00</span><span class="book-chapter-name">00 历史：从一门课到一组平台</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="overview"><a class="book-chapter-link" href="/docs/sse-market/overview/" data-chapter-link="overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">01 平台体系：三层与节点</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">三条主线</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="main"><a class="book-chapter-link" href="/docs/sse-market/main/" data-chapter-link="main"><span class="book-chapter-index">02</span><span class="book-chapter-name">02 主站：账号、帖子与互动</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="cloud"><a class="book-chapter-link" href="/docs/sse-market/cloud/" data-chapter-link="cloud"><span class="book-chapter-index">03</span><span class="book-chapter-name">03 集市云：一组一容器</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="iwiki"><a class="book-chapter-link" href="/docs/sse-market/iwiki/" data-chapter-link="iwiki"><span class="book-chapter-index">04</span><span class="book-chapter-name">04 iWiki：协作、检索与开放</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">身份与存储</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="unisso"><a class="book-chapter-link" href="/docs/sse-market/unisso/" data-chapter-link="unisso"><span class="book-chapter-index">05</span><span class="book-chapter-name">05 UniSSO：统一身份</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="imagebed"><a class="book-chapter-link" href="/docs/sse-market/imagebed/" data-chapter-link="imagebed"><span class="book-chapter-index">06</span><span class="book-chapter-name">06 图床：上传、鉴权与存储</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">端与开发者</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app"><a class="book-chapter-link is-current" href="/docs/sse-market/app/" data-chapter-link="app" aria-current="page"><span class="book-chapter-index">07</span><span class="book-chapter-name">07 App：六平台与九种产物</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="join"><a class="book-chapter-link" href="/docs/sse-market/join/" data-chapter-link="join"><span class="book-chapter-index">08</span><span class="book-chapter-name">08 招聘：双选、答辩与席位</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="developer"><a class="book-chapter-link" href="/docs/sse-market/developer/" data-chapter-link="developer"><span class="book-chapter-index">09</span><span class="book-chapter-name">09 开发者平台：权限、部署与小程序</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">能力</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="api-platform"><a class="book-chapter-link" href="/docs/sse-market/api-platform/" data-chapter-link="api-platform"><span class="book-chapter-index">10</span><span class="book-chapter-name">10 API 平台：兼容与计费</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="tts-ai"><a class="book-chapter-link" href="/docs/sse-market/tts-ai/" data-chapter-link="tts-ai"><span class="book-chapter-index">11</span><span class="book-chapter-name">11 TTS 与 AI 研究</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">复盘与附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="interview"><a class="book-chapter-link" href="/docs/sse-market/interview/" data-chapter-link="interview"><span class="book-chapter-index">12</span><span class="book-chapter-name">12 全平台面试速答</span><span class="book-chapter-time">1′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="incidents"><a class="book-chapter-link" href="/docs/sse-market/incidents/" data-chapter-link="incidents"><span class="book-chapter-index">13</span><span class="book-chapter-name">13 事故复盘</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/docs/"><i class="fas fa-arrow-left"></i> 返回文档</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/docs/sse-market/">软工集市专题</a><i class="fas fa-angle-right"></i><span>07 App：六平台与九种产物</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">DOC 07</span><h1>07 App：六平台与九种产物</h1><div class="book-chapter-meta">5 分钟读完 · 2,252 字</div></div><blockquote>
+<p>Flutter 多端客户端：一套 Dart 代码出 Android / iOS / HarmonyOS / 桌面 / Web，作为主站的移动入口，同时充当小程序宿主。<code>lib/</code> 约 4 万行、124 个 dart 文件。</p>
+<p>仓库：<a target="_blank" rel="noopener" href="https://github.com/SysuMirror/SSEMarket-X">github.com/SysuMirror/SSEMarket-X</a>。关键依赖：<code>webview_flutter 4.6</code>、<code>web_socket_channel</code>、<code>flutter_local_notifications 19</code>、<code>just_audio 0.9</code>、<code>shared_preferences</code>。</p>
+</blockquote>
+<h3 id="多端形态">多端形态</h3>
+<h4 id="①-支持矩阵">① 支持矩阵</h4>
+<p>六个原生平台加一个 Web 端，共九种产物（Android 三种 ABI 各算一种）：</p>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>产物</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Android</td>
+<td>arm64-v8a / armeabi-v7a / x86_64</td>
+<td>按 CPU 架构分包，2015 年前的老设备走 v7a</td>
+</tr>
+<tr>
+<td>iOS</td>
+<td>nosign</td>
+<td>未签名包，需自行签名或开发者账号安装</td>
+</tr>
+<tr>
+<td>HarmonyOS</td>
+<td>nosign</td>
+<td>未签名包，需自行签名安装</td>
+</tr>
+<tr>
+<td>Windows</td>
+<td>x64 / arm64</td>
+<td>ARM 笔记本（如骁龙本）单独出包</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td>universal</td>
+<td>Intel 与 Apple 芯片共用</td>
+</tr>
+<tr>
+<td>Linux</td>
+<td>x64</td>
+<td>主流发行版</td>
+</tr>
+<tr>
+<td>Web</td>
+<td>—</td>
+<td>能力受限：无本地通知，小程序走外部窗口</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-text">android/  ios/  ohos/  linux/  macos/  windows/  web/     ← 七套宿主工程
+lib/core/        api / models / router / services / miniprogram / skins
+lib/views/       auth / home / post / chat / notice / coin / shop / miniprogram / profile / xiaoqiu / todo
+lib/shared/      components / theme
+</code></pre>
+<ul>
+<li><strong>实现</strong>：<code>lib/</code> 被七套宿主工程共用，业务代码只写一遍；平台差异集中在 <code>core/services</code> 与 <code>core/miniprogram</code>，用 <code>Platform.is*</code> 与 <code>MethodChannel</code> 分流。</li>
+</ul>
+<h4 id="②-平台能力差异">② 平台能力差异</h4>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>实现方式</th>
+<th>差异</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>本地通知</td>
+<td>Android / iOS / macOS / Windows / Linux 用 <code>flutter_local_notifications</code></td>
+<td>HarmonyOS 走原生 <code>MethodChannel('ssemarket/notifications')</code>；Web 不支持，降级为空操作</td>
+</tr>
+<tr>
+<td>小程序容器</td>
+<td>移动端内嵌 WebView，桌面端开外部窗口</td>
+<td>Web 与桌面无内嵌 WebView</td>
+</tr>
+<tr>
+<td>后台保活</td>
+<td>Android 生命周期通道 <code>start</code> / <code>stop</code></td>
+<td>其他平台不做保活</td>
+</tr>
+<tr>
+<td>音频</td>
+<td><code>just_audio</code></td>
+<td>macOS 有独立分支处理</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-dart">// lib/core/services/notification_service.dart
+/// - Android / iOS / macOS / Windows / Linux 走 flutter_local_notifications；
+/// - HarmonyOS 走原生 MethodChannel（ssemarket/notifications），
+///   在 ohos/entry/src/main/ets/entryability/EntryAbility.ets 中实现。
+/// - Web 不支持，全部降级为空操作。
+</code></pre>
+<ul>
+<li><strong>坑</strong>：把「平台不支持」写成抛异常，会让 Web 端每个页面都报错。正确做法是降级为空操作，业务侧只判断「有没有触发」。</li>
+</ul>
+<h4 id="③-HarmonyOS-的依赖覆盖">③ HarmonyOS 的依赖覆盖</h4>
+<ul>
+<li><strong>实现</strong>：OHOS 使用 OpenHarmony TPC 的 Flutter 分支，依赖覆盖写在单独的 <code>pubspec_overrides.ohos.yaml</code>；构建其他平台时不带这个文件。</li>
+</ul>
+<pre><code class="language-text">pubspec.yaml                  公共依赖
+pubspec_overrides.ohos.yaml   仅在构建 OHOS 时生效的 dependency_overrides
+</code></pre>
+<ul>
+<li><strong>坑</strong>：覆盖文件常驻会让 Android/iOS 构建去拉 OHOS 分支的包，编译直接失败。构建脚本要按目标平台增删该文件。</li>
+</ul>
+<h4 id="④-桌面端：开外部窗口">④ 桌面端：开外部窗口</h4>
+<ul>
+<li><strong>实现</strong>：Windows 上按固定候选路径找 Edge / Chrome / Brave，用 <code>--new-window --app=&lt;url&gt;</code> 以「应用窗口」模式启动（无地址栏）；找不到浏览器才退回系统默认打开。macOS / Linux / Web 直接 <code>launchUrl</code> 外部打开。</li>
+</ul>
+<pre><code class="language-dart">Future&lt;void&gt; _openDesktopWindow(Uri uri) async {
+  if (kIsWeb) {
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
+    return;
+  }
+  final url = uri.toString();
+  if (Platform.isWindows) {
+    final pf = Platform.environment['ProgramFiles'] ?? r'C://Program Files';
+    final pf86 = Platform.environment['ProgramFiles(x86)'] ?? r'C://Program Files (x86)';
+    final local = Platform.environment['LOCALAPPDATA'] ?? '';
+    final candidates = &lt;String&gt;[
+      '$pf86\\Microsoft\\Edge\\Application\\msedge.exe',
+      '$pf\\Microsoft\\Edge\\Application\\msedge.exe',
+      '$pf\\Google\\Chrome\\Application\\chrome.exe',
+      '$pf\\BraveSoftware\\Brave-Browser\\Application\\brave.exe',
+    ];
+    for (final path in candidates) {
+      if (File(path).existsSync()) {
+        await Process.start(path, &lt;String&gt;['--new-window', '--app=$url'],
+            mode: ProcessStartMode.detached);
+        return;
+      }
+    }
+  }
+  await launchUrl(uri, mode: LaunchMode.externalApplication);
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：桌面端不能在主窗口叠加载入遮罩。开窗是外部进程完成的，遮罩等不到回调，界面会一直转圈。</li>
+<li><strong>面试点</strong>：<code>--app=</code> 让浏览器以无地址栏的应用窗口打开，看起来像独立客户端；代价是依赖用户装了 Chromium 系浏览器。</li>
+</ul>
+<h4 id="⑤-移动端：内嵌-保活">⑤ 移动端：内嵌 + 保活</h4>
+<ul>
+<li><strong>实现</strong>：移动端用内嵌 WebView；Android 额外通过生命周期通道开启保活，让小程序音频在切后台后继续播放。</li>
+</ul>
+<pre><code class="language-dart">Future&lt;void&gt; _setKeepAlive(bool on) async {
+  if (on == _keepAliveStarted) return;
+  _keepAliveStarted = on;
+  if (!Platform.isAndroid) return;       // 只有 Android 做保活
+  await _lifecycle.invokeMethod&lt;bool&gt;(on ? 'start' : 'stop');
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：保活必须与「离开容器」成对调用。只 start 不 stop，退出小程序后前台服务还在，通知栏会一直挂着。</li>
+</ul>
+<h3 id="网络与身份">网络与身份</h3>
+<h4 id="①-API-封装">① API 封装</h4>
+<ul>
+<li><strong>实现</strong>：<code>ApiService</code> 用常量 base 地址，一个业务动作一个方法，统一解析响应体里的 <code>code</code> / <code>msg</code> / <code>data</code>，错误以异常向上抛。</li>
+</ul>
+<pre><code class="language-dart">// lib/core/api/api_service.dart
+static const String _baseUrl = 'https://ssemarket.cn/api';
+static const String webBaseUrl = 'https://ssemarket.cn';
+
+final uri = Uri.parse('$_baseUrl/auth/login');
+...
+final uri = Uri.parse('$_baseUrl/auth/showDetails');
+</code></pre>
+<ul>
+<li><strong>坑</strong>：base 地址写死会让测试环境与灰度无法切换。要么走构建变量注入，要么把 host 收进配置类。</li>
+</ul>
+<h4 id="②-令牌存储">② 令牌存储</h4>
+<ul>
+<li><strong>实现</strong>：<code>StorageService</code> 用 <code>shared_preferences</code> 存三个键 —— 访问令牌、刷新令牌、刷新令牌到期时间；启动时读回并恢复登录态。</li>
+</ul>
+<pre><code class="language-dart">// lib/core/services/storage_service.dart
+static const String _keyToken = 'user_token';
+static const String _keyRefreshToken = 'refresh_token';
+static const String _keyRefreshTokenExpiry = 'refresh_token_expiry';
+
+final token = _prefs.getString(_keyToken) ?? '';
+if (token.isNotEmpty &amp;&amp; userJson != null) {
+  _token = token;
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>shared_preferences</code> 在 Android 是明文 XML、iOS 是明文 plist，root/越狱设备可直接读。需要更强保护时接 <code>flutter_secure_storage</code>（Keychain / Keystore）。</li>
+</ul>
+<h4 id="③-令牌刷新">③ 令牌刷新</h4>
+<ul>
+<li><strong>实现</strong>：登录响应同时返回 access 与 refresh；<code>refresh_token_expiry</code> 决定何时不再尝试刷新，直接跳登录。</li>
+</ul>
+<pre><code class="language-dart">// 登录返回
+final refreshToken = data['refresh_token'] is String ? data['refresh_token'] as String : '';
+return LoginResult(token: token, refreshToken: refreshToken);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：刷新失败要一次性清理三个键并回登录页。只清 access 不清 refresh，下次启动会拿过期 refresh 反复请求，形成死循环。</li>
+</ul>
+<h3 id="主站功能">主站功能</h3>
+<h4 id="①-首页与搜索">① 首页与搜索</h4>
+<ul>
+<li><strong>实现</strong>：<code>views/home/home_page.dart</code> 承载分区与信息流，<code>search_page.dart</code> 做帖子/用户搜索，均走 <code>ApiService</code> 的浏览接口。</li>
+</ul>
+<pre><code class="language-dart">final uri = Uri.parse('$_baseUrl/auth/browse');
+</code></pre>
+<h4 id="②-帖子详情">② 帖子详情</h4>
+<ul>
+<li><strong>用户操作</strong>：看正文、图片、LaTeX 公式、点赞、收藏、投币、评论、分享。</li>
+<li><strong>实现</strong>：<code>post_detail_page.dart</code>（1400+ 行）+ <code>latex_markdown.dart</code>（1200+ 行）自绘 Markdown 与公式；表情选择器 <code>emoji_picker.dart</code> 独立组件。</li>
+</ul>
+<pre><code class="language-text">lib/views/post/post_detail_page.dart   详情、评论、点赞、收藏
+lib/shared/components/markdown/latex_markdown.dart   Markdown + LaTeX 渲染
+lib/shared/components/inputs/emoji_picker.dart       表情输入
+</code></pre>
+<ul>
+<li><strong>坑</strong>：LaTeX 与 Markdown 混排必须同一次解析完成。先渲染 Markdown 再替换公式，会把公式里的 <code>_</code>、<code>*</code> 当成斜体/加粗吃掉。</li>
+</ul>
+<h4 id="③-发帖">③ 发帖</h4>
+<ul>
+<li><strong>实现</strong>：<code>create_post_page.dart</code> 支持标题、正文、图片、匿名、分区；图片先上传拿地址再拼进正文。</li>
+</ul>
+<h4 id="④-私信">④ 私信</h4>
+<ul>
+<li>
+<p><strong>实现</strong>：<code>websocket_service.dart</code> 维持长连接，<code>views/chat</code> 渲染会话；断线重连后按最后消息 ID 补拉历史。</p>
+</li>
+<li>
+<p><strong>坑</strong>：移动端切后台会断连。回到前台要先补拉历史再重连，否则中间的消息在界面上是空洞。</p>
+</li>
+</ul>
+<h4 id="⑤-通知">⑤ 通知</h4>
+<ul>
+<li><strong>实现</strong>：<code>notification_service.dart</code> 申请权限、处理点击跳转、显示新帖通知；<code>notice_service.dart</code> 拉站内通知与未读数。</li>
+</ul>
+<pre><code class="language-text">init()                 初始化通道与点击回调
+requestPermission()    申请通知权限
+showNewPosts()         新帖提醒
+openSystemSettings()   权限被拒后引导到系统设置
+</code></pre>
+<ul>
+<li><strong>坑</strong>：点击通知的跳转要在 App 冷启动时就绪。只在热启动注册回调，冷启动点通知会落在首页，到不了目标页。</li>
+</ul>
+<h4 id="⑥-在线心跳">⑥ 在线心跳</h4>
+<ul>
+<li><strong>实现</strong>：模块级单例，登录后每 60 秒上报一次；页面用 <code>setTarget</code> 切换「正在看什么」，切场景立即补一次；切后台暂停。</li>
+</ul>
+<pre><code class="language-dart">// lib/core/services/presence_service.dart
+static const Duration _defaultInterval = Duration(seconds: 60);
+
+void start(ApiService api) {
+  _api = api;
+  if (!StorageService().isLoggedIn) return;
+  if (_timer != null) return;
+  _active = true;
+  unawaited(beat());
+  _timer = Timer.periodic(_defaultInterval, (_) =&gt; unawaited(beat()));
+}
+
+void setTarget(String scene, {int targetID = 0}) {
+  _scene = scene;
+  _targetID = scene == 'home' ? 0 : targetID;
+  if (_active) unawaited(beat());   // 切场景立即补一次
+}
+
+Future&lt;void&gt; beat() async {
+  if (_inFlight || !_active) return;   // 防重入：上一发没回来就跳过
+  ...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>_inFlight</code> 这个标志不能省。弱网下请求悬挂，定时器每 60 秒再发一次，会堆出一串并发请求。</li>
+</ul>
+<h4 id="⑦-投币与打分">⑦ 投币与打分</h4>
+<ul>
+<li><strong>实现</strong>：<code>views/coin</code> 是投币弹窗与流水；<code>views/todo/score_page.dart</code> 是打分专区入口（目录名 <code>todo</code> 是历史命名，内容是打分）。</li>
+</ul>
+<h3 id="小程序容器">小程序容器</h3>
+<h4 id="①-目录与票据预取">① 目录与票据预取</h4>
+<ul>
+<li><strong>实现</strong>：<code>mini_program_catalog.dart</code> 拉目录并缓存；<code>prefetchTickets</code> 提前申请票据放进本地缓存，点开时直接取，减少等待。</li>
+</ul>
+<pre><code class="language-dart">// mini_program_runtime.dart
+Future&lt;void&gt; open(MPApp app) async {
+  ...
+  final ticket = await _takeTicket(app);   // 先用预取缓存，没有再实时申请
+  ...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：预取的票据有 60 秒 TTL。缓存必须带过期判断，过期就重新申请，不能直接复用。</li>
+</ul>
+<h4 id="②-申请票据">② 申请票据</h4>
+<ul>
+<li><strong>实现</strong>：<code>mp_platform_api.dart</code> 调 <code>POST /v1/launch-tickets</code>，带上 <code>appKey</code>、<code>deviceID</code>、可选 <code>origin</code>。</li>
+</ul>
+<pre><code class="language-dart">Future&lt;MPLaunchTicket&gt; launchTicket({required String appKey, String? origin}) async {
+  final data = await _request('POST', '/v1/launch-tickets', body: {
+    'appKey': appKey,
+    'deviceID': await deviceId,
+    if (origin != null &amp;&amp; origin.isNotEmpty) 'origin': origin,
+  });
+  return MPLaunchTicket(
+    ticket: data['ticket']?.toString() ?? '',
+    launchUrl: data['launchURL']?.toString() ?? '',
+    expiresIn: (data['expiresIn'] as num?)?.toInt() ?? 60,
+    app: data['app'] == null ? null : MPApp.fromDynamic(data['app']),
+  );
+}
+</code></pre>
+<h4 id="③-来源校验">③ 来源校验</h4>
+<ul>
+<li><strong>实现</strong>：打开前用 <code>_isAllowed(app, uri)</code> 比对应用配置的 origin 白名单；不匹配直接拒绝，不进入 WebView。</li>
+</ul>
+<pre><code class="language-dart">if (!_isAllowed(effectiveApp, uri)) { /* 拒绝打开 */ }
+</code></pre>
+<ul>
+<li><strong>坑</strong>：来源校验必须比对「解析后的 origin」，不能对 URL 做字符串前缀匹配。<code>https://evil.com/?x=applet.ssemarket.cn</code> 在前缀匹配下会被放行。</li>
+</ul>
+<h4 id="④-内部应用的令牌注入">④ 内部应用的令牌注入</h4>
+<ul>
+<li><strong>实现</strong>：只为<strong>自家托管</strong>的小程序注入主站访问令牌 —— 条件是 <code>https</code> + 主机 <code>applet.ssemarket.cn</code> + 路径以 <code>/mp/</code> 开头；注入方式是在页面里设置 <code>window.__SSE_MAIN_TOKEN__</code> 并广播事件。</li>
+</ul>
+<pre><code class="language-dart">// lib/core/miniprogram/mini_program_runtime.dart
+bool _isInternalMpUrl(String url) {
+  final uri = Uri.tryParse(url);
+  if (uri == null) return false;
+  return uri.scheme == 'https' &amp;&amp;
+      uri.host == 'applet.ssemarket.cn' &amp;&amp;
+      uri.path.startsWith('/mp/');
+}
+
+Future&lt;void&gt; _injectMainToken(String url) async {
+  if (!_isInternalMpUrl(url)) return;      // 第三方应用不注入
+  final controller = _controller;
+  if (controller == null) return;
+  final token = StorageService().token;
+  if (token.isEmpty) return;
+  final encoded = jsonEncode(token);
+  final script = '''
+(function(){
+  try {
+    var t = $encoded;
+    window.__SSE_MAIN_TOKEN__ = t;
+    if (typeof window.__setSSEAppToken === 'function') window.__setSSEAppToken(t);
+    window.dispatchEvent(new Event('sse-main-token'));
+  } catch(e) {}
+})();
+''';
+  await controller.runJavaScript(script);
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：注入对象是<strong>短期 access token</strong>：它只读业务接口、几小时过期。refresh token 能换新令牌，泄露等同于账号被接管，不下发给 WebView。</li>
+<li><strong>坑</strong>：注入脚本要 <code>try/catch</code> 包住。目标页若 CSP 禁止内联脚本，<code>runJavaScript</code> 会抛异常，不捕获会中断整个打开流程。</li>
+</ul>
+<h4 id="⑤-桥接与返回">⑤ 桥接与返回</h4>
+<ul>
+<li><strong>实现</strong>：<code>_onBridgeMessage</code> 处理小程序发来的消息（关闭、跳转、标题变更）；<code>handleBack</code> 先给 WebView 一次返回机会，再退出容器；<code>pauseMedia</code> 在小程序切走时暂停音频。</li>
+</ul>
+<pre><code class="language-text">_onBridgeMessage   容器与页面的消息通道
+handleBack         返回键优先给页面，其次退出
+pauseMedia         离开时停音频
+_setKeepAlive      常驻标记
+</code></pre>
+<ul>
+<li><strong>坑</strong>：返回键必须让页面先处理。直接退出容器，用户会以为「按返回就把小程序关了」，实际只是回到了上一页。</li>
+</ul>
+<h4 id="⑥-设备注册与订阅">⑥ 设备注册与订阅</h4>
+<ul>
+<li><strong>实现</strong>：<code>mp_platform_api.dart</code> 的 <code>registerDevice</code> / <code>updateSubscriptions</code> 把 <code>deviceID</code> 与订阅关系上报平台，推送由平台按订阅下发。</li>
+</ul>
+<pre><code class="language-dart">Future&lt;void&gt; registerDevice(...)
+Future&lt;void&gt; updateSubscriptions(...)
+</code></pre>
+<h3 id="音乐播放">音乐播放</h3>
+<h4 id="①-播放器">① 播放器</h4>
+<ul>
+<li><strong>实现</strong>：<code>music_player_service.dart</code> 基于 <code>just_audio</code>，暴露 play / pause / toggle / stop；播放状态通过 <code>ValueNotifier</code> 通知界面。</li>
+</ul>
+<pre><code class="language-dart">void play(...) / pause() / toggle() / stop() / dispose()
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>dispose</code> 必须释放底层播放器实例。只置空引用，音频焦点不会归还，其他应用的声音会被压低。</li>
+</ul>
+<h4 id="②-帖子内嵌音乐">② 帖子内嵌音乐</h4>
+<ul>
+<li><strong>实现</strong>：正文里的 <code>::music &lt;id&gt;::</code> 在客户端被解析成卡片，点击后交给播放器；播放与页面解绑，离开详情页仍继续。</li>
+</ul>
+<h3 id="本地能力">本地能力</h3>
+<h4 id="①-缓存管理">① 缓存管理</h4>
+<ul>
+<li>
+<p><strong>实现</strong>：<code>media_cache_service.dart</code> 管理图片/音频缓存，<code>cache_management_page.dart</code> 展示占用并可清理。</p>
+</li>
+<li>
+<p><strong>坑</strong>：缓存要设上限与 LRU 淘汰。只增不减，长期使用后占用会到 GB 级，用户只能卸载重装。</p>
+</li>
+</ul>
+<h4 id="②-浏览历史与稍后再看">② 浏览历史与稍后再看</h4>
+<ul>
+<li><strong>实现</strong>：<code>browse_history_service.dart</code> 与 <code>watch_later_service.dart</code> 本地存储 + 服务端同步；<code>browse_history_page.dart</code> 提供列表与清理。</li>
+</ul>
+<h4 id="③-皮肤与桌面布局偏好">③ 皮肤与桌面布局偏好</h4>
+<ul>
+<li><strong>实现</strong>：<code>skins/</code> 定义主题，<code>desktop_layout_preference_service.dart</code> 记住桌面端的窗口/侧栏布局。</li>
+</ul>
+<h3 id="App-·-面试速答">App · 面试速答</h3>
+<ul>
+<li><strong>多端</strong>：六平台 + Web，九种产物（Android 三种 ABI）；七套宿主工程共用 <code>lib/</code>，平台差异收敛在 <code>core/services</code> 与 <code>core/miniprogram</code>。</li>
+<li><strong>OHOS</strong>：独立 <code>pubspec_overrides.ohos.yaml</code>，构建其他平台必须移除；通知走原生 <code>MethodChannel</code>。</li>
+<li><strong>平台差异</strong>：桌面用 <code>--app=</code> 开浏览器应用窗口、移动内嵌 WebView；桌面不能叠加载遮罩；保活只在 Android。</li>
+<li><strong>身份</strong>：<code>shared_preferences</code> 存 access / refresh / expiry 三键；更严场景需 Keychain / Keystore。</li>
+<li><strong>心跳</strong>：60 秒单例心跳，切场景立即补报，<code>_inFlight</code> 防重入。</li>
+<li><strong>小程序</strong>：预取票据（60s TTL）→ 来源白名单校验 → 仅自家 <code>/mp/</code> 页面注入 access token。</li>
+<li><strong>坑位</strong>：返回键先给页面、通知冷启动要注册回调、缓存要 LRU、播放器要 dispose。</li>
+</ul>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本篇已读</span></button><a class="book-btn book-btn-ghost" href="/docs/sse-market/"><i class="fas fa-list"></i> 全部篇目</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/docs/sse-market/imagebed/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一篇</span><strong>06 图床：上传、鉴权与存储</strong></a><a class="book-pager-link next" href="/docs/sse-market/join/"><span class="book-pager-dir">下一篇 <i class="fas fa-arrow-right"></i></span><strong>08 招聘：双选、答辩与席位</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%A4%9A%E7%AB%AF%E5%BD%A2%E6%80%81">多端形态</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E6%94%AF%E6%8C%81%E7%9F%A9%E9%98%B5">① 支持矩阵</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%B9%B3%E5%8F%B0%E8%83%BD%E5%8A%9B%E5%B7%AE%E5%BC%82">② 平台能力差异</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-HarmonyOS-%E7%9A%84%E4%BE%9D%E8%B5%96%E8%A6%86%E7%9B%96">③ HarmonyOS 的依赖覆盖</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E6%A1%8C%E9%9D%A2%E7%AB%AF%EF%BC%9A%E5%BC%80%E5%A4%96%E9%83%A8%E7%AA%97%E5%8F%A3">④ 桌面端：开外部窗口</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E7%A7%BB%E5%8A%A8%E7%AB%AF%EF%BC%9A%E5%86%85%E5%B5%8C-%E4%BF%9D%E6%B4%BB">⑤ 移动端：内嵌 + 保活</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%BD%91%E7%BB%9C%E4%B8%8E%E8%BA%AB%E4%BB%BD">网络与身份</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-API-%E5%B0%81%E8%A3%85">① API 封装</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E4%BB%A4%E7%89%8C%E5%AD%98%E5%82%A8">② 令牌存储</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E4%BB%A4%E7%89%8C%E5%88%B7%E6%96%B0">③ 令牌刷新</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%BB%E7%AB%99%E5%8A%9F%E8%83%BD">主站功能</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E9%A6%96%E9%A1%B5%E4%B8%8E%E6%90%9C%E7%B4%A2">① 首页与搜索</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%B8%96%E5%AD%90%E8%AF%A6%E6%83%85">② 帖子详情</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%8F%91%E5%B8%96">③ 发帖</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E7%A7%81%E4%BF%A1">④ 私信</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E9%80%9A%E7%9F%A5">⑤ 通知</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A5-%E5%9C%A8%E7%BA%BF%E5%BF%83%E8%B7%B3">⑥ 在线心跳</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A6-%E6%8A%95%E5%B8%81%E4%B8%8E%E6%89%93%E5%88%86">⑦ 投币与打分</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%AE%B9%E5%99%A8">小程序容器</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E7%9B%AE%E5%BD%95%E4%B8%8E%E7%A5%A8%E6%8D%AE%E9%A2%84%E5%8F%96">① 目录与票据预取</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E7%94%B3%E8%AF%B7%E7%A5%A8%E6%8D%AE">② 申请票据</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E6%9D%A5%E6%BA%90%E6%A0%A1%E9%AA%8C">③ 来源校验</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E5%86%85%E9%83%A8%E5%BA%94%E7%94%A8%E7%9A%84%E4%BB%A4%E7%89%8C%E6%B3%A8%E5%85%A5">④ 内部应用的令牌注入</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E6%A1%A5%E6%8E%A5%E4%B8%8E%E8%BF%94%E5%9B%9E">⑤ 桥接与返回</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A5-%E8%AE%BE%E5%A4%87%E6%B3%A8%E5%86%8C%E4%B8%8E%E8%AE%A2%E9%98%85">⑥ 设备注册与订阅</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE">音乐播放</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E6%92%AD%E6%94%BE%E5%99%A8">① 播放器</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%B8%96%E5%AD%90%E5%86%85%E5%B5%8C%E9%9F%B3%E4%B9%90">② 帖子内嵌音乐</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%9C%AC%E5%9C%B0%E8%83%BD%E5%8A%9B">本地能力</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E7%BC%93%E5%AD%98%E7%AE%A1%E7%90%86">① 缓存管理</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%B5%8F%E8%A7%88%E5%8E%86%E5%8F%B2%E4%B8%8E%E7%A8%8D%E5%90%8E%E5%86%8D%E7%9C%8B">② 浏览历史与稍后再看</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E7%9A%AE%E8%82%A4%E4%B8%8E%E6%A1%8C%E9%9D%A2%E5%B8%83%E5%B1%80%E5%81%8F%E5%A5%BD">③ 皮肤与桌面布局偏好</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#App-%C2%B7-%E9%9D%A2%E8%AF%95%E9%80%9F%E7%AD%94">App · 面试速答</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

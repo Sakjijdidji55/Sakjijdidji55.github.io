@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 900" role="img" aria-label="软工集市平台全书">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#0b1220"/>
+      <stop offset="0.55" stop-color="#101b2e"/>
+      <stop offset="1" stop-color="#16233a"/>
+    </linearGradient>
+    <linearGradient id="rule" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#93c5fd"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="rgba(255,255,255,.045)" stroke-width="1"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="60"/></filter>
+  </defs>
+
+  <rect width="640" height="900" fill="url(#bg)"/>
+  <rect width="640" height="900" fill="url(#grid)"/>
+  <circle cx="520" cy="120" r="150" fill="#3b82f6" opacity=".14" filter="url(#soft)"/>
+  <circle cx="90" cy="760" r="130" fill="#2563eb" opacity=".10" filter="url(#soft)"/>
+
+  <rect x="56" y="72" width="56" height="4" fill="url(#rule)"/>
+  <text x="56" y="118" fill="#93c5fd" font-family="'Helvetica Neue',Arial,sans-serif" font-size="17" letter-spacing="4">SSE MARKET</text>
+
+  <text x="56" y="238" fill="#f8fafc" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="66" font-weight="700" letter-spacing="2">软工集市</text>
+  <text x="56" y="318" fill="#f8fafc" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="66" font-weight="700" letter-spacing="2">平台全书</text>
+
+  <rect x="56" y="358" width="120" height="3" fill="url(#rule)"/>
+
+  <text x="56" y="404" fill="#94a3b8" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="20" letter-spacing="1">从一门课上的论坛</text>
+  <text x="56" y="438" fill="#94a3b8" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="20" letter-spacing="1">到一组自建的学院基础设施</text>
+
+  <g font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="17" fill="#cbd5e1">
+    <text x="56" y="548">主站 · 集市云 · iWiki · UniSSO</text>
+    <text x="56" y="584">图床 · App · 招聘 · 开发者平台</text>
+    <text x="56" y="620">API 开放平台 · TTS · 事故复盘</text>
+  </g>
+
+  <g>
+    <rect x="56" y="700" width="92" height="2" fill="#334155"/>
+    <rect x="56" y="716" width="150" height="2" fill="#334155"/>
+    <rect x="56" y="732" width="64" height="2" fill="#334155"/>
+  </g>
+
+  <text x="56" y="812" fill="#64748b" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="15" letter-spacing="1">每一章：操作 · 实现 · 关键代码 · 坑 · 面试点</text>
+  <text x="56" y="844" fill="#475569" font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="13">2023 — 2026</text>
+</svg>

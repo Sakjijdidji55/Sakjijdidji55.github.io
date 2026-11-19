@@ -1,0 +1,1134 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>02 主站：账号、帖子与互动 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="软工集市专题 · 02 主站：账号、帖子与互动">
+<meta property="og:type" content="website">
+<meta property="og:title" content="02 主站：账号、帖子与互动">
+<meta property="og:url" content="https://sakjijdidji55.github.io/docs/sse-market/main/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="软工集市专题 · 02 主站：账号、帖子与互动">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-11-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/docs/sse-market/main/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '02 主站：账号、帖子与互动',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">02 主站：账号、帖子与互动</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">02 主站：账号、帖子与互动</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-market" data-chapter="main" data-total="14" data-prev="/docs/sse-market/overview/" data-next="/docs/sse-market/cloud/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/docs/sse-market/">软工集市专题</a><div class="book-sidebar-sub">14 篇 · 1 小时 30 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 14</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选篇目..." data-book-filter aria-label="筛选篇目"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="history"><a class="book-chapter-link" href="/docs/sse-market/history/" data-chapter-link="history"><span class="book-chapter-index">00</span><span class="book-chapter-name">00 历史：从一门课到一组平台</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="overview"><a class="book-chapter-link" href="/docs/sse-market/overview/" data-chapter-link="overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">01 平台体系：三层与节点</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">三条主线</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="main"><a class="book-chapter-link is-current" href="/docs/sse-market/main/" data-chapter-link="main" aria-current="page"><span class="book-chapter-index">02</span><span class="book-chapter-name">02 主站：账号、帖子与互动</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="cloud"><a class="book-chapter-link" href="/docs/sse-market/cloud/" data-chapter-link="cloud"><span class="book-chapter-index">03</span><span class="book-chapter-name">03 集市云：一组一容器</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="iwiki"><a class="book-chapter-link" href="/docs/sse-market/iwiki/" data-chapter-link="iwiki"><span class="book-chapter-index">04</span><span class="book-chapter-name">04 iWiki：协作、检索与开放</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">身份与存储</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="unisso"><a class="book-chapter-link" href="/docs/sse-market/unisso/" data-chapter-link="unisso"><span class="book-chapter-index">05</span><span class="book-chapter-name">05 UniSSO：统一身份</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="imagebed"><a class="book-chapter-link" href="/docs/sse-market/imagebed/" data-chapter-link="imagebed"><span class="book-chapter-index">06</span><span class="book-chapter-name">06 图床：上传、鉴权与存储</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">端与开发者</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app"><a class="book-chapter-link" href="/docs/sse-market/app/" data-chapter-link="app"><span class="book-chapter-index">07</span><span class="book-chapter-name">07 App：六平台与九种产物</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="join"><a class="book-chapter-link" href="/docs/sse-market/join/" data-chapter-link="join"><span class="book-chapter-index">08</span><span class="book-chapter-name">08 招聘：双选、答辩与席位</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="developer"><a class="book-chapter-link" href="/docs/sse-market/developer/" data-chapter-link="developer"><span class="book-chapter-index">09</span><span class="book-chapter-name">09 开发者平台：权限、部署与小程序</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">能力</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="api-platform"><a class="book-chapter-link" href="/docs/sse-market/api-platform/" data-chapter-link="api-platform"><span class="book-chapter-index">10</span><span class="book-chapter-name">10 API 平台：兼容与计费</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="tts-ai"><a class="book-chapter-link" href="/docs/sse-market/tts-ai/" data-chapter-link="tts-ai"><span class="book-chapter-index">11</span><span class="book-chapter-name">11 TTS 与 AI 研究</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">复盘与附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="interview"><a class="book-chapter-link" href="/docs/sse-market/interview/" data-chapter-link="interview"><span class="book-chapter-index">12</span><span class="book-chapter-name">12 全平台面试速答</span><span class="book-chapter-time">1′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="incidents"><a class="book-chapter-link" href="/docs/sse-market/incidents/" data-chapter-link="incidents"><span class="book-chapter-index">13</span><span class="book-chapter-name">13 事故复盘</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/docs/"><i class="fas fa-arrow-left"></i> 返回文档</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/docs/sse-market/">软工集市专题</a><i class="fas fa-angle-right"></i><span>02 主站：账号、帖子与互动</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">DOC 02</span><h1>02 主站：账号、帖子与互动</h1><div class="book-chapter-meta">16 分钟读完 · 6,911 字</div></div><blockquote>
+<p>前端：<a target="_blank" rel="noopener" href="https://gitee.com/qvq-qiu/newSSE%E3%80%81%E5%90%8E%E7%AB%AF%EF%BC%9Ahttps://gitee.com/yang-peiyue/SSE_market_server">https://gitee.com/qvq-qiu/newSSE、后端：https://gitee.com/yang-peiyue/SSE_market_server</a></p>
+</blockquote>
+<h3 id="账号与安全">账号与安全</h3>
+<h4 id="①-注册">① 注册</h4>
+<ul>
+<li><strong>用户操作</strong>：在 <code>sso.ssemarket.cn/register</code> 填邮箱 → 收 6 位验证码 → 设密码（可填激活码 CDKey）→ 提交。</li>
+<li><strong>入口位置</strong>：主站 <code>POST /api/auth/register</code> 只接受 UniSSO 的服务端调用，浏览器直接调用返回 403。绕过 UniSSO 创建的账号在统一身份中不存在，无法再次登录，因此注册统一在 <code>sso.ssemarket.cn/register</code> 完成。</li>
+<li><strong>实现链路</strong>：前端把密码用 SM2 加密 → 主站解密 → 校验两次一致、长度 ≥6 → 交给 <code>service.Users.Register</code> 校验验证码/CDKey、查重（邮箱唯一、手机号唯一）→ 落库 → 返回 access + refresh。若当前 SSO 模式开启，再用刚设的密码向 UniSSO 换一次共享会话，失败也不影响注册结果。</li>
+</ul>
+<pre><code class="language-go">// controller/userController.go —— 只拦浏览器，不拦 UniSSO 的服务端调用
+func Register(c *gin.Context) {
+	if browserAuthRequest(c) {
+		response.Response(c, http.StatusForbidden, 403, nil,
+			&quot;注册请前往统一身份认证：https://sso.ssemarket.cn/register&quot;)
+		return
+	}
+	password1 := util.Decrypt(requestUser.Password) // 前端 SM2 密文
+	password2 := util.Decrypt(requestUser.Password2)
+	if len(password2) &lt; 6 { /* 422 密码不能少于6位 */ }
+	if password1 != password2 { /* 422 两次密码不相同 */ }
+
+	tokens, err := service.Users.Register(c.Request.Context(), domain.RegisterInput{
+		Name: requestUser.Name, Phone: requestUser.Phone,
+		Email: strings.TrimSpace(requestUser.Email),
+		Password: password1, ValiCode: requestUser.ValiCode, CDKey: requestUser.CDKey,
+	})
+	if errors.Is(err, domain.ErrConflict) { /* 422 该邮箱/手机号已存在 */ }
+	if errors.Is(err, domain.ErrUnauthorized) { /* 400 验证码错误 */ }
+	// 其余分支与错误处理略（见仓库）
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>browserAuthRequest</code> 靠 Origin/Referer 判断，服务端调用天然没有这两个头 —— 所以能精确区分「浏览器乱调」和「UniSSO 正常建号」，不用加白名单。</li>
+<li><strong>面试点</strong>：注册需保证幂等。邮箱唯一索引是最终约束，业务层的「先查再插」在并发下会产生重复插入。</li>
+</ul>
+<h4 id="②-登录">② 登录</h4>
+<ul>
+<li><strong>用户操作</strong>：输邮箱 + 密码，或点「集市账号登录」跳 UniSSO。</li>
+<li><strong>关键变化</strong>：密码<strong>不由主站校验</strong>，主站把邮箱密码交给 UniSSO 的密码校验接口，拿回身份后再签发自己的 token。这是「一个账号中心」的代价，也是收益 —— 改密码、封号、二次验证全在 UniSSO 一处生效。</li>
+<li><strong>错误码</strong>按失败原因分别定义：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>情况</th>
+<th>状态码</th>
+<th>提示</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>密码错</td>
+<td>401</td>
+<td>邮箱或密码错误</td>
+</tr>
+<tr>
+<td>非学院内部成员</td>
+<td>403</td>
+<td>该账号没有软件工程学院内部权限</td>
+</tr>
+<tr>
+<td>该身份已绑其他集市账号</td>
+<td>409</td>
+<td>该统一身份已绑定其他集市账号</td>
+</tr>
+<tr>
+<td>邮箱没有集市账号</td>
+<td>422</td>
+<td>请先注册</td>
+</tr>
+<tr>
+<td>密码校验被禁</td>
+<td>403</td>
+<td>不允许通过密码校验登录</td>
+</tr>
+<tr>
+<td>失败次数过多</td>
+<td>429</td>
+<td>已被临时锁定，请 15 分钟后再试</td>
+</tr>
+<tr>
+<td>UniSSO 挂了</td>
+<td>503</td>
+<td>统一身份服务暂时不可用</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-go">// controller/userController.go
+func Login(c *gin.Context) {
+	mode := service.CurrentSsoMode()
+	if mode == service.SsoModeDisabled { /* 503 统一身份服务暂时不可用 */ }
+
+	email := requestUser.Email
+	password := util.Decrypt(requestUser.Password) // 健康探测只给状态提示，密码始终由 UniSSO 校验
+	tokens, ssoSess, err := service.Sso.LoginViaUnisso(c.Request.Context(), email, password)
+	if err != nil {
+		switch {
+		case errors.Is(err, service.ErrSsoBadCredentials):  /* 401 */
+		case errors.Is(err, service.ErrSsoForbidden):       /* 403 非内部成员 */
+		case errors.Is(err, service.ErrSsoConflict):        /* 409 已绑其他账号 */
+		case errors.Is(err, service.ErrSsoNoLocalAccount):  /* 422 请先注册 */
+		case errors.Is(err, service.ErrSsoTooManyAttempts): /* 429 锁定 15 分钟 */
+		case errors.Is(err, service.ErrSsoUnavailable):     /* 503 */
+		}
+		return
+	}
+	service.SsoAudit(&quot;unisso_login&quot;, &quot;mode&quot;, mode, &quot;email&quot;, email, &quot;result&quot;, &quot;success&quot;)
+	setSsoCookie(c, ssoSess) // 父域 Cookie，主站/图床/iWiki 共享登录态
+	response.Success(c, gin.H{&quot;token&quot;: tokens.AccessToken, &quot;refresh_token&quot;: tokens.RefreshToken}, &quot;登录成功&quot;)
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>setSsoCookie</code> 的名称/值/Domain/有效期<strong>全部从 UniSSO 响应里取</strong>，不在主站写常量。父域 Cookie 一旦硬编码域名，本地开发与更换域名时都会失效。</li>
+<li><strong>面试点</strong>：登录失败要审计（<code>SsoAudit</code> 记 mode/email/result），但<strong>绝不能记密码和完整 token</strong>。审计日志本身就是拖库目标。</li>
+</ul>
+<h4 id="③-鉴权中间件">③ 鉴权中间件</h4>
+<ul>
+<li><strong>用户操作</strong>：无感知。登录后所有请求自动带 <code>Authorization: Bearer &lt;token&gt;</code>。</li>
+<li><strong>实现</strong>：三层分工 —— 严格鉴权（必须登录）、可选鉴权（登录了就给身份，游客也放行）、OAuth 鉴权（第三方应用带 scope）。</li>
+<li><strong>中间件顺序</strong>：先严格鉴权解析出用户，再进入布隆过滤器做防刷判断。</li>
+</ul>
+<pre><code class="language-go">// route/routes.go —— 三组路由，同一批 handler 按需挂不同中间件
+auth.Use(middleware.StrictAuthMiddleware())
+auth.Use(middleware.BloomFilterMiddleware()) // 布隆过滤器挡恶意刷接口
+oauth.Use(middleware.OAuthMiddleware())
+noauth.Use(middleware.OptionalAuthMiddleware())
+</code></pre>
+<pre><code class="language-go">// middleware/authMiddleware.go
+tokenString := ctx.GetHeader(&quot;Authorization&quot;)
+if tokenString == &quot;&quot; || len(tokenString) &lt;= 7 || !strings.HasPrefix(tokenString, &quot;Bearer &quot;) {
+	ctx.JSON(http.StatusUnauthorized, gin.H{&quot;code&quot;: 401, &quot;msg&quot;: &quot;权限不足&quot;})
+	ctx.Abort()
+	return
+}
+tokenString = tokenString[7:]
+token, claims, err := common.ParseToken(tokenString)
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>OptionalAuthMiddleware</code> 会校验，但校验失败也放行。所以凡是读到用户身份就必须显式判断 nil —— 详情页的「我点过赞没有」就靠这个，游客看到的是未点赞状态。</li>
+<li><strong>面试点</strong>：校验维度是「用户 × 路径 × 时间窗」，Redis Set 的存储开销不可接受；布隆过滤器以少量假阳性换取常量级内存，假阳性的后果是多拒绝一次请求。</li>
+</ul>
+<h4 id="④-个人访问令牌-PAT">④ 个人访问令牌 PAT</h4>
+<ul>
+<li><strong>用户操作</strong>：设置页创建 PAT（可勾 scope）→ 复制 <code>sk_xq_</code> 开头的串 → 贴到 MCP 客户端或脚本里。</li>
+<li><strong>用途</strong>：浏览器之外的调用方（MCP、CI）不能走 Cookie，也不能每次让用户输密码，用长期令牌换身份。</li>
+<li><strong>实现</strong>：创建时返回一次原文，库里只存哈希；<code>/api/auth/token/verify</code> 供 MCP 网关以 PAT 换身份；吊销与删除分开（吊销保留记录、删除抹掉）。MCP 入口单独限流 30 次/分钟。</li>
+</ul>
+<pre><code class="language-go">// route/routes.go —— MCP 只认 PAT，和 JWT 登录态物理隔离
+forumMCP := r.Group(&quot;/api/auth&quot;)
+forumMCP.Use(middleware.ForumPATAuth(), middleware.UserRateLimit(&quot;forum-mcp&quot;, 30, time.Minute))
+forumMCP.Any(&quot;/mcp&quot;, controller.NewForumMCPHandler())
+</code></pre>
+<ul>
+<li><strong>坑</strong>：PAT 的 scope 要能「收窄」不能「放大」。给 MCP 的令牌只授予帖子读写权限，不包含修改密码等能力。</li>
+<li><strong>面试点</strong>：长期令牌必须有独立吊销通道，且不能与登录态共用签名密钥 —— 否则轮换 JWT 密钥时会把所有 PAT 一起废掉。</li>
+</ul>
+<h4 id="⑤-改密-改邮箱-注销">⑤ 改密 / 改邮箱 / 注销</h4>
+<ul>
+<li><strong>用户操作</strong>：设置页改密码（验旧密码）、改邮箱（验新邮箱验证码）、注销账号。</li>
+<li><strong>实现</strong>：改密与改邮箱都要求先验证身份（旧密码 / 邮箱验证码）；改邮箱同时更新唯一索引，冲突直接 422；注销是软删 + 清会话 + 解绑 UniSSO，不物理删数据。</li>
+<li><strong>坑</strong>：改密后必须让旧 refresh 失效，否则被盗号后攻击者用 refresh 一直续期，改密不生效。</li>
+</ul>
+<pre><code class="language-go">// controller/userController.go
+func ModifyPassword(c *gin.Context) { /* 验旧密码 → 更新 → 清 refresh_tokens */ }
+func ModifyEmail(c *gin.Context)    { /* 验新邮箱验证码 → 更新 → 唯一索引冲突返回 422 */ }
+func DeleteMe(c *gin.Context)       { /* 软删 + 解绑 + 清会话 */ }
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：账号系统的三个「必做」—— 改密踢下线、注销软删、操作留审计。</li>
+</ul>
+<h3 id="帖子与浏览">帖子与浏览</h3>
+<h4 id="①-发帖">① 发帖</h4>
+<ul>
+<li><strong>用户操作</strong>：选分区 → 填标题 → 写 Markdown 正文（可插图片/音乐/视频）→ 可选匿名 → 发布。</li>
+<li><strong>实现链路</strong>：
+<ol>
+<li>前端先传图，拿 COS 地址，再拼进 Markdown。</li>
+<li>提交走 <code>POST /api/auth/post</code>，后端校验标题长度、正文非空、分区合法。</li>
+<li>匿名帖在<strong>读的时候</strong>才脱敏，库里仍存真实 <code>user_id</code> —— 否则作者自己都找不回自己的帖子。</li>
+<li>写库成功 → 让列表缓存换 generation → 触发 @解析（含 @小秋）。</li>
+</ol>
+</li>
+<li><strong>关键设计</strong>：列表缓存用 <strong>generation 版本号</strong>，发帖不删缓存，只把版本号 +1，旧 key 自然失效。</li>
+</ul>
+<pre><code class="language-go">// service/browse_feed.go（示意）—— 公共 Feed 带 generation，写入即换代
+func (s *BrowseService) InvalidateHomeBrowse() {
+	core.MyRedis.Incr(ctx, &quot;post:browse:generation&quot;)
+}
+// 读的时候把 generation 拼进缓存键，换代后自然 miss，不用 SCAN 删旧键
+cacheKey := fmt.Sprintf(&quot;post:browse:home:%s&quot;, gen)
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>SCAN</code> 遍历键会阻塞单线程 Redis；用版本号或命名空间换代，失效操作为 O(1)。</li>
+<li><strong>面试点</strong>：匿名不是加密。库里明文存作者，只靠响应层脱敏 —— 一旦有人写个新接口忘了脱敏就泄露，所以要用统一的 <code>anonymizeAuthor</code> 出口。</li>
+</ul>
+<h4 id="②-列表与分页">② 列表与分页</h4>
+<ul>
+<li><strong>用户操作</strong>：首页切「全部/关注/推荐/热榜」，按分区、标签、时间、排序筛选，滚动加载下一页。</li>
+<li><strong>实现</strong>：一个 <code>BrowseFilter</code> 结构承接所有筛选维度，避免为每种组合写一个接口；缓存按 feed 类型分开，<code>home</code> / <code>history</code>（浏览足迹）/ <code>save</code>（收藏）/ <code>rating</code>（评分专区）各自独立键。</li>
+<li><strong>坑</strong>：分页用 <code>OFFSET</code> 在深页会全表扫，数据量上来必须换游标（<code>WHERE id &lt; last_id</code>）。</li>
+</ul>
+<pre><code class="language-go">// controller/postController.go
+func Browse(c *gin.Context) {
+	// searchsort ∈ {home, history, save, rating}，与分区/标签/时间/排序一起组装 BrowseFilter
+	filter := domain.BrowseFilter{ /* ... */ }
+	list, total, err := service.Posts.Browse(c.Request.Context(), filter)
+	// 逐条过匿名脱敏，再返回
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：<code>total</code> 在大表上的聚合开销较高；可单独维护计数表，或前端不展示总页数、只提供「加载更多」。</li>
+</ul>
+<h4 id="③-详情与浏览数">③ 详情与浏览数</h4>
+<ul>
+<li><strong>用户操作</strong>：点进帖子 → 看到正文、点赞数、评论、投币数；刷新一次浏览数 +1。</li>
+<li><strong>实现</strong>：详情整包缓存 <code>post:detail:&lt;id&gt;</code>；浏览数<strong>不进 MySQL 同步写</strong>，走 Redis <code>INCR</code> + 脏标记，5 秒批量回写。</li>
+</ul>
+<pre><code class="language-go">// service/hot_data_service.go
+func (s *HotDataService) IncrBrowseCount(postID int) int64 {
+	if !s.redisHealthy {
+		return s.browseNumFromDB(postID) // Redis 挂了直接降级查库
+	}
+	s.ensureBrowseCountKeySeeded(postID) // 首次从 DB 播种，避免从 0 开始
+	n, err := core.MyRedis.Incr(ctx, util.GetPostBrowseCountKey(postID)).Result()
+	if err != nil {
+		return s.browseNumFromDB(postID)
+	}
+	s.browseDirty.Store(postID, time.Now()) // 打脏标记，后台每 5s 批量落库
+	return n
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：播种（seed）这一步不能省。如果 key 不存在直接 <code>INCR</code>，浏览数会从 1 开始，把历史数据「清零」。</li>
+<li><strong>面试点</strong>：浏览数这种高写低读的计数，一定要「缓存为准 + 定期回写」，直接 <code>UPDATE ... SET num = num + 1</code> 会把行锁打爆。</li>
+</ul>
+<h4 id="④-点赞-收藏-关注-置顶-私密-删除">④ 点赞 / 收藏 / 关注 / 置顶 / 私密 / 删除</h4>
+<ul>
+<li><strong>用户操作</strong>：帖子卡片或详情页点图标，状态即时翻转；作者可置顶、设私密、删除；他人可举报。</li>
+<li><strong>实现</strong>：点赞是关系表 + 计数两处写，同一事务；收藏进「我的收藏」独立表；关注帖子单独一张表（区别于关注作者）；私密只改可见性不删数据；删除是软删 + 从所有 feed 移除。</li>
+<li><strong>统一规则</strong>：<strong>任何改变详情内容的写操作，都必须失效 <code>post:detail:&lt;id&gt;</code></strong> —— 点赞数、评论数、投币数都在这个缓存里。</li>
+</ul>
+<pre><code class="language-go">// controller/postController.go
+func UpdateLike(c *gin.Context)        { /* 关系表翻转 + 计数 ±1 + 失效详情缓存 */ }
+func UpdateSave(c *gin.Context)        { /* 收藏表增删 + 失效个人收藏列表 */ }
+func ToggleWatch(c *gin.Context)       { /* 关注帖子，独立于关注作者 */ }
+func UpdatePostPrivacy(c *gin.Context) { /* 只改 visible，不删数据 */ }
+</code></pre>
+<ul>
+<li><strong>坑</strong>：点赞和取消点赞会来回打，计数用 <code>±1</code> 在并发下会漂。要么用唯一索引 + 计数表重算，要么接受微小误差并定期校准。</li>
+<li><strong>面试点</strong>：软删的代价是所有查询都要带 <code>deleted_at IS NULL</code>，一旦漏一处就会「删了还能搜到」。由 GORM 的软删钩子统一处理。</li>
+</ul>
+<h4 id="⑤-搜索与热榜">⑤ 搜索与热榜</h4>
+<ul>
+<li><strong>用户操作</strong>：顶部搜索框搜帖子/用户，热榜看当前最热内容。</li>
+<li><strong>实现</strong>：搜索走标题 + 正文匹配，服务端二次过滤可见性（私密帖不能出现在别人结果里）；热榜分数离线算好，不随请求实时排序。</li>
+<li><strong>热度公式</strong>（<code>CalculateHeat</code>）：赞 +3、浏览 +1、评论 +6，删评论按 <code>0.5^days</code> 衰减。</li>
+</ul>
+<pre><code class="language-go">// controller/postController.go
+func CalculateHeat(c *gin.Context) { /* 赞*3 + 浏览*1 + 评论*6，删评论按 0.5^days 衰减 */ }
+</code></pre>
+<ul>
+<li><strong>坑</strong>：搜索结果的权限过滤必须在<strong>服务端</strong>做。前端过滤会先把私密内容下发到浏览器，过滤必须放在服务端。</li>
+<li><strong>面试点</strong>：热榜按「时间衰减 + 互动加权」算分，纯计数会让老帖永远占榜。</li>
+</ul>
+<h3 id="评论与评分">评论与评分</h3>
+<h4 id="①-一级评论">① 一级评论</h4>
+<ul>
+<li><strong>用户操作</strong>：帖子底部输入框写评论 → 提交 → 立刻出现在列表顶部。</li>
+<li><strong>校验顺序</strong>（顺序本身就是设计）：内容非空 → 长度 ≤1000 字（按 rune 算，不是 byte）→ 用户身份 → 是否被禁言 → 帖子是否存在。</li>
+</ul>
+<pre><code class="language-go">// controller/commentController.go
+func PostPcomment(c *gin.Context) {
+	if len(msg.Content) == 0 { /* 400 评论内容不能为空 */ }
+	if utf8.RuneCountInString(msg.Content) &gt; 1000 { /* 400 评论内容过长 */ }
+	user, ok := requireViewerLegacyPhone(c, msg.UserTelephone)
+	if !ok { /* 422 权限不足 */ }
+	if user.BanEnd.After(time.Now()) { /* 400 你尚处于禁言状态中，不得评论 */ }
+
+	result, err := service.Comments.CreatePcomment(c.Request.Context(), domain.PcommentCreateInput{
+		UserID: user.ID, PostID: msg.PostID,
+		Content: msg.Content, AsStaffUserID: msg.AsStaffUserID, // 支持以职位身份发言
+	})
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>len(content)</code> 算的是字节，一个中文 3 字节，用它会变成 333 字就报超长。必须 <code>utf8.RuneCountInString</code>。</li>
+<li><strong>面试点</strong>：限流与禁言要分开 —— 限流是「太快」，禁言是「不许」。禁言用户返回 400；429 表示请求过快，语义不对。</li>
+</ul>
+<h4 id="②-楼中楼回复">② 楼中楼回复</h4>
+<ul>
+<li><strong>用户操作</strong>：在别人评论下点「回复」→ 输入 → 出现在该评论下方。</li>
+<li><strong>实现</strong>：二级评论单独一张 <code>ccomment</code> 表，带 <code>parent_id</code> 指向一级评论；列表接口把两级拼成树，只查当前页的一级评论再批量捞二级，避免 N+1。</li>
+</ul>
+<pre><code class="language-go">// controller/commentController.go
+func PostCcomment(c *gin.Context) { /* 二级回复，parent 指向 pcomment */ }
+</code></pre>
+<ul>
+<li><strong>坑</strong>：楼中楼只做两层，不做无限嵌套。三层以上前端渲染和分页都会失控，回复三层统一挂到二级下面并 <code>@</code> 被回复人。</li>
+</ul>
+<h4 id="③-点赞-点踩-删除评论">③ 点赞 / 点踩 / 删除评论</h4>
+<ul>
+<li><strong>用户操作</strong>：评论右侧点赞、点踩、删除（仅作者或管理员）。</li>
+<li><strong>实现</strong>：赞与踩互斥，切换时要把另一侧减掉；删除一级评论时二级一起失效；每次写操作失效评论列表缓存 <code>comment:list:&lt;postID&gt;:&lt;type&gt;</code>。</li>
+</ul>
+<pre><code class="language-go">func UpdatePcommentLike(c *gin.Context) { /* 赞/踩互斥，切换时反向 -1 */ }
+func UpdatePcommentDeny(c *gin.Context) { }
+func DeletePcomment(c *gin.Context)     { /* 级联失效二级 + 缓存 */ }
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：赞踩互斥如果用两张表，必须在一个事务里改；用一张表存 <code>-1/0/1</code> 更简单。</li>
+</ul>
+<h4 id="④-评分专区">④ 评分专区</h4>
+<ul>
+<li><strong>用户操作</strong>：进「打分」页 → 选分类 → 发评分贴 → 给星级 → 别人可评论、点赞。</li>
+<li><strong>实现</strong>：<strong>完全独立的一套表</strong>，不复用评论表。链路是：分类 → 评分贴 → 星级提交（每人每帖一次）→ 评分评论。</li>
+<li><strong>独立建表的原因</strong>：评分有「一人一票」「星级聚合」等约束，复用通用评论表需额外字段，且无法建立对应唯一索引。</li>
+</ul>
+<pre><code class="language-go">// controller/rating_controller.go
+func RatingCategoryList(c *gin.Context)   { }
+func RatingCategoryCreate(c *gin.Context) { }
+// 评分贴列表/详情/删除 + 星级提交 + 评分评论 + 点赞
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：当业务存在独立的唯一约束与聚合口径时应另建表；复用通用表的代价是每个查询都要附加 <code>WHERE type = 'rating'</code>。</li>
+</ul>
+<h3 id="提及">@ 提及</h3>
+<p>主站有三种 @，实现机制各不相同。</p>
+<h4 id="①-用户">① @ 用户</h4>
+<ul>
+<li><strong>用户操作</strong>：正文里打 <code>@</code> → 弹候选下拉 → 选中某人 → 发布后名字变成可点链接。</li>
+<li><strong>难点</strong>：Markdown 正文为纯文本，<code>@张三</code> 之后可能紧跟标点、中文或 HTML 标签，需要确定昵称的结束位置。</li>
+<li><strong>解法</strong>：编辑期只记录候选；<strong>渲染期</strong>拿「已知用户表」按昵称长度降序做最长前缀匹配，命中后再做边界判定（空白/标点/CJK/HTML 标签）。</li>
+<li><strong>输入期的容错</strong>：用户可能打 <code>@张三，你好</code>，所以提交时要生成「剥尾部标点」的变体一起拿去解析。</li>
+</ul>
+<pre><code class="language-ts">// newSSE/src/utils/mention.ts —— 生成候选变体：原名 + 逐字符剥标点
+export function mentionCandidates(captured: string): string[] {
+  const cur = captured.trim()
+  if (!cur) return []
+  const set = new Set&lt;string&gt;([cur])
+  for (let i = 0; i &lt; cur.length; i++) {
+    if (PUNCT_RE.test(cur[i])) {
+      set.add(cur.slice(0, i))      // &quot;@张三，你好&quot; → &quot;@张三&quot;
+      set.add(cur.slice(0, i + 1))  // 也保留带标点的版本
+    }
+  }
+  return [...set].filter(Boolean).sort((a, b) =&gt; b.length - a.length) // 长的优先
+}
+</code></pre>
+<pre><code class="language-go">// controller/commentController.go —— 批量解析，前端只查缓存里没有的
+func ResolveMentions(c *gin.Context) {
+	if err := c.ShouldBindJSON(&amp;req); err != nil || len(req.Names) == 0 {
+		response.Success(c, gin.H{&quot;users&quot;: []MentionUserResp{}}, &quot;ok&quot;) // 空输入不报错
+		return
+	}
+	users, err := service.Comments.ResolveMentionUsers(c.Request.Context(), req.Names)
+	out := make([]MentionUserResp, 0, len(users))
+	for _, u := range users {
+		if u == nil || u.ID == 0 { continue }
+		out = append(out, MentionUserResp{Name: u.Name, UserID: uint(u.ID)})
+	}
+	response.Success(c, gin.H{&quot;users&quot;: out}, &quot;ok&quot;)
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：必须<strong>批量</strong>解析。一篇文章 @ 了 10 个人，逐个查库就是 10 次 RTT；前端还要做全局 Map 缓存，只提交缺失的名字。</li>
+<li><strong>面试点</strong>：渲染期匹配可保证用户改名后旧帖仍指向正确的人；若发布时写死链接，改名后链接失效。</li>
+</ul>
+<h4 id="②-小秋（AI-助手）">② @小秋（AI 助手）</h4>
+<ul>
+<li><strong>用户操作</strong>：正文写 <code>@小秋 帮我总结一下</code> → 发布 → 十几秒后 bot 在帖子里回一条评论。</li>
+<li><strong>实现</strong>：后端识别到 <code>@小秋</code> 后<strong>异步</strong>处理，主请求立即返回，不阻塞用户。</li>
+<li><strong>三个必须处理的细节</strong>：
+<ol>
+<li>goroutine 里<strong>不能用请求的 ctx</strong>，请求一返回 ctx 就取消，AI 调用直接失败。</li>
+<li>bot 回帖要用 bot 自己的身份，不能用提问者身份。</li>
+<li>去重分两层：<code>sync.Map</code> 挡同一次触发，actor 侧再挡 60 秒窗口。</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-go">// controller/xiaoqiu_at.go（示意）
+go func() {
+	// 关键：脱离请求生命周期
+	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
+	defer cancel()
+	if _, loaded := trigger.LoadOrStore(key, struct{}{}); loaded {
+		return // 同一触发不重复处理
+	}
+	reply, err := agentClient.Chat(ctx, prompt) // 内网 Agent
+	if err != nil { return }
+	_ = service.Comments.CreatePcomment(ctx, domain.PcommentCreateInput{
+		UserID: xiaoqiuBotUserID, PostID: postID, Content: reply,
+	})
+}()
+</code></pre>
+<pre><code class="language-mermaid">flowchart TB
+  A[&quot;发帖正文含 @小秋&quot;] --&gt; B[&quot;主请求立即返回&quot;]
+  A --&gt; C[&quot;goroutine 用独立 ctx&quot;]
+  C --&gt; D{&quot;trigger 去重通过?&quot;}
+  D -- 否 --&gt; E[&quot;丢弃&quot;]
+  D -- 是 --&gt; F[&quot;调内网 Agent&quot;]
+  F --&gt; G[&quot;拿回 Markdown&quot;]
+  G --&gt; H[&quot;以 bot 身份创建评论&quot;]
+  H --&gt; I[&quot;失效评论列表缓存&quot;]
+</code></pre>
+<ul>
+<li><strong>坑</strong>：私密帖必须静默跳过 —— 否则 AI 可能把私密内容带进公开回复。</li>
+<li><strong>面试点</strong>：异步任务要「有界」：超时、去重、失败不重试爆量，三样缺一不可。</li>
+</ul>
+<h4 id="③-职位身份">③ @ 职位身份</h4>
+<ul>
+<li><strong>用户操作</strong>：开发人员在帖子下回复时，可切换「以职位身份回复」，显示的是岗位名，个人昵称不出现。</li>
+<li><strong>实现</strong>：每个职位对应一个 staff alias 账号（<code>AsStaffUserID</code>），评论表存两个 user_id：真实作者 + 展示身份。下拉候选按「当前线程可用的身份」过滤，只取当前线程用得上的那几个。</li>
+<li><strong>坑</strong>：权限判断要用真实作者，展示用 alias。写反了就会出现「匿名职位账号能改别人的帖子」这种越权。</li>
+</ul>
+<pre><code class="language-go">// controller/commentController.go
+result, err := service.Comments.CreatePcomment(ctx, domain.PcommentCreateInput{
+	UserID: user.ID, AsStaffUserID: msg.AsStaffUserID, // 真实身份 + 展示身份
+	PostID: msg.PostID, Content: msg.Content,
+})
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：身份与权限要解耦。「以谁的名义说」和「有没有权限做」是两个字段，混成一个必然出越权。</li>
+</ul>
+<h3 id="投币">投币</h3>
+<h4 id="①-投币">① 投币</h4>
+<ul>
+<li><strong>用户操作</strong>：帖子/小说卡片点「投币」→ 弹窗显示余额 → 选 1 枚或 2 枚 → 确认。</li>
+<li><strong>约束</strong>：每人每个内容最多 2 币；不能给自己投；私密/已删内容不能投。</li>
+<li><strong>实现</strong>：一个事务里做五件事 —— 扣用户币 → 写投币记录 → 投币者加经验 → 作者分成 → 记流水。成功后失效详情缓存和首页 Feed（里面带 <code>coin_num</code>）。</li>
+</ul>
+<pre><code class="language-go">// controller/coinController.go
+func CoinThrow(c *gin.Context) {
+	targetType := coinTargetType(msg.TargetType) // 只允许 post / novel
+	if targetType == &quot;&quot; || msg.TargetID &lt;= 0 || msg.Coins &lt;= 0 {
+		response.Response(c, http.StatusBadRequest, 400, nil, &quot;无效的投币参数&quot;); return
+	}
+	result, err := service.Coins.Throw(c.Request.Context(), user.ID, targetType, msg.TargetID, msg.Coins)
+}
+</code></pre>
+<pre><code class="language-go">// service/coin_service.go —— 目标校验 + 分成 + 缓存失效
+post, err := s.posts.FindPublicByID(ctx, targetID) // 私密帖查不到 → 不可投
+if post.UserID == userID { return nil, domain.ErrCoinSelf }
+result, err := s.coins.Throw(ctx, domain.CoinThrowInput{
+	UserID: userID, AuthorID: post.UserID,
+	TargetType: targetType, TargetID: targetID, Coins: coins,
+})
+if targetType == domain.CoinTargetPost {
+	InvalidatePostDetail(targetID) // 详情里有 coin_num
+	InvalidateHomeBrowse()         // Feed 里也有
+}
+</code></pre>
+<pre><code class="language-go">// domain/coin.go
+CoinMaxPerTarget = 2 // 每人每内容最多 2 币；投币者 +10 经验/币，作者 0.1 分成/币
+</code></pre>
+<pre><code class="language-mermaid">flowchart TB
+  A[&quot;POST /coin/throw&quot;] --&gt; B{&quot;公开且非本人?&quot;}
+  B -- 否 --&gt; E[&quot;404 / 403&quot;]
+  B -- 是 --&gt; C[&quot;单事务&quot;]
+  C --&gt; C1[&quot;扣用户币&quot;]
+  C --&gt; C2[&quot;写 coin_throw（唯一索引 ≤2）&quot;]
+  C --&gt; C3[&quot;投币者 +10 经验/币&quot;]
+  C --&gt; C4[&quot;作者 +0.1 币/币&quot;]
+  C --&gt; C5[&quot;写币流水&quot;]
+  C1 --&gt; D[&quot;失效 post:detail + 首页 Feed&quot;]
+  D --&gt; F[&quot;返回余额 / 总币 / 经验&quot;]
+</code></pre>
+<ul>
+<li><strong>坑</strong>：数量上限<strong>不能只靠代码判断</strong>。并发下「先查已投 1 枚、再投 1 枚」两个请求都会通过，唯一索引 <code>(user_id, target_type, target_id)</code> 是最终约束。</li>
+<li><strong>面试点</strong>：取消投币以 <code>coin_throw</code> 记录为凭证，不依赖目标内容是否存在，内容删除后仍可退回。</li>
+</ul>
+<h4 id="②-取消投币">② 取消投币</h4>
+<ul>
+<li><strong>用户操作</strong>：已投过的弹窗里点「取消投币」→ 全部撤回 → 币退回余额。</li>
+<li><strong>实现</strong>：删投币记录 → 退币 → 回退双方经验和分成 → 记一条反向流水 → 失效缓存。<strong>一次取消全部</strong>，不做「只退 1 枚」。</li>
+</ul>
+<pre><code class="language-go">// service/coin_service.go
+func (s *coinService) Cancel(ctx context.Context, userID int, targetType string, targetID int) error {
+	// 以 coin_throw 行为凭证，不要求目标内容仍存在
+	// 退币 + 经验回退 + 反向流水 + InvalidatePostDetail / InvalidateHomeBrowse
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：反向流水不能直接删原流水，否则对账时「收入 2 币、支出 0」对不上。要有独立的 <code>refund</code> 类型记录。</li>
+</ul>
+<h4 id="③-投币汇总-流水-排行榜">③ 投币汇总 / 流水 / 排行榜</h4>
+<ul>
+<li><strong>用户操作</strong>：弹窗看「我的余额 / 已投给这个作者多少」；个人页看投币流水；排行榜看帖子榜和作者榜。</li>
+<li><strong>实现</strong>：汇总走 <code>GET coin/summary</code> <strong>实时查</strong>，不读会话快照（快照会偏旧，投完再开弹窗显示的还是旧余额）；流水按时间倒序分页；排行榜按投币数聚合，用 ZSet。</li>
+</ul>
+<pre><code class="language-text">GET /api/auth/coin/summary    # 弹窗打开先现取余额，避免会话里缓存的 balance 过期
+GET /api/auth/coin/ledger?page=1
+GET /api/auth/rank/...
+</code></pre>
+<ul>
+<li><strong>坑</strong>：投票功能已下线，历史票数<strong>折算成已投的币</strong>保留展示，不要直接清零 —— 用户会认为数据丢了。</li>
+</ul>
+<h3 id="在线人数">在线人数</h3>
+<h4 id="①-心跳上报">① 心跳上报</h4>
+<ul>
+<li><strong>用户操作</strong>：无感知。登录后页面每 60 秒自动发一次心跳，切到后台暂停，切回前台立刻补一次。</li>
+<li><strong>实现</strong>：一个模块级单例管定时器，整个应用只有一份；徽标组件<strong>自己不起定时器</strong>，只负责切换场景。</li>
+</ul>
+<pre><code class="language-ts">// newSSE —— 模块级单例，避免每个页面/每个组件各起一个定时器
+// start(): 登录后调用，60s 一次；document.hidden 时 pause；visibilitychange 回前台立即补报
+</code></pre>
+<ul>
+<li><strong>坑</strong>：定时器挂在组件上而路由跳转后不销毁时，实例会持续累积，个人在线数被重复计入。因此采用模块级单例并显式 stop。</li>
+</ul>
+<h4 id="②-在线统计">② 在线统计</h4>
+<ul>
+<li><strong>用户操作</strong>：帖子页右上角显示「本页 3 人正在看 · 全站 128 人在线」。</li>
+<li><strong>实现</strong>：两个 ZSET —— 全站 <code>presence:online</code>、场景 <code>presence:scene:&lt;scene&gt;:&lt;id&gt;</code>；member 是用户 ID，score 是心跳时间戳（毫秒）。统计窗口 150 秒，超时即视为离线。</li>
+<li><strong>查询只发一次 RTT</strong>：一个 Pipeline 里先按 score 清过期，再 <code>ZCARD</code> 数人数。</li>
+</ul>
+<pre><code class="language-go">// service/presence_service.go
+opCtx, cancel := context.WithTimeout(context.WithoutCancel(ctx), time.Second)
+prevSceneKey, _ := core.MyRedis.Get(opCtx, currentKey).Result()
+pipe := core.MyRedis.TxPipeline()
+if prevSceneKey != &quot;&quot; &amp;&amp; prevSceneKey != newSceneKey {
+	pipe.ZRem(opCtx, prevSceneKey, member) // 切场景：从旧场景集合里摘掉自己
+}
+</code></pre>
+<pre><code class="language-go">// 常量化，统一维护窗口与间隔
+PresenceWindow        = 150 * time.Second // 统计窗口
+PresenceHeartbeatHint = 60                // 前端建议心跳间隔
+PresenceKeyTTL        = 5 * time.Minute   // key 兜底过期
+</code></pre>
+<pre><code class="language-mermaid">sequenceDiagram
+  participant F as 前端单例心跳
+  participant G as Gin 接口
+  participant R as Redis ZSET
+  F-&gt;&gt;G: 每 60s 上报 scene 与 targetID
+  G-&gt;&gt;R: 读 presence:current 拿上次场景
+  G-&gt;&gt;R: 管道 写新场景 清旧场景 记当前场景
+  G-&gt;&gt;R: 清过期成员并计数
+  R--&gt;&gt;G: 本页人数与全站人数
+  G--&gt;&gt;F: 返回快照
+</code></pre>
+<ul>
+<li><strong>坑 1</strong>：切场景只 <code>ZAdd</code> 新集合、不 <code>ZRem</code> 旧集合，用户会在两个场景里同时「在线」，人数虚高。</li>
+<li><strong>坑 2</strong>：用请求 ctx 写 Redis，客户端一断开就取消，心跳白写。所以要用 <code>context.WithoutCancel</code> 剥掉取消信号，但保留超时。</li>
+<li><strong>面试点</strong>：Set 只能整键过期，无法按 score 范围清理；「最近 150 秒在线」由 ZSET 的 <code>ZREMRANGEBYSCORE</code> 加 <code>ZCARD</code> 实现。</li>
+</ul>
+<h3 id="工作台">工作台</h3>
+<h4 id="①-内置入口">① 内置入口</h4>
+<ul>
+<li><strong>用户操作</strong>：登录后进工作台，看到 9 个固定卡片：排行榜、小秋、打分、小说、简历、商城、iWiki、课程专区、学人汇。</li>
+<li><strong>实现</strong>：内置入口<strong>写死在前端</strong>，不走接口。后端挂了工作台照样能点，这是一条可用性兜底。</li>
+</ul>
+<h4 id="②-动态应用">② 动态应用</h4>
+<ul>
+<li><strong>用户操作</strong>：开发者平台注册的模块会出现在工作台，点一下跳到站内页或新开外链。</li>
+<li><strong>实现</strong>：动态应用存 <code>workbench_apps</code> 表，<code>type</code> 只有两种 —— <code>route</code>（站内 <code>router.push</code>）和 <code>link</code>（<code>window.open</code>）。拉回来按名称去重后追加在内置的后面。</li>
+</ul>
+<pre><code class="language-go">// controller/workbench_controller.go
+func WorkbenchAppPublicList(c *gin.Context) {
+	list, err := service.WorkbenchApps.ListVisible(c.Request.Context())
+	if err != nil { /* 500 查询失败 */ }
+	out := make([]WorkbenchAppResponse, 0, len(list))
+	for _, app := range list { out = append(out, workbenchAppToResponse(app)) }
+	c.JSON(http.StatusOK, out)
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>link</code> 类型必须做 URL 白名单校验，否则任何人都能往工作台塞一个钓鱼链接 —— 用户看到的是站内工作台，点开却去了外部站点。</li>
+</ul>
+<h4 id="③-平台中转（SM2-验签）">③ 平台中转（SM2 验签）</h4>
+<ul>
+<li><strong>用户操作</strong>：无感知，开发者平台的管理页里能远程给某个用户建工作台应用。</li>
+<li><strong>实现</strong>：主站暴露一对内部接口（建、查），调用方必须带 SM2 签名。主站验签通过才落库，这样开发者平台不用碰主站数据库。</li>
+</ul>
+<pre><code class="language-go">// controller/workbench_controller.go
+func platformInvoker(c *gin.Context) string { /* 从 SM2 签名里解出调用方身份 */ }
+func OpenWorkbenchAppCreate(c *gin.Context) { /* 验签 → 建应用 */ }
+func OpenWorkbenchAppList(c *gin.Context)   { /* 验签 → 查应用 */ }
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：跨平台写数据，宁可暴露一个验签接口，也不要共享数据库连接。共享库会把两个平台的发布节奏和表结构绑死。</li>
+</ul>
+<h3 id="通知与私信">通知与私信</h3>
+<h4 id="①-通知">① 通知</h4>
+<ul>
+<li><strong>用户操作</strong>：右上角铃铛显示未读数，点开看列表，可标记已读、可关邮件推送。</li>
+<li><strong>实现</strong>：通知落表，未读数用「总数 / 已读 / 未读」三个值一起返回，避免前端自己算。</li>
+</ul>
+<pre><code class="language-go">// controller/noticeController.go
+func GetNoticeNum(c *gin.Context) {
+	user := value.(*domain.User)
+	counts, err := service.Notices.GetCounts(c.Request.Context(), user.ID)
+	if err != nil { /* 500 */ }
+	c.JSON(http.StatusOK, &amp;NoticeNumResponse{
+		TotalNum: counts.TotalNum, ReadTotalNum: counts.ReadTotalNum, UnreadTotalNum: counts.UnreadTotalNum,
+	})
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：游客访问未读数接口返回 400；401 会触发前端强制跳登录，通知按钮对游客本就隐藏。</li>
+</ul>
+<h4 id="②-一对一私信">② 一对一私信</h4>
+<ul>
+<li><strong>用户操作</strong>：私聊窗口发文字、收消息、撤回、未读小红点。</li>
+<li><strong>实现</strong>：WebSocket 长连接，<code>clientMap</code> 存「用户 ID → 连接」。发消息<strong>先落库再投递</strong>：对方在线且正开着这个会话就直推，否则未读 +1。</li>
+</ul>
+<pre><code class="language-go">// controller/chat.go —— token 允许走 query，因为原生 WebSocket 客户端带不了自定义 Header
+func ChatHandler(c *gin.Context) {
+	userInterface, ok := c.Get(&quot;user&quot;)
+	if !ok {
+		tokenString := c.Query(&quot;token&quot;)
+		_, claim, err := common.ParseToken(tokenString)
+		if err != nil { /* 请重新登录 */ }
+		userID = claim.UserID
+	} else {
+		userID = userInterface.(*domain.User).ID
+	}
+	chatFunc(c.Request, c.Writer, userID)
+}
+</code></pre>
+<pre><code class="language-go">// 建连后双协程：一个只发（带 200 缓冲的 chan），一个只收
+node := &amp;ChatNode{conn, make(chan []byte, 200)}
+clientMap.Store(userID, node)
+go sendMsg2User(node)
+go recvMsgFromUser(node, userID)
+</code></pre>
+<ul>
+<li><strong>坑 1</strong>：<code>CheckOrigin</code> 直接 <code>return true</code> 是有风险的，生产要校验来源域名。</li>
+<li><strong>坑 2</strong>：发送 channel 必须有缓冲。无缓冲 + 对端不收 = 发送方阻塞，一个慢客户端能拖死整个推送循环。</li>
+<li><strong>面试点</strong>：消息以落库为准，推送只做加速；推送不可靠，刷新后从库中拉取历史。</li>
+</ul>
+<h4 id="③-未读计数">③ 未读计数</h4>
+<ul>
+<li><strong>用户操作</strong>：会话列表里的红点、总未读数。</li>
+<li><strong>实现</strong>：未读键 <code>{sender}RecvUnread{target}_{lane}</code> 存计数，另用一个索引集合 <code>chatUnreadIndex:&lt;uid&gt;</code> 记录「这个人有哪些会话有未读」。进会话时清计数并从索引里删掉。</li>
+</ul>
+<pre><code class="language-text">未读 = 计数键（O(1) 增减） + 索引集合（不用扫全库找哪些会话有红点）
+进入会话 → 清零 + 从索引集合移除 → 广播已读
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：<code>SCAN chatUnread:*</code> 为 O(N) 且阻塞单线程 Redis；计数键加索引集合把未读查询降为 O(1)。</li>
+</ul>
+<h4 id="④-撤回">④ 撤回</h4>
+<ul>
+<li><strong>用户操作</strong>：2 分钟内长按消息 → 撤回 → 双方界面都变成「已撤回」。</li>
+<li><strong>实现</strong>：改消息状态为已撤回（不删行）→ 落库 → 通过 WebSocket 广播给双方各自的会话 → 双方前端替换气泡内容。</li>
+</ul>
+<pre><code class="language-go">// controller/chat.go
+func RecallChatMessage(c *gin.Context) { /* 状态置为 recall + broadcastChatRecall */ }
+func broadcastChatRecall(item domain.ChatHistoryItem) { /* 通知双方刷新该条 */ }
+</code></pre>
+<ul>
+<li><strong>坑</strong>：撤回必须广播给<strong>接收方</strong>，仅修改本地状态时接收方仍可见。</li>
+</ul>
+<h3 id="内容板块">内容板块</h3>
+<h4 id="①-音乐">① 音乐</h4>
+<ul>
+<li><strong>用户操作</strong>：上传音频 + 封面 → 发布 → 列表播放 → 删自己的；帖子正文里能内嵌一首歌，点开直接播。</li>
+<li><strong>实现</strong>：上传走 COS，播放走 noauth 媒体路由（<code>&lt;audio&gt;</code> 标签带不了 Authorization 头，只能放开鉴权用不可猜的路径保护）。</li>
+<li><strong>帖子内嵌的实现</strong>分三步：</li>
+</ul>
+<pre><code class="language-ts">// newSSE/src/components/MarkdownContainer.vue
+// 1) 预处理：独占一行的 ::music 12:: 变成占位 div（不能直接变 audio，因为要批量拉 meta）
+text = text.replace(/(^|\n)[ \t]*::music\s+(\d+)::[ \t]*(?=\n|$)/g,
+  (_m, lead, id) =&gt; `${lead}&lt;div class=&quot;post-music&quot; data-music-id=&quot;${id}&quot;&gt;&lt;/div&gt;`)
+</code></pre>
+<pre><code class="language-text">2) 水合：渲染完成后，把页面上所有占位 div 的 id 收集起来，一次请求拉回标题 / 封面 / 时长
+3) 播放：交给 Howler.js，它支持 Range 请求，可以边下边播、可拖动进度条
+</code></pre>
+<ul>
+<li><strong>坑</strong>：直接生成 <code>audio</code> 标签会导致「一进页面就开始加载所有音频」，长帖有 5 首歌就是 5 个并发请求。占位 + 点击才加载，是省流量的关键。</li>
+<li><strong>面试点</strong>：原生控件无法满足统一样式、播放进度上报与跨页面续播，因此自建播放器。</li>
+</ul>
+<h4 id="②-小说">② 小说</h4>
+<ul>
+<li><strong>用户操作</strong>：看书 → 书架收藏 → 记阅读进度 → 写书评/章评/段评 → 签到攒积分 → 给书评分。</li>
+<li><strong>实现</strong>：三级结构「书 → 章 → 段」，评论也分三级；书架与阅读进度各一张表；积分签到有连胜和当日去重。</li>
+</ul>
+<pre><code class="language-go">// service/novel_points_service.go —— 签到：连胜 + 当日去重
+// 1) 先看今天签过没有（唯一索引挡重复）
+// 2) 昨天签过 → streak + 1；否则 streak 重置为 1
+// 3) 按 streak 给积分，写流水
+</code></pre>
+<ul>
+<li><strong>坑</strong>：段评要按「章节 + 段落序号」定位，段落是 Markdown 渲染后的第 N 个块，编辑器改一个字就可能错位。所以段评只在发布态可见，编辑后要重新对齐。</li>
+</ul>
+<h4 id="③-视频">③ 视频</h4>
+<ul>
+<li><strong>用户操作</strong>：上传视频 → 列表 → 播放 → 看播放记录。</li>
+<li><strong>实现</strong>：视频走对象存储 + 转码任务，播放用 HLS/mp4 直链；播放记录单独表，用于「继续观看」。</li>
+</ul>
+<pre><code class="language-go">// controller/videoController.go
+func UploadVideo(c *gin.Context) { /* 拿上传凭证 → 前端直传 COS */ }
+</code></pre>
+<ul>
+<li><strong>坑</strong>：大文件必须前端直传对象存储，不能过 Go 服务 —— 一次 500MB 上传就能打满内存。</li>
+</ul>
+<h4 id="④-年度报告-主题皮肤">④ 年度报告 / 主题皮肤</h4>
+<ul>
+<li><strong>用户操作</strong>：年底看个人年度报告；活动期间切换全站主题皮肤。</li>
+<li><strong>实现</strong>：主题活动有时间窗，游客也能读当前主题（否则未登录用户会看到默认皮肤闪一下再变）；用户自己的外观选择单独存。</li>
+</ul>
+<h3 id="社区与交易">社区与交易</h3>
+<h4 id="①-商城">① 商城</h4>
+<ul>
+<li><strong>用户操作</strong>：发布商品（图 + 价 + 描述）→ 列表浏览 → 详情 → 下架/删除 → 标记已售出。</li>
+<li><strong>实现</strong>：常规 CRUD + COS 图片；首页轮播图从「在售 + 有图」的商品里取。</li>
+</ul>
+<h4 id="②-简历">② 简历</h4>
+<ul>
+<li><strong>用户操作</strong>：上传简历（PDF/图片）→ 列表 → 在线预览 → 下载 → 更新 → 删除。每人最多 5 份。</li>
+<li><strong>实现</strong>：文件存 COS；预览只下发一个 30 分钟有效的临时 URL，永久直链不下发；下载接口挂 <code>OptionalAuth</code>，允许「登录态 Bearer」和「签名链接」二者校验其一。</li>
+</ul>
+<pre><code class="language-go">// controller/resumeController.go
+const resumeDownloadURLTTL = 30 * time.Minute
+// 预览：签发 30 分钟 URL（COS 预签名）
+// 下载：OptionalAuth —— 有 Bearer 用登录身份，没 Bearer 校验签名参数
+</code></pre>
+<ul>
+<li><strong>坑</strong>：简历是隐私数据，直链一旦泄露就是永久泄露。所以宁可每次预览都签一次 URL。</li>
+<li><strong>面试点</strong>：<code>OptionalAuth</code> 的双通道校验中，签名需包含过期时间与文件 ID，并使用服务端密钥 HMAC，避免参数被伪造。</li>
+</ul>
+<h4 id="③-课程专区">③ 课程专区</h4>
+<ul>
+<li><strong>用户操作</strong>：按课程看文件列表 → 上传 → 建/删文件夹 → 拿附件上传凭证。</li>
+<li><strong>实现</strong>：目录树 + 对象存储前缀。上传走「后端发凭证 → 前端直传」，避免文件过服务。</li>
+</ul>
+<h4 id="④-需求（quest）">④ 需求（quest）</h4>
+<ul>
+<li><strong>用户操作</strong>：发布需求 → 别人看列表 → 详情 → 接单/改状态 → 在「我的需求」里跟踪 → 直接聊发起人。</li>
+<li><strong>实现</strong>：状态机驱动（待接单 / 进行中 / 已完成 / 已关闭），每次流转校验当前状态，防止「已完成」再被接单。</li>
+</ul>
+<h4 id="⑤-抽奖">⑤ 抽奖</h4>
+<ul>
+<li><strong>用户操作</strong>：创建抽奖（奖品 + 名额 + 时间）→ 别人参与 → 看自己参没参与 → 开奖。</li>
+<li><strong>实现</strong>：创建时校验奖品与名额；参与用唯一索引挡重复；开奖按参与记录随机取，结果落表。</li>
+</ul>
+<pre><code class="language-go">// service/lottery_service.go
+// Create: 校验标题/奖品/名额/时间窗
+// Draw: 取参与列表 → 随机 → 写中奖记录 → 更新抽奖状态（幂等：已开奖直接返回）
+</code></pre>
+<ul>
+<li><strong>坑</strong>：开奖必须幂等。用户连点两次「开奖」不能抽出两批中奖者，用状态字段做条件更新（<code>WHERE status = 'open'</code>）。</li>
+</ul>
+<h4 id="⑥-意见反馈">⑥ 意见反馈</h4>
+<ul>
+<li><strong>用户操作</strong>：提交反馈（文字 + 图）→ 管理端看列表 → 标记处理状态。</li>
+<li><strong>实现</strong>：单表 + 状态字段，管理端列表可按状态筛。</li>
+</ul>
+<pre><code class="language-go">// controller/postController.go
+func SubmitFeedback(c *gin.Context) { }
+func GetAllFeedback(c *gin.Context) { }
+</code></pre>
+<h3 id="个性化">个性化</h3>
+<h4 id="①-勋章">① 勋章</h4>
+<ul>
+<li><strong>用户操作</strong>：个人页看「我的勋章」→ 挑几枚挂在主页勋章墙 → 可设某一枚对外展示。</li>
+<li><strong>实现</strong>：三类来源 —— 注册周年（定时任务自动发）、节日限定（活动期发）、特殊成就（达成条件发）。展示有上限：主页最多 30 枚，批量查询限 100 人。</li>
+</ul>
+<pre><code class="language-go">// service/badge_service.go
+func (s *badgeService) AwardDueAnniversaries(ctx context.Context) error {
+	// 扫「注册满 N 年 且 还没发过该周年勋章」的用户 → 批量发放
+	// 幂等靠唯一索引（user_id, badge_id）
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：批量查询要限人数。一次查询 1000 人的勋章墙会产生 1000 次关联查询，接口超时。</li>
+<li><strong>面试点</strong>：定时发放类勋章一定要幂等，任务是可能重跑的（部署、补数据、手动触发）。</li>
+</ul>
+<h4 id="②-皮肤">② 皮肤</h4>
+<ul>
+<li>
+<p><strong>用户操作</strong>：外观设置里切主题；活动期换成限定皮肤；也能自己传两张图做自定义皮肤。</p>
+</li>
+<li>
+<p><strong>实现</strong>：全站主题是「活动 + 时间窗 + 双图」，用户选择单独存；换肤靠前端 CSS 变量，不重新加载页面。</p>
+</li>
+<li>
+<p><strong>坑</strong>：自定义皮肤要限制图片尺寸和格式，否则用户传一张 20MB 的图，所有人首屏都卡。</p>
+</li>
+</ul>
+<h4 id="③-小秋（AI-助手）">③ 小秋（AI 助手）</h4>
+<ul>
+<li><strong>用户操作</strong>：工作台点「小秋」进独立页，像聊天一样问平台相关问题。</li>
+<li><strong>实现</strong>：独立前端页 + 内网 Agent 接口；和「帖子里 @小秋」共用同一套 Agent，只是入口不同（一个同步问答、一个异步回帖）。</li>
+</ul>
+<h3 id="管理端">管理端</h3>
+<h4 id="①-登录">① 登录</h4>
+<ul>
+<li>
+<p><strong>用户操作</strong>：管理端只能用 UniSSO 登录，且必须是学院成员 + 在白名单里。</p>
+</li>
+<li>
+<p><strong>实现</strong>：管理员 token 单独签发，有效期 1 天，短于用户 token 的 7 天，并与用户 token 隔离；用户 token 调用管理接口返回 401。</p>
+</li>
+<li>
+<p><strong>面试点</strong>：管理员与用户凭证在服务端隔离；共用一套会使「用户 token 泄露」直接影响后台写入权限。</p>
+</li>
+</ul>
+<h4 id="②-成员管理">② 成员管理</h4>
+<ul>
+<li><strong>用户操作</strong>：搜索用户 → 改资料 → 封禁 / 禁言 / 解禁 → 看禁言名单。</li>
+<li><strong>实现</strong>：封禁是 <code>ban_end</code> 时间戳（不是布尔值），到期自动恢复，不用定时任务去解封。</li>
+</ul>
+<pre><code class="language-go">// 权限判定统一看时间戳，过期即视为未封禁
+if user.BanEnd.After(time.Now()) { /* 仍在禁言/封禁中 */ }
+</code></pre>
+<ul>
+<li><strong>坑</strong>：用布尔值 <code>is_banned</code> 就必须有定时任务解封，任务一挂就永远封着。时间戳方案天然自愈。</li>
+</ul>
+<h4 id="③-内容治理">③ 内容治理</h4>
+<ul>
+<li><strong>用户操作</strong>：帖子审核（违规/不违规）→ 删帖 / 加精 / 取消加精 → 处理举报 → 处理反馈。</li>
+<li><strong>实现</strong>：审核与举报联动 —— 举报成立后自动走 <code>MarkViolation</code>：结案 + 惩罚作者 + 通知作者 + 通知举报人，一次事务里全做完。</li>
+</ul>
+<pre><code class="language-go">// service/sue_service.go
+func (s *sueService) MarkViolation(ctx context.Context, sueID int) error {
+	sue, err := s.sues.FindByID(ctx, sueID)
+	_ = s.sues.MarkFinishedByID(ctx, sueID, sueStatusViolation)
+	_ = s.sues.MarkFinishedByTarget(ctx, sue.TargetType, sue.TargetID, sueStatusViolation)
+	result, err := s.sues.ProcessViolation(ctx, sue) // 算惩罚（禁言时长等）
+	user, err := s.sues.PunishUser(ctx, result.TargetUserID)
+	punishText := fmt.Sprintf(&quot;你的%s[%s]内容涉嫌违规被举报…&quot;, result.SueType, result.Content, user.BanEnd.Format(...))
+	_ = s.sues.CreateNotice(ctx, result.TargetUserID, &quot;punish&quot;, punishText, result.SueID)
+	return s.sues.CreateNotice(ctx, result.ReporterID, &quot;sue&quot;, &quot;我们已经收到你的举报…&quot;, result.SueID)
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：通知要同时发给被罚者和举报人。只通知被罚者，举报人不知道结果，下次就不举报了。</li>
+<li><strong>面试点</strong>：同一目标的多条举报由 <code>MarkFinishedByTarget</code> 一次结案，避免逐条重复处理。</li>
+</ul>
+<h4 id="④-推荐流灰度-OAuth-应用-视频-博客-CDKey-数据看板">④ 推荐流灰度 / OAuth 应用 / 视频 / 博客 / CDKey / 数据看板</h4>
+<ul>
+<li><strong>用户操作</strong>：管理页里切推荐算法模式、管第三方应用、管视频、发博客、发激活码、看数据看板。</li>
+<li><strong>实现</strong>：推荐流的模式是配置项，可实时切（<code>effectiveMode</code>），不用发版；OAuth 应用管理控制哪些第三方能拿用户身份；CDKey 是注册激活码，一次性使用。</li>
+</ul>
+<pre><code class="language-go">// service/recommendation_service.go
+func effectiveMode(cfg domain.RecommendConfig) string {
+	if cfg.Mode == &quot;&quot; { return domain.RecommendModeDefault } // 兜底，配置缺失不至于 500
+	return cfg.Mode
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：灰度开关要有默认值兜底。配置中心挂了、字段没填，服务不能跟着挂。</li>
+</ul>
+<h3 id="主站-·-面试速答">主站 · 面试速答</h3>
+<ul>
+<li><strong>鉴权</strong>：用户 JWT 7 天 / 管理员 JWT 1 天 / OAuth2 access 5 分钟，三套物理隔离；另加 PAT（<code>sk_xq_</code>）给 MCP，入口单独限流 30 次/分。</li>
+<li><strong>登录</strong>：密码由 UniSSO 校验，主站只负责换发自己的 token 并种父域 Cookie；错误码细分到 401/403/409/422/429/503。</li>
+<li><strong>缓存</strong>：列表用 generation 版本号整体换代（O(1)），详情用主动失效，浏览数用脏标记 5 秒批量回写。</li>
+<li><strong>在线</strong>：ZSET 滑动窗口 150 秒，双键（全站 + 场景），单次 Pipeline 完成清理与计数，切场景要 ZREM 旧键。</li>
+<li><strong>投币</strong>：唯一索引兜住每人每内容 ≤2，单事务五步，取消以投币记录为凭证（不要求目标存在）。</li>
+<li><strong>@ 三种</strong>：@用户是渲染期最长前缀匹配；@小秋是 goroutine + <code>context.Background()</code> + 双层去重；@职位身份是真实身份与展示身份分离。</li>
+<li><strong>WebSocket</strong>：token 走 query（原生客户端带不了 Header），先落库再推送，未读用「计数键 + 索引集合」两件套。</li>
+<li><strong>热度</strong>：赞 +3 / 浏览 +1 / 评论 +6，删评论按 <code>0.5^days</code> 衰减。</li>
+<li><strong>封禁</strong>：存 <code>ban_end</code> 时间戳，到期自动生效，不依赖定时任务；布尔值做不到这点。</li>
+</ul>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本篇已读</span></button><a class="book-btn book-btn-ghost" href="/docs/sse-market/"><i class="fas fa-list"></i> 全部篇目</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/docs/sse-market/overview/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一篇</span><strong>01 平台体系：三层与节点</strong></a><a class="book-pager-link next" href="/docs/sse-market/cloud/"><span class="book-pager-dir">下一篇 <i class="fas fa-arrow-right"></i></span><strong>03 集市云：一组一容器</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E8%B4%A6%E5%8F%B7%E4%B8%8E%E5%AE%89%E5%85%A8">账号与安全</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E6%B3%A8%E5%86%8C">① 注册</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E7%99%BB%E5%BD%95">② 登录</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E9%89%B4%E6%9D%83%E4%B8%AD%E9%97%B4%E4%BB%B6">③ 鉴权中间件</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E4%B8%AA%E4%BA%BA%E8%AE%BF%E9%97%AE%E4%BB%A4%E7%89%8C-PAT">④ 个人访问令牌 PAT</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E6%94%B9%E5%AF%86-%E6%94%B9%E9%82%AE%E7%AE%B1-%E6%B3%A8%E9%94%80">⑤ 改密 / 改邮箱 / 注销</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%B8%96%E5%AD%90%E4%B8%8E%E6%B5%8F%E8%A7%88">帖子与浏览</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%8F%91%E5%B8%96">① 发帖</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%88%97%E8%A1%A8%E4%B8%8E%E5%88%86%E9%A1%B5">② 列表与分页</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E8%AF%A6%E6%83%85%E4%B8%8E%E6%B5%8F%E8%A7%88%E6%95%B0">③ 详情与浏览数</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E7%82%B9%E8%B5%9E-%E6%94%B6%E8%97%8F-%E5%85%B3%E6%B3%A8-%E7%BD%AE%E9%A1%B6-%E7%A7%81%E5%AF%86-%E5%88%A0%E9%99%A4">④ 点赞 / 收藏 / 关注 / 置顶 / 私密 / 删除</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E6%90%9C%E7%B4%A2%E4%B8%8E%E7%83%AD%E6%A6%9C">⑤ 搜索与热榜</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E8%AF%84%E8%AE%BA%E4%B8%8E%E8%AF%84%E5%88%86">评论与评分</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E4%B8%80%E7%BA%A7%E8%AF%84%E8%AE%BA">① 一级评论</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%A5%BC%E4%B8%AD%E6%A5%BC%E5%9B%9E%E5%A4%8D">② 楼中楼回复</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E7%82%B9%E8%B5%9E-%E7%82%B9%E8%B8%A9-%E5%88%A0%E9%99%A4%E8%AF%84%E8%AE%BA">③ 点赞 / 点踩 / 删除评论</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E8%AF%84%E5%88%86%E4%B8%93%E5%8C%BA">④ 评分专区</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%8F%90%E5%8F%8A">@ 提及</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E7%94%A8%E6%88%B7">① @ 用户</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%B0%8F%E7%A7%8B%EF%BC%88AI-%E5%8A%A9%E6%89%8B%EF%BC%89">② @小秋（AI 助手）</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E8%81%8C%E4%BD%8D%E8%BA%AB%E4%BB%BD">③ @ 职位身份</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%8A%95%E5%B8%81">投币</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E6%8A%95%E5%B8%81">① 投币</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%8F%96%E6%B6%88%E6%8A%95%E5%B8%81">② 取消投币</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E6%8A%95%E5%B8%81%E6%B1%87%E6%80%BB-%E6%B5%81%E6%B0%B4-%E6%8E%92%E8%A1%8C%E6%A6%9C">③ 投币汇总 / 流水 / 排行榜</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%9C%A8%E7%BA%BF%E4%BA%BA%E6%95%B0">在线人数</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%BF%83%E8%B7%B3%E4%B8%8A%E6%8A%A5">① 心跳上报</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%9C%A8%E7%BA%BF%E7%BB%9F%E8%AE%A1">② 在线统计</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%B7%A5%E4%BD%9C%E5%8F%B0">工作台</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%86%85%E7%BD%AE%E5%85%A5%E5%8F%A3">① 内置入口</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%8A%A8%E6%80%81%E5%BA%94%E7%94%A8">② 动态应用</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%B9%B3%E5%8F%B0%E4%B8%AD%E8%BD%AC%EF%BC%88SM2-%E9%AA%8C%E7%AD%BE%EF%BC%89">③ 平台中转（SM2 验签）</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E9%80%9A%E7%9F%A5%E4%B8%8E%E7%A7%81%E4%BF%A1">通知与私信</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E9%80%9A%E7%9F%A5">① 通知</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E4%B8%80%E5%AF%B9%E4%B8%80%E7%A7%81%E4%BF%A1">② 一对一私信</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E6%9C%AA%E8%AF%BB%E8%AE%A1%E6%95%B0">③ 未读计数</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E6%92%A4%E5%9B%9E">④ 撤回</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%86%85%E5%AE%B9%E6%9D%BF%E5%9D%97">内容板块</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E9%9F%B3%E4%B9%90">① 音乐</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%B0%8F%E8%AF%B4">② 小说</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E8%A7%86%E9%A2%91">③ 视频</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E5%B9%B4%E5%BA%A6%E6%8A%A5%E5%91%8A-%E4%B8%BB%E9%A2%98%E7%9A%AE%E8%82%A4">④ 年度报告 / 主题皮肤</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%A4%BE%E5%8C%BA%E4%B8%8E%E4%BA%A4%E6%98%93">社区与交易</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%95%86%E5%9F%8E">① 商城</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E7%AE%80%E5%8E%86">② 简历</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E8%AF%BE%E7%A8%8B%E4%B8%93%E5%8C%BA">③ 课程专区</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E9%9C%80%E6%B1%82%EF%BC%88quest%EF%BC%89">④ 需求（quest）</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E6%8A%BD%E5%A5%96">⑤ 抽奖</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A5-%E6%84%8F%E8%A7%81%E5%8F%8D%E9%A6%88">⑥ 意见反馈</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%AA%E6%80%A7%E5%8C%96">个性化</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%8B%8B%E7%AB%A0">① 勋章</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E7%9A%AE%E8%82%A4">② 皮肤</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%B0%8F%E7%A7%8B%EF%BC%88AI-%E5%8A%A9%E6%89%8B%EF%BC%89">③ 小秋（AI 助手）</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%AE%A1%E7%90%86%E7%AB%AF">管理端</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E7%99%BB%E5%BD%95">① 登录</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%88%90%E5%91%98%E7%AE%A1%E7%90%86">② 成员管理</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%86%85%E5%AE%B9%E6%B2%BB%E7%90%86">③ 内容治理</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E6%8E%A8%E8%8D%90%E6%B5%81%E7%81%B0%E5%BA%A6-OAuth-%E5%BA%94%E7%94%A8-%E8%A7%86%E9%A2%91-%E5%8D%9A%E5%AE%A2-CDKey-%E6%95%B0%E6%8D%AE%E7%9C%8B%E6%9D%BF">④ 推荐流灰度 / OAuth 应用 / 视频 / 博客 / CDKey / 数据看板</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%BB%E7%AB%99-%C2%B7-%E9%9D%A2%E8%AF%95%E9%80%9F%E7%AD%94">主站 · 面试速答</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

@@ -1,0 +1,726 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>05 UniSSO：统一身份 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="软工集市专题 · 05 UniSSO：统一身份">
+<meta property="og:type" content="website">
+<meta property="og:title" content="05 UniSSO：统一身份">
+<meta property="og:url" content="https://sakjijdidji55.github.io/docs/sse-market/unisso/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="软工集市专题 · 05 UniSSO：统一身份">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-11-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/docs/sse-market/unisso/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '05 UniSSO：统一身份',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">05 UniSSO：统一身份</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">05 UniSSO：统一身份</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-market" data-chapter="unisso" data-total="14" data-prev="/docs/sse-market/iwiki/" data-next="/docs/sse-market/imagebed/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/docs/sse-market/">软工集市专题</a><div class="book-sidebar-sub">14 篇 · 1 小时 30 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 14</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选篇目..." data-book-filter aria-label="筛选篇目"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="history"><a class="book-chapter-link" href="/docs/sse-market/history/" data-chapter-link="history"><span class="book-chapter-index">00</span><span class="book-chapter-name">00 历史：从一门课到一组平台</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="overview"><a class="book-chapter-link" href="/docs/sse-market/overview/" data-chapter-link="overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">01 平台体系：三层与节点</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">三条主线</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="main"><a class="book-chapter-link" href="/docs/sse-market/main/" data-chapter-link="main"><span class="book-chapter-index">02</span><span class="book-chapter-name">02 主站：账号、帖子与互动</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="cloud"><a class="book-chapter-link" href="/docs/sse-market/cloud/" data-chapter-link="cloud"><span class="book-chapter-index">03</span><span class="book-chapter-name">03 集市云：一组一容器</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="iwiki"><a class="book-chapter-link" href="/docs/sse-market/iwiki/" data-chapter-link="iwiki"><span class="book-chapter-index">04</span><span class="book-chapter-name">04 iWiki：协作、检索与开放</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">身份与存储</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="unisso"><a class="book-chapter-link is-current" href="/docs/sse-market/unisso/" data-chapter-link="unisso" aria-current="page"><span class="book-chapter-index">05</span><span class="book-chapter-name">05 UniSSO：统一身份</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="imagebed"><a class="book-chapter-link" href="/docs/sse-market/imagebed/" data-chapter-link="imagebed"><span class="book-chapter-index">06</span><span class="book-chapter-name">06 图床：上传、鉴权与存储</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">端与开发者</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app"><a class="book-chapter-link" href="/docs/sse-market/app/" data-chapter-link="app"><span class="book-chapter-index">07</span><span class="book-chapter-name">07 App：六平台与九种产物</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="join"><a class="book-chapter-link" href="/docs/sse-market/join/" data-chapter-link="join"><span class="book-chapter-index">08</span><span class="book-chapter-name">08 招聘：双选、答辩与席位</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="developer"><a class="book-chapter-link" href="/docs/sse-market/developer/" data-chapter-link="developer"><span class="book-chapter-index">09</span><span class="book-chapter-name">09 开发者平台：权限、部署与小程序</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">能力</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="api-platform"><a class="book-chapter-link" href="/docs/sse-market/api-platform/" data-chapter-link="api-platform"><span class="book-chapter-index">10</span><span class="book-chapter-name">10 API 平台：兼容与计费</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="tts-ai"><a class="book-chapter-link" href="/docs/sse-market/tts-ai/" data-chapter-link="tts-ai"><span class="book-chapter-index">11</span><span class="book-chapter-name">11 TTS 与 AI 研究</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">复盘与附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="interview"><a class="book-chapter-link" href="/docs/sse-market/interview/" data-chapter-link="interview"><span class="book-chapter-index">12</span><span class="book-chapter-name">12 全平台面试速答</span><span class="book-chapter-time">1′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="incidents"><a class="book-chapter-link" href="/docs/sse-market/incidents/" data-chapter-link="incidents"><span class="book-chapter-index">13</span><span class="book-chapter-name">13 事故复盘</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/docs/"><i class="fas fa-arrow-left"></i> 返回文档</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/docs/sse-market/">软工集市专题</a><i class="fas fa-angle-right"></i><span>05 UniSSO：统一身份</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">DOC 05</span><h1>05 UniSSO：统一身份</h1><div class="book-chapter-meta">6 分钟读完 · 2,451 字</div></div><blockquote>
+<p>全生态的账号中心：注册、登录、扫码、二次验证、OAuth2/OIDC 授权、应用与授权管理。C++20 + cpp-httplib，会话存 Redis，令牌内部用 HMAC JWT、对外 OIDC 用 RSA（JWKS 暴露公钥）。</p>
+<p>仓库：<a target="_blank" rel="noopener" href="https://github.com/SysuMirror/unisso">github.com/SysuMirror/unisso</a>（<code>backend/src</code> 约 1.3 万行 C++，<code>frontend/</code> Vue 3）。</p>
+</blockquote>
+<h3 id="注册与登录">注册与登录</h3>
+<h4 id="①-注册">① 注册</h4>
+<ul>
+<li><strong>用户操作</strong>：填邮箱 → 收 6 位验证码 → 设密码 → 提交 → 邮箱验证后可用。</li>
+<li><strong>实现</strong>：
+<ol>
+<li>验证码不落明文，落库前用服务端密钥 HMAC-SHA256 后存 Redis；待注册记录按「邮箱摘要」建键。</li>
+<li>发送频率双重限流：同一邮箱每小时上限、同一 IP 每小时上限。</li>
+<li>提交后进入待验证态，验证通过才建正式用户。</li>
+</ol>
+</li>
+<li><strong>关键代码</strong></li>
+</ul>
+<pre><code class="language-cpp">// backend/src/app/registration.cpp
+std::string pendingKey(const std::string&amp; email) {
+    return &quot;registration_pending:&quot; + digestEmail(email);
+}
+
+std::string codeHash(const std::string&amp; code) {
+    auto&amp; cfg = AppConfig::get();
+    std::string key = cfg.secretKey.empty() ? cfg.signingKeyId : cfg.secretKey;
+    return util::hex(util::hmacSha256Raw(key, code));
+}
+
+std::string randomCode() {
+    static std::atomic&lt;unsigned int&gt; counter{0};
+    std::random_device rd;
+    unsigned int value = rd() + counter.fetch_add(1);
+    return std::to_string(100000 + (value % 900000));   // 固定 6 位
+}
+
+bool rateLimited(const std::string&amp; email, const std::string&amp; ip) {
+    std::string digest = digestEmail(email);
+    long long emailCount = Cache::incr(&quot;registration_email_hour:&quot; + digest, 3600);
+    ...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：验证码比对必须是「哈希后常数时间比较」。直接比明文，Redis 泄露等于验证码泄露；用普通 <code>==</code> 比较，理论上存在时序侧信道。</li>
+<li><strong>坑</strong>：限流键用「邮箱摘要」；用原文会把用户邮箱写进 Redis 键名，运维 <code>KEYS *</code> 就能看到全站邮箱。</li>
+</ul>
+<h4 id="②-登录">② 登录</h4>
+<ul>
+<li><strong>用户操作</strong>：邮箱（或用户名）+ 密码登录；也可以点「集市账号登录」。</li>
+<li><strong>实现</strong>：
+<ol>
+<li>先查锁定状态，未过锁定期直接 429。</li>
+<li>本地校验密码（bcrypt）；失败且开启了集市通道时，回退到集市（SSE）校验 —— 集市凭证一定是邮箱，所以用户名登录不走回退。</li>
+<li>通过后建会话、种父域 Cookie。</li>
+</ol>
+</li>
+<li><strong>关键代码</strong></li>
+</ul>
+<pre><code class="language-cpp">// backend/src/app/handlers_auth.cpp
+void authLogin(const Request&amp; req, Response&amp; res) {
+    // &quot;email&quot; 字段同时接受邮箱与用户名；锁定与限流按提交的标识计算
+    std::string identifier = util::trim(http::input(req, &quot;email&quot;));
+    std::string email = util::lower(identifier);
+    std::string password = http::input(req, &quot;password&quot;);
+    std::string next = safeNextUrl(http::input(req, &quot;next&quot;));
+    std::string ip = http::clientIp(req);
+
+    long long lockedUntil = 0;
+    if (isLocked(email, ip, lockedUntil)) {
+        http::error(res, 429, &quot;too_many_attempts&quot;, &quot;登录尝试次数过多，请 15 分钟后再试&quot;);
+        return;
+    }
+    auto user = identifier.find('@') == std::string::npos
+        ? repo::findUserByUsername(identifier)
+        : repo::findUserByEmail(email);
+    bool authenticated = user &amp;&amp; user-&gt;isActive &amp;&amp; password::verify(password, user-&gt;passwordHash);
+
+    // 本地无此账号或密码不匹配时，若开启集市通道且标识是邮箱，回退到集市校验
+    if (!authenticated &amp;&amp; AppConfig::get().sseEnabled &amp;&amp; email.find('@') != std::string::npos) {
+        ...
+    }
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>next</code> 参数必须校验为站内相对路径（<code>safeNextUrl</code>），否则登录页会成为开放重定向跳板。</li>
+<li><strong>面试点</strong>：锁定键同时包含邮箱和 IP。只按邮箱锁，攻击者可以拿一个邮箱把别人锁死；只按 IP 锁，分布式换 IP 即可绕过。</li>
+</ul>
+<h4 id="③-邮箱验证与重发">③ 邮箱验证与重发</h4>
+<ul>
+<li><strong>用户操作</strong>：注册后点邮件里的链接 / 填验证码完成验证；没收到可重发。</li>
+<li><strong>实现</strong>：<code>/api/auth/verify-email</code> 校验并置 <code>email_verified</code>；<code>/api/auth/resend-registration</code> 重发，同样受限流约束。</li>
+</ul>
+<pre><code class="language-cpp">// 路由（backend/src/app/routes.cpp）
+app.post(&quot;/api/auth/register&quot;, handlers::authRegister);
+app.post(&quot;/api/auth/verify-email&quot;, handlers::authVerify);
+app.post(&quot;/api/auth/resend-registration&quot;, handlers::authResend);
+</code></pre>
+<h4 id="④-找回密码">④ 找回密码</h4>
+<ul>
+<li><strong>用户操作</strong>：输邮箱 → 收验证码 → 设新密码。</li>
+<li><strong>实现</strong>：两段式接口，<code>start</code> 只发码不泄露账号是否存在，<code>confirm</code> 校验码后改密并清理该用户现有会话。</li>
+</ul>
+<pre><code class="language-cpp">app.post(&quot;/api/auth/password-reset/start&quot;, handlers::passwordResetStart);
+app.post(&quot;/api/auth/password-reset/confirm&quot;, handlers::passwordResetConfirm);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>start</code> 必须对所有邮箱返回同样的响应。账号是否存在若能从响应区分，就成了账号枚举接口。</li>
+</ul>
+<h4 id="⑤-登出、当前用户、会话查询">⑤ 登出、当前用户、会话查询</h4>
+<ul>
+<li><strong>实现</strong>：<code>authLogout</code> 删会话并清 Cookie；<code>authMe</code> 返回用户 JSON；<code>authSession</code> 返回会话摘要。</li>
+</ul>
+<pre><code class="language-cpp">// backend/src/app/handlers_auth.cpp
+void authMe(const Request&amp; req, Response&amp; res) {
+    auto user = authx::currentUser(req);
+    if (!user) { http::error(res, 401, &quot;authentication_required&quot;, &quot;未登录&quot;); return; }
+    std::map&lt;std::string, JsonValue&gt; obj;
+    obj[&quot;user&quot;] = repo::userJson(*user, true);
+    http::json(res, 200, JsonValue(obj));
+}
+</code></pre>
+<h4 id="⑥-CSRF-令牌">⑥ CSRF 令牌</h4>
+<ul>
+<li><strong>实现</strong>：<code>GET /api/csrf-token</code> 下发一次性令牌，写操作校验；浏览器端与 Cookie 双提交配合。</li>
+</ul>
+<pre><code class="language-cpp">app.get(&quot;/api/csrf-token&quot;, handlers::csrfToken);
+</code></pre>
+<h3 id="扫码登录">扫码登录</h3>
+<h4 id="①-生成与轮询">① 生成与轮询</h4>
+<ul>
+<li><strong>用户操作</strong>：PC 打开登录页出现二维码，手机扫码后确认，PC 自动登录。</li>
+<li><strong>实现</strong>：<code>qr/start</code> 生成二维码记录（<code>Cache</code> 带 TTL），<code>qr/poll</code> 轮询状态；二维码 ID 有格式校验，防止被当作任意键读写。</li>
+</ul>
+<pre><code class="language-cpp">app.get(&quot;/api/auth/qr/start&quot;, handlers::qrLoginStart);
+app.get(&quot;/api/auth/qr/poll&quot;, handlers::qrLoginPoll);
+app.get(&quot;/api/auth/qr/scan&quot;, handlers::qrLoginScan);
+app.get(&quot;/api/auth/qr/detail&quot;, handlers::qrLoginDetail);
+app.post(&quot;/api/auth/qr/confirm&quot;, handlers::qrLoginConfirm);
+app.post(&quot;/api/auth/qr/deny&quot;, handlers::qrLoginDeny);
+</code></pre>
+<h4 id="②-手机端确认">② 手机端确认</h4>
+<ul>
+<li><strong>用户操作</strong>：手机（已登录）扫码 → 看到登录设备与地点 → 点确认 / 拒绝。</li>
+<li><strong>实现</strong>：确认接口要求手机端已登录；同一用户每分钟决策次数有上限；二维码已被他人处理时返回 409，不覆盖他人操作。</li>
+</ul>
+<pre><code class="language-cpp">// backend/src/app/handlers_qrlogin.cpp
+void qrLoginConfirm(const Request&amp; req, Response&amp; res) {
+    User user;
+    if (!authx::requireUser(req, res, user)) return;
+    std::string id = util::trim(http::input(req, &quot;id&quot;));
+    if (!validQrId(id)) { http::error(res, 400, &quot;invalid_id&quot;, &quot;二维码参数不正确&quot;); return; }
+
+    long long decides = Cache::incr(&quot;qr_login_decide:&quot; + user.id, 60);
+    if (decides &gt; 20) { http::error(res, 429, &quot;rate_limited&quot;, &quot;操作过于频繁，请稍后再试&quot;); return; }
+
+    std::map&lt;std::string, JsonValue&gt; rec;
+    if (!loadRecord(id, rec)) { http::error(res, 410, &quot;qr_expired&quot;, &quot;二维码已过期，请回到电脑上刷新&quot;); return; }
+    std::string status = statusOf(rec);
+    if (status == &quot;confirmed&quot;) {
+        if (jsonx::getString(rec, &quot;user_id&quot;) == user.id) { http::ok(res); return; }
+        http::error(res, 409, &quot;already_handled&quot;, &quot;这个二维码已在其他设备上处理&quot;);
+        return;
+    }
+    if (status == &quot;denied&quot;) { http::error(res, 409, &quot;already_denied&quot;, &quot;这个二维码已被拒绝&quot;); return; }
+    ...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：确认接口要按「用户」限流，不能只按二维码 ID。否则一张二维码被反复确认/拒绝，状态机被打乱。</li>
+<li><strong>面试点</strong>：二维码过期返回 410；404 表示不存在，前端据此区分「过期」与「不存在」，给出不同的引导文案。</li>
+</ul>
+<h4 id="③-集市扫码授权（SSE-通道）">③ 集市扫码授权（SSE 通道）</h4>
+<ul>
+<li><strong>实现</strong>：<code>/api/auth/sse/qr/*</code> 与 <code>/api/auth/sse/oauth/callback</code> 走集市侧二维码，回调后取集市身份并关联。</li>
+</ul>
+<pre><code class="language-cpp">app.get(&quot;/api/auth/sse/qr/status&quot;, handlers::sseQrStatus);
+app.get(&quot;/api/auth/sse/qr/start&quot;, handlers::sseQrStart);
+app.get(&quot;/api/auth/sse/qr/poll&quot;, handlers::sseQrPoll);
+app.get(&quot;/api/auth/sse/oauth/callback&quot;, handlers::sseOauthCallback);
+</code></pre>
+<h3 id="会话与设备">会话与设备</h3>
+<h4 id="①-会话列表">① 会话列表</h4>
+<ul>
+<li><strong>用户操作</strong>：设置页看到所有登录设备（浏览器 / 系统 / 最近活跃 / 是否当前设备）。</li>
+<li><strong>实现</strong>：会话存在 Redis（<code>session:*</code>），列表时扫描并解析，只保留属于当前用户的条目，按活跃时间排序。</li>
+</ul>
+<pre><code class="language-cpp">// backend/src/app/handlers_sessions.cpp
+void sessionsList(const Request&amp; req, Response&amp; res) {
+    User user;
+    if (!authx::requireUser(req, res, user)) return;
+    auto currentId = authx::sessionId(req);
+    std::vector&lt;SessionInfo&gt; sessions;
+    for (const auto&amp; name : Cache::scan(&quot;session:*&quot;, 500)) {
+        std::string raw = Cache::get(name);
+        if (raw.empty()) continue;
+        SessionInfo info;
+        if (!parseSession(name, raw, info) || info.userId != user.id) continue;
+        info.current = currentId &amp;&amp; info.id == *currentId;
+        sessions.push_back(info);
+    }
+    std::sort(sessions.begin(), sessions.end(), ...);
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>scan(&quot;session:*&quot;, 500)</code> 有 500 条上限。用户会话数一般远小于这个值，但全站会话多时扫描成本高，因此只能用于「用户自助查看」，不能做统计口径。</li>
+</ul>
+<h4 id="②-退出指定设备-退出其他设备">② 退出指定设备 / 退出其他设备</h4>
+<ul>
+<li><strong>实现</strong>：单条删除用会话 ID；「退出其他所有」遍历该用户会话，跳过当前会话逐个删。</li>
+</ul>
+<pre><code class="language-cpp">void sessionRevokeOthers(const Request&amp; req, Response&amp; res) {
+    User user;
+    if (!authx::requireUser(req, res, user)) return;
+    auto currentId = authx::sessionId(req);
+    long long revoked = 0;
+    for (const auto&amp; name : Cache::scan(&quot;session:*&quot;, 500)) {
+        std::string raw = Cache::get(name);
+        if (raw.empty()) continue;
+        SessionInfo info;
+        if (!parseSession(name, raw, info) || info.userId != user.id) continue;
+        if (currentId &amp;&amp; info.id == *currentId) continue;   // 保留当前会话
+        deleteSession(info.id);
+        ++revoked;
+    }
+    applog::access(&quot;[session] user=&quot; + user.id + &quot; revoked_others=&quot; + std::to_string(revoked));
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：必须显式跳过当前会话，否则用户点「退出其他设备」会把自己也踢下线。</li>
+<li><strong>面试点</strong>：会话吊销只删服务端记录，令牌本身仍可能有效到过期。若要求「立即失效」，令牌校验必须每次回查会话，或维护吊销名单。</li>
+</ul>
+<h4 id="③-资料与头像">③ 资料与头像</h4>
+<ul>
+<li><strong>实现</strong>：<code>PUT /api/me/profile</code> 改资料；<code>GET/POST /api/me/avatar</code> 上传与读取头像，<code>user-avatar</code> 服务处理裁剪与缓存。</li>
+</ul>
+<pre><code class="language-cpp">app.put(&quot;/api/me/profile&quot;, handlers::accountUpdateProfile);
+app.get(&quot;/api/me/avatar&quot;, handlers::avatarGet);
+app.post(&quot;/api/me/avatar&quot;, handlers::avatarUpload);
+</code></pre>
+<h3 id="OAuth2-与-OIDC">OAuth2 与 OIDC</h3>
+<h4 id="①-授权上下文">① 授权上下文</h4>
+<ul>
+<li><strong>用户操作</strong>：第三方应用跳过来后，先看到「XX 应用请求以下权限」。</li>
+<li><strong>实现</strong>：<code>GET /api/oauth/authorize/context</code> 按 <code>client_id</code> 返回应用信息与 scope 列表，用于渲染同意页。</li>
+</ul>
+<pre><code class="language-cpp">app.get(&quot;/api/oauth/authorize/context&quot;, handlers::oauthContext);
+</code></pre>
+<h4 id="②-授权与授权码">② 授权与授权码</h4>
+<ul>
+<li><strong>用户操作</strong>：点同意 → 跳回应用，地址栏带 <code>code</code>。</li>
+<li><strong>实现</strong>：校验 <code>redirect_uri</code> 白名单（精确匹配）→ 校验 PKCE 参数形态 → 生成随机 code 存 Redis（带 TTL）→ 302 回跳并附 <code>state</code>。</li>
+</ul>
+<pre><code class="language-cpp">// backend/src/app/handlers_oauth.cpp
+bool validPkce(const std::string&amp; challenge, const std::string&amp; method) { ... }
+
+std::string issueCode(const std::string&amp; clientId, const std::string&amp; userId,
+                      const std::string&amp; redirectUri, const std::string&amp; scope,
+                      const std::string&amp; challenge, const std::string&amp; method,
+                      const std::string&amp; state, const std::string&amp; nonce) {
+    std::map&lt;std::string, JsonValue&gt; data;
+    data[&quot;client_id&quot;] = JsonValue(clientId);
+    data[&quot;user_id&quot;] = JsonValue(userId);
+    data[&quot;redirect_uri&quot;] = JsonValue(redirectUri);
+    data[&quot;scope&quot;] = JsonValue(scope);
+    data[&quot;code_challenge&quot;] = JsonValue(challenge);
+    data[&quot;code_challenge_method&quot;] = JsonValue(method);
+    data[&quot;state&quot;] = JsonValue(state);
+    data[&quot;nonce&quot;] = JsonValue(nonce);
+    std::string code = util::randomToken(32);
+    Cache::set(&quot;auth_code:&quot; + code, jsonx::dump(data), AppConfig::get().authCodeSeconds);
+    return code;
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>redirect_uri</code> 必须精确匹配注册值。做前缀匹配等于允许攻击者把 code 引导到自己域名下的任意路径。</li>
+<li><strong>坑</strong>：code 只能消费一次。<code>consumeCode</code> 要在读取后立即删除，先读后删的写法在并发下会被兑换两次。</li>
+</ul>
+<h4 id="③-换取令牌">③ 换取令牌</h4>
+<ul>
+<li><strong>用户操作</strong>：无感知（应用后端完成）。</li>
+<li><strong>实现</strong>：<code>grant_type=authorization_code</code> 时依次校验 code 有效性 → client 身份 → redirect_uri 一致 → PKCE（<code>BASE64URL(SHA256(verifier))</code> 与 challenge 常数时间比较）→ 签发 access / refresh / id_token。</li>
+</ul>
+<pre><code class="language-cpp">bool verifyPkce(const std::string&amp; verifier, const std::string&amp; challenge) {
+    if (verifier.empty()) return false;
+    return util::constantTimeEquals(util::base64UrlEncode(util::sha256Raw(verifier)), challenge);
+}
+</code></pre>
+<pre><code class="language-cpp">void oauthToken(const Request&amp; req, Response&amp; res) {
+    std::string grantType = http::input(req, &quot;grant_type&quot;);
+    ...
+    if (grantType == &quot;authorization_code&quot;) {
+        auto data = consumeCode(code);
+        if (!data) { oauthError(res, 400, &quot;invalid_grant&quot;, &quot;authorization code invalid or expired&quot;); return; }
+        if (clientId != codeClient) { oauthError(res, 400, &quot;invalid_grant&quot;, &quot;client mismatch&quot;); return; }
+        auto app = repo::findApplicationByClientId(codeClient);
+        std::string clientError;
+        if (!verifyClient(*app, clientSecret, clientError)) { oauthError(res, 401, &quot;invalid_client&quot;); return; }
+        if (!redirectUri.empty() &amp;&amp; redirectUri != codeRedirect) {
+            oauthError(res, 400, &quot;invalid_grant&quot;, &quot;redirect_uri mismatch&quot;); return;
+        }
+        ...
+    }
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：PKCE 的比对要用常数时间比较。普通 <code>==</code> 在理论上可被逐字节探测，虽然 PKCE 的 challenge 本身不是秘密，但统一用常数时间比较是惯例。</li>
+</ul>
+<h4 id="④-userinfo-与-introspect">④ userinfo 与 introspect</h4>
+<ul>
+<li><strong>实现</strong>：<code>/api/oauth/userinfo</code> 按 Bearer access_token 返回 claim；<code>/api/oauth/introspect</code> 供资源服务器校验令牌（先校验调用方 client 身份，再判断令牌是否有效并返回 <code>active</code>）。</li>
+</ul>
+<pre><code class="language-cpp">void oauthIntrospect(const Request&amp; req, Response&amp; res) {
+    auto app = repo::findApplicationByClientId(clientId);
+    std::string clientError;
+    if (!app || !verifyClient(*app, clientSecret, clientError)) {
+        oauthError(res, 401, &quot;invalid_client&quot;); return;
+    }
+    std::map&lt;std::string, JsonValue&gt; obj;
+    obj[&quot;active&quot;] = JsonValue(false);       // 默认无效，只有校验通过才置 true
+    if (token.empty()) { http::json(res, 200, JsonValue(obj)); ... }
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：introspect 的默认值必须是 <code>active=false</code>。默认 true 再逐项排查，任何分支遗漏都会变成「伪令牌通过校验」。</li>
+</ul>
+<h4 id="⑤-发现文档与-JWKS">⑤ 发现文档与 JWKS</h4>
+<ul>
+<li><strong>实现</strong>：<code>/.well-known/openid-configuration</code> 返回各端点与 <code>jwks_uri</code>；<code>/.well-known/jwks.json</code> 返回 RSA 公钥（<code>RsJwt::jwks()</code>），带 5 分钟缓存。</li>
+</ul>
+<pre><code class="language-cpp">void oidcJwks(const Request&amp;, Response&amp; res) {
+    res.statusCode = 200;
+    res.body = RsJwt::jwks();
+    res.headers[&quot;Content-Type&quot;] = &quot;application/json; charset=utf-8&quot;;
+    res.headers[&quot;Cache-Control&quot;] = &quot;public, max-age=300&quot;;
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：内部会话 JWT 用 HMAC（单一密钥、单服务校验），对外的 OIDC id_token 用 RSA（多方验签、公钥公开）。两种令牌用途不同，密钥体系也不同。</li>
+</ul>
+<h4 id="⑥-机器对机器接口">⑥ 机器对机器接口</h4>
+<ul>
+<li><strong>实现</strong>：<code>password/verify</code>、<code>session/verify</code>、<code>session/revoke</code>、<code>users/list</code>、<code>developer/update</code> 走 client 凭证（Basic 或表单），由 <code>m2mAuthorized</code> 统一鉴权。</li>
+</ul>
+<pre><code class="language-cpp">bool m2mAuthorized(const Request&amp; req, Response&amp; res, std::string&amp; clientId, bool developerWrite = false) {
+    std::string clientSecret = http::input(req, &quot;client_secret&quot;);
+    auto basic = basicCredentials(req);
+    if (clientId.empty()) clientId = basic.first;
+    if (clientSecret.empty()) clientSecret = basic.second;
+    auto app = repo::findApplicationByClientId(clientId, true);
+    ...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>developerWrite</code> 区分读写权限。同一个 client 凭证不应同时具备「查用户」和「改开发者信息」的能力。</li>
+</ul>
+<h3 id="应用与授权管理">应用与授权管理</h3>
+<h4 id="①-应用注册与审核">① 应用注册与审核</h4>
+<ul>
+<li><strong>用户操作</strong>：第三方提交应用申请（名称、回调地址、scope）→ 管理员审核 → 通过后拿到 client_id / secret。</li>
+<li><strong>实现</strong>：<code>/api/apps/apply</code> 建申请，<code>/api/apps/pending</code> 列待审，<code>/api/apps/{id}/review</code> 审核；内接应用由管理员直接建（<code>/api/apps</code>）。</li>
+</ul>
+<pre><code class="language-cpp">app.post(&quot;/api/apps&quot;, handlers::appsCreate);        // 内部应用
+app.post(&quot;/api/apps/apply&quot;, handlers::appsApply);   // 第三方申请
+app.get(&quot;/api/apps/pending&quot;, handlers::appsPending);
+app.post(&quot;/api/apps/{id}/review&quot;, handlers::appsReview);
+app.post(&quot;/api/apps/{id}/reset-secret&quot;, handlers::appsResetSecret);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：重置 secret 后旧 secret 必须立即失效，并清理该应用的现有令牌。只换 secret 不吊销令牌，等于给了旧凭证继续使用的窗口。</li>
+</ul>
+<h4 id="②-授权同意记录">② 授权同意记录</h4>
+<ul>
+<li><strong>用户操作</strong>：「我的授权」里看到授过哪些应用，可撤销。</li>
+<li><strong>实现</strong>：<code>consents</code> 表按「用户 + 应用」记一条，撤销后该应用下次访问需重新同意。</li>
+</ul>
+<pre><code class="language-cpp">app.get(&quot;/api/consents&quot;, handlers::consentsList);
+app.put(&quot;/api/consents/{id}&quot;, handlers::consentsUpdate);
+app.del(&quot;/api/consents/{id}&quot;, handlers::consentsRevoke);
+</code></pre>
+<h4 id="③-外部身份绑定">③ 外部身份绑定</h4>
+<ul>
+<li><strong>实现</strong>：<code>/api/identities</code> 只提供列表与解绑；<strong>绑定入口被刻意关闭</strong>，身份只能通过一次校验过的集市 OAuth 回环建立。</li>
+</ul>
+<pre><code class="language-cpp">app.get(&quot;/api/identities&quot;, handlers::identitiesList);
+// Legacy POST /api/identities 已停用：身份只能通过校验过的集市 OAuth 回环绑定
+app.del(&quot;/api/identities/{id}&quot;, handlers::identitiesUnbind);
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：开放「直接 POST 绑定」等于允许把任意邮箱绑到自己账号，等于账号接管。绑定必须证明「你确实拥有那个身份」，所以只能走 OAuth 回环。</li>
+</ul>
+<h4 id="④-首页应用展示">④ 首页应用展示</h4>
+<ul>
+<li><strong>实现</strong>：<code>homepage-apps</code> 公开列表 + 管理员 CRUD + 图标上传，用于落地页展示生态应用。</li>
+</ul>
+<pre><code class="language-cpp">app.get(&quot;/api/public/homepage-apps&quot;, handlers::homepageAppsPublic);
+app.post(&quot;/api/admin/homepage-apps&quot;, handlers::adminHomepageAppsCreate);
+app.post(&quot;/api/admin/homepage-apps/{id}/icon&quot;, handlers::adminHomepageAppsIcon);
+</code></pre>
+<h3 id="后台与可观测">后台与可观测</h3>
+<h4 id="①-用户管理">① 用户管理</h4>
+<ul>
+<li><strong>实现</strong>：管理员可增删改查用户；删除走停用，物理删除会打断外键引用。</li>
+</ul>
+<pre><code class="language-cpp">app.get(&quot;/api/admin/users&quot;, handlers::adminUsersList);
+app.post(&quot;/api/admin/users&quot;, handlers::adminUsersCreate);
+app.put(&quot;/api/admin/users/{id}&quot;, handlers::adminUsersUpdate);
+app.del(&quot;/api/admin/users/{id}&quot;, handlers::adminUsersDelete);
+</code></pre>
+<h4 id="②-日志">② 日志</h4>
+<ul>
+<li><strong>实现</strong>：前端把客户端日志打到 <code>/api/logs/client</code>；管理员可列日志文件与查看末尾若干行；服务端另有访问日志（<code>applog::access</code>）。</li>
+</ul>
+<pre><code class="language-cpp">app.post(&quot;/api/logs/client&quot;, handlers::clientLog);
+app.get(&quot;/api/admin/logs&quot;, handlers::adminLogsList);
+app.get(&quot;/api/admin/logs/{file}&quot;, handlers::adminLogsTail);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>/api/admin/logs/{file}</code> 的文件名必须做白名单或路径归一化。直接拼接路径，<code>..%2F</code> 就能读任意文件。</li>
+</ul>
+<h4 id="③-存储不可用的统一降级">③ 存储不可用的统一降级</h4>
+<ul>
+<li><strong>实现</strong>：所有依赖存储的 handler 包一层 <code>storageAware</code>，捕获 <code>StorageUnavailable</code> 后统一返回 503 并给 <code>Retry-After</code>。</li>
+</ul>
+<pre><code class="language-cpp">// backend/src/app/routes.cpp
+auto storageAware(void (*handler)(const Request&amp;, Response&amp;)) {
+    return [handler](const Request&amp; req, Response&amp; res) {
+        try {
+            handler(req, res);
+        } catch (const StorageUnavailable&amp;) {
+            http::error(res, 503, &quot;temporarily_unavailable&quot;, &quot;身份服务暂时不可用，请稍后重试&quot;);
+            res.headers[&quot;Retry-After&quot;] = &quot;3&quot;;
+        }
+    };
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：把「存储故障」建模成一种异常类型，在路由层统一转成 503，比在每个 handler 里写 try-catch 更可靠 —— 新增接口不会漏。</li>
+</ul>
+<h3 id="UniSSO-·-面试速答">UniSSO · 面试速答</h3>
+<ul>
+<li><strong>注册</strong>：验证码 HMAC 后存 Redis，按邮箱摘要与 IP 双限流，待验证态与正式用户分离。</li>
+<li><strong>登录</strong>：本地 bcrypt 优先，失败且标识为邮箱时回退集市校验；锁定键 = 邮箱 + IP。</li>
+<li><strong>扫码</strong>：二维码记录带 TTL，确认接口按用户限流，过期返回 410，已处理返回 409。</li>
+<li><strong>OAuth2</strong>：<code>redirect_uri</code> 精确匹配、code 一次性、PKCE 常数时间比对、introspect 默认 <code>active=false</code>。</li>
+<li><strong>两种令牌</strong>：内部会话 HMAC JWT，对外 OIDC id_token RSA + JWKS。</li>
+<li><strong>会话</strong>：Redis <code>session:*</code>，支持看设备、踢单台、踢其他所有；吊销只删服务端记录，需即时失效则要回查。</li>
+<li><strong>边界</strong>：只管身份，应用内角色、用户组、资源权限归各应用。</li>
+</ul>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本篇已读</span></button><a class="book-btn book-btn-ghost" href="/docs/sse-market/"><i class="fas fa-list"></i> 全部篇目</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/docs/sse-market/iwiki/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一篇</span><strong>04 iWiki：协作、检索与开放</strong></a><a class="book-pager-link next" href="/docs/sse-market/imagebed/"><span class="book-pager-dir">下一篇 <i class="fas fa-arrow-right"></i></span><strong>06 图床：上传、鉴权与存储</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%B3%A8%E5%86%8C%E4%B8%8E%E7%99%BB%E5%BD%95">注册与登录</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E6%B3%A8%E5%86%8C">① 注册</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E7%99%BB%E5%BD%95">② 登录</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E9%82%AE%E7%AE%B1%E9%AA%8C%E8%AF%81%E4%B8%8E%E9%87%8D%E5%8F%91">③ 邮箱验证与重发</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E6%89%BE%E5%9B%9E%E5%AF%86%E7%A0%81">④ 找回密码</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E7%99%BB%E5%87%BA%E3%80%81%E5%BD%93%E5%89%8D%E7%94%A8%E6%88%B7%E3%80%81%E4%BC%9A%E8%AF%9D%E6%9F%A5%E8%AF%A2">⑤ 登出、当前用户、会话查询</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A5-CSRF-%E4%BB%A4%E7%89%8C">⑥ CSRF 令牌</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%89%AB%E7%A0%81%E7%99%BB%E5%BD%95">扫码登录</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E7%94%9F%E6%88%90%E4%B8%8E%E8%BD%AE%E8%AF%A2">① 生成与轮询</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%89%8B%E6%9C%BA%E7%AB%AF%E7%A1%AE%E8%AE%A4">② 手机端确认</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E9%9B%86%E5%B8%82%E6%89%AB%E7%A0%81%E6%8E%88%E6%9D%83%EF%BC%88SSE-%E9%80%9A%E9%81%93%EF%BC%89">③ 集市扫码授权（SSE 通道）</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%BC%9A%E8%AF%9D%E4%B8%8E%E8%AE%BE%E5%A4%87">会话与设备</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E4%BC%9A%E8%AF%9D%E5%88%97%E8%A1%A8">① 会话列表</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E9%80%80%E5%87%BA%E6%8C%87%E5%AE%9A%E8%AE%BE%E5%A4%87-%E9%80%80%E5%87%BA%E5%85%B6%E4%BB%96%E8%AE%BE%E5%A4%87">② 退出指定设备 / 退出其他设备</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E8%B5%84%E6%96%99%E4%B8%8E%E5%A4%B4%E5%83%8F">③ 资料与头像</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#OAuth2-%E4%B8%8E-OIDC">OAuth2 与 OIDC</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E6%8E%88%E6%9D%83%E4%B8%8A%E4%B8%8B%E6%96%87">① 授权上下文</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%8E%88%E6%9D%83%E4%B8%8E%E6%8E%88%E6%9D%83%E7%A0%81">② 授权与授权码</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E6%8D%A2%E5%8F%96%E4%BB%A4%E7%89%8C">③ 换取令牌</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-userinfo-%E4%B8%8E-introspect">④ userinfo 与 introspect</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E5%8F%91%E7%8E%B0%E6%96%87%E6%A1%A3%E4%B8%8E-JWKS">⑤ 发现文档与 JWKS</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A5-%E6%9C%BA%E5%99%A8%E5%AF%B9%E6%9C%BA%E5%99%A8%E6%8E%A5%E5%8F%A3">⑥ 机器对机器接口</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%BA%94%E7%94%A8%E4%B8%8E%E6%8E%88%E6%9D%83%E7%AE%A1%E7%90%86">应用与授权管理</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%BA%94%E7%94%A8%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%AE%A1%E6%A0%B8">① 应用注册与审核</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%8E%88%E6%9D%83%E5%90%8C%E6%84%8F%E8%AE%B0%E5%BD%95">② 授权同意记录</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%A4%96%E9%83%A8%E8%BA%AB%E4%BB%BD%E7%BB%91%E5%AE%9A">③ 外部身份绑定</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E9%A6%96%E9%A1%B5%E5%BA%94%E7%94%A8%E5%B1%95%E7%A4%BA">④ 首页应用展示</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%90%8E%E5%8F%B0%E4%B8%8E%E5%8F%AF%E8%A7%82%E6%B5%8B">后台与可观测</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E7%94%A8%E6%88%B7%E7%AE%A1%E7%90%86">① 用户管理</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%97%A5%E5%BF%97">② 日志</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%AD%98%E5%82%A8%E4%B8%8D%E5%8F%AF%E7%94%A8%E7%9A%84%E7%BB%9F%E4%B8%80%E9%99%8D%E7%BA%A7">③ 存储不可用的统一降级</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#UniSSO-%C2%B7-%E9%9D%A2%E8%AF%95%E9%80%9F%E7%AD%94">UniSSO · 面试速答</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

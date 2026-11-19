@@ -1,0 +1,473 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>13 事故复盘 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="软工集市专题 · 13 事故复盘">
+<meta property="og:type" content="website">
+<meta property="og:title" content="13 事故复盘">
+<meta property="og:url" content="https://sakjijdidji55.github.io/docs/sse-market/incidents/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="软工集市专题 · 13 事故复盘">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-11-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/docs/sse-market/incidents/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '13 事故复盘',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">13 事故复盘</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">13 事故复盘</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-market" data-chapter="incidents" data-total="14" data-prev="/docs/sse-market/interview/" data-next=""><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/docs/sse-market/">软工集市专题</a><div class="book-sidebar-sub">14 篇 · 1 小时 30 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 14</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选篇目..." data-book-filter aria-label="筛选篇目"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="history"><a class="book-chapter-link" href="/docs/sse-market/history/" data-chapter-link="history"><span class="book-chapter-index">00</span><span class="book-chapter-name">00 历史：从一门课到一组平台</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="overview"><a class="book-chapter-link" href="/docs/sse-market/overview/" data-chapter-link="overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">01 平台体系：三层与节点</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">三条主线</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="main"><a class="book-chapter-link" href="/docs/sse-market/main/" data-chapter-link="main"><span class="book-chapter-index">02</span><span class="book-chapter-name">02 主站：账号、帖子与互动</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="cloud"><a class="book-chapter-link" href="/docs/sse-market/cloud/" data-chapter-link="cloud"><span class="book-chapter-index">03</span><span class="book-chapter-name">03 集市云：一组一容器</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="iwiki"><a class="book-chapter-link" href="/docs/sse-market/iwiki/" data-chapter-link="iwiki"><span class="book-chapter-index">04</span><span class="book-chapter-name">04 iWiki：协作、检索与开放</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">身份与存储</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="unisso"><a class="book-chapter-link" href="/docs/sse-market/unisso/" data-chapter-link="unisso"><span class="book-chapter-index">05</span><span class="book-chapter-name">05 UniSSO：统一身份</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="imagebed"><a class="book-chapter-link" href="/docs/sse-market/imagebed/" data-chapter-link="imagebed"><span class="book-chapter-index">06</span><span class="book-chapter-name">06 图床：上传、鉴权与存储</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">端与开发者</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app"><a class="book-chapter-link" href="/docs/sse-market/app/" data-chapter-link="app"><span class="book-chapter-index">07</span><span class="book-chapter-name">07 App：六平台与九种产物</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="join"><a class="book-chapter-link" href="/docs/sse-market/join/" data-chapter-link="join"><span class="book-chapter-index">08</span><span class="book-chapter-name">08 招聘：双选、答辩与席位</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="developer"><a class="book-chapter-link" href="/docs/sse-market/developer/" data-chapter-link="developer"><span class="book-chapter-index">09</span><span class="book-chapter-name">09 开发者平台：权限、部署与小程序</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">能力</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="api-platform"><a class="book-chapter-link" href="/docs/sse-market/api-platform/" data-chapter-link="api-platform"><span class="book-chapter-index">10</span><span class="book-chapter-name">10 API 平台：兼容与计费</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="tts-ai"><a class="book-chapter-link" href="/docs/sse-market/tts-ai/" data-chapter-link="tts-ai"><span class="book-chapter-index">11</span><span class="book-chapter-name">11 TTS 与 AI 研究</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">复盘与附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="interview"><a class="book-chapter-link" href="/docs/sse-market/interview/" data-chapter-link="interview"><span class="book-chapter-index">12</span><span class="book-chapter-name">12 全平台面试速答</span><span class="book-chapter-time">1′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="incidents"><a class="book-chapter-link is-current" href="/docs/sse-market/incidents/" data-chapter-link="incidents" aria-current="page"><span class="book-chapter-index">13</span><span class="book-chapter-name">13 事故复盘</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/docs/"><i class="fas fa-arrow-left"></i> 返回文档</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/docs/sse-market/">软工集市专题</a><i class="fas fa-angle-right"></i><span>13 事故复盘</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">DOC 13</span><h1>13 事故复盘</h1><div class="book-chapter-meta">9 分钟读完 · 3,757 字</div></div><p>这一章收了九起有记录的事故，从 2023 年上线到现在。每起按「现象、排查、根因、恢复、之后补了什么」写，最后收一张对照表和几条能带走的结论。</p>
+<p>先说一个共同点：九起里面，没有一起是监控先发现的。发现的人分别是用户、同学、值班的人自己。</p>
+<h3 id="九次事故一览">九次事故一览</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>时间</th>
+<th>表象</th>
+<th>谁先发现</th>
+<th>根因类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2023.9.18</td>
+<td>站点起不来</td>
+<td>上线当天的访问者</td>
+<td>现场被重启冲掉，查不出</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2023.9.22 13:45:12</td>
+<td>全部帖子消失</td>
+<td>用户反馈「帖子好像没了」</td>
+<td>破坏性操作没有边界判断</td>
+</tr>
+<tr>
+<td>3</td>
+<td>2023.9.26</td>
+<td>列表评论数全是 1</td>
+<td>用户截图</td>
+<td>派生字段取值错</td>
+</tr>
+<tr>
+<td>4</td>
+<td>2024.1.26</td>
+<td>注册量静默归零</td>
+<td>一位同学说收不到验证码</td>
+<td>配置写错，且无告警</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2025.11—2026.1</td>
+<td>Redis 内存打满；随后 MySQL 磁盘打满</td>
+<td>服务不可用后人工发现</td>
+<td>无 TTL 清理策略；清理 SQL 写错列名</td>
+</tr>
+<tr>
+<td>6</td>
+<td>2026.8.30</td>
+<td>整机挂死约 1 小时</td>
+<td>用户反馈</td>
+<td>四类「只进不出」的资源把磁盘吃到 97%</td>
+</tr>
+<tr>
+<td>7</td>
+<td>2026.9.19</td>
+<td>主站 API 全量失效约 35 分钟</td>
+<td>用户反馈</td>
+<td>蜜罐把入口 Nginx 当扫描器，封了全部端口 7 天</td>
+</tr>
+<tr>
+<td>8</td>
+<td>2026.9.22</td>
+<td>图床不可用约 20 小时，丢约 900 张图</td>
+<td>部署时人工发现</td>
+<td>蜜罐自锁 + 「失败即删组」逻辑 + 对象存储密钥从未生效</td>
+</tr>
+<tr>
+<td>9</td>
+<td>2026.9.29</td>
+<td>25 个域名 HTTPS 全挂约 2.5 小时</td>
+<td>用户反馈</td>
+<td>k3s 重启后 traefik 按出厂值抢占 80/443</td>
+</tr>
+</tbody>
+</table>
+<h3 id="一、2023-9-18：上线当天，服务器崩溃">一、2023.9.18：上线当天，服务器崩溃</h3>
+<p>正式上线当天，站点打不开。值班的人直接重启，重启后重新部署，站点恢复了，原因没查出来。</p>
+<p>没查出来的原因很具体：当时没有完整日志，重启把现场清掉了 —— 进程状态、错误栈、那一刻的请求，全在内存里，重启即丢失。这一次之后才补上日志系统，后面几次排查都靠它。</p>
+<p>这起事故留下的结论只有一条：重启负责恢复服务，定位原因要靠现场。要重启之前，先把日志、堆栈、连接数、慢查询留下来。</p>
+<h3 id="二、2023-9-22-13-45-12：全部帖子被删除">二、2023.9.22 13:45:12：全部帖子被删除</h3>
+<p>上线第四天，有人反馈「帖子好像没了」。第一反应是数据库挂了，查下来库还在，帖子确实没了。</p>
+<p>MySQL 的 general log 里，13:45:12 有一条把帖子全删的语句；后端日志在同一时刻连续出现多条删除帖子的请求。两条时间戳对上，结论是：正常请求打到了有缺陷的代码，日志里没有外部攻击的痕迹。组里另一个人用「删除一个本来就不存在的帖子」去测，必现全表被清空 —— 删除函数没有校验目标是否存在，传入不存在的 ID 时删除条件失效，语句退化成无条件删除。</p>
+<p>数据靠 binlog 救回来。定位到 <code>binlog.000003</code> 的 Pos 217032，用 <code>mysqlbinlog</code> 按时间点和位置截出事故前的一段，再用 <code>binlog2sql</code> 解析成回滚 SQL 灌回数据库，最后核对帖子数与时间戳，确认没把事故之后的脏数据带回来。之后补了数据库备份，也把函数改成先判存在再删。</p>
+<p>这起事故的教训是破坏性操作的写法：入参要校验（ID 大于 0 且目标存在），<code>WHERE</code> 必须命中主键，执行后校验影响行数（<code>RowsAffected</code> 只能是 1）。线上要假设参数是错的，尤其是 ID。binlog 是最后一道防线，前提是 <code>ROW</code> 格式和足够的保留期。</p>
+<h3 id="三、2023-9-26：列表里的评论数全变成-1">三、2023.9.26：列表里的评论数全变成 1</h3>
+<p>帖子列表每一条的评论数都显示 1。数据和评论都还在，问题出在列表查询：取到的是某一条评论记录，帖子的评论条数没有被统计。</p>
+<p>修法是把列表计数改成按帖子聚合，或者单独维护计数字段。这也定下一条规矩：评论数、点赞数、浏览数这类派生字段必须有唯一事实源 —— 要么查询时聚合，要么写时维护加回填任务，不能顺手 join 一行当计数。</p>
+<h3 id="四、2024-1-26：邮箱验证码发不出去">四、2024.1.26：邮箱验证码发不出去</h3>
+<p>注册量本来是每天一两个地涨，有一天开始连续几天为零，当时以为是确实没人注册。后来有同学说收不到验证码，才知道注册入口已经断了，只是一直没人报障。发现时已经到期末，手上任务也多，一直拖到 1 月 26 日才修。</p>
+<p>修复本身很小：发送方式改成 TLS，发件箱换成企业邮箱。根因是端口 —— 把 465 写成了 456，而 QQ 邮箱已经关掉非 TLS 端口，连不上，验证码自然发不出。</p>
+<p>这起事故的代价在发现环节：发信失败没有告警，注册为零也没有告警，两个沉默叠在一起，问题存在了几周。零值是最该报警的信号 —— 注册 0、发帖 0、消费 0，都值得一个告警。</p>
+<h3 id="五、2025-11：双-Token-改造，先撑爆-Redis，再撑爆-MySQL">五、2025.11：双 Token 改造，先撑爆 Redis，再撑爆 MySQL</h3>
+<p>2025 年 11 月 16 日，登录从单 token 改成双 token：短期 access token 加 30 天的 refresh token，refresh 用过一次即作废。改动本身没问题，问题在存储方式 —— refresh token 被写进 Redis，键名是 <code>refresh_token:&lt;JWT&gt;</code>，值是用户 ID，TTL 30 天，等这个 token 被用掉才 <code>DEL</code>。</p>
+<p>于是每次登录、每次刷新都会写一个新键，键名本身是一整串 JWT（几百字节），30 天内不会消失。换设备、重复登录、微信里跳转重新授权，都在产生新键；没被用掉的 token 永远不删。Redis 内存一路涨，直到打满，登录链路整体不可用。</p>
+<p>11 月 19 日，refresh token 改存 MySQL：新建 <code>refresh_tokens</code> 表（<code>user_id</code>、唯一的 <code>token</code>、<code>expires_at</code>、<code>is_used</code>、<code>created_at</code>），刷新时按 token、用户、未使用三个条件查一条，查到就标记为已使用再发新的一对；同时加了一个每 48 小时跑一次的清理任务，删掉三天前已使用的记录。</p>
+<p>到这里本该结束，但清理任务的删除条件写错了列名：<code>is_used = 1 AND updated_at &lt; cutoff</code>，而这张表和模型里只有 <code>created_at</code>，没有 <code>updated_at</code>。SQL 每次执行都报错，错误被 <code>if result.Error != nil</code> 接住，只打一行日志就返回 —— 任务「跑了」，一条没删。两个月后，MySQL 磁盘被这张表涨满。</p>
+<p>2026 年 1 月 20 日的提交把它改成 <code>created_at &lt; cutoff</code>，清理才真正生效。一行列名，两起事故：一次是 Redis 没有清理策略，一次是清理策略写错了也看不出来。</p>
+<p>这起事故留下的两条：一是会话类数据要么有过期机制、要么有清理任务，两者都没有就是定时炸弹；二是清理任务必须验证真的删掉了 —— 看日志里「清理了 N 条」的 N，不要只看任务有没有被调度。</p>
+<h3 id="六、2026-8-30：磁盘满，整机挂死约一小时">六、2026.8.30：磁盘满，整机挂死约一小时</h3>
+<p>20:26 起，机器上所有依赖磁盘的服务开始集体超时，日志落盘延迟三到七分钟；20:35 整机失去响应，硬挂死。</p>
+<p>根因是四类「只进不出」的资源长期只增不减：每日 <code>mysqldump</code> 备份没有轮转，三年攒了 1178 个文件、14G；Docker 构建缓存没有清理，561 次构建留下 28.9G，而每日清理脚本因为文件丢失已经静默失败数月；容器日志没有上限，一个错误循环的容器单独占了 5.5G；journald 也没有上限，frps 和 k3s 每天多出 500M 以上。事发时磁盘水位 97%，只剩 7.9G。水位到顶之后，多路大 I/O 把系统级 I/O 拖停，最后整机挂死。</p>
+<p>恢复过程里最麻烦的一步在重启之后：宿主机上那套空的默认 nginx 抢占了 80/443，入口容器起不来。后来把宿主机 nginx 永久停用，80/443 归入口容器唯一所有。</p>
+<p>之后落地的机制：cron 重建每日维护脚本（构建缓存保留 72 小时、备份压缩保留 30 天、60 天后删）、journald 上限 1G、容器日志 50m×3、磁盘使用率 85% 告警。最大的教训是清理任务要验证真的在跑 —— 静默失败几个月没人发现，比没有清理更危险。</p>
+<h3 id="七、2026-9-19：蜜罐把入口-Nginx-封了，API-全量失效约-35-分钟">七、2026.9.19：蜜罐把入口 Nginx 封了，API 全量失效约 35 分钟</h3>
+<p>现象是主站 API 全线不可用，但后端进程活着，日志里有「服务就绪」，没有 panic 也没有 OOM，宿主机直连同一容器返回 200、耗时 1.7ms。数据库和 Redis 也都正常。</p>
+<p>问题出在入口。蜜罐脚本按 IP 聚合 frps 连接来识别扫描器，而入口 Nginx 在七天内访问了四个代理共 1011 次，正好同时命中「四个以上代理 + 一千次以上」的 multi-scan 阈值 —— 反代的流量特征和扫描器在特征空间里几乎分不开，调阈值治不了本。致命的是执行动作：tarpit 封禁没有加 <code>--dport</code>，封的是全部端口，Nginx 发往任何后端的请求都被改道到 endlessh；叠加封禁 7 天，不处理就是一周故障。另外免名单是逐 IP 手写的静态列表，容器 IP 随重建变化，必然过时。</p>
+<p>修复的做法是给脚本加内网网段豁免（127/8、10/8、172.16/12、192.168/16），利用脚本里「豁免 IP 已封则自动解封」的分支自愈，30 秒内业务恢复。没有手工解封，也不需要某个人在场。这个改法可以复现，不依赖某个人在场。</p>
+<p>排查上留了一个可复用的判断方法：上游返回垃圾时，先去连一个肯定没人监听的端口，正常应该 <code>Connection refused</code>；如果那个端口也吐随机 token，五秒钟就能判定请求被按源 IP 在网络层劫持了，跟后端无关。</p>
+<h3 id="八、2026-9-22：图床部署失败，线上组被误删，丢约-900-张图">八、2026.9.22：图床部署失败，线上组被误删，丢约 900 张图</h3>
+<p>图床部署失败，平台随后把线上组删了，组目录随组清空，丢约 900 张图。这是九起里唯一丢数据的一次。</p>
+<p>三个根因叠在一起。第一层是自锁：部署机通过 hairpin NAT 访问自己的域名时，源 IP 就是自己的公网 IP，而 SSH 蜜罐没有配 <code>ignoreip</code>，七天全端口 tarpit 把平台通往跳板机的路掐死了，包传不上去。第二层是自毁：部署平台的兜底逻辑是「新建的 pod 部署失败就释放」，而它把一次瞬时查询错误误判成「组不存在」，于是标记为新建，部署失败后真把线上组删了，审计记录里这种事发生过四次。第三层是没有备份：图床当时只有「写 MinIO」和「写本地磁盘」两种互斥模式，容器启动脚本用 <code>su -l</code>（login shell）拉起 supervisord，<code>-l</code> 重置了继承的环境变量，MinIO 密钥在应用进程里是空的，数据一路写本地盘，天生没有备份。</p>
+<p>修复分两路：图床切到对象存储并做端到端验证（把本地文件移走仍然能出图，此后删组不再丢数据）；平台修掉误删判定逻辑。教训有两条：数据相关变更必须灰度，新旧方式并行一段时间再切换；删除类操作的条件如果依赖一次网络查询，不能凭一次判断就执行。</p>
+<h3 id="九、2026-9-29：traefik-抢了-80-443，25-个域名-HTTPS-全挂约-2-5-小时">九、2026.9.29：traefik 抢了 80/443，25 个域名 HTTPS 全挂约 2.5 小时</h3>
+<p>16:30 开始，25 个域名陆续报证书错误，19:01 恢复。</p>
+<p>根因是同一台机器上住着两套「看大门」的：docker 里的 nginx 有真证书、接真流量；k3s 自带的 traefik 零配置空跑。k3s 的出厂规矩是每次启动按出厂值重装自带组件，而 traefik 默认以 LoadBalancer 方式占用 80/443。此前的修复写在 k3s 托管文件 <code>manifests/traefik.yaml</code> 里，重启就会被覆盖 —— 隐患从装上 k3s 那天就存在。k3s 的 iptables 规则又插在表最前面，<code>KUBE-SERVICES</code> 先命中 443，docker 给 nginx 的规则永远轮不到。所以 nginx 没坏、证书也没过期，只是一个连接都没接到，这也解释了「直连容器 IP 正常、走域名报证书错」的反常现象。</p>
+<p>触发点是一次 AI 运维代理的变更：为了启用 gVisor 执行 <code>systemctl restart k3s</code>，重启本身是必要的，但变更前没有留端口基线，没有复核「k3s 里没有业务，重启安全」这个前提，变更后也没有自检主站。变更「成功」了，主站已经挂了，靠人工报障拖了两个多小时。</p>
+<p>最终修复是一个九行的 <code>HelmChartConfig</code>（<code>traefik-config.yaml</code>），k3s 会自动应用且重启不覆盖，把 traefik 固化成 ClusterIP —— 放弃对外端口，占位容器和 iptables 规则一起消失。</p>
+<h3 id="九起放在一起看">九起放在一起看</h3>
+<table>
+<thead>
+<tr>
+<th>事故</th>
+<th>直接原因</th>
+<th>真正的缺口</th>
+<th>后来补的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>崩服</td>
+<td>未知</td>
+<td>没有日志</td>
+<td>日志系统</td>
+</tr>
+<tr>
+<td>删库</td>
+<td>删除函数缺边界校验</td>
+<td>破坏性操作没有护栏，也没有备份</td>
+<td>校验、备份、binlog 恢复流程</td>
+</tr>
+<tr>
+<td>计数</td>
+<td>派生字段取错</td>
+<td>展示层与事实源脱节</td>
+<td>聚合口径</td>
+</tr>
+<tr>
+<td>邮件</td>
+<td>端口写错</td>
+<td>静默失败，零值无告警</td>
+<td>TLS、换发件箱</td>
+</tr>
+<tr>
+<td>双 Token</td>
+<td>Redis 无清理；清理 SQL 写错列名</td>
+<td>会话数据没有生命周期管理</td>
+<td>改存 MySQL、清理任务、按 created_at 删除</td>
+</tr>
+<tr>
+<td>磁盘满</td>
+<td>四类资源只进不出</td>
+<td>清理静默失败数月没人验证</td>
+<td>轮转策略、日志上限、85% 告警</td>
+</tr>
+<tr>
+<td>蜜罐封禁</td>
+<td>封全部端口 7 天</td>
+<td>安全动作没有评估爆炸半径</td>
+<td>内网网段豁免、告警</td>
+</tr>
+<tr>
+<td>图床误删</td>
+<td>瞬时错误被判成「组不存在」</td>
+<td>删除动作没有二次确认，数据没有备份</td>
+<td>切对象存储、修误删逻辑</td>
+</tr>
+<tr>
+<td>证书失效</td>
+<td>traefik 占 80/443</td>
+<td>端口没有唯一 owner，托管文件被直接改</td>
+<td>HelmChartConfig 固化、端口巡检</td>
+</tr>
+</tbody>
+</table>
+<p>能带走的三条：</p>
+<ol>
+<li><strong>先保现场再动手。</strong> 重启、回滚、改配置之前，把日志、堆栈、连接、慢查询留下来。</li>
+<li><strong>破坏性操作当敌人对待。</strong> 校验、主键、影响行数、备份，四样缺一不可；删除条件依赖网络查询时，加二次确认或时间窗。</li>
+<li><strong>给「零」和「失败」配告警。</strong> 注册为零、发信失败、清理任务连续失败，都该有人被叫醒；等人来问坏没坏，代价太大。</li>
+</ol>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本篇已读</span></button><a class="book-btn book-btn-ghost" href="/docs/sse-market/"><i class="fas fa-list"></i> 全部篇目</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/docs/sse-market/interview/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一篇</span><strong>12 全平台面试速答</strong></a><span class="book-pager-link is-empty"></span></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B9%9D%E6%AC%A1%E4%BA%8B%E6%95%85%E4%B8%80%E8%A7%88">九次事故一览</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%80%E3%80%812023-9-18%EF%BC%9A%E4%B8%8A%E7%BA%BF%E5%BD%93%E5%A4%A9%EF%BC%8C%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%B4%A9%E6%BA%83">一、2023.9.18：上线当天，服务器崩溃</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%BA%8C%E3%80%812023-9-22-13-45-12%EF%BC%9A%E5%85%A8%E9%83%A8%E5%B8%96%E5%AD%90%E8%A2%AB%E5%88%A0%E9%99%A4">二、2023.9.22 13:45:12：全部帖子被删除</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%89%E3%80%812023-9-26%EF%BC%9A%E5%88%97%E8%A1%A8%E9%87%8C%E7%9A%84%E8%AF%84%E8%AE%BA%E6%95%B0%E5%85%A8%E5%8F%98%E6%88%90-1">三、2023.9.26：列表里的评论数全变成 1</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%9B%9B%E3%80%812024-1-26%EF%BC%9A%E9%82%AE%E7%AE%B1%E9%AA%8C%E8%AF%81%E7%A0%81%E5%8F%91%E4%B8%8D%E5%87%BA%E5%8E%BB">四、2024.1.26：邮箱验证码发不出去</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%BA%94%E3%80%812025-11%EF%BC%9A%E5%8F%8C-Token-%E6%94%B9%E9%80%A0%EF%BC%8C%E5%85%88%E6%92%91%E7%88%86-Redis%EF%BC%8C%E5%86%8D%E6%92%91%E7%88%86-MySQL">五、2025.11：双 Token 改造，先撑爆 Redis，再撑爆 MySQL</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%85%AD%E3%80%812026-8-30%EF%BC%9A%E7%A3%81%E7%9B%98%E6%BB%A1%EF%BC%8C%E6%95%B4%E6%9C%BA%E6%8C%82%E6%AD%BB%E7%BA%A6%E4%B8%80%E5%B0%8F%E6%97%B6">六、2026.8.30：磁盘满，整机挂死约一小时</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%83%E3%80%812026-9-19%EF%BC%9A%E8%9C%9C%E7%BD%90%E6%8A%8A%E5%85%A5%E5%8F%A3-Nginx-%E5%B0%81%E4%BA%86%EF%BC%8CAPI-%E5%85%A8%E9%87%8F%E5%A4%B1%E6%95%88%E7%BA%A6-35-%E5%88%86%E9%92%9F">七、2026.9.19：蜜罐把入口 Nginx 封了，API 全量失效约 35 分钟</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%85%AB%E3%80%812026-9-22%EF%BC%9A%E5%9B%BE%E5%BA%8A%E9%83%A8%E7%BD%B2%E5%A4%B1%E8%B4%A5%EF%BC%8C%E7%BA%BF%E4%B8%8A%E7%BB%84%E8%A2%AB%E8%AF%AF%E5%88%A0%EF%BC%8C%E4%B8%A2%E7%BA%A6-900-%E5%BC%A0%E5%9B%BE">八、2026.9.22：图床部署失败，线上组被误删，丢约 900 张图</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B9%9D%E3%80%812026-9-29%EF%BC%9Atraefik-%E6%8A%A2%E4%BA%86-80-443%EF%BC%8C25-%E4%B8%AA%E5%9F%9F%E5%90%8D-HTTPS-%E5%85%A8%E6%8C%82%E7%BA%A6-2-5-%E5%B0%8F%E6%97%B6">九、2026.9.29：traefik 抢了 80/443，25 个域名 HTTPS 全挂约 2.5 小时</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B9%9D%E8%B5%B7%E6%94%BE%E5%9C%A8%E4%B8%80%E8%B5%B7%E7%9C%8B">九起放在一起看</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

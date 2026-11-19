@@ -1,0 +1,514 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>10 API 平台：兼容与计费 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="软工集市专题 · 10 API 平台：兼容与计费">
+<meta property="og:type" content="website">
+<meta property="og:title" content="10 API 平台：兼容与计费">
+<meta property="og:url" content="https://sakjijdidji55.github.io/docs/sse-market/api-platform/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="软工集市专题 · 10 API 平台：兼容与计费">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-11-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/docs/sse-market/api-platform/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '10 API 平台：兼容与计费',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">10 API 平台：兼容与计费</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">10 API 平台：兼容与计费</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-market" data-chapter="api-platform" data-total="14" data-prev="/docs/sse-market/developer/" data-next="/docs/sse-market/tts-ai/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/docs/sse-market/">软工集市专题</a><div class="book-sidebar-sub">14 篇 · 1 小时 30 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 14</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选篇目..." data-book-filter aria-label="筛选篇目"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="history"><a class="book-chapter-link" href="/docs/sse-market/history/" data-chapter-link="history"><span class="book-chapter-index">00</span><span class="book-chapter-name">00 历史：从一门课到一组平台</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="overview"><a class="book-chapter-link" href="/docs/sse-market/overview/" data-chapter-link="overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">01 平台体系：三层与节点</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">三条主线</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="main"><a class="book-chapter-link" href="/docs/sse-market/main/" data-chapter-link="main"><span class="book-chapter-index">02</span><span class="book-chapter-name">02 主站：账号、帖子与互动</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="cloud"><a class="book-chapter-link" href="/docs/sse-market/cloud/" data-chapter-link="cloud"><span class="book-chapter-index">03</span><span class="book-chapter-name">03 集市云：一组一容器</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="iwiki"><a class="book-chapter-link" href="/docs/sse-market/iwiki/" data-chapter-link="iwiki"><span class="book-chapter-index">04</span><span class="book-chapter-name">04 iWiki：协作、检索与开放</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">身份与存储</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="unisso"><a class="book-chapter-link" href="/docs/sse-market/unisso/" data-chapter-link="unisso"><span class="book-chapter-index">05</span><span class="book-chapter-name">05 UniSSO：统一身份</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="imagebed"><a class="book-chapter-link" href="/docs/sse-market/imagebed/" data-chapter-link="imagebed"><span class="book-chapter-index">06</span><span class="book-chapter-name">06 图床：上传、鉴权与存储</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">端与开发者</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app"><a class="book-chapter-link" href="/docs/sse-market/app/" data-chapter-link="app"><span class="book-chapter-index">07</span><span class="book-chapter-name">07 App：六平台与九种产物</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="join"><a class="book-chapter-link" href="/docs/sse-market/join/" data-chapter-link="join"><span class="book-chapter-index">08</span><span class="book-chapter-name">08 招聘：双选、答辩与席位</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="developer"><a class="book-chapter-link" href="/docs/sse-market/developer/" data-chapter-link="developer"><span class="book-chapter-index">09</span><span class="book-chapter-name">09 开发者平台：权限、部署与小程序</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">能力</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="api-platform"><a class="book-chapter-link is-current" href="/docs/sse-market/api-platform/" data-chapter-link="api-platform" aria-current="page"><span class="book-chapter-index">10</span><span class="book-chapter-name">10 API 平台：兼容与计费</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="tts-ai"><a class="book-chapter-link" href="/docs/sse-market/tts-ai/" data-chapter-link="tts-ai"><span class="book-chapter-index">11</span><span class="book-chapter-name">11 TTS 与 AI 研究</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">复盘与附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="interview"><a class="book-chapter-link" href="/docs/sse-market/interview/" data-chapter-link="interview"><span class="book-chapter-index">12</span><span class="book-chapter-name">12 全平台面试速答</span><span class="book-chapter-time">1′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="incidents"><a class="book-chapter-link" href="/docs/sse-market/incidents/" data-chapter-link="incidents"><span class="book-chapter-index">13</span><span class="book-chapter-name">13 事故复盘</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/docs/"><i class="fas fa-arrow-left"></i> 返回文档</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/docs/sse-market/">软工集市专题</a><i class="fas fa-angle-right"></i><span>10 API 平台：兼容与计费</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">DOC 10</span><h1>10 API 平台：兼容与计费</h1><div class="book-chapter-meta">4 分钟读完 · 1,522 字</div></div><blockquote>
+<p>ai-infra 的统一出口：对外提供 OpenAI 兼容接口（另有 Claude 协议适配），对内转发到 vLLM 等上游，按 token 计费并按 Key 限流。</p>
+<p>仓库：<a target="_blank" rel="noopener" href="https://github.com/SysuMirror/sseapi">github.com/SysuMirror/sseapi</a>（TypeScript，<code>server/</code> 约 8700 行、<code>web/</code> 约 5400 行、<code>docs/</code>）。</p>
+</blockquote>
+<h3 id="账号与密钥">账号与密钥</h3>
+<h4 id="①-集市-OAuth-登录">① 集市 OAuth 登录</h4>
+<ul>
+<li><strong>用户操作</strong>：用集市账号登录控制台。</li>
+<li><strong>实现</strong>：授权码换 token → 取 userinfo → 建本地会话；控制台与 API 用两套凭证，互不复用。</li>
+</ul>
+<pre><code class="language-text">GET  /api/auth/oauth/config     返回 client_id 等公开参数
+GET  /api/auth/oauth/login-url  生成授权地址
+POST /api/auth/oauth/token      code 换令牌
+GET  /api/auth/oauth/userinfo   取用户信息
+GET  /api/auth/me               当前登录用户
+</code></pre>
+<h4 id="②-创建-API-Key">② 创建 API Key</h4>
+<ul>
+<li><strong>用户操作</strong>：控制台创建 Key → 可选绑定域名 → 复制 <code>sk-</code> 开头的串 → 填进客户端。</li>
+<li><strong>实现</strong>：Key 只展示一次，库中存哈希；可绑定来源域名，泄露后非白名单来源无法使用。</li>
+</ul>
+<pre><code class="language-text">GET    /api/keys
+POST   /api/keys
+PATCH  /api/keys/:id
+DELETE /api/keys/:id
+</code></pre>
+<ul>
+<li><strong>坑</strong>：Key 与用户是多对一，计费与限流都挂在 Key 上。若挂在用户上，一个人给三个项目建的 Key 会互相抢配额。</li>
+</ul>
+<h4 id="③-余额与流水">③ 余额与流水</h4>
+<ul>
+<li><strong>用户操作</strong>：看余额、看每条调用扣了多少、看充值记录。</li>
+<li><strong>实现</strong>：<code>balance</code> 当前余额、<code>ledger</code> 流水明细、<code>summary</code> 汇总；每次调用写一条用量记录并带余额快照。</li>
+</ul>
+<pre><code class="language-text">GET /api/billing/balance
+GET /api/billing/ledger
+GET /api/billing/summary
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：流水必须存「本笔之后的余额」。只存变动额，对账时要重放全部历史才能算出某一时点余额。</li>
+</ul>
+<h4 id="④-每日签到">④ 每日签到</h4>
+<ul>
+<li><strong>用户操作</strong>：控制台点签到，领取小额额度。</li>
+<li><strong>实现</strong>：签到按「用户 + 日期」唯一，重复签到返回已签；奖励直接入账并写流水。</li>
+</ul>
+<pre><code class="language-text">GET  /api/billing/checkin
+POST /api/billing/checkin
+</code></pre>
+<ul>
+<li><strong>坑</strong>：日期要用服务端时区统一计算。用客户端时区，「跨时区重复签到」就成立。</li>
+</ul>
+<h3 id="模型目录">模型目录</h3>
+<h4 id="①-注册模型">① 注册模型</h4>
+<ul>
+<li><strong>用户操作</strong>：管理员登记模型（上游地址、模型名、单价、限流）。</li>
+<li><strong>实现</strong>：上游地址 + <code>served_model_name</code> + 上游 Key + 入出单价 + RPM/并发；对外只暴露平台的 Slug，<code>/v1/models</code> 返回的是 Slug 列表。</li>
+</ul>
+<pre><code class="language-text">GET    /api/models
+POST   /api/models
+GET    /api/models/:modelId
+DELETE /api/models/:id
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>served_model_name</code> 必须与上游 vLLM 的启动参数一致。不一致时上游返回 <code>model not found</code>，而网关常把它包装成 502，排查时容易误判为网络问题。</li>
+</ul>
+<h4 id="②-协议连通性测试">② 协议连通性测试</h4>
+<ul>
+<li><strong>实现</strong>：<code>test</code> 发一次最小请求验证可用；<code>test-protocol</code> 单独验证协议兼容性（流式字段、usage 字段是否存在），不与业务请求混在一起。</li>
+</ul>
+<pre><code class="language-text">POST /api/models/test
+POST /api/models/:id/test
+POST /api/models/:id/test-protocol
+</code></pre>
+<ul>
+<li><strong>坑</strong>：健康检查要区分「连通」与「协议兼容」。只 ping 通的上游，可能在流式响应里缺 <code>usage</code>，导致计费全靠估算。</li>
+</ul>
+<h3 id="请求转发">请求转发</h3>
+<h4 id="①-统一入口">① 统一入口</h4>
+<pre><code class="language-text">POST /v1/chat/completions     OpenAI 兼容对话（支持流式）
+POST /v1/embeddings           向量化
+POST /v1/rerank               重排
+POST /v1/images/generations   文生图
+POST /v1/messages             Claude 协议（经适配层转换）
+</code></pre>
+<ul>
+<li><strong>实现</strong>：所有入口共用一套前置流程 —— 用 <code>Bearer sk-</code> 找 Key → 校验状态与余额 → 校验来源 → 按 Slug 找上游 → 转发 → 旁路计费。</li>
+</ul>
+<h4 id="②-Claude-协议适配">② Claude 协议适配</h4>
+<ul>
+<li><strong>实现</strong>：<code>claude-adapter.ts</code> 把 Anthropic 风格的 <code>messages</code> 请求与响应双向转换，客户端可以继续用 Claude SDK，上游仍是 OpenAI 兼容服务。</li>
+</ul>
+<pre><code class="language-ts">// server/src/services/claude-adapter.ts —— 请求/响应字段映射与流式事件转换
+</code></pre>
+<ul>
+<li><strong>坑</strong>：协议转换要处理「系统提示」与「工具调用」的字段差异。只转文本字段，工具调用会在适配层丢失。</li>
+</ul>
+<h4 id="③-用量提取">③ 用量提取</h4>
+<ul>
+<li><strong>实现</strong>：流式响应里逐行解析 <code>data:</code>，取最后一条带 <code>usage</code> 的事件；非流式直接读响应体 <code>usage</code>。两者都拿不到时按字符数估算（约 4 字符 1 token），并标记为估算值。</li>
+</ul>
+<pre><code class="language-ts">// server/src/routes/proxy.ts
+function extractUsageFromSse(buf: string): {
+  prompt: number; completion: number; cached: number; imageTokens: number; found: boolean
+} {
+  let last = { prompt: 0, completion: 0, cached: 0, imageTokens: 0, found: false };
+  for (const line of buf.split(/\r?\n/)) {
+    const t = line.trim();
+    if (!t.startsWith('data:')) continue;
+    const data = t.slice(5).trim();
+    if (!data || data === '[DONE]') continue;
+    try {
+      const j = JSON.parse(data);
+      const u = readUsage(j?.usage);
+      if (u.found) last = u;      // 取最后一条带 usage 的
+    } catch {
+      /* 忽略半包 */
+    }
+  }
+  return last;
+}
+
+function estimateTokens(messages: unknown, completionText: string) {
+  const msgLen = JSON.stringify(redactImagesForEstimate(messages) ?? '').length;
+  return {
+    prompt: Math.max(1, Math.ceil(msgLen / 4)),
+    completion: Math.max(0, Math.ceil((completionText || '').length / 4)),
+    cached: 0,
+    imageTokens: 0,
+  };
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：SSE 分块会切断 JSON。解析失败要跳过；抛错的话，一个半包就让整次调用失败。</li>
+<li><strong>坑</strong>：估算前要把图片内容替换掉（<code>redactImagesForEstimate</code>）。base64 图片的字符数会把 token 估到几十万。</li>
+<li><strong>面试点</strong>：估算值要落库标记来源（<code>usage_source = usage | estimate</code>）。把估算当真实用量计费，账单一定会被质疑。</li>
+</ul>
+<h3 id="计费与限流">计费与限流</h3>
+<h4 id="①-计费口径">① 计费口径</h4>
+<ul>
+<li><strong>实现</strong>：单价按「每百万 token」存，输入与输出分别计价，可另设缓存价与图片价；扣费后写流水与余额快照。</li>
+</ul>
+<pre><code class="language-text">cost = prompt_tokens / 1e6 * input_price_per_1m
+     + completion_tokens / 1e6 * output_price_per_1m
+</code></pre>
+<ul>
+<li><strong>坑</strong>：金额用整数分或定点数累加。用浮点会累积误差，对账时总是差几分钱，且无法回溯是哪一笔。</li>
+</ul>
+<h4 id="②-限流">② 限流</h4>
+<ul>
+<li><strong>实现</strong>：RPM 与并发两档限制，维度是 Key；超限返回 429 并给出重试时间。</li>
+</ul>
+<pre><code class="language-text">GET /api/admin/rate-limits
+GET /api/admin/rate-limits/status
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：RPM 与并发是两种约束。只限 RPM，突发并发仍能打满上游；只限并发，慢速高频请求仍能把连接数占满。</li>
+</ul>
+<h4 id="③-余额不足">③ 余额不足</h4>
+<ul>
+<li>
+<p><strong>实现</strong>：请求前置检查余额，不足直接拒绝，不转发到上游；已发生的调用照常扣费。</p>
+</li>
+<li>
+<p><strong>坑</strong>：余额检查要在转发之前。放到响应之后，欠费用户可以无限调用直到下次登录。</p>
+</li>
+</ul>
+<h3 id="来源校验">来源校验</h3>
+<h4 id="①-域名白名单">① 域名白名单</h4>
+<ul>
+<li><strong>实现</strong>：Key 可绑定来源列表；匹配时把输入归一化成 host 再比较，允许配置裸域名或完整 URL。</li>
+</ul>
+<pre><code class="language-ts">// server/src/services/origins.ts
+export function parseOriginList(raw: string | undefined | null): string[] {
+  if (!raw) return [];
+  return String(raw).split(/[\n,;]+/).map((s) =&gt; s.trim()).filter(Boolean);
+}
+
+function normalizeHost(input: string): string {
+  let s = input.trim().toLowerCase();
+  if (!s) return '';
+  try {
+    if (s.includes('://')) return new URL(s).host;
+  } catch { /* ignore */ }
+  ...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：比较必须用归一化后的 host（小写、去端口、去协议）。直接字符串比较会因大小写或尾部斜杠误判。</li>
+</ul>
+<h4 id="②-密钥存储">② 密钥存储</h4>
+<ul>
+<li>
+<p><strong>实现</strong>：Key 与用户 Token 都只存哈希；列表接口只返回前缀与末四位，用于识别。</p>
+</li>
+<li>
+<p><strong>坑</strong>：返回完整 Key 的「查看」功能不存在。需要重新获取只能新建并废弃旧的。</p>
+</li>
+</ul>
+<h3 id="管理与观测">管理与观测</h3>
+<h4 id="①-用户与额度">① 用户与额度</h4>
+<ul>
+<li><strong>实现</strong>：管理员可查用户、改额度、看单人用量与请求明细。</li>
+</ul>
+<pre><code class="language-text">GET   /api/admin/users
+PATCH /api/admin/users/:id
+GET   /api/admin/usage/by-user
+GET   /api/admin/usage/by-user/:userId/reqs
+</code></pre>
+<h4 id="②-调用日志">② 调用日志</h4>
+<ul>
+<li><strong>实现</strong>：每次调用记 Key、Slug、token 数、耗时、状态码；可按时间与 Key 过滤。</li>
+</ul>
+<pre><code class="language-text">GET /api/admin/logs
+GET /api/admin/stats
+</code></pre>
+<ul>
+<li><strong>坑</strong>：日志里不能记请求正文。对话内容可能含隐私与密钥，排障只需要元数据。</li>
+</ul>
+<h4 id="③-文档">③ 文档</h4>
+<ul>
+<li><strong>实现</strong>：<code>/api/docs</code> 提供接口元数据，<code>docs/</code> 目录存放接入文档；控制台按模型生成调用示例。</li>
+</ul>
+<pre><code class="language-text">GET /api/docs
+GET /api/public/docs
+</code></pre>
+<h3 id="API-平台-·-面试速答">API 平台 · 面试速答</h3>
+<ul>
+<li><strong>兼容层</strong>：对外 OpenAI 兼容，另有 Claude 协议适配；<code>model</code> 字段是平台 Slug，换上游不动客户端。</li>
+<li><strong>转发</strong>：统一前置（Key → 余额 → 来源 → 上游），流式原样透传并旁路计费。</li>
+<li><strong>用量</strong>：优先取上游 <code>usage</code>，取不到按 4 字符 1 token 估算并标记来源。</li>
+<li><strong>计费</strong>：按每百万 token，整数分累加，流水带余额快照。</li>
+<li><strong>限流</strong>：RPM 与并发双约束，维度为 Key。</li>
+<li><strong>安全</strong>：Key 只存哈希、可绑来源 host 白名单（归一化后比较）。</li>
+</ul>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本篇已读</span></button><a class="book-btn book-btn-ghost" href="/docs/sse-market/"><i class="fas fa-list"></i> 全部篇目</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/docs/sse-market/developer/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一篇</span><strong>09 开发者平台：权限、部署与小程序</strong></a><a class="book-pager-link next" href="/docs/sse-market/tts-ai/"><span class="book-pager-dir">下一篇 <i class="fas fa-arrow-right"></i></span><strong>11 TTS 与 AI 研究</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E8%B4%A6%E5%8F%B7%E4%B8%8E%E5%AF%86%E9%92%A5">账号与密钥</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E9%9B%86%E5%B8%82-OAuth-%E7%99%BB%E5%BD%95">① 集市 OAuth 登录</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%88%9B%E5%BB%BA-API-Key">② 创建 API Key</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E4%BD%99%E9%A2%9D%E4%B8%8E%E6%B5%81%E6%B0%B4">③ 余额与流水</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E6%AF%8F%E6%97%A5%E7%AD%BE%E5%88%B0">④ 每日签到</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%A8%A1%E5%9E%8B%E7%9B%AE%E5%BD%95">模型目录</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E6%B3%A8%E5%86%8C%E6%A8%A1%E5%9E%8B">① 注册模型</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%8D%8F%E8%AE%AE%E8%BF%9E%E9%80%9A%E6%80%A7%E6%B5%8B%E8%AF%95">② 协议连通性测试</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E8%AF%B7%E6%B1%82%E8%BD%AC%E5%8F%91">请求转发</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E7%BB%9F%E4%B8%80%E5%85%A5%E5%8F%A3">① 统一入口</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-Claude-%E5%8D%8F%E8%AE%AE%E9%80%82%E9%85%8D">② Claude 协议适配</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E7%94%A8%E9%87%8F%E6%8F%90%E5%8F%96">③ 用量提取</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E8%AE%A1%E8%B4%B9%E4%B8%8E%E9%99%90%E6%B5%81">计费与限流</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E8%AE%A1%E8%B4%B9%E5%8F%A3%E5%BE%84">① 计费口径</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E9%99%90%E6%B5%81">② 限流</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E4%BD%99%E9%A2%9D%E4%B8%8D%E8%B6%B3">③ 余额不足</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%9D%A5%E6%BA%90%E6%A0%A1%E9%AA%8C">来源校验</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%9F%9F%E5%90%8D%E7%99%BD%E5%90%8D%E5%8D%95">① 域名白名单</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%AF%86%E9%92%A5%E5%AD%98%E5%82%A8">② 密钥存储</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%AE%A1%E7%90%86%E4%B8%8E%E8%A7%82%E6%B5%8B">管理与观测</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E7%94%A8%E6%88%B7%E4%B8%8E%E9%A2%9D%E5%BA%A6">① 用户与额度</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E8%B0%83%E7%94%A8%E6%97%A5%E5%BF%97">② 调用日志</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E6%96%87%E6%A1%A3">③ 文档</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#API-%E5%B9%B3%E5%8F%B0-%C2%B7-%E9%9D%A2%E8%AF%95%E9%80%9F%E7%AD%94">API 平台 · 面试速答</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

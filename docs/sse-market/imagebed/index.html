@@ -1,0 +1,617 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>06 图床：上传、鉴权与存储 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="软工集市专题 · 06 图床：上传、鉴权与存储">
+<meta property="og:type" content="website">
+<meta property="og:title" content="06 图床：上传、鉴权与存储">
+<meta property="og:url" content="https://sakjijdidji55.github.io/docs/sse-market/imagebed/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="软工集市专题 · 06 图床：上传、鉴权与存储">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-11-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/docs/sse-market/imagebed/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '06 图床：上传、鉴权与存储',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">06 图床：上传、鉴权与存储</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">06 图床：上传、鉴权与存储</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-market" data-chapter="imagebed" data-total="14" data-prev="/docs/sse-market/unisso/" data-next="/docs/sse-market/app/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/docs/sse-market/">软工集市专题</a><div class="book-sidebar-sub">14 篇 · 1 小时 30 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 14</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选篇目..." data-book-filter aria-label="筛选篇目"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="history"><a class="book-chapter-link" href="/docs/sse-market/history/" data-chapter-link="history"><span class="book-chapter-index">00</span><span class="book-chapter-name">00 历史：从一门课到一组平台</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="overview"><a class="book-chapter-link" href="/docs/sse-market/overview/" data-chapter-link="overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">01 平台体系：三层与节点</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">三条主线</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="main"><a class="book-chapter-link" href="/docs/sse-market/main/" data-chapter-link="main"><span class="book-chapter-index">02</span><span class="book-chapter-name">02 主站：账号、帖子与互动</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="cloud"><a class="book-chapter-link" href="/docs/sse-market/cloud/" data-chapter-link="cloud"><span class="book-chapter-index">03</span><span class="book-chapter-name">03 集市云：一组一容器</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="iwiki"><a class="book-chapter-link" href="/docs/sse-market/iwiki/" data-chapter-link="iwiki"><span class="book-chapter-index">04</span><span class="book-chapter-name">04 iWiki：协作、检索与开放</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">身份与存储</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="unisso"><a class="book-chapter-link" href="/docs/sse-market/unisso/" data-chapter-link="unisso"><span class="book-chapter-index">05</span><span class="book-chapter-name">05 UniSSO：统一身份</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="imagebed"><a class="book-chapter-link is-current" href="/docs/sse-market/imagebed/" data-chapter-link="imagebed" aria-current="page"><span class="book-chapter-index">06</span><span class="book-chapter-name">06 图床：上传、鉴权与存储</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">端与开发者</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app"><a class="book-chapter-link" href="/docs/sse-market/app/" data-chapter-link="app"><span class="book-chapter-index">07</span><span class="book-chapter-name">07 App：六平台与九种产物</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="join"><a class="book-chapter-link" href="/docs/sse-market/join/" data-chapter-link="join"><span class="book-chapter-index">08</span><span class="book-chapter-name">08 招聘：双选、答辩与席位</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="developer"><a class="book-chapter-link" href="/docs/sse-market/developer/" data-chapter-link="developer"><span class="book-chapter-index">09</span><span class="book-chapter-name">09 开发者平台：权限、部署与小程序</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">能力</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="api-platform"><a class="book-chapter-link" href="/docs/sse-market/api-platform/" data-chapter-link="api-platform"><span class="book-chapter-index">10</span><span class="book-chapter-name">10 API 平台：兼容与计费</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="tts-ai"><a class="book-chapter-link" href="/docs/sse-market/tts-ai/" data-chapter-link="tts-ai"><span class="book-chapter-index">11</span><span class="book-chapter-name">11 TTS 与 AI 研究</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">复盘与附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="interview"><a class="book-chapter-link" href="/docs/sse-market/interview/" data-chapter-link="interview"><span class="book-chapter-index">12</span><span class="book-chapter-name">12 全平台面试速答</span><span class="book-chapter-time">1′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="incidents"><a class="book-chapter-link" href="/docs/sse-market/incidents/" data-chapter-link="incidents"><span class="book-chapter-index">13</span><span class="book-chapter-name">13 事故复盘</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/docs/"><i class="fas fa-arrow-left"></i> 返回文档</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/docs/sse-market/">软工集市专题</a><i class="fas fa-angle-right"></i><span>06 图床：上传、鉴权与存储</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">DOC 06</span><h1>06 图床：上传、鉴权与存储</h1><div class="book-chapter-meta">4 分钟读完 · 1,611 字</div></div><blockquote>
+<p>图片托管服务：集市 OAuth 登录、三种上传入口、公开/私有可见性、个人 Token 与直链。Go + Gin + GORM，存储可切换本地目录或 MinIO。</p>
+<p>仓库：<a target="_blank" rel="noopener" href="https://github.com/SysuMirror/imagebed">github.com/SysuMirror/imagebed</a>（<code>server/</code> 约 2700 行 Go，<code>web/</code> 前端）。</p>
+</blockquote>
+<h3 id="登录">登录</h3>
+<h4 id="①-state-签名">① state 签名</h4>
+<ul>
+<li><strong>实现</strong>：<code>state = 随机 nonce + HMAC-SHA256(nonce) 的前 16 个 hex 字符</code>。回调时先校验长度与 hex 形态，再比签名，篡改或伪造都会被拒。</li>
+</ul>
+<pre><code class="language-go">// server/service/oauth_service.go
+func (s *OAuthService) sign(nonce string) string {
+	secret := s.cfg.OAuth.AppSecret
+	if secret == &quot;&quot; {
+		secret = &quot;imagebed-oauth-state&quot;
+	}
+	mac := hmac.New(sha256.New, []byte(secret))
+	mac.Write([]byte(nonce))
+	return hex.EncodeToString(mac.Sum(nil))[:stateSigLen]
+}
+
+func (s *OAuthService) CreateState() (string, error) {
+	nonce, err := util.RandomHex(stateNonceLen / 2) // 24 字节 = 48 hex 字符
+	if err != nil {
+		return &quot;&quot;, err
+	}
+	return nonce + s.sign(nonce), nil
+}
+
+// ConsumeState 校验 state 的 hex 格式与 HMAC 签名，防篡改
+func (s *OAuthService) ConsumeState(state string) bool {
+	if len(state) != stateNonceLen+stateSigLen || !isHex(state) {
+		return false
+	}
+	nonce := state[:stateNonceLen]
+	...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>secret</code> 为空时退化为硬编码常量，等于没有签名。生产必须配 <code>AppSecret</code>，启动时应对空值直接报错。</li>
+<li><strong>面试点</strong>：state 用「nonce + 截断签名」，URL 因此短一些；截断到 64 bit 仍足以抵抗伪造。</li>
+</ul>
+<h4 id="②-两步回调：access-token-不下发浏览器">② 两步回调：access_token 不下发浏览器</h4>
+<ul>
+<li><strong>用户操作</strong>：点「集市账号登录」→ 授权 → 回到图床，已登录。</li>
+<li><strong>实现</strong>：回调阶段用 code 换 <code>access_token</code> 后<strong>不返回前端</strong>，只在服务端内存里存一份（带 TTL），返回一次性 <code>sessionId</code>；前端用 <code>sessionId</code> 换本域 JWT。</li>
+</ul>
+<pre><code class="language-go">// server/service/oauth_service.go
+func (s *OAuthService) CreateCallbackSession(accessToken string) (string, error) {
+	id, err := util.RandomHex(16) // 32 hex 字符
+	if err != nil {
+		return &quot;&quot;, err
+	}
+	s.mu.Lock()
+	s.sessions[id] = oauthSession{accessToken: accessToken, expiresAt: time.Now().Add(sessionTTL)}
+	s.mu.Unlock()
+	return id, nil
+}
+
+func (s *OAuthService) ConsumeCallbackSession(id string) (string, bool) { ... }
+</code></pre>
+<pre><code class="language-text">GET  /api/oauth/login-url   → { url }                 生成带 state 的授权地址
+POST /api/oauth/callback    → { sessionId }           校验 state，用 code 换 token
+POST /api/oauth/userinfo    → { token, user }          用 sessionId 取 userinfo 并签发本地 JWT
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>sessions</code> 是进程内 map。多实例部署时，回调落在 A 实例、userinfo 打到 B 实例会取不到会话，需要换 Redis 或做会话粘性。</li>
+<li><strong>坑</strong>：一次性会话必须「取出即删」，且过期时间要短（分钟级）。可重复使用就退化成长期令牌。</li>
+</ul>
+<h4 id="③-换取本地身份">③ 换取本地身份</h4>
+<ul>
+<li><strong>实现</strong>：用 <code>sessionId</code> 取回 access_token，拉集市 userinfo，按 <code>OAuthID</code> upsert 本地用户，再签本地 JWT；<code>GET /api/auth/me</code> 返回当前用户。</li>
+</ul>
+<pre><code class="language-go">// routes：oauth 组（无需登录）、auth 组（需 JWT）
+oauth.GET(&quot;/login-url&quot;, oauthCtrl.LoginURL)
+oauth.POST(&quot;/callback&quot;, oauthCtrl.Callback)
+oauth.POST(&quot;/userinfo&quot;, oauthCtrl.UserInfo)
+auth.GET(&quot;/me&quot;, middleware.JWTAuth(authSvc), authCtrl.Me)
+</code></pre>
+<h3 id="上传">上传</h3>
+<h4 id="①-三种入口">① 三种入口</h4>
+<ul>
+<li><strong>用户操作</strong>：网页拖拽/选择（可批量）；脚本用 multipart、原始二进制或 JSON base64。</li>
+<li><strong>实现</strong>：三条入口最终都归一成 <code>[]byte</code> 调 <code>UploadService.Save</code>，鉴权分别是 JWT（网页）与个人 Token（<code>/api/upload</code>）。</li>
+</ul>
+<pre><code class="language-text">POST /api/auth/images           multipart/form-data   网页（JWT）
+POST /api/upload                三种编码，Bearer Token 脚本
+POST /api/auth/images           原始二进制 / base64   同一 handler 内分支
+</code></pre>
+<h4 id="②-大小限制与类型嗅探">② 大小限制与类型嗅探</h4>
+<ul>
+<li><strong>实现</strong>：先判空、再判大小，然后<strong>内容嗅探</strong>（<code>http.DetectContentType</code>）比对白名单；SVG 单独放行（嗅探常返回 <code>text/xml</code>）；内容无法识别时才退回扩展名判定。</li>
+</ul>
+<pre><code class="language-go">// server/service/upload_service.go
+func (s *UploadService) Save(userID uint, originalName string, data []byte) (*model.Image, error) {
+	if len(data) == 0 {
+		return nil, errors.New(&quot;空文件&quot;)
+	}
+	if int64(len(data)) &gt; s.cfg.MaxUploadBytes() {
+		return nil, errors.New(&quot;文件超过大小限制&quot;)
+	}
+
+	ext := filepath.Ext(originalName)
+	mime, err := util.ValidateImage(data, ext)
+	if err != nil {
+		return nil, err
+	}
+	ext = util.MimeToExt(mime)   // 落盘扩展名以嗅探结果为准
+
+	subDir := time.Now().Format(&quot;2006/01/02&quot;)
+	id := uuid.NewString()
+	relPath := &quot;images/&quot; + subDir + &quot;/&quot; + id + ext
+	if err := s.store.Put(ctx, relPath, bytes.NewReader(data), int64(len(data)), mime); err != nil {
+		return nil, err
+	}
+	...
+}
+</code></pre>
+<pre><code class="language-go">// server/util/imageutil.go
+sniffed := http.DetectContentType(data)
+if allowedImageTypes[sniffMime] {          // 嗅探命中白名单 → 以嗅探为准
+	return sniffMime, nil
+}
+if ext == &quot;.svg&quot; &amp;&amp; (sniffMime == &quot;text/xml&quot; || sniffMime == &quot;image/svg+xml&quot;) {
+	return &quot;image/svg+xml&quot;, nil            // SVG 需结合扩展名放行
+}
+// 内容无法识别时，退回按扩展名判定
+</code></pre>
+<ul>
+<li><strong>坑</strong>：落盘扩展名必须用嗅探结果重写。保留用户传来的 <code>.php</code>，静态服务一旦按扩展名执行就是 RCE。</li>
+<li><strong>坑</strong>：SVG 是 XML，可内嵌脚本。它按白名单被放行，就必须在响应头加 <code>Content-Security-Policy</code> 或强制下载，不能按图片直接渲染。</li>
+<li><strong>面试点</strong>：先嗅探、再扩展名兜底，是因为部分格式（SVG、部分 BMP）没有稳定的 magic bytes；但兜底只能用于「无法识别」的分支，不能反过来。</li>
+</ul>
+<h4 id="③-存储后端">③ 存储后端</h4>
+<ul>
+<li><strong>实现</strong>：<code>blob.Store</code> 接口抽象 <code>Put/Get/Delete</code>，实现有本地目录与 MinIO；对象键统一走 <code>abs()</code> 校验。</li>
+</ul>
+<pre><code class="language-go">// server/blob/store.go
+func (s *localStore) abs(key string) (string, error) {
+	key = strings.TrimPrefix(filepath.ToSlash(key), &quot;/&quot;)
+	if key == &quot;&quot; || strings.Contains(key, &quot;..&quot;) {
+		return &quot;&quot;, fmt.Errorf(&quot;非法对象键&quot;)
+	}
+	full := filepath.Join(s.root, filepath.FromSlash(key))
+	if !strings.HasPrefix(filepath.Clean(full), filepath.Clean(s.root)) {
+		return &quot;&quot;, fmt.Errorf(&quot;路径越界&quot;)
+	}
+	return full, nil
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：路径校验要做两次 —— 拒绝 <code>..</code>，再比对清理后的前缀。只做前者，符号链接与编码绕过仍可能越界。</li>
+</ul>
+<h4 id="④-元数据">④ 元数据</h4>
+<ul>
+<li><strong>实现</strong>：落库记录 <code>user_id</code>、存储键、MIME、宽高、字节数、<code>visibility</code>、缩略图键；按日期分目录（<code>YYYY/MM/DD</code>），避免单目录文件过多。</li>
+</ul>
+<h3 id="图片管理">图片管理</h3>
+<h4 id="①-列表与搜索">① 列表与搜索</h4>
+<ul>
+<li><strong>实现</strong>：按用户隔离查询，支持关键词与可见性过滤、分页；返回前填充直链与缩略图地址（<code>fillURLs</code>）。</li>
+</ul>
+<pre><code class="language-go">// server/service/image_service.go
+func (s *ImageService) List(userID uint, keyword, visibility string, page, pageSize int) ([]model.Image, int64, error)
+func (s *ImageService) fillURLs(img *model.Image)
+</code></pre>
+<h4 id="②-可见性切换">② 可见性切换</h4>
+<ul>
+<li><strong>用户操作</strong>：图片卡片上切「公开 / 私有」。</li>
+<li><strong>实现</strong>：只接受两个枚举值，非法值直接报错；先按 <code>userID</code> 找图，找不到即 404。</li>
+</ul>
+<pre><code class="language-go">func (s *ImageService) UpdateVisibility(userID, id uint, visibility string) (*model.Image, error) {
+	img, err := s.images.FindByID(userID, id)
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, ErrImageNotFound
+		}
+		return nil, err
+	}
+	if visibility != model.VisibilityPublic &amp;&amp; visibility != model.VisibilityPrivate {
+		return nil, errors.New(&quot;非法的可见性&quot;)
+	}
+	img.Visibility = visibility
+	...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>FindByID(userID, id)</code> 必须带 <code>userID</code> 条件。用 <code>id</code> 单条件查再比 <code>user_id</code>，会先查出一条别人的记录再返回 403，等于确认了资源存在。</li>
+</ul>
+<h4 id="③-删除">③ 删除</h4>
+<ul>
+<li><strong>实现</strong>：先删存储对象再删库记录；存储删除失败时不阻断（记录日志），避免「库里没了、文件还在」反复重试。</li>
+</ul>
+<pre><code class="language-go">func (s *ImageService) Delete(userID, id uint) error { ... }
+</code></pre>
+<h4 id="④-缩略图">④ 缩略图</h4>
+<ul>
+<li><strong>实现</strong>：保存时生成缩略图，原图与缩略图分目录；<code>/i/&lt;rel&gt;</code> 与 <code>/i/thumbs/&lt;rel&gt;</code> 都能命中，服务层分别用 <code>FindByPathForServe</code> 与 <code>FindByThumbPathForServe</code> 解析。</li>
+</ul>
+<pre><code class="language-go">func (s *ImageService) FindByPathForServe(path string) (*model.Image, error)
+func (s *ImageService) FindByThumbPathForServe(path string) (*model.Image, error)
+</code></pre>
+<h3 id="访问控制">访问控制</h3>
+<h4 id="①-直链服务">① 直链服务</h4>
+<ul>
+<li><strong>用户操作</strong>：复制地址粘到任何地方即可显示；私有图只有本人带凭证能看。</li>
+<li><strong>实现</strong>：<code>/i/*filepath</code> 统一处理 —— 校验路径、按路径找图、私有则解析用户、最后从存储读流返回。</li>
+</ul>
+<pre><code class="language-go">// server/core/static.go
+func serveImage(c *gin.Context, store blob.Store, imageSvc *service.ImageService,
+	authSvc *service.AuthService, tokenSvc *service.TokenService) {
+	rel := strings.TrimPrefix(c.Param(&quot;filepath&quot;), &quot;/&quot;)
+	if rel == &quot;&quot; || strings.Contains(rel, &quot;..&quot;) {
+		c.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+	img, err := imageSvc.FindByPathForServe(rel)
+	if err != nil {
+		img, err = imageSvc.FindByThumbPathForServe(rel)
+		if err != nil {
+			c.AbortWithStatus(http.StatusNotFound)
+			return
+		}
+	}
+	if img.Visibility == model.VisibilityPrivate {
+		uid, ok := resolveUser(c, authSvc, tokenSvc)
+		if !ok || uid != img.UserID {
+			c.AbortWithStatus(http.StatusNotFound)   // 越权一律 404，不暴露存在性
+			return
+		}
+	}
+	rc, err := store.Get(c.Request.Context(), rel)
+	if err != nil {
+		c.AbortWithStatus(http.StatusNotFound)
+		return
+	}
+	defer rc.Close()
+	...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：私有图越权返回 404；403 等于告诉对方「这张图存在，只是不归你」。403 等于告诉对方「这张图存在，只是不归你」。</li>
+<li><strong>面试点</strong>：鉴权放在「找到记录之后、读存储之前」。放在读存储之后会先产生一次对象读取，浪费带宽。</li>
+</ul>
+<h4 id="②-双凭证解析">② 双凭证解析</h4>
+<ul>
+<li><strong>实现</strong>：优先读 <code>Authorization: Bearer</code>，其次读 <code>?token=</code>（原生 <code>&lt;img&gt;</code> 带不了请求头），先按 JWT 解析，失败再按个人 Token 解析。</li>
+</ul>
+<pre><code class="language-go">func resolveUser(c *gin.Context, authSvc *service.AuthService, tokenSvc *service.TokenService) (uint, bool) {
+	raw := middleware.BearerToken(c)
+	if raw == &quot;&quot; {
+		raw = c.Query(&quot;token&quot;)
+	}
+	if raw == &quot;&quot; {
+		return 0, false
+	}
+	if uid, err := authSvc.ParseToken(raw); err == nil {
+		return uid, true
+	}
+	if t, err := tokenSvc.Authenticate(raw); err == nil {
+		return t.UserID, true
+	}
+	return 0, false
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>?token=</code> 会进浏览器历史、代理日志与 Referer。它只应作为 <code>&lt;img&gt;</code> 这类无法带头的场景的兜底，且令牌应短期、可吊销。</li>
+</ul>
+<h4 id="③-路径穿越防护">③ 路径穿越防护</h4>
+<ul>
+<li><strong>实现</strong>：<code>serveImage</code> 与 <code>localStore.abs</code> 双重校验：先拒 <code>..</code>，再比对清理后的前缀。</li>
+</ul>
+<pre><code class="language-text">rel 含 &quot;..&quot;            → 404
+清理后不在 root 之下   → 404
+</code></pre>
+<h3 id="个人-Token">个人 Token</h3>
+<h4 id="①-创建">① 创建</h4>
+<ul>
+<li><strong>用户操作</strong>：设置页创建 Token → 选过期（1h / 1d / 7d / 30d / 永久）→ 复制一次。</li>
+<li><strong>实现</strong>：随机生成原文，库里只存 SHA-256；创建响应是唯一一次返回原文的机会。</li>
+</ul>
+<pre><code class="language-go">// server/service/token_service.go
+func (s *TokenService) Create(userID uint, name string, expiresAt *time.Time) (string, *model.Token, error) {
+	raw, err := randomToken()
+	...
+	// 入库：TokenHash = SHA256(raw)，原文不落库
+}
+</code></pre>
+<h4 id="②-认证">② 认证</h4>
+<ul>
+<li><strong>实现</strong>：哈希后按哈希查记录 → 过期判断 → 更新 <code>last_used_at</code> → 返回 Token 所属用户。</li>
+</ul>
+<pre><code class="language-go">func (s *TokenService) Authenticate(raw string) (*model.Token, error) {
+	if raw == &quot;&quot; {
+		return nil, ErrTokenNotFound
+	}
+	hash := util.SHA256Bytes([]byte(raw))
+	t, err := s.tokens.FindByHash(hash)
+	if err != nil {
+		return nil, ErrTokenNotFound
+	}
+	if t.ExpiresAt != nil &amp;&amp; t.ExpiresAt.Before(time.Now()) {
+		return nil, ErrTokenExpired
+	}
+	_ = s.tokens.TouchLastUsed(t.ID, time.Now())
+	return t, nil
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：Token 用 SHA-256 而用户密码用 bcrypt，是因为 Token 是服务端生成的高熵随机串，不存在字典攻击面；用慢哈希只会让每次上传都多花几十毫秒。</li>
+</ul>
+<h4 id="③-吊销">③ 吊销</h4>
+<ul>
+<li><strong>实现</strong>：删除记录即失效；「删除」按 <code>(userID, id)</code> 定位，跨账号删除返回未找到。</li>
+</ul>
+<pre><code class="language-go">func (s *TokenService) Revoke(userID, id uint) error { ... }
+// 路由：DELETE /api/auth/tokens/:id
+</code></pre>
+<h3 id="前端与静态资源">前端与静态资源</h3>
+<h4 id="①-前端托管">① 前端托管</h4>
+<ul>
+<li><strong>实现</strong>：<code>mountFrontend</code> 托管构建产物，<code>looksLikeStaticAsset</code> 区分「静态资源请求」与「前端路由」，前者 404 不回落，后者回落到 <code>index.html</code>。</li>
+</ul>
+<pre><code class="language-go">// server/core/static.go
+func mountFrontend(r *gin.Engine, cfg *config.Config)
+func looksLikeStaticAsset(p string) bool
+</code></pre>
+<ul>
+<li><strong>坑</strong>：SPA 回落要排除静态资源后缀。否则请求一个不存在的 <code>.js</code> 会返回 <code>index.html</code>，浏览器按 JS 解析直接语法报错，排查方向被带偏。</li>
+</ul>
+<h3 id="图床-·-面试速答">图床 · 面试速答</h3>
+<ul>
+<li><strong>登录</strong>：state = nonce + 截断 HMAC；access_token 只留服务端，前端拿一次性 <code>sessionId</code> 换本域 JWT。</li>
+<li><strong>上传</strong>：内容嗅探为准、扩展名兜底；落盘扩展名按嗅探结果重写；SVG 需额外 CSP。</li>
+<li><strong>存储</strong>：<code>blob.Store</code> 抽象本地与 MinIO，对象键两次校验（拒 <code>..</code>、比前缀）。</li>
+<li><strong>权限</strong>：私有图越权返回 404；先鉴权后读存储。</li>
+<li><strong>Token</strong>：只存 SHA-256，创建时返回一次原文，认证时哈希查询并写 <code>last_used_at</code>。</li>
+<li><strong>静态</strong>：SPA 回落需排除静态资源，避免把 404 变成语法错误。</li>
+</ul>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本篇已读</span></button><a class="book-btn book-btn-ghost" href="/docs/sse-market/"><i class="fas fa-list"></i> 全部篇目</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/docs/sse-market/unisso/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一篇</span><strong>05 UniSSO：统一身份</strong></a><a class="book-pager-link next" href="/docs/sse-market/app/"><span class="book-pager-dir">下一篇 <i class="fas fa-arrow-right"></i></span><strong>07 App：六平台与九种产物</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%99%BB%E5%BD%95">登录</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-state-%E7%AD%BE%E5%90%8D">① state 签名</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E4%B8%A4%E6%AD%A5%E5%9B%9E%E8%B0%83%EF%BC%9Aaccess-token-%E4%B8%8D%E4%B8%8B%E5%8F%91%E6%B5%8F%E8%A7%88%E5%99%A8">② 两步回调：access_token 不下发浏览器</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E6%8D%A2%E5%8F%96%E6%9C%AC%E5%9C%B0%E8%BA%AB%E4%BB%BD">③ 换取本地身份</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%8A%E4%BC%A0">上传</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E4%B8%89%E7%A7%8D%E5%85%A5%E5%8F%A3">① 三种入口</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%A4%A7%E5%B0%8F%E9%99%90%E5%88%B6%E4%B8%8E%E7%B1%BB%E5%9E%8B%E5%97%85%E6%8E%A2">② 大小限制与类型嗅探</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%AD%98%E5%82%A8%E5%90%8E%E7%AB%AF">③ 存储后端</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E5%85%83%E6%95%B0%E6%8D%AE">④ 元数据</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%86">图片管理</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%88%97%E8%A1%A8%E4%B8%8E%E6%90%9C%E7%B4%A2">① 列表与搜索</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%8F%AF%E8%A7%81%E6%80%A7%E5%88%87%E6%8D%A2">② 可见性切换</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%88%A0%E9%99%A4">③ 删除</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E7%BC%A9%E7%95%A5%E5%9B%BE">④ 缩略图</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6">访问控制</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E7%9B%B4%E9%93%BE%E6%9C%8D%E5%8A%A1">① 直链服务</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%8F%8C%E5%87%AD%E8%AF%81%E8%A7%A3%E6%9E%90">② 双凭证解析</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E8%B7%AF%E5%BE%84%E7%A9%BF%E8%B6%8A%E9%98%B2%E6%8A%A4">③ 路径穿越防护</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E4%B8%AA%E4%BA%BA-Token">个人 Token</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%88%9B%E5%BB%BA">① 创建</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E8%AE%A4%E8%AF%81">② 认证</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%90%8A%E9%94%80">③ 吊销</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%89%8D%E7%AB%AF%E4%B8%8E%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90">前端与静态资源</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%89%8D%E7%AB%AF%E6%89%98%E7%AE%A1">① 前端托管</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%9B%BE%E5%BA%8A-%C2%B7-%E9%9D%A2%E8%AF%95%E9%80%9F%E7%AD%94">图床 · 面试速答</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

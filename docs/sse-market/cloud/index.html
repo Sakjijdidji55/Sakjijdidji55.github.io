@@ -1,0 +1,1149 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>03 集市云：一组一容器 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="软工集市专题 · 03 集市云：一组一容器">
+<meta property="og:type" content="website">
+<meta property="og:title" content="03 集市云：一组一容器">
+<meta property="og:url" content="https://sakjijdidji55.github.io/docs/sse-market/cloud/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="软工集市专题 · 03 集市云：一组一容器">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-11-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/docs/sse-market/cloud/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '03 集市云：一组一容器',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">03 集市云：一组一容器</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">03 集市云：一组一容器</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-market" data-chapter="cloud" data-total="14" data-prev="/docs/sse-market/main/" data-next="/docs/sse-market/iwiki/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/docs/sse-market/">软工集市专题</a><div class="book-sidebar-sub">14 篇 · 1 小时 30 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 14</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选篇目..." data-book-filter aria-label="筛选篇目"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="history"><a class="book-chapter-link" href="/docs/sse-market/history/" data-chapter-link="history"><span class="book-chapter-index">00</span><span class="book-chapter-name">00 历史：从一门课到一组平台</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="overview"><a class="book-chapter-link" href="/docs/sse-market/overview/" data-chapter-link="overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">01 平台体系：三层与节点</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">三条主线</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="main"><a class="book-chapter-link" href="/docs/sse-market/main/" data-chapter-link="main"><span class="book-chapter-index">02</span><span class="book-chapter-name">02 主站：账号、帖子与互动</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="cloud"><a class="book-chapter-link is-current" href="/docs/sse-market/cloud/" data-chapter-link="cloud" aria-current="page"><span class="book-chapter-index">03</span><span class="book-chapter-name">03 集市云：一组一容器</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="iwiki"><a class="book-chapter-link" href="/docs/sse-market/iwiki/" data-chapter-link="iwiki"><span class="book-chapter-index">04</span><span class="book-chapter-name">04 iWiki：协作、检索与开放</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">身份与存储</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="unisso"><a class="book-chapter-link" href="/docs/sse-market/unisso/" data-chapter-link="unisso"><span class="book-chapter-index">05</span><span class="book-chapter-name">05 UniSSO：统一身份</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="imagebed"><a class="book-chapter-link" href="/docs/sse-market/imagebed/" data-chapter-link="imagebed"><span class="book-chapter-index">06</span><span class="book-chapter-name">06 图床：上传、鉴权与存储</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">端与开发者</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app"><a class="book-chapter-link" href="/docs/sse-market/app/" data-chapter-link="app"><span class="book-chapter-index">07</span><span class="book-chapter-name">07 App：六平台与九种产物</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="join"><a class="book-chapter-link" href="/docs/sse-market/join/" data-chapter-link="join"><span class="book-chapter-index">08</span><span class="book-chapter-name">08 招聘：双选、答辩与席位</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="developer"><a class="book-chapter-link" href="/docs/sse-market/developer/" data-chapter-link="developer"><span class="book-chapter-index">09</span><span class="book-chapter-name">09 开发者平台：权限、部署与小程序</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">能力</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="api-platform"><a class="book-chapter-link" href="/docs/sse-market/api-platform/" data-chapter-link="api-platform"><span class="book-chapter-index">10</span><span class="book-chapter-name">10 API 平台：兼容与计费</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="tts-ai"><a class="book-chapter-link" href="/docs/sse-market/tts-ai/" data-chapter-link="tts-ai"><span class="book-chapter-index">11</span><span class="book-chapter-name">11 TTS 与 AI 研究</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">复盘与附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="interview"><a class="book-chapter-link" href="/docs/sse-market/interview/" data-chapter-link="interview"><span class="book-chapter-index">12</span><span class="book-chapter-name">12 全平台面试速答</span><span class="book-chapter-time">1′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="incidents"><a class="book-chapter-link" href="/docs/sse-market/incidents/" data-chapter-link="incidents"><span class="book-chapter-index">13</span><span class="book-chapter-name">13 事故复盘</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/docs/"><i class="fas fa-arrow-left"></i> 返回文档</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/docs/sse-market/">软工集市专题</a><i class="fas fa-angle-right"></i><span>03 集市云：一组一容器</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">DOC 03</span><h1>03 集市云：一组一容器</h1><div class="book-chapter-meta">9 分钟读完 · 3,944 字</div></div><blockquote>
+<p>自助算力平台：一个组（group）对应 K3s 命名空间 <code>clouds</code> 里的一个 Pod，用户拿到 root，可在其中部署服务、申请数据库与对象存储、绑定子域名。平台自身是 Flask + gunicorn（单 worker，SocketIO 需要粘性会话）+ React SPA。</p>
+<p>仓库：<a target="_blank" rel="noopener" href="https://github.com/SysuMirror/yatterra">github.com/SysuMirror/yatterra</a>（Python，<code>web/</code> 后端 + <code>web/frontend/</code> 前端 + <code>manifests/</code> + <code>systemd/</code>）。</p>
+</blockquote>
+<h3 id="组容器">组容器</h3>
+<h4 id="①-创建组">① 创建组</h4>
+<ul>
+<li><strong>用户操作</strong>：填组名 → 选规格（CPU / 内存 / 存储 / GPU 卡数）→ 选类型（Linux / Windows / Android）→ 选节点（默认 auto）→ 创建。</li>
+<li><strong>实现</strong>：
+<ol>
+<li>组名先规范化为小写 RFC1123 名称（<code>[a-z0-9-]</code>，字母数字开头结尾），否则 <code>kubectl apply</code> 会拒绝并留下孤儿 manifest 与 home 目录。</li>
+<li>规格缺省按类型补齐：GPU 组、Windows 组、Android 组各有一套默认 CPU / 内存。</li>
+<li>节点选择：<code>auto</code> 表示不写 placement 字段；Windows / Android 组强制 <code>auto</code>，因为 <code>/dev/kvm</code> 与 VM 磁盘只在默认节点上。</li>
+<li>组定义写入 <code>groups.json</code>（状态文件），再渲染 Deployment 并 apply。</li>
+</ol>
+</li>
+<li><strong>关键代码</strong></li>
+</ul>
+<pre><code class="language-python"># web/groups.py
+def create_group(name, gpus=None, cpu=None, mem=None, storage=None, creator=None,
+                 type=None, node=&quot;auto&quot;, image=None, mounts=None, tag=None,
+                 privileged=False):
+    # k8s 资源名必须是小写 RFC 1123（[a-z0-9-]，字母数字开头结尾）
+    name = normalize_name(name)
+    state = load_state()
+    if name in state[&quot;groups&quot;]:
+        raise ValueError(f&quot;组 {name} 已存在&quot;)
+    is_windows = (type == &quot;windows&quot;)
+    is_android = (type == &quot;android&quot;)
+    if is_windows or is_android or not node:
+        node = &quot;auto&quot;
+    node = str(node).strip().lower()
+    if node != &quot;auto&quot; and not nodes.valid(node):
+        raise ValueError(f&quot;未知节点: {node}&quot;)
+    is_gpu = bool(gpus) and not is_windows and not is_android
+    if cpu is None:
+        cpu = (ANDROID_DEFAULT_CPU if is_android
+               else WINDOWS_DEFAULT_CPU if is_windows
+               else DEFAULT_GPU_CPU if is_gpu else DEFAULT_CPU_CPU)
+    mem = _norm_mem(mem)
+</code></pre>
+<ul>
+<li><strong>坑</strong>：组名规范化必须在「查重」之前做。<code>Demo</code> 与 <code>demo</code> 规范化后同名，先查重会漏判，最后两个组抢同一个 k8s 资源名。</li>
+<li><strong>面试点</strong>：状态文件 <code>groups.json</code> 是权威来源，K3s 只承载运行态。这样即使集群被清空，按状态文件可以重建全部组。</li>
+</ul>
+<h4 id="②-规格：limits-与-requests-分离">② 规格：limits 与 requests 分离</h4>
+<ul>
+<li><strong>用户操作</strong>：创建时填的 CPU / 内存是<strong>上限</strong>，实际占用通常低于上限。</li>
+<li><strong>实现</strong>：Deployment 里 <code>limits</code> 用用户填的值，<code>requests</code> 用 EWMA 估算值。二者分离，调度器按真实用量算账，用户仍可短时突发到上限。</li>
+</ul>
+<pre><code class="language-python"># web/groups.py
+def deployment_yaml(g):
+    is_gpu = g[&quot;type&quot;] == &quot;gpu&quot;
+    cpu = g[&quot;cpu&quot;]; mem = g[&quot;mem&quot;]
+    # limits = user-set cap; requests = EWMA estimate from actual usage
+    req_cpu, req_mem, req_storage = req_estimate.request_for(g)
+</code></pre>
+<pre><code class="language-python"># web/req_estimate.py
+def request_for(g):
+    &quot;&quot;&quot;Return (cpu_req_str, mem_req_str, storage_req_str) for deployment_yaml.
+
+    Computes the request from the accumulated EWMA at pod-creation time.
+    With no history, falls back to min(limit, limit × DEFAULT_REQ_FRACTION).
+    &quot;&quot;&quot;
+    limit_cpu = parse_cpu(g.get(&quot;cpu&quot;, &quot;1&quot;))
+    limit_mem = parse_mem_gi(g.get(&quot;mem&quot;, &quot;1Gi&quot;))
+    limit_storage = parse_storage_gi(g.get(&quot;storage&quot;, &quot;1Gi&quot;))
+    st = load_state()
+    e = st.get(g.get(&quot;name&quot;, &quot;&quot;)) or {}
+    # storage 由 hostPath 提供，不计入 Kubernetes 的 ephemeral-storage 预留
+    storage_req = fmt_storage_gi(min(limit_storage, FLOOR_STORAGE_GI))
+    if e.get(&quot;cpu_ewma&quot;) is None or e.get(&quot;samples&quot;, 0) &lt; 3:
+        # 样本不足：取「上限 × DEFAULT_REQ_FRACTION」，并设下限
+        cpu_req = fmt_cpu(min(limit_cpu, max(FLOOR_CPU, limit_cpu * DEFAULT_REQ_FRACTION)))
+        mem_req = fmt_mem_gi(min(limit_mem, max(FLOOR_MEM_GI, limit_mem * DEFAULT_REQ_FRACTION)))
+        return cpu_req, mem_req, storage_req
+    eff_cpu, eff_mem = eff_cpu_mem(e)          # 有效用量取 EWMA 与 p90 的较大者
+    cpu_req = fmt_cpu(_target_cpu(eff_cpu, limit_cpu))
+    mem_req = fmt_mem_gi(_target_mem_gi(eff_mem, limit_mem))
+</code></pre>
+<ul>
+<li><strong>坑</strong>：requests 只在 Pod 重建时计算，运行期不热改。否则每次采样都会触发滚动更新，容器被反复重启。</li>
+<li><strong>坑</strong>：hostPath 的字节数不能当 requests 用。Kubernetes 不把它算进 ephemeral-storage，写进去会让调度器误判。</li>
+<li><strong>面试点</strong>：requests 决定调度与驱逐优先级，limits 决定 cgroup 上限。把两者设成相等会让节点利用率长期停在低水位。</li>
+</ul>
+<h4 id="③-启动-停止-重启-删除">③ 启动 / 停止 / 重启 / 删除</h4>
+<ul>
+<li><strong>用户操作</strong>：组卡片上四个按钮，状态实时刷新。</li>
+<li><strong>实现</strong>：全部映射到 Deployment 的副本数或滚动重启；停止是 <code>replicas=0</code>（保留卷），删除才清 Deployment 与 home 目录。</li>
+</ul>
+<pre><code class="language-python"># web/api/pods.py —— 路由 + 权限装饰器 + 审计
+@pods_bp.route(&quot;/&lt;name&gt;/start&quot;, methods=[&quot;POST&quot;])
+@api_pod(&quot;owner&quot;)
+def start_pod(name):
+    res = lifecycle.start_group(name)
+    audit.record(&quot;api_start_pod&quot;, detail=name, actor=_actor())
+    return jsonify(res)
+
+@pods_bp.route(&quot;/&lt;name&gt;/stop&quot;, methods=[&quot;POST&quot;])
+@api_pod(&quot;owner&quot;)
+def stop_pod(name):
+    res = lifecycle.stop_group(name)
+    audit.record(&quot;api_stop_pod&quot;, detail=name, actor=_actor())
+    return jsonify(res)
+
+# 停止是 scale replicas = 0（保留 home 卷）；删除才清 Deployment 与 home 目录
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>scale 0</code> 与「删除」在界面文案上必须区分。二者视觉相似，后者会连同数据一起清掉。</li>
+</ul>
+<h4 id="④-迁移节点、扩缩容、改名、重置密码">④ 迁移节点、扩缩容、改名、重置密码</h4>
+<ul>
+<li><strong>用户操作</strong>：组设置里改规格、指定新节点迁移、改组名、重置容器密码。</li>
+<li><strong>实现</strong>：迁移是先在新节点渲染并 apply，等新 Pod 就绪后再删旧的；改名要同步重写 frpc 与 nginx 托管块；重置密码改的是 Deployment 的 <code>CLOUD_PASSWORD</code> 环境变量并触发滚动更新。</li>
+</ul>
+<pre><code class="language-python"># web/groups.py
+def migrate_group(name, new_node, exclude_weights=True):
+    &quot;&quot;&quot;Move a group onto another node. Ports stay on the group's index.
+
+    共享盘：只改 g['node'] 并在新节点启动，不复制不删除。
+    loop 支持的 data.img 在源节点卸载、目标节点挂载，保证同一时刻只有一个节点持有 ext4。
+    其余情况通过 SSH 传 home 与 data.img；只有目标节点启动成功后才删除源目录，
+    启动失败则回退到原节点重启。
+    &quot;&quot;&quot;
+    state = load_state()
+    g = state[&quot;groups&quot;].get(name)
+    if not g:
+        raise ValueError(f&quot;组 {name} 不存在&quot;)
+    old_node, new_node = _check_move_target(g, new_node)
+    src = nodes.node_for(g)
+</code></pre>
+<ul>
+<li><strong>坑</strong>：改名必须同时改三处（状态文件、frpc 代理名、nginx server_name），漏一处就是「组还在但域名 502」。</li>
+</ul>
+<h4 id="⑤-在线文件管理与代码索引">⑤ 在线文件管理与代码索引</h4>
+<ul>
+<li><strong>用户操作</strong>：网页里浏览组内文件、在线编辑保存、上传下载；还能对组内代码库做结构索引、符号查找、全文搜索。</li>
+<li><strong>实现</strong>：文件接口走 Pod 内的 home 目录；代码索引由 <code>podcode.py</code> 定期重建，生成大纲、符号表与向量索引。</li>
+</ul>
+<pre><code class="language-python"># web/api/pods.py
+def list_files(name):
+    path = request.args.get(&quot;path&quot;, &quot;/home/cloud&quot;)
+    return jsonify(deploys.browse(name, path))
+
+@pods_bp.route(&quot;/&lt;name&gt;/files/content&quot;, methods=[&quot;GET&quot;])
+@api_pod(&quot;member&quot;)
+def get_file_content(name):
+    path = request.args.get(&quot;path&quot;, &quot;&quot;)
+    if not path:
+        return jsonify({&quot;error&quot;: &quot;缺少 path&quot;}), 400
+    norm = os.path.normpath(path)  # 归一化后再做前缀校验，防止 ../ 越界
+</code></pre>
+<pre><code class="language-python"># web/podcode.py —— 正则检索，数据来自 hostPath 上已建的索引
+def grep(pod, pattern, path=&quot;&quot;, limit=60):
+    &quot;&quot;&quot;Regex grep over the pod's indexed files, read from the hostPath.&quot;&quot;&quot;
+    try:
+        rx = re.compile(pattern)
+    except re.error as e:
+        return None, f&quot;正则无效: {e}&quot;
+    d = get_index(pod)
+    if not d:
+        return None, &quot;该 Pod 还没有代码索引&quot;
+    files = list((d.get(&quot;files&quot;) or {}).keys())
+</code></pre>
+<pre><code class="language-python"># web/podcode.py —— 符号查找：在索引的 symbols 上做子串匹配
+def find_symbol(pod, name, limit=40):
+    &quot;&quot;&quot;Locate a definition by (partial) symbol name across the index.&quot;&quot;&quot;
+    d = get_index(pod)
+    if not d:
+        return None, &quot;该 Pod 还没有代码索引&quot;
+    q = (name or &quot;&quot;).strip().lower()
+    if not q:
+        return None, &quot;缺少符号名&quot;
+    hits = []
+    for rel, e in sorted((d.get(&quot;files&quot;) or {}).items()):
+        for s in (e.get(&quot;symbols&quot;) or []):
+            if q in (s.get(&quot;name&quot;) or &quot;&quot;).lower():
+</code></pre>
+<ul>
+<li><strong>坑</strong>：在线编辑必须限制单文件大小与后缀白名单。放任写二进制会污染索引，也会把编辑接口变成任意文件写入通道。</li>
+</ul>
+<h4 id="⑥-日志与在线终端">⑥ 日志与在线终端</h4>
+<ul>
+<li><strong>用户操作</strong>：查看容器日志、应用日志，打开 Web 终端执行命令。</li>
+<li><strong>实现</strong>：日志与终端都通过 <code>kubectl logs -f</code> / <code>exec</code> 转 WebSocket 流，前端按行渲染。</li>
+</ul>
+<pre><code class="language-python"># web/api/pods.py —— 日志以 SSE 流式返回
+def stream_logs(name):
+    pod = deploys.resolve_pod(name)
+    if not pod:
+        return jsonify({&quot;error&quot;: &quot;Pod 未运行&quot;}), 404
+
+    def _stream():
+        args = [&quot;kubectl&quot;, &quot;-n&quot;, groups.NS, &quot;logs&quot;, &quot;-f&quot;, &quot;--tail=100&quot;, pod]
+        yield from _iter_log_process(args)
+
+    resp = Response(_stream(), mimetype=&quot;text/event-stream&quot;)
+    resp.headers[&quot;Cache-Control&quot;] = &quot;no-cache&quot;
+    resp.headers[&quot;X-Accel-Buffering&quot;] = &quot;no&quot;   # 关掉 nginx 缓冲，否则日志被攒住
+</code></pre>
+<ul>
+<li><strong>坑</strong>：流式连接要设空闲超时并支持客户端断开时释放 exec 进程，否则每次断线都会在 Pod 里残留一个 shell。</li>
+</ul>
+<h4 id="⑦-端口代理">⑦ 端口代理</h4>
+<ul>
+<li><strong>用户操作</strong>：临时访问组内某个端口（如 8080 的开发服务），不绑定子域名。</li>
+<li><strong>实现</strong>：平台按 <code>pod + port</code> 反代到集群内的 Service，路径带随机前缀，会话结束即失效。</li>
+</ul>
+<pre><code class="language-python"># web/api/pods.py
+def proxy_pod_port(name, port, path):
+    &quot;&quot;&quot;Pod 本地端口只读代理（IDE 内置浏览器用）。
+
+    只允许 member 及以上访问、只做 GET/HEAD、只打到该 pod 自己的 IP，
+    响应体上限 16MB，超限截断。
+    &quot;&quot;&quot;
+    if not (1 &lt;= port &lt;= 65535):
+        return jsonify({&quot;error&quot;: &quot;端口非法&quot;}), 400
+    if groups.pod_status(name) != &quot;Running&quot;:
+        return jsonify({&quot;error&quot;: &quot;Pod 未运行&quot;}), 400
+    pod = _pod_runtime_name(name)
+    if not pod:
+        return jsonify({&quot;error&quot;: &quot;找不到 Pod&quot;}), 404
+    r = groups.kubectl(&quot;get&quot;, &quot;pod&quot;, pod, &quot;-o&quot;, &quot;jsonpath={.status.podIP}&quot;, check=False)
+    ip = r.stdout.strip() if r.returncode == 0 else &quot;&quot;
+</code></pre>
+<ul>
+<li><strong>坑</strong>：代理只应允许组内成员访问，且要拦掉集群内部端口（见本篇「网络与存储」的端口黑名单），否则等于把内部服务暴露到公网。</li>
+</ul>
+<h3 id="部署">部署</h3>
+<h4 id="①-从-Git-部署">① 从 Git 部署</h4>
+<ul>
+<li><strong>用户操作</strong>：填仓库地址与分支 → 选组 → 选启动方式（自动识别或自定义脚本）→ 部署。</li>
+<li><strong>实现</strong>：
+<ol>
+<li><code>validate_repo</code> 校验地址形态，只接受 http(s) / git 协议。</li>
+<li>组内浅克隆代码到工作目录。</li>
+<li>按 <code>deploy.sh</code> 或自动识别（Python / Node / Go）生成启动命令。</li>
+<li>注册到 supervisord，崩溃自启、开机自启。</li>
+<li>运行记录写入部署表，状态与日志可回看。</li>
+</ol>
+</li>
+</ul>
+<pre><code class="language-python"># web/deploys.py
+def run(group, dep, wait=False, skip_if_same_ref=False):
+    &quot;&quot;&quot;Clone/pull, (re)write program conf, (re)start via supervisorctl.
+
+    wait / skip_if_same_ref 供 push-to-deploy 使用：
+      wait=True            同一记录已有部署在跑就排队等待
+      skip_if_same_ref=True  ref 未变化且程序 RUNNING 时跳过重启（重投幂等）
+    &quot;&quot;&quot;
+    fd, got = _deploy_lock(group, dep[&quot;id&quot;], wait=wait)
+    if not got:
+        msg = &quot;已有部署正在进行中，本次未执行（请稍后重试）&quot;
+        audit.record(&quot;deploy_run&quot;,
+                     detail=&quot;%s/%s id=%s skipped=locked&quot; % (group, dep.get(&quot;name&quot;), dep[&quot;id&quot;]),
+                     module=&quot;deploys&quot;)
+        return False, msg
+</code></pre>
+<ul>
+<li><strong>坑</strong>：克隆必须限定深度。全量克隆大仓库会把构建超时耗尽在下载阶段。</li>
+</ul>
+<h4 id="②-自定义脚本的路径校验">② 自定义脚本的路径校验</h4>
+<ul>
+<li><strong>用户操作</strong>：填一个 <code>deploy.sh</code> 的绝对路径，平台执行它。</li>
+<li><strong>实现</strong>：路径必须绝对、不含 <code>..</code>、且只允许 <code>/home/cloud/</code> 或 <code>/shared/</code> 前缀。这三条挡住了「写 <code>/etc/cron.d/x</code> 让平台以 root 执行」的路径。</li>
+</ul>
+<pre><code class="language-python"># web/deploys.py
+def validate_script(path):
+    &quot;&quot;&quot;Validate a local deploy.sh path inside the pod. Returns (ok, msg).&quot;&quot;&quot;
+    p = (path or &quot;&quot;).strip()
+    if not p:
+        return False, &quot;脚本路径不能为空&quot;
+    if not p.startswith(&quot;/&quot;):
+        return False, &quot;脚本路径必须是绝对路径&quot;
+    if &quot;..&quot; in p.split(&quot;/&quot;):
+        return False, &quot;路径不能含 ..&quot;
+    if not any(p.startswith(pre) for pre in _SCRIPT_PREFIXES):
+        return False, &quot;脚本路径仅允许 /home/cloud/ 或 /shared/ 下&quot;
+    return True, &quot;&quot;
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：这类「让用户指定可执行文件」的接口，校验点落在路径白名单上；按文件名或后缀校验挡不住 <code>..</code> 和软链。</li>
+</ul>
+<h4 id="③-Webhook-自动部署">③ Webhook 自动部署</h4>
+<ul>
+<li><strong>用户操作</strong>：在仓库里配一个 Webhook，push 后自动部署。</li>
+<li><strong>实现</strong>：两种密钥作用域。全局密钥可以触发任意「仓库 + 分支」匹配的部署；单部署密钥只能触发它自己那条记录，泄露后影响面被限定。</li>
+</ul>
+<pre><code class="language-python"># web/deploys.py
+def match_webhook(source, headers, body, repo_url, branch):
+    &quot;&quot;&quot;Authorize a push for (repo_url, branch). Returns (matched, mode).
+
+    mode: &quot;per_deploy&quot; (某条部署自己的密钥签了 body),
+          &quot;global&quot;     (全局密钥签名 → 所有匹配 repo/branch 的记录),
+          None         (未通过)
+    &quot;&quot;&quot;
+    cands = find_by_repo_branch(repo_url, branch)
+    matched = [(g, d) for (g, d) in cands if verify_for_deploy(source, headers, body, d)]
+</code></pre>
+<ul>
+<li><strong>坑</strong>：验签必须对<strong>原始 body</strong> 做，不能在 JSON 解析再序列化之后做。字段顺序变化会导致签名永远对不上。</li>
+<li><strong>面试点</strong>：密钥作用域从「全局」细化到「单条部署」，是把爆炸半径写进设计里。</li>
+</ul>
+<h4 id="④-部署队列与-GPU-部署">④ 部署队列与 GPU 部署</h4>
+<ul>
+<li><strong>用户操作</strong>：提交部署后显示排队位次；GPU 组里可同时跑多个小任务。</li>
+<li><strong>实现</strong>：<code>defer_queue.py</code> 记录待执行项，<code>scheduler</code> 决定落在哪张卡上；GPU 共享用 MPS（Multi-Process Service），按百分比切分算力。</li>
+</ul>
+<pre><code class="language-python"># web/scheduler.py
+def place_train(deploy_id, group, vram_mb=None, node=None):
+    &quot;&quot;&quot;挑选该节点上剩余显存足够且负载最低的卡；无可用卡返回 None，由调用方排队。&quot;&quot;&quot;
+    node = node or group_node(group)
+    vram = int(vram_mb) if vram_mb else DEFAULT_TRAIN_VRAM_MB
+    sm = sample(node)
+    if not sm:
+        return None
+    allowed = _group_gpus(group, node)
+    if allowed is not None:
+        sm = [g for g in sm if g[&quot;index&quot;] in allowed]
+        if not sm:
+            return None
+    sgpus = serve_gpus(node)
+    candidates = [g for g in sm if g[&quot;vram_free&quot;] &gt;= vram]
+
+def set_mps_pct(deploy_id, pct):
+    &quot;&quot;&quot;Record the MPS % currently applied to a deploy (for rebalance diffing).&quot;&quot;&quot;
+    with _LOCK:
+        alloc = load_alloc()
+        rec = alloc.setdefault(&quot;deploys&quot;, {}).get(deploy_id)
+        if not rec:
+            return
+        rec[&quot;mps_pct&quot;] = pct
+        save_alloc(alloc)
+</code></pre>
+<ul>
+<li><strong>坑</strong>：MPS 百分比要落库。只改运行态不记录，下一轮重平衡没有 diff 基准，会反复重设。</li>
+</ul>
+<h3 id="网络与存储">网络与存储</h3>
+<h4 id="①-子域名映射">① 子域名映射</h4>
+<ul>
+<li><strong>用户操作</strong>：填子域名 + 容器端口 → 保存 → 一分钟内可公网访问。</li>
+<li><strong>实现</strong>：一条映射要过五道校验 —— 子域正则（1–63 位小写字母数字连字符）、保留名黑名单、端口范围、端口黑名单（集群内部服务端口）、唯一性（子域不重复、端口不重复、不与现有 nginx <code>server_name</code> 冲突）。</li>
+</ul>
+<pre><code class="language-python"># web/proxy_map.py
+def add(subdomain, port, note=&quot;&quot;, pod=None):
+    sub = (subdomain or &quot;&quot;).strip().lower()
+    if not SUB_RE.match(sub):
+        return False, &quot;子域只允许小写字母数字和连字符,1-63 字符&quot;
+    if sub in RESERVED:
+        return False, f&quot;子域 {sub} 是保留名,禁止&quot;
+    port = int(port)
+    if not (1 &lt;= port &lt;= 65535):
+        return False, &quot;端口范围 1-65535&quot;
+    if port in BLOCKED_PORTS:
+        return False, f&quot;端口 {port} 是集群内部服务端口,禁止映射到公网&quot;
+    state = _load()
+    if any(m[&quot;subdomain&quot;] == sub for m in state):
+        return False, f&quot;子域 {sub} 已存在&quot;
+    if any(m[&quot;port&quot;] == port for m in state):
+        return False, f&quot;端口 {port} 已被其他映射占用&quot;
+    if _conf_has_servername(sub):
+        return False, f&quot;nginx 里段外已有 {sub}.{DOMAIN} 的 server_name,请先手工清理&quot;
+    rec = {&quot;id&quot;: sub, &quot;subdomain&quot;: sub, &quot;port&quot;: port, &quot;enabled&quot;: True, &quot;pod&quot;: pod,
+           &quot;note&quot;: (note or &quot;&quot;).strip()[:120]}
+    state.append(rec)
+    _save(state)
+    ok, msg = apply()          # 重写 frpc 与 nginx 托管块
+</code></pre>
+<ul>
+<li><strong>坑</strong>：端口黑名单是最容易被忽略的一道。放通 kubelet 或内部 API 端口，等于从公网直接打控制面。</li>
+</ul>
+<h4 id="②-frp-隧道与-nginx-托管块">② frp 隧道与 nginx 托管块</h4>
+<ul>
+<li><strong>实现</strong>：Pod 只监听内网端口，公网流量经 frpc → frps → 本机 nginx。frpc 配置与 nginx 站点都由代码生成，且用标记块包起来，重写时整块替换。</li>
+</ul>
+<pre><code class="language-python"># web/groups.py
+def frpc_segment(name, local_port, remote_port):
+    return f&quot;&quot;&quot;[[proxies]]
+name = &quot;{name}&quot;
+type = &quot;tcp&quot;
+localIP = &quot;127.0.0.1&quot;
+localPort = {local_port}
+remotePort = {remote_port}
+&quot;&quot;&quot;
+
+def build_managed_block(state):
+    lines = [FRPC_MARK_BEGIN]
+    lines.append(frpc_segment(&quot;platform-gui&quot;, 8090, PLATFORM_GUI_PORT - 10000))
+    for g in state[&quot;groups&quot;].values():
+        lines.append(frpc_segment(f&quot;grp-{g['name']}-ssh&quot;, g[&quot;ssh_nodeport&quot;], g[&quot;ssh_public&quot;]))
+        lines.append(frpc_segment(f&quot;grp-{g['name']}-web&quot;, g[&quot;web_nodeport&quot;], g[&quot;web_public&quot;] - 10000))
+    lines.append(FRPC_MARK_END)
+    return &quot;\n&quot;.join(lines)
+</code></pre>
+<pre><code class="language-python"># web/groups.py
+def build_nginx_web_block(state):
+    &quot;&quot;&quot;Build the managed marker section with all web-ssl server blocks.&quot;&quot;&quot;
+    lines = [NGINX_MARK_BEGIN]
+    lines.append(_web_ssl_block(PLATFORM_GUI_PORT))
+    for g in state[&quot;groups&quot;].values():
+        auth_user = g[&quot;name&quot;] if g.get(&quot;type&quot;) in AUTH_WEB_TYPES else None
+        lines.append(_web_ssl_block(g[&quot;web_public&quot;], auth_user=auth_user, group=g[&quot;name&quot;]))
+    lines.append(NGINX_MARK_END)
+    return &quot;\n\n&quot;.join(lines)
+</code></pre>
+<ul>
+<li><strong>坑</strong>：重写前必须先清掉旧的 <code>listen 23xxx ssl</code> 块，否则每改一次映射就多一份 <code>server</code> 块，nginx 启动直接报 <code>duplicate listen</code>。</li>
+<li><strong>面试点</strong>：用「标记块 + 整块重写」代替逐条增删，把配置生成收敛成一个纯函数，天然幂等。</li>
+</ul>
+<h4 id="③-凭证下发">③ 凭证下发</h4>
+<ul>
+<li><strong>用户操作</strong>：为组申请 MySQL / Redis / MinIO，拿到独立账号与桶。</li>
+<li><strong>实现</strong>：<code>db_svc</code> / <code>minio_svc</code> 按组创建 database 与 bucket，签发只对该资源有效的账号；凭证可查看、可吊销。</li>
+</ul>
+<pre><code class="language-python"># web/api/pods.py —— 数据库与对象存储凭证按组列出
+def list_credentials(name):
+    _gn = name.lower()
+    grp_db = [_db_cred_card(c) for c in db_mod.list_creds()
+              if (c.get(&quot;label&quot;) or &quot;&quot;).lower() == _gn]
+    grp_mk = [_minio_cred_card(k) for k in minio_mod.list_keys()
+              if (k.get(&quot;label&quot;) or &quot;&quot;).lower() == _gn]
+    return jsonify({&quot;databases&quot;: grp_db, &quot;minio&quot;: grp_mk})
+</code></pre>
+<ul>
+<li><strong>坑</strong>：吊销要同步改数据库授权，不能只删平台记录。否则平台上「已吊销」，实际账号还能连。</li>
+</ul>
+<h3 id="资源治理">资源治理</h3>
+<h4 id="①-指标采样">① 指标采样</h4>
+<ul>
+<li><strong>实现</strong>：<code>fleet_sampler</code> 定时采本机与远程主机指标写 SQLite；<code>metrics.py</code> 提供聚合查询给前端画曲线。</li>
+</ul>
+<pre><code class="language-python"># web/fleet_sampler.py —— 单写者采样进程，靠文件锁保证只有一个实例在写
+def main():
+    parser.add_argument('--interval', type=int, default=15)
+    if args.interval &lt; 5:
+        parser.error('interval must be at least 5 seconds')
+    store = Store()
+    with open(store.path + '.lock', 'a') as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)  # 抢不到锁就退出
+        while True:
+            sample_once(store, interval)
+</code></pre>
+<ul>
+<li><strong>坑</strong>：采样要写死上限保留期并定期清理，SQLite 无限增长到几 GB 后查询会拖慢整个平台。</li>
+</ul>
+<h4 id="②-GPU-调度与-MPS">② GPU 调度与 MPS</h4>
+<ul>
+<li><strong>用户操作</strong>：GPU 组里同时跑训练与常驻服务，互不独占。</li>
+<li><strong>实现</strong>：每个组只能看到分配给它的卡（<code>NVIDIA_VISIBLE_DEVICES</code>）；卡内用 MPS 按百分比切分；调度器按 <code>place_train</code> / <code>place_serve</code> 两套规则放置。</li>
+</ul>
+<pre><code class="language-python"># web/groups.py —— 组只看到自己的卡
+if is_gpu:
+    node = nodes.node_for(g)
+    env_lines.append(
+        f'        - name: NVIDIA_VISIBLE_DEVICES\n          value: &quot;{nodes.visible_devices(node, g.get(&quot;gpus&quot;))}&quot;'
+    )
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>NVIDIA_VISIBLE_DEVICES</code> 是隔离的最小实现，但它只约束可见性，不约束算力。算力隔离仍要靠 MPS 百分比。</li>
+</ul>
+<h4 id="③-压力驱逐">③ 压力驱逐</h4>
+<ul>
+<li><strong>用户操作</strong>：机器紧张时，低优先级组的任务被暂停，压力缓解后自动恢复。</li>
+<li><strong>实现</strong>：读取压力信号 → 构造候选（按 tier 排序）→ 驱逐 → 记录 <code>low_since</code> 用于滞回恢复。无压力信号时直接返回，不做任何动作。</li>
+</ul>
+<pre><code class="language-python"># web/priority_kill.py
+def cycle(dry=False):
+    p = read_pressure()
+    if p is None:
+        return  # 无信号，fail-safe
+    st = load_state()
+    top = pod_usage_by_group()
+    gpu_tot = gpu_total_mem()
+    cands = build_candidates(p, top, gpu_tot, st)
+    n_evict = do_evict(cands, st, dry)
+    n_recov = do_recover(p, st, dry)
+    if n_evict or n_recov or cands or st.get(&quot;stopped&quot;):
+        save_state(st)
+</code></pre>
+<ul>
+<li><strong>坑</strong>：恢复必须带滞回（<code>low_since</code> 持续低于阈值一段时间才恢复），否则在阈值附近会反复驱逐—恢复，形成抖动。</li>
+<li><strong>面试点</strong>：读不到压力信号时选择「不动作」；按默认值动作会把抖动放大。这是 fail-safe 的方向选择。</li>
+</ul>
+<h4 id="④-Pod-巡检">④ Pod 巡检</h4>
+<ul>
+<li><strong>用户操作</strong>：组的文件与运行状态被定期检查，出现高风险时给成员推送提醒。</li>
+<li><strong>实现</strong>：<code>podwatch</code> 扫描 home 目录、做 diff、更新 profile；单次扫描异常只记日志不外抛，监控循环不中断。</li>
+</ul>
+<pre><code class="language-python"># web/podwatch.py
+def scan_one(pod, force=False):
+    &quot;&quot;&quot;Scan one pod, diff, and (on change / force) update its profile.&quot;&quot;&quot;
+    with _pod_lock(pod):
+        try:
+            return _scan_one_locked(pod, force)
+        except Exception as e:
+            log.warning(&quot;podwatch: scan_one(%s) failed: %s&quot;, pod, e)
+            return None
+</code></pre>
+<ul>
+<li><strong>坑</strong>：巡检函数不能抛异常。一个组的目录权限异常会让整个巡检线程退出，所有组都失去监控。</li>
+</ul>
+<h4 id="⑤-硬盘配额">⑤ 硬盘配额</h4>
+<ul>
+<li><strong>实现</strong>：按组统计 home 目录占用，超限时写入配额脚本并限制写入；删除组时先解挂再清理。</li>
+</ul>
+<pre><code class="language-python"># web/hdd_quota.py
+def ensure(name, storage, node=None):
+    &quot;&quot;&quot;Create the capped image on the group's node. Returns (ok, output).&quot;&quot;&quot;
+    import nodes
+    script = ensure_script(name, storage)
+    if nodes.is_local(node):
+        r = subprocess.run([&quot;bash&quot;, &quot;-c&quot;, script], capture_output=True, text=True, timeout=900)
+        out = (r.stdout or &quot;&quot;) + (r.stderr or &quot;&quot;)
+        return r.returncode == 0, out
+    return nodes.run_on(node, script, timeout=900)
+</code></pre>
+<h4 id="⑥-容量预测">⑥ 容量预测</h4>
+<ul>
+<li><strong>实现</strong>：对历史序列做 STL 分解（趋势 + 季节 + 残差），预测未来供给，给出低谷窗口用于安排重任务；带误差分位与回测。</li>
+</ul>
+<pre><code class="language-python"># web/forecast.py —— 逐小时预测：历史不足退化为统计量，足够才建模
+def predict_supply(group=None, horizon=24, metric=&quot;cpu&quot;, now=None):
+    &quot;&quot;&quot;Forecast demand for the next horizon hourly slots. Never raises.&quot;&quot;&quot;
+    rows = load_series(group, metric, bucket=&quot;hour&quot;)
+    values = [r[&quot;value&quot;] for r in rows]
+    n = len(values)
+    stale = bool(rows) and (now - rows[-1][&quot;ts&quot;]) &gt; STALE_H * 3600
+    if n == 0:
+        return result                                  # 无历史，返回空预测
+    if max(values) &lt;= DEAD_EPS:                        # 全零序列不建模
+        result[&quot;kind&quot;] = &quot;none&quot;; result[&quot;note&quot;] = &quot;dead-column&quot;
+        return result
+    ss = _series_state(state, group, metric)
+    bias = float(ss.get(&quot;bias_ewma&quot;) or 0.0)           # 历史预测偏差，用于修正
+</code></pre>
+<pre><code class="language-python"># web/forecast.py —— 低谷窗口：取 p50 低于 min + frac×(max-min) 的连续时段
+def valley_windows(result, frac=0.33, max_windows=3):
+    &quot;&quot;&quot;Contiguous low-p50 windows (p50 &lt;= min + frac*(max-min)), longest first.&quot;&quot;&quot;
+    slots = (result or {}).get(&quot;slots&quot;) or []
+    if len(slots) &lt; 2:
+        return []
+    p50 = [s[&quot;p50&quot;] for s in slots]
+    lo, hi = min(p50), max(p50)
+    if hi - lo &lt;= DEAD_EPS:
+        return []
+    thr = lo + frac * (hi - lo)
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：预测结果要带误差区间。只给一个点估计，排产决策无法评估风险。</li>
+</ul>
+<h3 id="通知与告警">通知与告警</h3>
+<h4 id="①-PWA-推送">① PWA 推送</h4>
+<ul>
+<li><strong>用户操作</strong>：浏览器订阅后，组异常、证书到期、高风险判定都会收到推送。</li>
+<li><strong>实现</strong>：事件以 <code>event_key</code> 作为 SQLite 主键做去重，同一事件只推一次；收件人按组的成员关系计算。</li>
+</ul>
+<pre><code class="language-python"># web/pwa_alerts.py
+def notify_event(event_key, group, title, body, url=&quot;/&quot;, kind=&quot;event&quot;, extra=None):
+    &quot;&quot;&quot;Generic at-most-once push channel for events raised outside this module.
+
+    SQLite 的 alert_event 主键就是去重令牌：同一个 event_key 只发送一次，
+    即使 worker 重启或重试也不会重复推送。
+    &quot;&quot;&quot;
+</code></pre>
+<ul>
+<li><strong>坑</strong>：去重键要包含「事件 + 对象 + 时间片」，只用事件名会把后续真实告警一起吞掉。</li>
+</ul>
+<h4 id="②-证书到期告警">② 证书到期告警</h4>
+<ul>
+<li><strong>实现</strong>：定时探测配置域名证书的 <code>notAfter</code>，剩余天数低于阈值时推管理员，同一证书只推一次。</li>
+</ul>
+<pre><code class="language-python"># web/cert_alerts.py
+def check_certs_once():
+    &quot;&quot;&quot;探测全部配置域名, 剩余 &lt; CERT_WARN_DAYS 天时推 admin(每证书一次)。&quot;&quot;&quot;
+    for host, port in _parse_hosts(CERT_HOSTS):
+        na = cert_not_after(host, port)
+        if not na:
+            continue
+        days_left = (na - time.time()) / 86400.0
+        if days_left &gt;= CERT_WARN_DAYS:
+            continue
+</code></pre>
+<h4 id="③-主机巡检告警">③ 主机巡检告警</h4>
+<ul>
+<li><strong>实现</strong>：五类检查分别执行，任一检查抛异常只记录并跳过，不影响其余检查。</li>
+</ul>
+<pre><code class="language-python"># web/host_alerts.py
+def run_checks():
+    total = 0
+    for fn in (check_disk, check_swap, check_gpu_temp, check_daemons, check_fleet):
+        try:
+            total += int(fn() or 0)
+        except Exception:
+            log.exception(&quot;host check %s failed&quot;, getattr(fn, &quot;__name__&quot;, fn))
+    return total
+</code></pre>
+<ul>
+<li><strong>坑</strong>：告警要有静默窗口（<code>BUCKET_S</code>）。同一块盘持续高位，每轮都推会把通知渠道打满。</li>
+</ul>
+<h3 id="计费与钱包">计费与钱包</h3>
+<h4 id="①-钱包">① 钱包</h4>
+<ul>
+<li><strong>用户操作</strong>：查看余额、充值、把余额分配到某个组。</li>
+<li><strong>实现</strong>：账户 + 流水两表；组间转账时两条流水共享同一个 <code>token</code>，<code>token</code> 上有唯一约束，重放同一请求返回空而不重复扣款。</li>
+</ul>
+<pre><code class="language-python"># web/wallet.py
+def transfer_to_pod(group_name, username, amount_cents, *, token, note=&quot;&quot;, actor=&quot;&quot;):
+    &quot;&quot;&quot;Move cents from username's wallet into group_name's pod quota.
+
+    Atomic and exactly-once: both ledger rows share token (UNIQUE), so a
+    replay returns None. Insufficient funds raises and rolls back.
+    &quot;&quot;&quot;
+    billing_store.ensure_account(group_name)
+    ensure_account(username)
+    cents = int(amount_cents)
+    if cents &lt;= 0:
+        raise ValueError(&quot;分配金额必须为正&quot;)
+    with billing_store.tx() as cn, cn.cursor() as cur:
+        # 同一 token 写两行（转出 / 转入）；token 唯一约束保证重放不产生第二次扣款
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：幂等靠唯一约束；「先查再插」在并发重试下必然漏。</li>
+</ul>
+<h4 id="②-计量">② 计量</h4>
+<ul>
+<li><strong>实现</strong>：按 tick 采 cgroup 数据累加用量；<code>take_tick</code> 是纯函数（不算库），由调用方统一落库；时间间隔异常时退回固定间隔，避免一次长暂停把用量算爆。</li>
+</ul>
+<pre><code class="language-python"># web/usage_meter.py
+def take_tick(now):
+    &quot;&quot;&quot;Sample one tick and return (rows, prev_ts). Pure, no DB writes.&quot;&quot;&quot;
+    prev_ts = _LAST_TS
+    dt = (now - prev_ts) if prev_ts else None
+    if dt is not None and not (0 &lt; dt &lt;= 4 * max(1, INTERVAL)):
+        dt = float(INTERVAL)
+    pods = _pods()
+    limits = _group_cpu_limits() if pods else {}
+    acc = {}   # group -&gt; {&quot;cpu&quot;: 核·秒, &quot;req&quot;: 请求核·秒, &quot;mem&quot;: GiB·秒}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：进程被挂起或重启后，两次 tick 的间隔可能是几小时。不设上限就会把这段空档全算成满负荷。</li>
+</ul>
+<h4 id="③-计费口径">③ 计费口径</h4>
+<ul>
+<li><strong>实现</strong>：金额以「分」为单位做整数运算；每个资源键独立四舍五入，总额等于各键之和，保证明细加总与总额一致。</li>
+</ul>
+<pre><code class="language-python"># web/billing_core.py
+def cost_cents(totals, prices, basis=&quot;actual&quot;, keys=None):
+    &quot;&quot;&quot;Integer cents owed for totals at prices, per resource key.
+
+    Each key is rounded half-up independently; total_cents is the sum of the
+    rounded per-key values, so per-key charges always add up to the total.
+    &quot;&quot;&quot;
+    units = units_for(totals, basis)
+    out = {}
+    total = 0
+    for key in (keys or RESOURCE_KEYS):
+        cents = int((_dec(units.get(key)) * unit_price(prices, key)).quantize(_CENT, ROUND_HALF_UP))
+        out[key] = cents
+        total += cents
+    out[&quot;total_cents&quot;] = total
+    return out
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：总额不能单独四舍五入。分开算再相加，才能保证「账单明细之和 = 账单总额」。</li>
+</ul>
+<h4 id="④-充值与结算">④ 充值与结算</h4>
+<ul>
+<li><strong>实现</strong>：下单走支付网关，回调按 <code>out_trade_no</code> 幂等入账，再按小时结算落到流水。</li>
+</ul>
+<pre><code class="language-python"># web/pay.py
+def create_order(*, amount_cents, subject, out_trade_no, resource_id=None,
+                 return_url=None, extra=None):
+    payload = {
+        &quot;amount_cents&quot;: int(amount_cents),
+        &quot;subject&quot;: subject,
+        &quot;out_trade_no&quot;: out_trade_no,
+    }
+    if resource_id:
+        payload[&quot;resource_id&quot;] = resource_id
+    if return_url:
+        payload[&quot;return_url&quot;] = return_url
+    if extra:
+        payload[&quot;extra&quot;] = extra
+
+# web/billing_settle.py —— 只结算已完整走完的小时
+def settle_hours(since, until, actor=&quot;settle&quot;, dry_run=False):
+    internal = groups.internal_groups()   # 平台内部组免计费
+    store = UsageStore()
+    now_hour = hour_of(time.time())
+    until = min(int(until), now_hour)     # 不结算当前未走完的小时
+</code></pre>
+<ul>
+<li><strong>坑</strong>：回调可能重复到达。入账前必须用 <code>out_trade_no</code> 查重，否则一次支付能充两次。</li>
+</ul>
+<h3 id="审批">审批</h3>
+<h4 id="①-高危操作审批">① 高危操作审批</h4>
+<ul>
+<li><strong>用户操作</strong>：AI 助手或自动化要执行高危动作时，先弹审批，管理员批准后才执行。</li>
+<li><strong>实现</strong>：<code>gate()</code> 先分类（<code>classify</code>），需要确认就登记挂起并返回提示；不需要则返回 <code>None</code> 直接执行。分类过程异常时保守放行，由 denylist 兜底。</li>
+</ul>
+<pre><code class="language-python"># web/approvals.py
+def gate(tool, args, runner, agent_def=None, pod=None, run_id=None, user=None):
+    &quot;&quot;&quot;审批闸入口(由 agent._exec_tool 调用)。
+
+    需确认则登记 pending 并返回&quot;已挂起&quot;提示串;否则返回 None(正常执行)。
+    &quot;&quot;&quot;
+    try:
+        reason = classify(tool, args, runner)
+        if not reason:
+            return None
+        return submit(tool, args, runner, agent_def, pod, run_id, user, reason)
+    except Exception as e:
+        audit.record(&quot;approval_error&quot;, detail=f&quot;gate 异常: {e!r}&quot;, actor=&quot;approvals&quot;)
+        return None
+</code></pre>
+<ul>
+<li><strong>坑</strong>：审批挂起后要能恢复执行（<code>verify_pending</code> / <code>resume_approved</code>），否则批准了也不会继续。</li>
+<li><strong>面试点</strong>：异常路径选择「放行 + 记审计」还是「拒绝」，取决于 denylist 是否足够可靠。这里由 denylist 兜底，因此选择放行。</li>
+</ul>
+<h3 id="AI-能力">AI 能力</h3>
+<h4 id="①-对话助手">① 对话助手</h4>
+<ul>
+<li><strong>用户操作</strong>：在平台里用自然语言问运维问题，助手会自己查状态、看日志、调工具。</li>
+<li><strong>实现</strong>：<code>run_agent</code> 是一个生成器，按事件流式输出文本、工具调用、工具结果与压缩事件；模式分 <code>ops</code>（运维）与 <code>build</code>（构建）。</li>
+</ul>
+<pre><code class="language-python"># web/agent.py
+def run_agent(mode, name, message, history, run_id, user=None):
+    &quot;&quot;&quot;Generator yielding event dicts. mode in {'ops','build'}.
+
+    Events: text / tool_call / tool_result / compact / spawn_start / spawn_done / done / error
+    &quot;&quot;&quot;
+    _llm_tls.user = (user.get(&quot;username&quot;) if isinstance(user, dict) else str(user)) if user else None
+    cfg = agent_conf.load()
+</code></pre>
+<ul>
+<li><strong>坑</strong>：工具调用要过权限（<code>agent_required_perm</code>）。助手用的是调用者的身份，权限判定不能省。</li>
+</ul>
+<h4 id="②-知识库-RAG">② 知识库 RAG</h4>
+<ul>
+<li><strong>实现</strong>：文档切块入 Qdrant，检索时按权限选集合 —— <code>kb_public</code> 对所有人生效，<code>kb_ops</code> 只对具备 <code>infra.*</code> / <code>ops.*</code> 权限的人生效，结果合并后按分数排序。</li>
+</ul>
+<pre><code class="language-python"># web/kb_service.py
+def retrieve(query, user, k=DEFAULT_K, min_score=DEFAULT_THRESHOLD):
+    &quot;&quot;&quot;Permission-routed retrieval. Returns [{text, title, source, score}].
+
+    kb_public 总是检索；kb_ops 仅对有 infra.*/ops.* 权限的用户检索。
+    &quot;&quot;&quot;
+    query = (query or &quot;&quot;).strip()
+    if not query:
+        return []
+    vec = embed([query])[0]
+    hits = []
+    for coll in collections_for(user):
+        out = _qdrant(&quot;POST&quot;, f&quot;/collections/{coll}/points/query&quot;,
+                      {&quot;query&quot;: vec, &quot;limit&quot;: k, &quot;score_threshold&quot;: min_score})
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：权限路由放在<strong>召回阶段</strong>；生成阶段过滤只能保证「不说」，不能保证「没读到」。生成阶段过滤只能保证「不说」，不能保证「没读到」。</li>
+</ul>
+<h4 id="③-IDE-Agent-与浏览器助手">③ IDE Agent 与浏览器助手</h4>
+<ul>
+<li><strong>用户操作</strong>：在组内打开 AI 编程助手，让它读文件、改代码、跑命令；也能让它在浏览器里操作页面。</li>
+<li><strong>实现</strong>：<code>ide_agent</code> 提供工具集合（<code>tool_definitions</code>）、系统提示（<code>harness_system</code>）、会话历史与目标栈；<code>browser_assistant</code> 管理浏览器会话的启动、停止与流式输出。</li>
+</ul>
+<pre><code class="language-python"># web/ide_agent.py —— 工具以 JSON Schema 声明，模型自己选
+def tool_definitions():
+    return [
+        {&quot;type&quot;: &quot;function&quot;, &quot;function&quot;: {
+            &quot;name&quot;: &quot;pod_bash&quot;,
+            &quot;description&quot;: &quot;Executes a given shell command in the user's Pod as user &quot;
+                           &quot;cloud, with /home/cloud as the working directory. Read-only &quot;
+                           &quot;commands run automatically; commands with side effects will &quot;
+                           &quot;ask the user for confirmation. Output streams back live. &quot;
+                           &quot;Default timeout 60s (max 120s), output truncated at 30k chars.&quot;,
+</code></pre>
+<pre><code class="language-python"># web/browser_assistant.py —— 浏览器会话与运行体
+def start(username, session_id, message, page=&quot;&quot;, context=&quot;&quot;, receipt=None):
+    if not isinstance(message, str) or not message.strip() or len(message) &gt; 8000:
+        raise ValueError(&quot;message is required and must be &lt;= 8000 characters&quot;)
+    sid = session_id or _new_session(username)
+    session = get_session(sid, username)
+    if not session:
+        raise LookupError(&quot;session not found&quot;)
+    run_id = secrets.token_hex(12)
+    run = Run(run_id, username)
+</code></pre>
+<ul>
+<li><strong>坑</strong>：IDE Agent 的写文件与执行命令必须落在组的 home 目录内，越界就是提权。</li>
+</ul>
+<h3 id="成员、审计与登录">成员、审计与登录</h3>
+<h4 id="①-成员与角色">① 成员与角色</h4>
+<ul>
+<li><strong>用户操作</strong>：组主邀请成员、审批加入申请、移除成员、添加共同所有者。</li>
+<li><strong>实现</strong>：成员关系存组内，角色分 owner / member；邀请与加入都要落审批记录。</li>
+</ul>
+<pre><code class="language-python"># web/groups.py
+def invite_member(name, username):
+    &quot;&quot;&quot;Owner directly invites an existing user as member.&quot;&quot;&quot;
+    if not isinstance(username, str) or not 1 &lt;= len(username.strip()) &lt;= 64:
+        raise ValueError(&quot;用户不存在&quot;)
+    user = users.get_user(username.strip())
+    if not user:
+        raise ValueError(&quot;用户不存在&quot;)
+    username = user[&quot;username&quot;]
+    state = load_state()
+    if name not in state[&quot;groups&quot;]:
+        raise ValueError(f&quot;组 {name} 不存在&quot;)
+    g = _ensure_acl(state[&quot;groups&quot;][name])
+</code></pre>
+<h4 id="②-审计">② 审计</h4>
+<ul>
+<li><strong>实现</strong>：每次操作追加一行 JSON；<code>actor</code> 与 <code>module</code> 二选一，模块动作会把真实操作者写入 <code>detail</code> 的 <code>by=</code>，保证「谁触发」与「哪个子系统执行」都在链上。</li>
+</ul>
+<pre><code class="language-python"># web/audit.py
+def record(action, detail=&quot;&quot;, actor=None, module=None):
+    &quot;&quot;&quot;Append one audit entry as a JSON line.
+
+    {&quot;ts&quot;: &lt;utc iso&gt;, &quot;action&quot;: action, &quot;detail&quot;: detail, &quot;actor&quot;: actor}
+    actor=&lt;username&gt; 表示操作者本人；module=&lt;name&gt; 表示子系统动作，
+    解析出的操作者会以 by=&lt;user&gt; 追加到 detail。
+    &quot;&quot;&quot;
+</code></pre>
+<h4 id="③-登录">③ 登录</h4>
+<ul>
+<li><strong>实现</strong>：两条通道 —— UniSSO（统一身份）与集市 OAuth，都走授权码换 token 再取 userinfo；会话写 Cookie。</li>
+</ul>
+<pre><code class="language-python"># web/oauth2_login.py —— 授权码换 token（PKCE 带 code_verifier）
+def unisso_exchange_code(code: str, redirect_uri: str, code_verifier: str) -&gt; dict:
+    &quot;&quot;&quot;Exchange authorization code for access token.&quot;&quot;&quot;
+    resp = requests.post(
+        UNISSO_TOKEN_URL,
+        data={
+            &quot;grant_type&quot;: &quot;authorization_code&quot;,
+            &quot;code&quot;: code,
+            &quot;client_id&quot;: UNISSO_CLIENT_ID,
+            &quot;client_secret&quot;: UNISSO_CLIENT_SECRET,
+            &quot;redirect_uri&quot;: redirect_uri,
+            &quot;code_verifier&quot;: code_verifier,
+        },
+    )
+</code></pre>
+<ul>
+<li><strong>坑</strong>：回调地址要由配置推导（<code>request_base_url</code>），不能写死域名，否则反代后回调落到内网地址。</li>
+</ul>
+<h4 id="④-威胁地图">④ 威胁地图</h4>
+<ul>
+<li><strong>用户操作</strong>：看面板上的攻击来源与趋势，可切时间窗（1h / 3h / 1d / 3d / 7d / all）。</li>
+<li><strong>实现</strong>：按窗口聚合日志并做短时缓存。</li>
+</ul>
+<pre><code class="language-python"># web/api/threat_map.py
+def threat_map_data():
+    &quot;&quot;&quot;Get threat map data.
+
+    Query params: window - 1h, 3h, 1d, 3d, 7d, all (default: 3d)
+    &quot;&quot;&quot;
+    w = request.args.get(&quot;window&quot;, &quot;3d&quot;)
+    if w not in (&quot;1h&quot;, &quot;3h&quot;, &quot;1d&quot;, &quot;3d&quot;, &quot;7d&quot;, &quot;all&quot;):
+        w = &quot;3d&quot;
+</code></pre>
+<h3 id="集市云-·-面试速答">集市云 · 面试速答</h3>
+<ul>
+<li><strong>组与 Pod</strong>：一组一 Pod（namespace <code>clouds</code>），状态在 <code>groups.json</code>，K3s 只承载运行态。</li>
+<li><strong>资源</strong>：limits 用用户上限，requests 用 EWMA 估算，仅在 Pod 重建时计算；hostPath 不计入 ephemeral-storage。</li>
+<li><strong>网络</strong>：frpc 隧道 + 本机 nginx，配置由代码生成并用标记块整块重写，天然幂等。</li>
+<li><strong>GPU</strong>：<code>NVIDIA_VISIBLE_DEVICES</code> 做可见性隔离，MPS 百分比做算力切分，调度器分训练/服务两套放置规则。</li>
+<li><strong>治理</strong>：压力驱逐带滞回恢复；巡检与告警单点失败不影响主循环；计量异常间隔退回固定间隔。</li>
+<li><strong>计费</strong>：金额用整数分；每个资源键独立四舍五入，总额等于各键之和。</li>
+<li><strong>幂等</strong>：钱包转账靠共享 <code>token</code> 唯一约束，支付回调靠 <code>out_trade_no</code> 查重。</li>
+<li><strong>AI</strong>：工具调用按调用者权限判定；RAG 的权限过滤在召回阶段完成。</li>
+</ul>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本篇已读</span></button><a class="book-btn book-btn-ghost" href="/docs/sse-market/"><i class="fas fa-list"></i> 全部篇目</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/docs/sse-market/main/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一篇</span><strong>02 主站：账号、帖子与互动</strong></a><a class="book-pager-link next" href="/docs/sse-market/iwiki/"><span class="book-pager-dir">下一篇 <i class="fas fa-arrow-right"></i></span><strong>04 iWiki：协作、检索与开放</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%BB%84%E5%AE%B9%E5%99%A8">组容器</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%88%9B%E5%BB%BA%E7%BB%84">① 创建组</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E8%A7%84%E6%A0%BC%EF%BC%9Alimits-%E4%B8%8E-requests-%E5%88%86%E7%A6%BB">② 规格：limits 与 requests 分离</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%90%AF%E5%8A%A8-%E5%81%9C%E6%AD%A2-%E9%87%8D%E5%90%AF-%E5%88%A0%E9%99%A4">③ 启动 / 停止 / 重启 / 删除</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E8%BF%81%E7%A7%BB%E8%8A%82%E7%82%B9%E3%80%81%E6%89%A9%E7%BC%A9%E5%AE%B9%E3%80%81%E6%94%B9%E5%90%8D%E3%80%81%E9%87%8D%E7%BD%AE%E5%AF%86%E7%A0%81">④ 迁移节点、扩缩容、改名、重置密码</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E5%9C%A8%E7%BA%BF%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86%E4%B8%8E%E4%BB%A3%E7%A0%81%E7%B4%A2%E5%BC%95">⑤ 在线文件管理与代码索引</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A5-%E6%97%A5%E5%BF%97%E4%B8%8E%E5%9C%A8%E7%BA%BF%E7%BB%88%E7%AB%AF">⑥ 日志与在线终端</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A6-%E7%AB%AF%E5%8F%A3%E4%BB%A3%E7%90%86">⑦ 端口代理</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E9%83%A8%E7%BD%B2">部署</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E4%BB%8E-Git-%E9%83%A8%E7%BD%B2">① 从 Git 部署</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%84%9A%E6%9C%AC%E7%9A%84%E8%B7%AF%E5%BE%84%E6%A0%A1%E9%AA%8C">② 自定义脚本的路径校验</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-Webhook-%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2">③ Webhook 自动部署</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E9%83%A8%E7%BD%B2%E9%98%9F%E5%88%97%E4%B8%8E-GPU-%E9%83%A8%E7%BD%B2">④ 部署队列与 GPU 部署</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%BD%91%E7%BB%9C%E4%B8%8E%E5%AD%98%E5%82%A8">网络与存储</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%AD%90%E5%9F%9F%E5%90%8D%E6%98%A0%E5%B0%84">① 子域名映射</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-frp-%E9%9A%A7%E9%81%93%E4%B8%8E-nginx-%E6%89%98%E7%AE%A1%E5%9D%97">② frp 隧道与 nginx 托管块</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%87%AD%E8%AF%81%E4%B8%8B%E5%8F%91">③ 凭证下发</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E8%B5%84%E6%BA%90%E6%B2%BB%E7%90%86">资源治理</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E6%8C%87%E6%A0%87%E9%87%87%E6%A0%B7">① 指标采样</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-GPU-%E8%B0%83%E5%BA%A6%E4%B8%8E-MPS">② GPU 调度与 MPS</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%8E%8B%E5%8A%9B%E9%A9%B1%E9%80%90">③ 压力驱逐</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-Pod-%E5%B7%A1%E6%A3%80">④ Pod 巡检</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E7%A1%AC%E7%9B%98%E9%85%8D%E9%A2%9D">⑤ 硬盘配额</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A5-%E5%AE%B9%E9%87%8F%E9%A2%84%E6%B5%8B">⑥ 容量预测</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E9%80%9A%E7%9F%A5%E4%B8%8E%E5%91%8A%E8%AD%A6">通知与告警</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-PWA-%E6%8E%A8%E9%80%81">① PWA 推送</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E8%AF%81%E4%B9%A6%E5%88%B0%E6%9C%9F%E5%91%8A%E8%AD%A6">② 证书到期告警</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E4%B8%BB%E6%9C%BA%E5%B7%A1%E6%A3%80%E5%91%8A%E8%AD%A6">③ 主机巡检告警</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E8%AE%A1%E8%B4%B9%E4%B8%8E%E9%92%B1%E5%8C%85">计费与钱包</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E9%92%B1%E5%8C%85">① 钱包</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E8%AE%A1%E9%87%8F">② 计量</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E8%AE%A1%E8%B4%B9%E5%8F%A3%E5%BE%84">③ 计费口径</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E5%85%85%E5%80%BC%E4%B8%8E%E7%BB%93%E7%AE%97">④ 充值与结算</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%AE%A1%E6%89%B9">审批</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E9%AB%98%E5%8D%B1%E6%93%8D%E4%BD%9C%E5%AE%A1%E6%89%B9">① 高危操作审批</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#AI-%E8%83%BD%E5%8A%9B">AI 能力</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%AF%B9%E8%AF%9D%E5%8A%A9%E6%89%8B">① 对话助手</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E7%9F%A5%E8%AF%86%E5%BA%93-RAG">② 知识库 RAG</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-IDE-Agent-%E4%B8%8E%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8A%A9%E6%89%8B">③ IDE Agent 与浏览器助手</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%88%90%E5%91%98%E3%80%81%E5%AE%A1%E8%AE%A1%E4%B8%8E%E7%99%BB%E5%BD%95">成员、审计与登录</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E6%88%90%E5%91%98%E4%B8%8E%E8%A7%92%E8%89%B2">① 成员与角色</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%AE%A1%E8%AE%A1">② 审计</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E7%99%BB%E5%BD%95">③ 登录</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E5%A8%81%E8%83%81%E5%9C%B0%E5%9B%BE">④ 威胁地图</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E9%9B%86%E5%B8%82%E4%BA%91-%C2%B7-%E9%9D%A2%E8%AF%95%E9%80%9F%E7%AD%94">集市云 · 面试速答</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

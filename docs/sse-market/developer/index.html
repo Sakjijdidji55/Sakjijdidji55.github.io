@@ -1,0 +1,660 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>09 开发者平台：权限、部署与小程序 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="软工集市专题 · 09 开发者平台：权限、部署与小程序">
+<meta property="og:type" content="website">
+<meta property="og:title" content="09 开发者平台：权限、部署与小程序">
+<meta property="og:url" content="https://sakjijdidji55.github.io/docs/sse-market/developer/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="软工集市专题 · 09 开发者平台：权限、部署与小程序">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-11-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/docs/sse-market/developer/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '09 开发者平台：权限、部署与小程序',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">09 开发者平台：权限、部署与小程序</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">09 开发者平台：权限、部署与小程序</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-market" data-chapter="developer" data-total="14" data-prev="/docs/sse-market/join/" data-next="/docs/sse-market/api-platform/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/docs/sse-market/">软工集市专题</a><div class="book-sidebar-sub">14 篇 · 1 小时 30 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 14</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选篇目..." data-book-filter aria-label="筛选篇目"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="history"><a class="book-chapter-link" href="/docs/sse-market/history/" data-chapter-link="history"><span class="book-chapter-index">00</span><span class="book-chapter-name">00 历史：从一门课到一组平台</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="overview"><a class="book-chapter-link" href="/docs/sse-market/overview/" data-chapter-link="overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">01 平台体系：三层与节点</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">三条主线</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="main"><a class="book-chapter-link" href="/docs/sse-market/main/" data-chapter-link="main"><span class="book-chapter-index">02</span><span class="book-chapter-name">02 主站：账号、帖子与互动</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="cloud"><a class="book-chapter-link" href="/docs/sse-market/cloud/" data-chapter-link="cloud"><span class="book-chapter-index">03</span><span class="book-chapter-name">03 集市云：一组一容器</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="iwiki"><a class="book-chapter-link" href="/docs/sse-market/iwiki/" data-chapter-link="iwiki"><span class="book-chapter-index">04</span><span class="book-chapter-name">04 iWiki：协作、检索与开放</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">身份与存储</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="unisso"><a class="book-chapter-link" href="/docs/sse-market/unisso/" data-chapter-link="unisso"><span class="book-chapter-index">05</span><span class="book-chapter-name">05 UniSSO：统一身份</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="imagebed"><a class="book-chapter-link" href="/docs/sse-market/imagebed/" data-chapter-link="imagebed"><span class="book-chapter-index">06</span><span class="book-chapter-name">06 图床：上传、鉴权与存储</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">端与开发者</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app"><a class="book-chapter-link" href="/docs/sse-market/app/" data-chapter-link="app"><span class="book-chapter-index">07</span><span class="book-chapter-name">07 App：六平台与九种产物</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="join"><a class="book-chapter-link" href="/docs/sse-market/join/" data-chapter-link="join"><span class="book-chapter-index">08</span><span class="book-chapter-name">08 招聘：双选、答辩与席位</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="developer"><a class="book-chapter-link is-current" href="/docs/sse-market/developer/" data-chapter-link="developer" aria-current="page"><span class="book-chapter-index">09</span><span class="book-chapter-name">09 开发者平台：权限、部署与小程序</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">能力</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="api-platform"><a class="book-chapter-link" href="/docs/sse-market/api-platform/" data-chapter-link="api-platform"><span class="book-chapter-index">10</span><span class="book-chapter-name">10 API 平台：兼容与计费</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="tts-ai"><a class="book-chapter-link" href="/docs/sse-market/tts-ai/" data-chapter-link="tts-ai"><span class="book-chapter-index">11</span><span class="book-chapter-name">11 TTS 与 AI 研究</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">复盘与附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="interview"><a class="book-chapter-link" href="/docs/sse-market/interview/" data-chapter-link="interview"><span class="book-chapter-index">12</span><span class="book-chapter-name">12 全平台面试速答</span><span class="book-chapter-time">1′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="incidents"><a class="book-chapter-link" href="/docs/sse-market/incidents/" data-chapter-link="incidents"><span class="book-chapter-index">13</span><span class="book-chapter-name">13 事故复盘</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/docs/"><i class="fas fa-arrow-left"></i> 返回文档</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/docs/sse-market/">软工集市专题</a><i class="fas fa-angle-right"></i><span>09 开发者平台：权限、部署与小程序</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">DOC 09</span><h1>09 开发者平台：权限、部署与小程序</h1><div class="book-chapter-meta">6 分钟读完 · 2,440 字</div></div><blockquote>
+<p>生态的「应用市场 + 权限中心 + 部署台 + 小程序宿主」，三者后续合并为同一个开发者平台。</p>
+<p><strong>合并说明</strong>：本文按合并后的结构组织 —— 8.1–8.4 是开发者平台本体（模块、密钥、SM2 总线、权限），8.5–8.8 是部署台（已并入），8.9 是小程序（占位，合并完成后补写）。三个仓库当前仍是独立进程，合并期间通过 SM2 验签与短期票据互通。</p>
+<p>仓库：<a target="_blank" rel="noopener" href="https://github.com/SysuMirror/developer">github.com/SysuMirror/developer</a>（模块与总线，约 9000 行 TypeScript）、<a target="_blank" rel="noopener" href="https://github.com/SysuMirror/deploy">github.com/SysuMirror/deploy</a>（部署台，<code>apps/deploy-api</code> 约 1.9 万行 + <code>apps/deploy-web</code>）、<a target="_blank" rel="noopener" href="https://github.com/SysuMirror/applet">github.com/SysuMirror/applet</a>（小程序宿主，约 6000 行 Node.js）。</p>
+</blockquote>
+<h3 id="登录与开发者身份">登录与开发者身份</h3>
+<h4 id="①-集市-OAuth-登录">① 集市 OAuth 登录</h4>
+<ul>
+<li><strong>用户操作</strong>：用集市账号登录 → 首次进入自动建本地用户。</li>
+<li><strong>实现</strong>：授权码换令牌 → 取 userinfo → 按 <code>sub</code> upsert 本地用户；令牌只用于本次换身份，不落库。</li>
+</ul>
+<pre><code class="language-text">GET  /oauth/start      → 跳转集市授权
+GET  /oauth/callback   → code 换 token → 取 userinfo → 建会话
+</code></pre>
+<h4 id="②-开发者申请">② 开发者申请</h4>
+<ul>
+<li><strong>用户操作</strong>：非开发者提交申请（用途、预期模块）→ 管理员审批 → 通过后获得开发者身份。</li>
+<li><strong>实现</strong>：审批通过时同时置 <code>is_developer</code> 并映射到内置 <code>developer</code> 角色，历史数据无需手工迁移。</li>
+</ul>
+<pre><code class="language-text">POST /api/applications        提交申请
+GET  /api/admin/applications  待审列表
+POST /api/admin/applications/:id/review
+</code></pre>
+<ul>
+<li><strong>坑</strong>：审批状态与角色授予要在同一事务内完成。只改申请状态不授角色，用户会看到「已通过」却仍然不能建模块。</li>
+</ul>
+<h4 id="③-花名与资料">③ 花名与资料</h4>
+<ul>
+<li><strong>实现</strong>：花名只用于展示，不参与任何权限判断；留空即回退实名。</li>
+</ul>
+<h3 id="模块与密钥">模块与密钥</h3>
+<h4 id="①-注册模块">① 注册模块</h4>
+<ul>
+<li><strong>用户操作</strong>：填名称、slug、说明 → 提交 → 拿到一对 SM2 密钥（私钥只显示一次）。</li>
+<li><strong>实现</strong>：<code>slug</code> 全局唯一，作为总线里的模块标识；注册时生成密钥对，平台只保存公钥。</li>
+</ul>
+<h4 id="②-只存公钥">② 只存公钥</h4>
+<pre><code class="language-text">常规做法：平台存密钥，模块带密钥调用  → 平台被拖库 = 所有模块可被伪造
+这里的做法：平台只存公钥，私钥给模块 → 平台被拖库也伪造不了任何模块请求
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：SM2 是非对称的，验签只需要公钥。平台不需要知道私钥，因此就不该持有 —— 这是把「最小权限」落到密钥管理上。</li>
+</ul>
+<h4 id="③-密钥轮换">③ 密钥轮换</h4>
+<ul>
+<li>
+<p><strong>实现</strong>：轮换时新私钥一次性下发，旧公钥保留一段灰度期，期间新旧两把公钥都接受验签。</p>
+</li>
+<li>
+<p><strong>坑</strong>：轮换不能「立即废弃旧公钥」。模块方滚动发布需要时间，立刻废弃会让灰度中的实例全部鉴权失败。</p>
+</li>
+</ul>
+<h3 id="SM2-签名总线">SM2 签名总线</h3>
+<h4 id="①-请求格式">① 请求格式</h4>
+<pre><code class="language-http">POST /api/open/modules/ping
+x-model-Authorization: base64url(slug).base64url(ts).base64url(nonce).base64url(sign)
+x-model-query-time: 1730000000000
+</code></pre>
+<ul>
+<li><strong>签名串</strong>（四段，<code>\n</code> 连接）：</li>
+</ul>
+<pre><code class="language-text">slug\nts\nnonce\nqueryTime
+</code></pre>
+<pre><code class="language-ts">// server/src/middleware/module-auth.ts
+const raw = String(req.headers[MODEL_AUTH_HEADER] || '').trim();
+const queryTime = String(req.headers[QUERY_TIME_HEADER] || '').trim();
+const v = verifyModelToken(raw, queryTime);   // 四段拆解 + SM2withSM3 验签
+if (!v.ok) return res.status(401).json({ code: 401, message: v.error });
+</code></pre>
+<h4 id="②-三重时间校验">② 三重时间校验</h4>
+<table>
+<thead>
+<tr>
+<th>校验项</th>
+<th>容差</th>
+<th>拦截目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ts</code>（签名内）</td>
+<td>±5 分钟</td>
+<td>重放数天前的旧请求</td>
+</tr>
+<tr>
+<td><code>queryTime</code>（独立头）</td>
+<td>±60 秒</td>
+<td>短窗口内的缓存重放</td>
+</tr>
+<tr>
+<td><code>nonce</code></td>
+<td>5 分钟去重缓存</td>
+<td>同窗口内重复提交</td>
+</tr>
+</tbody>
+</table>
+<h4 id="③-nonce-去重">③ nonce 去重</h4>
+<ul>
+<li><strong>实现</strong>：内存 Map 记录已用 nonce，写入前惰性清理过期项，不额外起定时器。</li>
+</ul>
+<pre><code class="language-ts">const nonceSeen = new Map&lt;string, number&gt;();
+for (const [k, t] of nonceSeen) {
+  if (t &lt; cutoff) nonceSeen.delete(k);
+}
+if (nonceSeen.has(nonceKey)) {
+  return res.status(401).json({ code: 401, message: 'nonce 已使用，疑似重放' });
+}
+nonceSeen.set(nonceKey, Date.now());
+</code></pre>
+<ul>
+<li><strong>坑</strong>：Map 在进程内。多实例部署时各算各的，挡不住跨实例重放，需要换 Redis。</li>
+<li><strong>面试点</strong>：<code>queryTime</code> 独立于签名，是为了让网关单独做时效判断，因此容差可以比 <code>ts</code> 更严（±60 秒 vs ±5 分钟）。</li>
+</ul>
+<h4 id="④-出站调用">④ 出站调用</h4>
+<ul>
+<li><strong>实现</strong>：模块反向调平台（发布工作台入口、读模块 API）时，同样带 SM2 签名；平台侧用模块公钥验签，不依赖共享密钥。</li>
+</ul>
+<pre><code class="language-text">POST /api/open/workbench/publish   模块 → 平台：注册工作台入口
+GET  /api/open/modules/:slug/apis  平台 → 模块：拉模块自述的接口清单
+</code></pre>
+<h3 id="权限模型">权限模型</h3>
+<h4 id="①-权限点目录">① 权限点目录</h4>
+<pre><code class="language-ts">// server/src/services/permissions.ts
+export const PERMISSION_CATALOG: PermissionDef[] = [
+  // developer.*  6 项：模块管理、密钥、文档、入口…
+  // admin.*      9 项：用户、审批、角色、授权…
+];
+</code></pre>
+<ul>
+<li><strong>实现</strong>：权限点集中在目录里声明，角色与直授都引用目录中的 code；新增能力只加一条，不改判定逻辑。</li>
+</ul>
+<h4 id="②-角色与直授">② 角色与直授</h4>
+<pre><code class="language-text">最终权限 = 角色权限（可挂多角色，取并集）
+         ± 直授（对单用户 allow / deny，deny 优先）
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：deny 优先于 allow，是权限系统的安全默认值。allow 是「补一点」，deny 是「紧急刹车」，刹车必须优先。</li>
+</ul>
+<h4 id="③-模块级可见性">③ 模块级可见性</h4>
+<ul>
+<li><strong>实现</strong>：模块声明 <code>required_permission</code>；无权限时列表里不出现，直接访问详情返回 404。</li>
+</ul>
+<pre><code class="language-text">列表：过滤掉无权限的模块（过滤掉，不做置灰）
+详情：404 —— 不暴露「这个模块存在」
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：403 适合「你知道有这个资源但不能动」，404 适合「连存在性都不该知道」。模块市场属于后者。</li>
+</ul>
+<h4 id="④-管理台">④ 管理台</h4>
+<ul>
+<li>
+<p><strong>实现</strong>：用户管理、开发者审批、平台入口增删改、模块管理、角色 CRUD、挂角色、直授/拒权、模块 API 授权审批、文档外链；每个操作对应一个 <code>admin.*</code> 权限点。</p>
+</li>
+<li>
+<p><strong>坑</strong>：管理台最容易漏的是「前端隐藏 + 后端不校验」。每个按钮背后都要有接口级判断。</p>
+</li>
+</ul>
+<h3 id="部署台：项目与成员">部署台：项目与成员</h3>
+<h4 id="①-项目">① 项目</h4>
+<ul>
+<li><strong>用户操作</strong>：developer 角色自助建项目 → 填名称、说明 → 自动成为 owner。</li>
+<li><strong>实现</strong>：项目表 + 成员表；一人可加入多个项目，成员带资源角色。</li>
+</ul>
+<pre><code class="language-text">GET    /api/projects
+POST   /api/projects
+GET    /api/projects/:id
+DELETE /api/projects/:id
+GET    /api/projects/:id/members
+POST   /api/projects/:id/members
+DELETE /api/projects/:id/members/:userId
+</code></pre>
+<h4 id="②-资源角色与模块范围">② 资源角色与模块范围</h4>
+<ul>
+<li><strong>实现</strong>：项目内分 <code>owner</code> / <code>maintainer</code> / <code>member</code>；成员还可被授予「可见模块范围」（<code>moduleScope</code>），只能看到范围内的模块。</li>
+</ul>
+<pre><code class="language-ts">// apps/deploy-api/src/services/project.ts
+export function getProjectRole(...)          // 取当前用户在该项目的角色
+export function canWriteProject(...)         // 写权限判定
+export function canReadProject(...)          // 读权限判定
+export function isProjectOwner(...)
+export function setProjectMemberScope(...)   // 设置可见模块范围
+export function addModuleMember(...)         // 模块级成员
+</code></pre>
+<ul>
+<li><strong>坑</strong>：模块范围的判定要覆盖「列表、详情、部署、日志」四条路径。只过滤列表，直接构造 URL 仍能访问详情。</li>
+</ul>
+<h4 id="③-审批单表">③ 审批单表</h4>
+<ul>
+<li><strong>实现</strong>：所有审批进单表 <code>applications</code>，用 <code>type</code> 区分业务；admin 发起免审并记 <code>auto_approved_by_role</code>。</li>
+</ul>
+<pre><code class="language-text">applications(id, type, applicant_id, target_id, payload, status, approver_id, created_at)
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：审批中心是统一入口，待办需要跨类型查询；按业务分表会让「我的待办」变成多表 UNION。</li>
+</ul>
+<h4 id="④-审计">④ 审计</h4>
+<ul>
+<li><strong>实现</strong>：状态变更写 <code>audit_logs</code>；部署台另有访问日志查询（<code>access-log-query.ts</code>）供排障。</li>
+</ul>
+<pre><code class="language-text">GET /api/audit-logs
+GET /api/projects/:id/logs
+</code></pre>
+<h3 id="部署台：部署流程">部署台：部署流程</h3>
+<h4 id="①-队列与并发">① 队列与并发</h4>
+<ul>
+<li><strong>用户操作</strong>：点「部署」→ 排队 → 看到实时日志 → 完成。</li>
+<li><strong>实现</strong>：单进程队列 + 并发上限；同一 <code>module:env</code> 同时只允许一个部署在跑，其余排队等待。</li>
+</ul>
+<pre><code class="language-ts">// apps/deploy-api/src/services/deploy-worker.ts
+export function enqueueDeployment(deploymentId: string) {
+  if (running.has(deploymentId) || queue.includes(deploymentId)) return;  // 去重
+  queue.push(deploymentId);
+  pump();
+}
+
+function pump() {
+  while (running.size &lt; MAX_CONCURRENT) {
+    const idx = queue.findIndex((id) =&gt; {
+      const dep = getDeployment(id);
+      if (!dep) return true;                    // 无效记录，丢弃
+      const key = `${dep.moduleId}:${dep.env}`;
+      return !activeModuleEnv.has(key);         // 同模块同环境串行
+    });
+    if (idx === -1) break;
+    const id = queue.splice(idx, 1)[0];
+    const dep = getDeployment(id);
+    if (!dep) continue;
+    start(id, `${dep.moduleId}:${dep.env}`);
+  }
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：并发按「模块 + 环境」串行。全局串行会让所有人的部署互相阻塞；完全并发又会同时改同一套容器。</li>
+<li><strong>坑</strong>：<code>enqueueDeployment</code> 必须做入队去重。用户连点两次会产生两条相同部署，第二条必然失败。</li>
+</ul>
+<h4 id="②-取消与恢复">② 取消与恢复</h4>
+<ul>
+<li><strong>实现</strong>：<code>cancelDeployment</code> 通过 <code>AbortController</code> 中断子进程；<code>recoverStaleDeployments</code> 在服务启动时把「卡在 running 但没有进程」的记录标为失败。</li>
+</ul>
+<pre><code class="language-ts">export function cancelDeployment(...)         // 中断执行
+export function getDeploymentLogs(...)        // 拉日志
+export function recoverStaleDeployments(...)  // 启动时清理僵尸记录
+</code></pre>
+<ul>
+<li><strong>坑</strong>：进程被 kill 时 <code>running</code> 集合是内存态，重启后全丢。没有 stale 恢复，数据库里会永久留着「部署中」的记录。</li>
+</ul>
+<h4 id="③-灰度发布">③ 灰度发布</h4>
+<ul>
+<li><strong>用户操作</strong>：正式域名上带一个灰度 Header 即可访问测试版本，不带则走正式版本。</li>
+<li><strong>实现</strong>：nginx 按 Header 值路由；灰度值在配置里维护，生成正则时逐项转义。</li>
+</ul>
+<pre><code class="language-ts">// apps/deploy-api/src/config/gray.ts
+export function grayValuesNginxRegex(): string {
+  return grayConfig.headerValues.map((v) =&gt; escapeRegex(v)).join('|');
+}
+
+function escapeRegex(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&amp;');
+}
+</code></pre>
+<pre><code class="language-ts">export function getGrayReleaseInfo(moduleName: string, prodUrl: string) {
+  const { headerName, recommendedValue, headerValues, versionHeaderName } = grayConfig;
+  return { headerName, headerValue: recommendedValue, headerValues, versionHeaderName,
+    description: `在正式域名上携带灰度 Header 将路由到测试容器，否则走正式版本` };
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：Header 值拼进 nginx 正则前必须转义。值里出现 <code>.</code> 或 <code>|</code> 会改变匹配语义，灰度范围直接失控。</li>
+</ul>
+<h4 id="④-域名绑定">④ 域名绑定</h4>
+<ul>
+<li><strong>实现</strong>：项目维度管理域名，绑定后由部署流程写入反代配置。</li>
+</ul>
+<pre><code class="language-text">GET    /api/projects/:id/domains
+POST   /api/projects/:id/domains
+DELETE /api/projects/:id/domains/:domainId
+</code></pre>
+<ul>
+<li><strong>坑</strong>：删除域名要先摘反代配置再删记录。顺序反了会出现「记录没了、配置还在」，请求继续打到旧容器。</li>
+</ul>
+<h4 id="⑤-环境与配置">⑤ 环境与配置</h4>
+<ul>
+<li><strong>实现</strong>：<code>env-config</code> 按环境存变量；<code>preview</code> 提供预览地址；<code>runs</code> 记录每次执行。</li>
+</ul>
+<pre><code class="language-text">GET /api/projects/:id/env-config
+GET /api/projects/:id/preview
+GET /api/projects/:id/runs
+</code></pre>
+<h3 id="部署台：脚本应用与存储">部署台：脚本应用与存储</h3>
+<h4 id="①-脚本应用">① 脚本应用</h4>
+<ul>
+<li><strong>用户操作</strong>：建一个「脚本应用」→ 填根目录与命令 → 成员可手动触发。</li>
+<li><strong>实现</strong>：根目录必须是绝对路径且落在允许范围内（<code>allowedRoots</code>）；命令拼接用 <code>shellQuote</code> 逐段转义。</li>
+</ul>
+<pre><code class="language-ts">// apps/deploy-api/src/services/script-apps.ts
+export function validateWorkdir(workdir: string): string {
+  const dir = (workdir ?? '').trim();
+  if (!dir) throw new ScriptError('请填写根目录（执行命令时先 cd 到这里）');
+  if (!dir.startsWith('/')) throw new ScriptError('根目录必须是绝对路径');
+  const normalized = normalizePath(dir);
+  const roots = allowedRoots();
+  const ok = roots.some((r) =&gt; normalized === r || normalized.startsWith(`${r}/`));
+  if (!ok) throw new ScriptError(`根目录必须位于允许范围内：${roots.join('、')}`);
+  return normalized;
+}
+
+/** 纯字符串规范化（不触碰文件系统，避免路径不存在时误判） */
+function normalizePath(p: string): string { ... }
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>normalizePath</code> 必须是纯字符串处理，不能用 <code>fs.realpath</code>。路径不存在时 <code>realpath</code> 抛错，会把「合法但尚未创建」的目录判为非法。</li>
+<li><strong>面试点</strong>：允许范围用「等于根 或 以 <code>根/</code> 开头」两个条件。只判前缀，<code>/data-evil</code> 会被 <code>/data</code> 放行。</li>
+</ul>
+<h4 id="②-对象存储">② 对象存储</h4>
+<ul>
+<li><strong>实现</strong>：按模块建 MinIO 桶，凭证按模块签发；支持把历史数据同步进桶，并查看同步进度。</li>
+</ul>
+<pre><code class="language-ts">export function resolveModuleMinioCreds(...)
+export function ensureModuleBucket(...)
+export function syncHistoryDataToBucket(...)
+export function getObjectStorageStatus(...)
+export function listModuleBucketObjects(...)
+</code></pre>
+<pre><code class="language-text">GET  /api/projects/:id/object-storage
+GET  /api/projects/:id/object-storage/credentials
+GET  /api/projects/:id/object-storage/objects
+GET  /api/projects/:id/object-storage/sync
+GET  /api/projects/:id/object-storage/sync/:jobId
+</code></pre>
+<ul>
+<li><strong>坑</strong>：同步任务要能续跑。一次几万条记录的同步中断后从头开始，既慢又会产生重复对象。</li>
+</ul>
+<h4 id="③-数据导出">③ 数据导出</h4>
+<ul>
+<li><strong>实现</strong>：项目数据可导出为 zip（含清单），导出前做权限校验。</li>
+</ul>
+<pre><code class="language-text">GET /api/projects/:id/data-export
+GET /api/projects/:id/data-export.zip
+</code></pre>
+<h3 id="平台联动">平台联动</h3>
+<h4 id="①-工作台入口发布">① 工作台入口发布</h4>
+<ul>
+<li><strong>实现</strong>：模块通过 SM2 签名调主站的内部接口，把入口注册到工作台；主站验签后落库，不需要开发者平台直接写主站库。</li>
+</ul>
+<pre><code class="language-ts">// server/src/routes/workbench-publish.ts —— 模块 → 平台 → 主站（SM2 验签中转）
+</code></pre>
+<h4 id="②-开放-API-清单">② 开放 API 清单</h4>
+<ul>
+<li><strong>实现</strong>：模块自述接口（<code>/api/open/modules/:slug/apis</code>），平台汇总后在文档页展示，并作为授权审批的粒度（整组或单点 <code>group.action</code>）。</li>
+</ul>
+<pre><code class="language-text">GET /api/apis
+GET /api/api-detail
+GET /api/modules
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：授权粒度到「接口」；整模块授权在模块变多后必然过度授权。</li>
+</ul>
+<h3 id="小程序（占位）">小程序（占位）</h3>
+<ul>
+<li><strong>现状</strong>：小程序目前是独立服务（<code>applet.ssemarket.cn</code>），提供目录、版本审核、启动票据、设备订阅；代码在 <a target="_blank" rel="noopener" href="https://github.com/SysuMirror/applet">github.com/SysuMirror/applet</a>。三者合并完成后，本节补写完整实现；当前只保留接口契约与迁移要点。</li>
+<li><strong>迁移计划</strong>：并入开发者平台，作为其中一个模块；届时启动会话、签名验签、目录管理的能力收敛到本平台的权限与审批模型之下。</li>
+<li><strong>迁移期间仍需保持的接口契约</strong>（App 侧依赖）：</li>
+</ul>
+<pre><code class="language-text">POST /v1/launch-tickets       申请一次性票据（60s）
+POST /v1/sessions/exchange    票据换 mp_session Cookie
+GET  /v1/sessions/me          当前会话
+GET  /v1/apps                 小程序目录
+</code></pre>
+<ul>
+<li><strong>坑</strong>：票据只能消费一次，兑换必须用 Redis <code>GETDEL</code> 或数据库条件更新；迁移时若更换会话存储，<code>mp_session</code> 的名称、作用域与 HttpOnly 属性要保持不变，否则已登录的小程序会全部掉线。</li>
+</ul>
+<h3 id="开发者平台-·-面试速答">开发者平台 · 面试速答</h3>
+<ul>
+<li><strong>密钥</strong>：平台只存 SM2 公钥，私钥一次性下发；轮换保留旧公钥灰度期。</li>
+<li><strong>签名</strong>：四段 token（slug / ts / nonce / queryTime），三重时间校验（±5 分钟、±60 秒、nonce 5 分钟去重）。</li>
+<li><strong>权限</strong>：权限点目录 + 角色并集 + 直授，deny 优先；模块无权限时列表不出现、详情 404。</li>
+<li><strong>部署队列</strong>：并发上限 + 同 <code>module:env</code> 串行 + 入队去重 + 启动时清理僵尸记录。</li>
+<li><strong>灰度</strong>：nginx 按 Header 路由，配置值拼正则前必须转义。</li>
+<li><strong>脚本应用</strong>：根目录白名单（等于根或以 <code>根/</code> 开头），路径规范化用纯字符串。</li>
+<li><strong>存储</strong>：按模块建桶与凭证，同步任务可续跑。</li>
+</ul>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本篇已读</span></button><a class="book-btn book-btn-ghost" href="/docs/sse-market/"><i class="fas fa-list"></i> 全部篇目</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/docs/sse-market/join/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一篇</span><strong>08 招聘：双选、答辩与席位</strong></a><a class="book-pager-link next" href="/docs/sse-market/api-platform/"><span class="book-pager-dir">下一篇 <i class="fas fa-arrow-right"></i></span><strong>10 API 平台：兼容与计费</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%99%BB%E5%BD%95%E4%B8%8E%E5%BC%80%E5%8F%91%E8%80%85%E8%BA%AB%E4%BB%BD">登录与开发者身份</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E9%9B%86%E5%B8%82-OAuth-%E7%99%BB%E5%BD%95">① 集市 OAuth 登录</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%BC%80%E5%8F%91%E8%80%85%E7%94%B3%E8%AF%B7">② 开发者申请</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E8%8A%B1%E5%90%8D%E4%B8%8E%E8%B5%84%E6%96%99">③ 花名与资料</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%A8%A1%E5%9D%97%E4%B8%8E%E5%AF%86%E9%92%A5">模块与密钥</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E6%B3%A8%E5%86%8C%E6%A8%A1%E5%9D%97">① 注册模块</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%8F%AA%E5%AD%98%E5%85%AC%E9%92%A5">② 只存公钥</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%AF%86%E9%92%A5%E8%BD%AE%E6%8D%A2">③ 密钥轮换</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#SM2-%E7%AD%BE%E5%90%8D%E6%80%BB%E7%BA%BF">SM2 签名总线</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E8%AF%B7%E6%B1%82%E6%A0%BC%E5%BC%8F">① 请求格式</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E4%B8%89%E9%87%8D%E6%97%B6%E9%97%B4%E6%A0%A1%E9%AA%8C">② 三重时间校验</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-nonce-%E5%8E%BB%E9%87%8D">③ nonce 去重</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E5%87%BA%E7%AB%99%E8%B0%83%E7%94%A8">④ 出站调用</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%9D%83%E9%99%90%E6%A8%A1%E5%9E%8B">权限模型</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E6%9D%83%E9%99%90%E7%82%B9%E7%9B%AE%E5%BD%95">① 权限点目录</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E8%A7%92%E8%89%B2%E4%B8%8E%E7%9B%B4%E6%8E%88">② 角色与直授</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E6%A8%A1%E5%9D%97%E7%BA%A7%E5%8F%AF%E8%A7%81%E6%80%A7">③ 模块级可见性</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E7%AE%A1%E7%90%86%E5%8F%B0">④ 管理台</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E9%83%A8%E7%BD%B2%E5%8F%B0%EF%BC%9A%E9%A1%B9%E7%9B%AE%E4%B8%8E%E6%88%90%E5%91%98">部署台：项目与成员</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E9%A1%B9%E7%9B%AE">① 项目</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E8%B5%84%E6%BA%90%E8%A7%92%E8%89%B2%E4%B8%8E%E6%A8%A1%E5%9D%97%E8%8C%83%E5%9B%B4">② 资源角色与模块范围</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%AE%A1%E6%89%B9%E5%8D%95%E8%A1%A8">③ 审批单表</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E5%AE%A1%E8%AE%A1">④ 审计</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E9%83%A8%E7%BD%B2%E5%8F%B0%EF%BC%9A%E9%83%A8%E7%BD%B2%E6%B5%81%E7%A8%8B">部署台：部署流程</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E9%98%9F%E5%88%97%E4%B8%8E%E5%B9%B6%E5%8F%91">① 队列与并发</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%8F%96%E6%B6%88%E4%B8%8E%E6%81%A2%E5%A4%8D">② 取消与恢复</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E7%81%B0%E5%BA%A6%E5%8F%91%E5%B8%83">③ 灰度发布</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E5%9F%9F%E5%90%8D%E7%BB%91%E5%AE%9A">④ 域名绑定</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E7%8E%AF%E5%A2%83%E4%B8%8E%E9%85%8D%E7%BD%AE">⑤ 环境与配置</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E9%83%A8%E7%BD%B2%E5%8F%B0%EF%BC%9A%E8%84%9A%E6%9C%AC%E5%BA%94%E7%94%A8%E4%B8%8E%E5%AD%98%E5%82%A8">部署台：脚本应用与存储</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E8%84%9A%E6%9C%AC%E5%BA%94%E7%94%A8">① 脚本应用</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8">② 对象存储</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%87%BA">③ 数据导出</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%B9%B3%E5%8F%B0%E8%81%94%E5%8A%A8">平台联动</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%B7%A5%E4%BD%9C%E5%8F%B0%E5%85%A5%E5%8F%A3%E5%8F%91%E5%B8%83">① 工作台入口发布</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E5%BC%80%E6%94%BE-API-%E6%B8%85%E5%8D%95">② 开放 API 清单</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%B0%8F%E7%A8%8B%E5%BA%8F%EF%BC%88%E5%8D%A0%E4%BD%8D%EF%BC%89">小程序（占位）</a></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%BC%80%E5%8F%91%E8%80%85%E5%B9%B3%E5%8F%B0-%C2%B7-%E9%9D%A2%E8%AF%95%E9%80%9F%E7%AD%94">开发者平台 · 面试速答</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>

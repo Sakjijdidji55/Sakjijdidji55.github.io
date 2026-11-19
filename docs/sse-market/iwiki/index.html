@@ -1,0 +1,905 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>04 iWiki：协作、检索与开放 | 迷路的小朋友</title><meta name="author" content="欣冻"><meta name="copyright" content="欣冻"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="软工集市专题 · 04 iWiki：协作、检索与开放">
+<meta property="og:type" content="website">
+<meta property="og:title" content="04 iWiki：协作、检索与开放">
+<meta property="og:url" content="https://sakjijdidji55.github.io/docs/sse-market/iwiki/index.html">
+<meta property="og:site_name" content="迷路的小朋友">
+<meta property="og:description" content="软工集市专题 · 04 iWiki：协作、检索与开放">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://sakjijdidji55.github.io/img/my-icon.png">
+<meta property="article:published_time" content="2026-11-18T00:00:00.000Z">
+<meta property="article:modified_time" content="2026-11-19T00:00:00.000Z">
+<meta property="article:author" content="欣冻">
+<meta property="article:tag" content="博客, 技术, 生活, tanxin, tanxin.me, 吃好喝好, 玩好, 睡好, 迷路的小朋友,tanxin55">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://sakjijdidji55.github.io/img/my-icon.png"><link rel="shortcut icon" href="/img/logo.ico"><link rel="canonical" href="https://sakjijdidji55.github.io/docs/sse-market/iwiki/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '04 iWiki：协作、检索与开放',
+  isHighlightShrink: false,
+  isToc: false,
+  pageType: 'page'
+}</script><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/books.css"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/animate.min.css" media="print" onload="this.media='screen'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="迷路的小朋友" type="application/atom+xml">
+</head><body><div id="web_bg" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/my-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">33</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">56</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">24</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div></div></div><div class="page type-book" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="/img/logo.png" alt="Logo"><span class="site-name">迷路的小朋友</span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/books/"><i class="fa-fw fas fa-book-open"></i><span> 书架</span></a></div><div class="menus_item"><a class="site-page" href="/docs/"><i class="fa-fw fas fa-file-lines"></i><span> 文档</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-archive"></i><span> 归档</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-clock-rotate-left"></i><span> 时间轴</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-user"></i><span> 关于</span></a></div><div class="menus_item"><a class="site-page" href="/bangumis/index.html"><i class="fa-fw fas fa-tv"></i><span> 追番</span></a></div><div class="menus_item"><a class="site-page" href="/comments/"><i class="fa-fw fas fa-envelope"></i><span> 留言板</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><h1 class="title-seo">04 iWiki：协作、检索与开放</h1></header><main class="layout hide-aside" id="content-inner"><div id="page"><div class="page-title">04 iWiki：协作、检索与开放</div><div class="container" id="article-container"><section class="book-reader" data-book-reader data-book="sse-market" data-chapter="iwiki" data-total="14" data-prev="/docs/sse-market/cloud/" data-next="/docs/sse-market/unisso/"><div class="book-reading-bar" data-reading-bar><i></i></div><div class="book-reader-shell"><aside class="book-sidebar" data-book-sidebar><div class="book-sidebar-head"><a class="book-sidebar-title" href="/docs/sse-market/">软工集市专题</a><div class="book-sidebar-sub">14 篇 · 1 小时 30 分钟</div><div class="book-sidebar-progress"><div class="book-progress-track"><i data-sidebar-progress></i></div><span data-sidebar-label>已读 0 / 14</span></div></div><div class="book-filter"><i class="fas fa-search"></i><input type="search" placeholder="筛选篇目..." data-book-filter aria-label="筛选篇目"></div><nav class="book-sidebar-nav" data-book-nav><div class="book-part-group"><div class="book-part-title">前言</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="history"><a class="book-chapter-link" href="/docs/sse-market/history/" data-chapter-link="history"><span class="book-chapter-index">00</span><span class="book-chapter-name">00 历史：从一门课到一组平台</span><span class="book-chapter-time">10′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="overview"><a class="book-chapter-link" href="/docs/sse-market/overview/" data-chapter-link="overview"><span class="book-chapter-index">01</span><span class="book-chapter-name">01 平台体系：三层与节点</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">三条主线</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="main"><a class="book-chapter-link" href="/docs/sse-market/main/" data-chapter-link="main"><span class="book-chapter-index">02</span><span class="book-chapter-name">02 主站：账号、帖子与互动</span><span class="book-chapter-time">16′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="cloud"><a class="book-chapter-link" href="/docs/sse-market/cloud/" data-chapter-link="cloud"><span class="book-chapter-index">03</span><span class="book-chapter-name">03 集市云：一组一容器</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="iwiki"><a class="book-chapter-link is-current" href="/docs/sse-market/iwiki/" data-chapter-link="iwiki" aria-current="page"><span class="book-chapter-index">04</span><span class="book-chapter-name">04 iWiki：协作、检索与开放</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">身份与存储</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="unisso"><a class="book-chapter-link" href="/docs/sse-market/unisso/" data-chapter-link="unisso"><span class="book-chapter-index">05</span><span class="book-chapter-name">05 UniSSO：统一身份</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="imagebed"><a class="book-chapter-link" href="/docs/sse-market/imagebed/" data-chapter-link="imagebed"><span class="book-chapter-index">06</span><span class="book-chapter-name">06 图床：上传、鉴权与存储</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">端与开发者</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="app"><a class="book-chapter-link" href="/docs/sse-market/app/" data-chapter-link="app"><span class="book-chapter-index">07</span><span class="book-chapter-name">07 App：六平台与九种产物</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="join"><a class="book-chapter-link" href="/docs/sse-market/join/" data-chapter-link="join"><span class="book-chapter-index">08</span><span class="book-chapter-name">08 招聘：双选、答辩与席位</span><span class="book-chapter-time">5′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="developer"><a class="book-chapter-link" href="/docs/sse-market/developer/" data-chapter-link="developer"><span class="book-chapter-index">09</span><span class="book-chapter-name">09 开发者平台：权限、部署与小程序</span><span class="book-chapter-time">6′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">能力</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="api-platform"><a class="book-chapter-link" href="/docs/sse-market/api-platform/" data-chapter-link="api-platform"><span class="book-chapter-index">10</span><span class="book-chapter-name">10 API 平台：兼容与计费</span><span class="book-chapter-time">4′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="tts-ai"><a class="book-chapter-link" href="/docs/sse-market/tts-ai/" data-chapter-link="tts-ai"><span class="book-chapter-index">11</span><span class="book-chapter-name">11 TTS 与 AI 研究</span><span class="book-chapter-time">3′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div><div class="book-part-group"><div class="book-part-title">复盘与附录</div><ul class="book-chapter-list"><li class="book-chapter-item" data-chapter-item="interview"><a class="book-chapter-link" href="/docs/sse-market/interview/" data-chapter-link="interview"><span class="book-chapter-index">12</span><span class="book-chapter-name">12 全平台面试速答</span><span class="book-chapter-time">1′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li><li class="book-chapter-item" data-chapter-item="incidents"><a class="book-chapter-link" href="/docs/sse-market/incidents/" data-chapter-link="incidents"><span class="book-chapter-index">13</span><span class="book-chapter-name">13 事故复盘</span><span class="book-chapter-time">9′</span><span class="book-chapter-check" aria-hidden="true"><i class="fas fa-check"></i></span></a></li></ul></div></nav><div class="book-sidebar-foot"><a href="/docs/"><i class="fas fa-arrow-left"></i> 返回文档</a></div></aside><div class="book-main"><div class="book-toolbar"><button type="button" class="book-menu-btn" data-book-menu aria-label="展开目录"><i class="fas fa-bars"></i><span>目录</span></button><div class="book-toolbar-crumb"><a href="/docs/sse-market/">软工集市专题</a><i class="fas fa-angle-right"></i><span>04 iWiki：协作、检索与开放</span></div><button type="button" class="book-mark-btn" data-mark-read aria-pressed="false"><i class="far fa-circle-check"></i><span>标记已读</span></button></div><article class="book-content" data-book-content><div class="book-chapter-heading"><span class="book-chapter-kicker">DOC 04</span><h1>04 iWiki：协作、检索与开放</h1><div class="book-chapter-meta">9 分钟读完 · 3,748 字</div></div><blockquote>
+<p>企业知识库：空间 → 页面树 → 页面正文，支持两种协作模式（Yjs 实时协同 / 普通文档三路合并）、版本快照链、按权限过滤的 RAG 问答、仓库转文档（CodeWiki），并对外提供 MCP 服务。</p>
+<p>仓库：<a target="_blank" rel="noopener" href="https://github.com/SysuMirror/iwiki">github.com/SysuMirror/iwiki</a>。Monorepo：<code>apps/iwiki-api</code>（Express + SQLite）、<code>apps/iwiki-web</code>（Vue 3）、<code>apps/iwiki-mcp</code>（MCP 服务）、<code>packages/sse-ui</code>（设计系统）。后端约 3.7 万行 TypeScript。</p>
+</blockquote>
+<h3 id="空间与页面">空间与页面</h3>
+<h4 id="①-个人空间与共享空间">① 个人空间与共享空间</h4>
+<ul>
+<li><strong>用户操作</strong>：注册后自动拥有个人空间；可建团队共享空间，也可把空间挂到其他空间下形成多级知识库。</li>
+<li><strong>实现</strong>：<code>spaces</code> 表带 <code>parent_id</code> 与 <code>owner_id</code>；个人空间按用户 ID 派生固定 ID（<code>personalSpaceId(userId)</code>），发布共享的源只能是自己的个人空间。</li>
+<li><strong>关键代码</strong></li>
+</ul>
+<pre><code class="language-ts">// src/services/page-publish.ts —— 只有「个人空间 → 共享空间」这一条发布路径
+export function publishPageToSpace(
+  pageId: string, userId: string, targetSpaceId: string,
+  visibility?: Visibility, allowedUserIds?: string[]
+) {
+  const row = db.prepare('SELECT * FROM pages WHERE id = ?').get(pageId);
+  if (!row) throw new Error('文档不存在');
+  const page = mapPage(row);
+  const sourceRow = getSpaceRow(page.spaceId);
+  if (!sourceRow) throw new Error('源空间不存在');
+  const sourceSpace = mapSpace(sourceRow);
+  if (page.spaceId !== personalSpaceId(userId)) { /* 拒绝：源必须是本人个人空间 */ }
+  ...
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：发布时改写同一条 <code>pages</code> 记录的 <code>space_id</code> 并调整可见性，不复制数据，因此发布后旧链接仍然有效。</li>
+</ul>
+<h4 id="②-目录树与移动">② 目录树与移动</h4>
+<ul>
+<li><strong>用户操作</strong>：新建、重命名、拖拽移动、删除页面；目录实时刷新。</li>
+<li><strong>实现</strong>：<code>pages.parent_id</code> 自引用建树，<code>ON DELETE SET NULL</code> 保证删父节点不会级联删子节点（子节点上提为根）；<code>idx_pages_space</code> 支撑按空间过滤。</li>
+<li><strong>关键代码</strong></li>
+</ul>
+<pre><code class="language-sql">-- src/db/init.ts
+CREATE TABLE IF NOT EXISTS pages (
+  id TEXT PRIMARY KEY,
+  space_id TEXT NOT NULL REFERENCES spaces(id) ON DELETE CASCADE,
+  parent_id TEXT REFERENCES pages(id) ON DELETE SET NULL,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL DEFAULT '',
+  visibility TEXT NOT NULL DEFAULT 'public',
+  editor_id TEXT NOT NULL REFERENCES users(id),
+  view_count INTEGER NOT NULL DEFAULT 0,
+  updated_at TEXT NOT NULL,
+  allow_all_edit INTEGER NOT NULL DEFAULT 0,
+  published INTEGER NOT NULL DEFAULT 1
+);
+CREATE INDEX IF NOT EXISTS idx_pages_space ON pages(space_id);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>ON DELETE SET NULL</code> 与 <code>ON DELETE CASCADE</code> 的选择决定了删除语义。目录里删父节点，子节点应当上提，所以这里用 SET NULL。</li>
+<li><strong>实现补充</strong>：移动后调用 <code>invalidateCatalogAfterMove</code> 让目录缓存失效，避免把旧树结构继续发给前端。</li>
+</ul>
+<h4 id="③-创建页面">③ 创建页面</h4>
+<ul>
+<li><strong>用户操作</strong>：在空间里点「新建」，填标题后进入编辑器。</li>
+<li><strong>实现</strong>：校验空间存在 → 校验有权在该空间建页 → 父页面必须属于同一空间且可见 → 落库并返回页面对象。</li>
+</ul>
+<pre><code class="language-ts">// src/services/page-create.ts
+export function createPageRecord(input: CreatePageInput): Page {
+  const spaceId = input.spaceId?.trim();
+  const title = input.title?.trim();
+  if (!spaceId || !title) pageCreateError('缺少 spaceId 或 title', 400);
+
+  const spaceRow = getSpaceRow(spaceId);
+  if (!spaceRow) pageCreateError('空间不存在', 404);
+  const space = mapSpace(spaceRow);
+  if (!canCreateInSpace(space, input.actorUserId, input.actorUserRole)) {
+    pageCreateError('无权在该空间创建文档', 403);
+  }
+
+  const parentId = input.parentId ?? null;
+  if (parentId) {
+    const parentRow = db.prepare('SELECT * FROM pages WHERE id = ?').get(parentId);
+    if (!parentRow || parentRow.space_id !== spaceId || !canViewPage(...)) {
+      /* 父页面不属于该空间或不可见 → 拒绝，避免构造出跨空间挂载 */
+    }
+  }
+  ...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：父页面必须校验「同空间」。只校验存在性，可以让 A 空间的页面挂到 B 空间的树下，目录渲染时越权泄露标题。</li>
+</ul>
+<h4 id="④-空间级联删除">④ 空间级联删除</h4>
+<ul>
+<li><strong>用户操作</strong>：删除空间（需管理员权限），其下所有子空间与页面一并清除。</li>
+<li><strong>实现</strong>：先收集子树空间 ID 与页面 ID，再在一个事务里删 RAG 分块、删页面、删挂在空间上的收集记录，最后删空间。</li>
+</ul>
+<pre><code class="language-ts">// src/services/space-tree.ts
+export function deleteSpaceCascade(spaceId: string): { spaceIds: string[]; pageIds: string[] } {
+  const spaceIds = collectSpaceSubtreeIds(spaceId);
+  const pageIds = collectSpacePageIds(spaceIds);
+  assertManagedPagesCanPurge(pageIds);
+  assertManagedSpacesCanPurge(spaceIds);
+  const placeholders = spaceIds.map(() =&gt; '?').join(',');
+  const tx = db.transaction(() =&gt; {
+    for (const pageId of pageIds) deletePageRagChunks(pageId);
+    if (pageIds.length) {
+      const ph = pageIds.map(() =&gt; '?').join(',');
+      db.prepare(`DELETE FROM pages WHERE id IN (${ph})`).run(...pageIds);
+    }
+    // 收集空间被删时，挂在它上面的收集记录一并清理（外键约束 + 避免空壳）
+    db.prepare(`DELETE FROM assignment_collections WHERE collection_space_id IN (${placeholders})`).run(...);
+  });
+  tx();
+  ...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：向量分块必须显式删除。SQLite 表有外键级联，向量索引表没有，漏删会留下「搜得到但打不开」的孤儿向量。</li>
+<li><strong>面试点</strong>：级联删除用「收集 ID → 单事务删除」；数据库级联覆盖不到向量库与文件存储，因为它们不在同一个事务域内。</li>
+</ul>
+<h4 id="⑤-空间配额">⑤ 空间配额</h4>
+<ul>
+<li><strong>用户操作</strong>：管理员给空间设页数 / 存储上限，超限后禁止新建。</li>
+<li><strong>实现</strong>：<code>space_quotas</code> 记录上限；<code>space-quota.ts</code> 在建页、上传时校验；根空间汇总子树用量（<code>countVisiblePagesByRoot</code>）。</li>
+</ul>
+<pre><code class="language-ts">// src/services/space-tree.ts
+export function countVisiblePagesByRoot(rootId: string): number { ... }
+// src/services/space-quota.ts —— 写入前检查配额，超限返回 403 并给出当前用量
+</code></pre>
+<h3 id="编辑、版本与冲突">编辑、版本与冲突</h3>
+<h4 id="①-两种协作模式">① 两种协作模式</h4>
+<ul>
+<li><strong>用户操作</strong>：无感知。新文档默认实时协同；把文档切为「普通文档」后变为单人编辑 + 保存时合并。</li>
+<li><strong>实现</strong>：<code>pages.collab_mode</code> 两个取值 —— <code>collab</code>（Yjs 实时协同，最后发布者为准）与 <code>normal</code>（单人编辑，保存时三路合并）。</li>
+</ul>
+<pre><code class="language-sql">-- src/db/init.ts —— 迁移时补列，默认 'collab'
+ALTER TABLE pages ADD COLUMN collab_mode TEXT NOT NULL DEFAULT 'collab';
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：两种模式并存是按文档类型分工 —— 长文档、多人同时改的场景用 CRDT；表格/PPT 这类结构化内容用单人编辑 + 合并，避免 CRDT 处理结构化属性的复杂度。</li>
+</ul>
+<h4 id="②-本地草稿与云草稿">② 本地草稿与云草稿</h4>
+<ul>
+<li><strong>用户操作</strong>：编辑时自动保存；关掉浏览器再打开，草稿还在；换设备也能接上。</li>
+<li><strong>实现</strong>：本地草稿（浏览器）+ 云草稿 <code>page_drafts</code>，主键是 <code>(page_id, user_id)</code>，同一用户对同一页只保留一份。</li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS page_drafts (
+  page_id TEXT NOT NULL REFERENCES pages(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES users(id),
+  title TEXT NOT NULL,
+  content TEXT NOT NULL DEFAULT '',
+  visibility TEXT NOT NULL DEFAULT 'public',
+  allowed_user_ids TEXT NOT NULL DEFAULT '[]',
+  updated_at TEXT NOT NULL,
+  PRIMARY KEY (page_id, user_id)
+);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：云草稿按「页面 + 用户」存，不按「页面」存。否则两人同时编辑会互相覆盖草稿。</li>
+</ul>
+<h4 id="③-版本链：快照-反向-diff">③ 版本链：快照 + 反向 diff</h4>
+<ul>
+<li><strong>用户操作</strong>：看历史版本、对比、回滚。</li>
+<li><strong>实现</strong>：<code>wiki_revision</code> 每版存一条，<code>is_snapshot</code> 标记全量快照，其余存 <code>reverse_diff</code>（反向差分，从后一版回退到这一版）；<code>expire_mark</code> 供清理任务识别可回收版本。</li>
+</ul>
+<pre><code class="language-sql">-- src/db/init.ts
+CREATE TABLE IF NOT EXISTS wiki_revision (
+  rev_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  page_id TEXT NOT NULL REFERENCES pages(id) ON DELETE CASCADE,
+  rev_no INTEGER NOT NULL,
+  editor_uid TEXT NOT NULL,
+  is_snapshot INTEGER NOT NULL DEFAULT 0,
+  full_content BLOB NULL,
+  reverse_diff BLOB NULL,
+  config_snapshot TEXT NULL,   -- 结构化页面（表格/流程图/PPT/画布）的配置，与正文同版本
+  create_ts INTEGER NOT NULL,
+  expire_mark INTEGER NOT NULL DEFAULT 0,
+  UNIQUE(page_id, rev_no)
+);
+CREATE INDEX IF NOT EXISTS idx_rev_page_no ON wiki_revision(page_id, rev_no);
+CREATE INDEX IF NOT EXISTS idx_rev_expire ON wiki_revision(expire_mark);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：存「反向 diff」：回滚的频率远低于前进，反向 diff 让「从最新版回退到任意历史版」变成顺序重放，不必先重建全量再算差。</li>
+<li><strong>面试点</strong>：<code>config_snapshot</code> 与正文同版本落库。表格、PPT 的正文只是占位，真正的数据在配置里；只存正文会导致回滚后格式全丢。</li>
+</ul>
+<h4 id="④-三路合并（normal-模式）">④ 三路合并（normal 模式）</h4>
+<ul>
+<li><strong>用户操作</strong>：两人改同一篇普通文档，后保存的人看到冲突标记，逐块选择。</li>
+<li><strong>实现</strong>：<code>node-diff3</code> 的 <code>diff3Merge(ours, base, theirs)</code>；无冲突区块直接拼接，冲突区块包成 Git 风格标记并记录行号区间。</li>
+</ul>
+<pre><code class="language-ts">// src/services/collab/merge-service.ts
+/** 三路合并：base=打开时基线, ours=用户草稿, theirs=线上最新 */
+export function threeWayMerge(base: string, ours: string, theirs: string): MergeResult {
+  const chunks = diff3Merge(splitLines(ours), splitLines(base), splitLines(theirs));
+  const mergedLines: string[] = [];
+  const conflictList: ConflictItem[] = [];
+  let lineNo = 1;
+
+  for (const chunk of chunks) {
+    if ('ok' in chunk &amp;&amp; chunk.ok) {
+      mergedLines.push(...chunk.ok);
+      lineNo += chunk.ok.length;
+      continue;
+    }
+    if ('conflict' in chunk &amp;&amp; chunk.conflict) {
+      const { a, b } = chunk.conflict;
+      const startLine = lineNo;
+      mergedLines.push(CONFLICT_START);
+      mergedLines.push(...a);
+      mergedLines.push(CONFLICT_SEP);
+      mergedLines.push(...b);
+      mergedLines.push(CONFLICT_END);
+      const blockLen = 1 + a.length + 1 + b.length + 1;
+      conflictList.push({ startLine, endLine: startLine + blockLen - 1, oursContent: [...a], theirsContent: [...b] });
+      lineNo += blockLen;
+    }
+  }
+  return { hasConflict: conflictList.length &gt; 0, mergedText: joinLines(mergedLines), conflictList };
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：合并必须按行切。按字符切会让中文段落的冲突区间错位，前端无法定位到具体块。</li>
+<li><strong>面试点</strong>：<code>hasConflictMarkers</code> 单独导出，用于判断「用户手改的正文里是否残留冲突标记」，防止把 <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> 直接发布出去。</li>
+</ul>
+<h4 id="⑤-编辑锁">⑤ 编辑锁</h4>
+<ul>
+<li><strong>用户操作</strong>：普通文档被他人编辑时，会提示「XX 正在编辑」。</li>
+<li><strong>实现</strong>：<code>wiki_edit_lock</code> 以 <code>page_id</code> 唯一，记录持有者与过期时间；拿不到锁则进入只读。</li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS wiki_edit_lock (
+  lock_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  page_id TEXT NOT NULL UNIQUE REFERENCES pages(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL,
+  expire_ts INTEGER NOT NULL
+);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：锁必须带过期时间。浏览器崩溃不会发解锁请求，没有 TTL 的锁会把文档永久锁死。</li>
+</ul>
+<h4 id="⑥-冲突草稿">⑥ 冲突草稿</h4>
+<ul>
+<li><strong>用户操作</strong>：合并冲突后暂时离开，草稿和冲突块都保留，回来继续处理。</li>
+<li><strong>实现</strong>：<code>wiki_temp_draft</code> 存 <code>base_rev_no</code> 与冲突内容（<code>conflict_draft</code> + <code>conflict_json</code>），按 <code>(page_id, user_id)</code> 唯一，带过期时间。</li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS wiki_temp_draft (
+  draft_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  page_id TEXT NOT NULL, user_id TEXT NOT NULL,
+  base_rev_no INTEGER NOT NULL,
+  conflict_draft BLOB NOT NULL, conflict_json BLOB NOT NULL,
+  create_ts INTEGER NOT NULL, expire_ts INTEGER NOT NULL,
+  UNIQUE(page_id, user_id)
+);
+CREATE INDEX IF NOT EXISTS idx_draft_expire ON wiki_temp_draft(expire_ts);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>base_rev_no</code> 必须一起存。只存冲突文本，下次打开时无法判断「线上又前进了几版」。</li>
+</ul>
+<h4 id="⑦-Yjs-实时协同">⑦ Yjs 实时协同</h4>
+<ul>
+<li><strong>用户操作</strong>：多人同时打开同一篇文档，光标与编辑实时同步。</li>
+<li><strong>实现</strong>：服务端持有 Yjs 文档二进制状态 <code>yjs_docs.ydoc_state</code>，并用 <code>base_rev_no</code> 记录「这份快照对应哪个版本」。开房时先决定种子来源：信任快照、用版本链重建，或拒绝。</li>
+</ul>
+<pre><code class="language-ts">// src/collab/yjs-server.ts
+export function decideRoomSeed(input: {
+  storedBaseRevNo: number | null;
+  snapshotText: string;
+  hasSnapshot: boolean;
+  latestRevNo: number;
+  latestText: string | null;
+}): RoomSeedDecision {
+  if (input.latestText === null) return { action: 'refuse', baseRevNo: null, latestText: null };
+  if (!input.hasSnapshot) {
+    return { action: 'seed-from-chain', baseRevNo: input.latestRevNo, latestText: input.latestText };
+  }
+  const same =
+    normalizeMarkdownContent(input.snapshotText) === normalizeMarkdownContent(input.latestText);
+  // 旧行 base 可能为 null：靠正文比对兜底
+  if (input.storedBaseRevNo === input.latestRevNo || same) {
+    return { action: 'trust-snapshot', baseRevNo: input.latestRevNo, latestText: input.latestText };
+  }
+  return { action: 'replace-with-chain', baseRevNo: input.latestRevNo, latestText: input.latestText };
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：快照可能落后于版本链（进程崩在落盘之前）。所以开房必须先比对 <code>base_rev_no</code> 与最新版本号，再用正文归一化比对兜底，不能无条件信任 BLOB。</li>
+<li><strong>面试点</strong>：<code>collab_mode='normal'</code> 的文档不给 editor 权限（<code>return page.collabMode === 'normal' ? 'viewer' : 'editor'</code>），避免 CRDT 与三路合并同时作用于同一篇文档。</li>
+</ul>
+<h3 id="权限体系">权限体系</h3>
+<h4 id="①-可见性模型">① 可见性模型</h4>
+<ul>
+<li><strong>用户操作</strong>：文档设为公开 / 私密 / 指定成员 / 团队可见；空间级另有「所有人可编辑」开关。</li>
+<li><strong>实现</strong>：<code>pages.visibility</code> + <code>page_allowed_users</code>（页级白名单）+ <code>space_allowed_users</code>（空间级白名单）+ <code>getAllowedPageTeams</code>（团队可见）；<code>allow_all_edit</code> 控制编辑权限是否放开。</li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS page_allowed_users (
+  page_id TEXT NOT NULL REFERENCES pages(id) ON DELETE CASCADE,
+  user_id TEXT NOT NULL REFERENCES users(id),
+  PRIMARY KEY (page_id, user_id)
+);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：白名单表要建 <code>(page_id, user_id)</code> 复合主键。只建自增 ID 时，重复授权会插入多行，权限查询结果集膨胀。</li>
+</ul>
+<h4 id="②-权限计算与批量查询">② 权限计算与批量查询</h4>
+<ul>
+<li><strong>用户操作</strong>：目录、搜索、AI 问答都只返回「我可见」的内容。</li>
+<li><strong>实现</strong>：<code>getAllowedUserIdsByPage(pageIds)</code> 一次查出多页的白名单，避免逐页查库；查询按 <code>chunkIds</code> 分批，绕过 SQLite 单语句变量上限。</li>
+</ul>
+<pre><code class="language-ts">// src/services/permission.ts
+export function getAllowedUserIdsByPage(pageIds?: string[]): Map&lt;string, string[]&gt; {
+  const map = new Map&lt;string, string[]&gt;();
+  const rows = (pageIds
+    ? chunkIds(pageIds).flatMap((ids) =&gt;
+        db.prepare(
+          `SELECT page_id, user_id FROM page_allowed_users WHERE page_id IN (${ids.map(() =&gt; '?').join(',')})`
+        ).all(...ids) as { page_id: string; user_id: string }[]
+      )
+    : db.prepare('SELECT page_id, user_id FROM page_allowed_users').all()) as { page_id: string; user_id: string }[];
+  for (const r of rows) {
+    const list = map.get(r.page_id) ?? [];
+    list.push(r.user_id);
+    map.set(r.page_id, list);
+  }
+  ...
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：<code>IN (...)</code> 的占位符数量有上限（SQLite 默认 999），所以 <code>chunkIds</code> 分批。批量查询不比分批更慢，但会直接报错。</li>
+</ul>
+<h4 id="③-团队与加入策略">③ 团队与加入策略</h4>
+<ul>
+<li><strong>用户操作</strong>：团队可设「免审批加入 / 需审批 / 关闭加入」；申请后由团队管理员处理。</li>
+<li><strong>实现</strong>：<code>teams.join_mode</code> 三态；<code>joinOrApply</code> 按模式分流 —— <code>open</code> 直接建成员关系并通知，<code>approval</code> 建待审记录（已存在则复用），<code>closed</code> 直接拒绝。</li>
+</ul>
+<pre><code class="language-ts">// src/services/team-join.ts
+export function joinOrApply(team: TeamRow, user: { id: string; name: string }, message = ''): JoinOutcome {
+  if (isTeamMember(team.id, user.id)) throw new Error('你已经是该团队成员');
+  const mode = normalizeJoinMode(team.join_mode, 'approval');
+  if (mode === 'closed') throw new Error('该团队未开放自助加入，请联系管理员添加');
+  if (mode === 'open') {
+    addTeamMember(team.id, user.id, 'member', null);
+    notifyJoined(user.id, team.id, team.name || '团队', '自助加入', 'member');
+    return { status: 'joined' };
+  }
+  const existing = findPendingJoinRequest(team.id, user.id);
+  if (existing) { /* 复用待审记录，不重复创建 */ }
+  ...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>normalizeJoinMode</code> 要给默认值 <code>approval</code>。历史数据缺字段时，默认放行等于把团队直接公开。</li>
+</ul>
+<h4 id="④-访问申请">④ 访问申请</h4>
+<ul>
+<li><strong>实现</strong>：<code>access_requests</code> 记录申请，<code>access_grants</code> 记录授权结果，两者分离 —— 申请可以有多轮，授权是最终态。</li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS access_requests (...);  -- 申请：谁、对什么、理由、状态
+CREATE TABLE IF NOT EXISTS access_grants   (...);  -- 授权：最终给到的权限与期限
+</code></pre>
+<h4 id="⑤-审计">⑤ 审计</h4>
+<ul>
+<li><strong>实现</strong>：<code>audit_logs</code> 追加写，记录操作者、动作、对象；管理台与 API 调用都写。</li>
+</ul>
+<pre><code class="language-ts">// src/services/audit-log.ts —— record(actorId, action, target, detail)
+</code></pre>
+<h3 id="评论与批注">评论与批注</h3>
+<h4 id="①-页面评论与回复">① 页面评论与回复</h4>
+<ul>
+<li><strong>用户操作</strong>：页面底部评论、回复某条评论；文档作者可设评论上限、关闭评论。</li>
+<li><strong>实现</strong>：<code>page_comments</code> 单表带 <code>parent_id</code> 做两级；<code>page_comment_settings</code> 存每页开关与上限；上限有硬边界。</li>
+</ul>
+<pre><code class="language-ts">// src/services/page-comments.ts
+export const DEFAULT_MAX_COMMENTS = ...; export const MIN_MAX_COMMENTS = ...; export const MAX_MAX_COMMENTS = ...;
+export const DEFAULT_MAX_ANNOTATIONS = ...; export const MIN_MAX_ANNOTATIONS = ...; export const MAX_MAX_ANNOTATIONS = ...;
+</code></pre>
+<ul>
+<li><strong>坑</strong>：上限必须有上下界。只校验「不超过用户设的值」，用户设 1e9 就等于没有上限。</li>
+</ul>
+<h4 id="②-段评（批注）">② 段评（批注）</h4>
+<ul>
+<li><strong>用户操作</strong>：选中一段文字 → 加批注 → 批注挂在选区上，正文改动后仍能定位。</li>
+<li><strong>实现</strong>：<code>page_annotations</code> 存 <code>quote</code>（选中的原文）、<code>prefix</code> / <code>suffix</code>（前后文）、<code>start_offset</code> / <code>end_offset</code>（位置）、<code>anchor_json</code>（结构化锚点）。</li>
+</ul>
+<pre><code class="language-ts">// src/services/page-comments.ts
+export function createAnnotation(input: AnnotationInput, publisherId: string, viewerId: string) {
+  const id = `ann-${nanoid(10)}`;
+  db.prepare(
+    `INSERT INTO page_annotations
+       (id, page_id, comment_id, user_id, quote, prefix, suffix, start_offset, end_offset, body, anchor_json, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+  ).run(id, input.pageId, input.commentId ?? null, input.userId, input.quote, input.prefix ?? '',
+        input.suffix ?? '', Math.trunc(input.startOffset ?? -1), Math.trunc(input.endOffset ?? -1),
+        input.body ?? '', ...);
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：只存 offset 不够 —— 正文一改就错位。所以要同时存 <code>quote + prefix + suffix</code>，offset 失效时用文本重新定位（锚点降级策略）。</li>
+<li><strong>坑</strong>：<code>startOffset</code> 用 <code>-1</code> 表示未知，不能默认 0。默认 0 会让所有降级批注都堆到文档开头。</li>
+</ul>
+<h4 id="③-评论与批注互相引用">③ 评论与批注互相引用</h4>
+<ul>
+<li><strong>实现</strong>：批注可选带 <code>comment_id</code>，把「一条评论」与「一段文字」关联；列表接口分别返回可见批注与评论。</li>
+</ul>
+<h3 id="检索与-AI">检索与 AI</h3>
+<h4 id="①-索引：切块入库">① 索引：切块入库</h4>
+<ul>
+<li><strong>用户操作</strong>：发布文档后，AI 问答即可检索到它。</li>
+<li><strong>实现</strong>：<code>indexPage</code> 先确认「当前内容仍是最新版本」，再删旧块、切块、向量化入库；用 <code>latest_rev_no</code> 与正文双重比对，防止旧快照覆盖新分块。</li>
+</ul>
+<pre><code class="language-ts">// src/services/rag-index.ts
+export async function indexPage(pageId: string, title: string, content: string): Promise&lt;number&gt; {
+  const readCurrent = () =&gt; db.prepare('SELECT title,content,latest_rev_no,deleted_at FROM pages WHERE id=?').get(pageId);
+  const source = readCurrent();
+  if (!source || source.deleted_at || !isRagVectorConfigured()) return 0;
+  if (isManagedIndex(pageId)) { title = source.title; content = source.content; }
+  else if (title !== source.title || content !== source.content) return 0;
+  const isCurrent = () =&gt; { const current = readCurrent();
+    return Boolean(current &amp;&amp; !current.deleted_at &amp;&amp; current.title === source.title
+      &amp;&amp; current.content === source.content &amp;&amp; current.latest_rev_no === source.latest_rev_no); };
+  // Superseded snapshots must never remove newer chunks or serialize obsolete shared content.
+  if (!isCurrent()) return 0;
+  deletePageRagChunks(pageId);
+  ...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：并发索引同一页时，旧任务可能在新任务之后落库，把新块删掉。所以写入前必须再确认一次版本号，不一致就放弃。</li>
+</ul>
+<h4 id="②-混合检索：向量-关键词">② 混合检索：向量 + 关键词</h4>
+<ul>
+<li><strong>用户操作</strong>：问一句话，返回相关文档片段。</li>
+<li><strong>实现</strong>：向量可用时走向量召回，异常时降级为 BM25 关键词召回；两条路径共用同一套权限过滤。</li>
+</ul>
+<pre><code class="language-ts">// src/services/ai-rag.ts
+export async function retrieveForQuestion(userId: string, question: string, options: RetrieveOptions = {}) {
+  if (isRagVectorConfigured()) {
+    try {
+      return await retrieveWithVectors(userId, question, options);
+    } catch (e) {
+      console.warn('[rag] vector retrieve failed, fallback keyword:', e);
+    }
+  }
+  return retrieveWithKeywords(userId, question, options);
+}
+</code></pre>
+<pre><code class="language-ts">// src/services/rag-index.ts —— KNN 在 sqlite-vec 扩展上做，且限定在可见页集合内
+export function searchChunksKnn(pageIds: string[], queryVector: number[], k: number): string[] {
+  if (!pageIds.length || !queryVector.length) return [];
+  if (!isVec0Available() || !hasVec0Table()) return [];
+  const all: { rowid: number; distance: number }[] = [];
+  for (const ids of chunkIds(pageIds)) {
+    const pagePlaceholders = ids.map(() =&gt; '?').join(',');
+    const vecRows = db.prepare(`SELECT rowid, distance ...`).all(...);
+  }
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：KNN 的候选集先按可见页过滤再算距离。反过来（先全库 KNN 再过滤）会既浪费算力，又可能因过滤后数量不足而漏召回。</li>
+<li><strong>坑</strong>：向量扩展不可用时要静默降级。直接抛错会让「向量服务没配」变成「整个问答不可用」。</li>
+</ul>
+<h4 id="③-提示词与无结果兜底">③ 提示词与无结果兜底</h4>
+<ul>
+<li><strong>实现</strong>：无召回时，系统提示明确要求回答「知识库中没有找到相关内容」，不编造。</li>
+</ul>
+<pre><code class="language-ts">// src/services/ai-rag.ts
+export function buildRagSystemPrompt(contextBlocks: string[]) {
+  if (!contextBlocks.length) {
+    return `你是 sse-iwiki 的智能助手，基于知识库文档回答用户问题。
+
+本次检索**未找到**与问题相关的文档片段。请如实告知用户「知识库中没有找到相关内容」，可以建议用户换个说法或补充关键词，但不要凭空编造答案。回答使用简体中文。`;
+  }
+  const docs = contextBlocks.join('\n\n---\n\n');
+  ...
+}
+</code></pre>
+<h4 id="④-文件类知识源">④ 文件类知识源</h4>
+<ul>
+<li><strong>用户操作</strong>：上传 PDF / 课件，AI 也能基于它回答。</li>
+<li><strong>实现</strong>：<code>rag_files</code> 以文件内容 SHA 为主键去重，记录 <code>ocr_state</code> / <code>ocr_task</code> / <code>attempts</code>，走 OCR 队列把扫描件转文本后再切块；<code>file_page_texts</code> 存逐页文本。</li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS rag_files (
+  file_sha TEXT PRIMARY KEY, mime TEXT NOT NULL DEFAULT '', ext TEXT NOT NULL DEFAULT '',
+  origin TEXT NOT NULL DEFAULT 'course', store_key TEXT NOT NULL DEFAULT '',
+  source_page TEXT, display_name TEXT NOT NULL DEFAULT '', size_bytes INTEGER NOT NULL DEFAULT 0,
+  page_count INTEGER, ocr_state TEXT NOT NULL DEFAULT 'pending', ocr_error TEXT,
+  ocr_task TEXT, attempts INTEGER NOT NULL DEFAULT 0,
+  updated_at TEXT NOT NULL, created_at TEXT NOT NULL
+);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：用内容 SHA 做主键，同一份文件被多次上传只索引一次；<code>attempts</code> 用于限制 OCR 重试，避免坏文件无限重排。</li>
+</ul>
+<h4 id="⑤-模型配置">⑤ 模型配置</h4>
+<ul>
+<li><strong>实现</strong>：<code>ai-models.ts</code> / <code>ai-custom-endpoints.ts</code> 管理模型与自定义 OpenAI 兼容端点；<code>secret-crypto.ts</code> 做凭证加密，<code>secret-migration.ts</code> 负责密钥轮换时的存量迁移。</li>
+</ul>
+<h3 id="CodeWiki">CodeWiki</h3>
+<h4 id="①-任务与队列">① 任务与队列</h4>
+<ul>
+<li><strong>用户操作</strong>：粘贴 Git 地址 → 选模型 → 提交 → 看进度与排队位次 → 完成后得到一套文档。</li>
+<li><strong>实现</strong>：<code>code_wikis</code> 主任务表 + <code>code_wiki_jobs</code> 阶段任务表 + <code>code_wiki_files</code> 结果文件表；<code>code-wiki-queue.ts</code> 控并发，<code>code-wiki-quota.ts</code> 与 <code>code_wiki_quota_requests</code> 控配额与提额申请。</li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS code_wikis (...);        -- 任务：仓库、模型、状态、进度
+CREATE TABLE IF NOT EXISTS code_wiki_jobs (...);    -- 阶段任务
+CREATE TABLE IF NOT EXISTS code_wiki_files (...);   -- 产出的文档文件
+CREATE TABLE IF NOT EXISTS code_wiki_pro_usage (...);-- 用量
+</code></pre>
+<h4 id="②-流水线">② 流水线</h4>
+<ul>
+<li><strong>实现</strong>：<code>runCodeWikiPipeline(id, mode)</code> 内按阶段推进（拉取 → 过滤 → 探索 → 生成 → 审校 → 落文档），<code>mode</code> 区分首次生成与增量更新；每次推进都写进度并打心跳，供前端轮询。</li>
+</ul>
+<pre><code class="language-ts">// src/services/code-wiki-pipeline.ts
+export async function runCodeWikiPipeline(id: string, mode: 'generate' | 'update', opts: PipelineRuntimeOpts = {}) {
+  const row = getCodeWikiRow(id);
+  if (!row) return;
+  const work = getCodeWikiWorkDir(id);
+  const repoDir = join(work, 'repo');
+  const beat = () =&gt; { opts.onHeartbeat?.(); };
+  let modelId: string;
+  try {
+    modelId = resolveCodeWikiModelId(row.model_id, { bypassUserAccess: true });
+  } catch (e) {
+    updateCodeWikiProgress(id, { status: 'failed', progress: 100, stageMessage: '失败' });
+    ...
+  }
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：<code>resolveCodeWikiModelId</code> 用 <code>bypassUserAccess</code>，因为任务可能在提交者失去模型权限之后才执行。若不绕过，历史任务会因权限变更随机失败。</li>
+</ul>
+<h4 id="③-检查点与断点续跑">③ 检查点与断点续跑</h4>
+<ul>
+<li>
+<p><strong>实现</strong>：<code>code-wiki-checkpoint.ts</code> 把已完成阶段写入检查点；进程重启后从检查点继续，不重复拉仓库与重复调用模型。</p>
+</li>
+<li>
+<p><strong>面试点</strong>：长任务的成本主要在模型调用。检查点按阶段存，重跑代价从「整条流水线」降到「最后一个阶段」。</p>
+</li>
+</ul>
+<h4 id="④-探索与审校">④ 探索与审校</h4>
+<ul>
+<li><strong>实现</strong>：<code>code-wiki-explore.ts</code> 负责让模型决定读哪些文件（按需读取文件，不全量塞入），<code>code-wiki-reviewer.ts</code> 负责审校产出，<code>code-wiki-filter.ts</code> 过滤无关文件。</li>
+</ul>
+<h3 id="开放能力">开放能力</h3>
+<h4 id="①-API-Token">① API Token</h4>
+<ul>
+<li><strong>用户操作</strong>：个人设置里创建 Token，脚本用它调接口。</li>
+<li><strong>实现</strong>：前缀 <code>API_TOKEN_PREFIX</code> 标识类型，随机 24 字节；每个用户最多 <code>MAX_ACTIVE_TOKENS_PER_USER</code> 个有效 Token，超出时报错并要求先吊销。</li>
+</ul>
+<pre><code class="language-ts">// src/services/api-token.ts
+export function createApiToken(userId: string, name: string, scope: ApiTokenScope = 'read-write') {
+  const active = db.prepare('SELECT COUNT(*) as c FROM api_tokens WHERE user_id = ? AND revoked_at IS NULL')
+    .get(userId) as { c: number };
+  if (active.c &gt;= MAX_ACTIVE_TOKENS_PER_USER) {
+    throw new Error(`每个用户最多创建 ${MAX_ACTIVE_TOKENS_PER_USER} 个有效 Token，请先吊销不用的 Token`);
+  }
+  const token = `${API_TOKEN_PREFIX}${randomBytes(24).toString('hex')}`;
+  const id = `tok-${nanoid(8)}`;
+  const createdAt = new Date().toISOString();
+  ...
+}
+</code></pre>
+<ul>
+<li><strong>坑</strong>：吊销不删除记录（<code>revoked_at</code> 置值），保留审计线索；计数只算未吊销的。</li>
+</ul>
+<h4 id="②-MCP-服务">② MCP 服务</h4>
+<ul>
+<li><strong>用户操作</strong>：在 MCP 客户端里配置后，AI 可以直接读写知识库。</li>
+<li><strong>实现</strong>：<code>buildMcpServer(userId, ctx, scope)</code> 按当前授权用户构造工具集，<code>scope='read'</code> 时只挂只读工具；所有工具内部都走同一套权限过滤。</li>
+</ul>
+<pre><code class="language-ts">// src/mcp/server.ts
+export function buildMcpServer(userId: string, ctx: AgentToolContext = {}, scope: ApiTokenScope | 'full' = 'full'): McpServer {
+  const server = new McpServer({ name: 'iwiki-mcp', version: '1.0.0' }, {
+    instructions:
+      'sse-iwiki 企业知识库。所有工具均按当前授权用户的权限过滤；写操作与网页端一致（写入后直接发布，并保留修订记录）。' +
+      '写正式文档请用 create_markdown_doc、create_doc；反复维护同一篇文档用 upsert_markdown_doc。' +
+      'write_note 仅用于 AI 自己的阶段性总结与速记，不要用它代替正式文档。',
+  });
+  const readOnly = scope === 'read';
+  ...
+}
+</code></pre>
+<ul>
+<li><strong>面试点</strong>：MCP 的权限边界是「Token 所属用户」。工具不做二次授权，因此 Token 一旦泄露等同该用户的全部文档权限。</li>
+</ul>
+<h4 id="③-上传与图床对接">③ 上传与图床对接</h4>
+<ul>
+<li><strong>实现</strong>：<code>upload-handler.ts</code> / <code>upload-store.ts</code> / <code>upload-validation.ts</code> 三段式 —— 校验类型与大小、落存储、返回可访问 URL；<code>image-bed.ts</code> 对接图床服务。</li>
+</ul>
+<h3 id="其他内容形态与后台">其他内容形态与后台</h3>
+<h4 id="①-作业与收集">① 作业与收集</h4>
+<ul>
+<li><strong>用户操作</strong>：老师建作业、学生提交、可设提醒。</li>
+<li><strong>实现</strong>：<code>assignment_collections</code> / <code>assignment_submissions</code> / <code>space_assignment_roles</code> / <code>assignment_reminders</code> 四张表；提醒由 <code>assignment-reminder.ts</code> 定时扫描。</li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS assignment_collections (...);  -- 收集（作业）
+CREATE TABLE IF NOT EXISTS assignment_submissions (...);  -- 提交
+CREATE TABLE IF NOT EXISTS space_assignment_roles (...);  -- 空间内的作业角色
+CREATE TABLE IF NOT EXISTS assignment_reminders (...);    -- 提醒计划
+</code></pre>
+<ul>
+<li><strong>坑</strong>：提交与收集要分表。放一张表里，收集的「截止时间 / 要求」字段会在每条提交记录上重复，改一次要全表更新。</li>
+</ul>
+<h4 id="②-表单、活动、公告、竞赛、讨论">② 表单、活动、公告、竞赛、讨论</h4>
+<ul>
+<li><strong>实现</strong>：各自独立路由与表（<code>forms.ts</code>、<code>activities.ts</code>、<code>announcements.ts</code>、<code>competition.ts</code>、<code>discussions.ts</code>），共用权限与通知基础设施。</li>
+</ul>
+<h4 id="③-研究空间与会议">③ 研究空间与会议</h4>
+<ul>
+<li><strong>实现</strong>：<code>research-space.ts</code> / <code>research-space-projects.ts</code> / <code>research-meetings.ts</code>，以「项目 + 会议」组织研究过程，<code>research-assets</code> 存材料。</li>
+</ul>
+<h4 id="④-管理台与平台设置">④ 管理台与平台设置</h4>
+<ul>
+<li><strong>用户操作</strong>：管理员管用户、空间、模型、RAG 重建、CodeWiki 配额、审计日志。</li>
+<li><strong>实现</strong>：<code>platform_admins</code> 记录管理员，<code>platform_settings</code> 存全局开关；<code>admin.ts</code> 路由统一挂管理员校验。</li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE IF NOT EXISTS platform_admins (...);
+CREATE TABLE IF NOT EXISTS platform_settings (...);
+</code></pre>
+<ul>
+<li><strong>坑</strong>：管理员身份要单独建表，不要复用 <code>users.role</code>。用户表的角色字段是业务概念，混进平台管理权限后，任何一次「改角色」都可能提权。</li>
+</ul>
+<h3 id="IWiki-·-面试速答">IWiki · 面试速答</h3>
+<ul>
+<li><strong>协作双模式</strong>：<code>collab</code> 走 Yjs CRDT（<code>yjs_docs</code> + <code>base_rev_no</code>），<code>normal</code> 走编辑锁 + 三路合并（<code>wiki_edit_lock</code> + <code>wiki_temp_draft</code>）。</li>
+<li><strong>版本链</strong>：<code>wiki_revision</code> 存快照与反向 diff，<code>config_snapshot</code> 保住结构化页面的格式。</li>
+<li><strong>权限</strong>：页级白名单 + 空间白名单 + 团队可见三源合并，批量查询按批分片规避 SQLite 变量上限。</li>
+<li><strong>RAG</strong>：向量召回优先、BM25 降级；KNN 候选集先按可见页过滤；索引写入前校验版本号，防止旧任务覆盖。</li>
+<li><strong>CodeWiki</strong>：主任务 + 阶段任务 + 结果文件三表，检查点按阶段落盘，模型解析绕过提交者权限。</li>
+<li><strong>开放能力</strong>：API Token 带前缀与上限、吊销保留记录；MCP 权限等价 Token 所属用户。</li>
+</ul>
+</article><div class="book-end-actions"><button type="button" class="book-btn book-btn-ghost" data-mark-read><i class="far fa-circle-check"></i> <span>标记本篇已读</span></button><a class="book-btn book-btn-ghost" href="/docs/sse-market/"><i class="fas fa-list"></i> 全部篇目</a></div><nav class="book-pager"><a class="book-pager-link prev" href="/docs/sse-market/cloud/"><span class="book-pager-dir"><i class="fas fa-arrow-left"></i> 上一篇</span><strong>03 集市云：一组一容器</strong></a><a class="book-pager-link next" href="/docs/sse-market/unisso/"><span class="book-pager-dir">下一篇 <i class="fas fa-arrow-right"></i></span><strong>05 UniSSO：统一身份</strong></a></nav></div><aside class="book-mini-toc"><div class="book-mini-toc-title"><i class="fas fa-list-ul"></i> 本页目录</div><ul class="book-toc-list"><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%A9%BA%E9%97%B4%E4%B8%8E%E9%A1%B5%E9%9D%A2">空间与页面</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E4%B8%AA%E4%BA%BA%E7%A9%BA%E9%97%B4%E4%B8%8E%E5%85%B1%E4%BA%AB%E7%A9%BA%E9%97%B4">① 个人空间与共享空间</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E7%9B%AE%E5%BD%95%E6%A0%91%E4%B8%8E%E7%A7%BB%E5%8A%A8">② 目录树与移动</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%88%9B%E5%BB%BA%E9%A1%B5%E9%9D%A2">③ 创建页面</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E7%A9%BA%E9%97%B4%E7%BA%A7%E8%81%94%E5%88%A0%E9%99%A4">④ 空间级联删除</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E7%A9%BA%E9%97%B4%E9%85%8D%E9%A2%9D">⑤ 空间配额</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E7%BC%96%E8%BE%91%E3%80%81%E7%89%88%E6%9C%AC%E4%B8%8E%E5%86%B2%E7%AA%81">编辑、版本与冲突</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E4%B8%A4%E7%A7%8D%E5%8D%8F%E4%BD%9C%E6%A8%A1%E5%BC%8F">① 两种协作模式</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%9C%AC%E5%9C%B0%E8%8D%89%E7%A8%BF%E4%B8%8E%E4%BA%91%E8%8D%89%E7%A8%BF">② 本地草稿与云草稿</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E7%89%88%E6%9C%AC%E9%93%BE%EF%BC%9A%E5%BF%AB%E7%85%A7-%E5%8F%8D%E5%90%91-diff">③ 版本链：快照 + 反向 diff</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E4%B8%89%E8%B7%AF%E5%90%88%E5%B9%B6%EF%BC%88normal-%E6%A8%A1%E5%BC%8F%EF%BC%89">④ 三路合并（normal 模式）</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E7%BC%96%E8%BE%91%E9%94%81">⑤ 编辑锁</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A5-%E5%86%B2%E7%AA%81%E8%8D%89%E7%A8%BF">⑥ 冲突草稿</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A6-Yjs-%E5%AE%9E%E6%97%B6%E5%8D%8F%E5%90%8C">⑦ Yjs 实时协同</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%9D%83%E9%99%90%E4%BD%93%E7%B3%BB">权限体系</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E5%8F%AF%E8%A7%81%E6%80%A7%E6%A8%A1%E5%9E%8B">① 可见性模型</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%9D%83%E9%99%90%E8%AE%A1%E7%AE%97%E4%B8%8E%E6%89%B9%E9%87%8F%E6%9F%A5%E8%AF%A2">② 权限计算与批量查询</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E5%9B%A2%E9%98%9F%E4%B8%8E%E5%8A%A0%E5%85%A5%E7%AD%96%E7%95%A5">③ 团队与加入策略</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E8%AE%BF%E9%97%AE%E7%94%B3%E8%AF%B7">④ 访问申请</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E5%AE%A1%E8%AE%A1">⑤ 审计</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E8%AF%84%E8%AE%BA%E4%B8%8E%E6%89%B9%E6%B3%A8">评论与批注</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E9%A1%B5%E9%9D%A2%E8%AF%84%E8%AE%BA%E4%B8%8E%E5%9B%9E%E5%A4%8D">① 页面评论与回复</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%AE%B5%E8%AF%84%EF%BC%88%E6%89%B9%E6%B3%A8%EF%BC%89">② 段评（批注）</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E8%AF%84%E8%AE%BA%E4%B8%8E%E6%89%B9%E6%B3%A8%E4%BA%92%E7%9B%B8%E5%BC%95%E7%94%A8">③ 评论与批注互相引用</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E6%A3%80%E7%B4%A2%E4%B8%8E-AI">检索与 AI</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E7%B4%A2%E5%BC%95%EF%BC%9A%E5%88%87%E5%9D%97%E5%85%A5%E5%BA%93">① 索引：切块入库</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%EF%BC%9A%E5%90%91%E9%87%8F-%E5%85%B3%E9%94%AE%E8%AF%8D">② 混合检索：向量 + 关键词</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E6%8F%90%E7%A4%BA%E8%AF%8D%E4%B8%8E%E6%97%A0%E7%BB%93%E6%9E%9C%E5%85%9C%E5%BA%95">③ 提示词与无结果兜底</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E6%96%87%E4%BB%B6%E7%B1%BB%E7%9F%A5%E8%AF%86%E6%BA%90">④ 文件类知识源</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A4-%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE">⑤ 模型配置</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#CodeWiki">CodeWiki</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E4%BB%BB%E5%8A%A1%E4%B8%8E%E9%98%9F%E5%88%97">① 任务与队列</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E6%B5%81%E6%B0%B4%E7%BA%BF">② 流水线</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E6%A3%80%E6%9F%A5%E7%82%B9%E4%B8%8E%E6%96%AD%E7%82%B9%E7%BB%AD%E8%B7%91">③ 检查点与断点续跑</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E6%8E%A2%E7%B4%A2%E4%B8%8E%E5%AE%A1%E6%A0%A1">④ 探索与审校</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%BC%80%E6%94%BE%E8%83%BD%E5%8A%9B">开放能力</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-API-Token">① API Token</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-MCP-%E6%9C%8D%E5%8A%A1">② MCP 服务</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E4%B8%8A%E4%BC%A0%E4%B8%8E%E5%9B%BE%E5%BA%8A%E5%AF%B9%E6%8E%A5">③ 上传与图床对接</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#%E5%85%B6%E4%BB%96%E5%86%85%E5%AE%B9%E5%BD%A2%E6%80%81%E4%B8%8E%E5%90%8E%E5%8F%B0">其他内容形态与后台</a><ul class="book-toc-list"><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A0-%E4%BD%9C%E4%B8%9A%E4%B8%8E%E6%94%B6%E9%9B%86">① 作业与收集</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A1-%E8%A1%A8%E5%8D%95%E3%80%81%E6%B4%BB%E5%8A%A8%E3%80%81%E5%85%AC%E5%91%8A%E3%80%81%E7%AB%9E%E8%B5%9B%E3%80%81%E8%AE%A8%E8%AE%BA">② 表单、活动、公告、竞赛、讨论</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A2-%E7%A0%94%E7%A9%B6%E7%A9%BA%E9%97%B4%E4%B8%8E%E4%BC%9A%E8%AE%AE">③ 研究空间与会议</a></li><li class="book-toc-item level-4"><a class="book-toc-link" href="#%E2%91%A3-%E7%AE%A1%E7%90%86%E5%8F%B0%E4%B8%8E%E5%B9%B3%E5%8F%B0%E8%AE%BE%E7%BD%AE">④ 管理台与平台设置</a></li></ul></li><li class="book-toc-item level-3"><a class="book-toc-link" href="#IWiki-%C2%B7-%E9%9D%A2%E8%AF%95%E9%80%9F%E7%AD%94">IWiki · 面试速答</a></li></ul><a class="book-mini-top" href="#" data-scroll-top><i class="fas fa-arrow-up"></i> 回到顶部</a></aside></div><div class="book-mask" data-book-mask></div></section></div></div></main><footer id="footer" style="background-image: url(https://i.imgs.ovh/2026/05/19/fe7dc549e1c7ecf1714b70083437d197.png);"><div id="footer-wrap"><div class="copyright">&copy;2019 - 2026 By 欣冻</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 7.3.0</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.3.3</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = `%%{init:{ 'theme':'${theme}'}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (true) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script></div><script src="/js/book.js" defer></script><div class="aplayer no-destroy" data-id="13348674056" data-server="netease" data-type="playlist"   data-order="list" data-fixed="true" data-preload="auto" data-autoplay="false" data-mutex="true" ></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div><p id="ghbdages"><a class="github-badge" target="_blank" href="https://hexo.io/" style="margin-inline:5px" data-title="博客框架为Hexo_v 7.3.0" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Frame-Hexo-blue?style=flat&amp;logo=hexo" alt=""/></a><a class="github-badge" target="_blank" href="https://butterfly.js.org/" style="margin-inline:5px" data-title="主题版本Butterfly_v5.2.2" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Theme-Butterfly-6513df?style=flat&amp;logo=bitdefender" alt=""/></a><a class="github-badge" target="_blank" href="https://www.jsdelivr.com/" style="margin-inline:5px" data-title="本站使用JsDelivr为静态资源提供CDN加速" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/CDN-jsDelivr-orange?style=flat&amp;logo=jsDelivr" alt=""/></a><a class="github-badge" target="_blank" href="https://github.com/" style="margin-inline:5px" data-title="本站项目由Github托管" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Source-Github-d021d6?style=flat&amp;logo=GitHub" alt=""/></a><a class="github-badge" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" style="margin-inline:5px" data-title="本站采用知识共享署名-非商业性使用-相同方式共享4.0国际许可协议进行许可" title=""><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-lazy-src="https://img.shields.io/badge/Copyright-BY--NC--SA%204.0-d42328?style=flat&amp;logo=Claris" alt=""/></a></p>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async src="https://cdn.jsdelivr.net/npm/hexo-butterfly-footer-beautify@1.0.6/lib/runtime.min.js"></script><script async src="/js/ali_font.js"></script><div class="js-pjax"><script async="async">var arr = document.getElementsByClassName('recent-post-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '30');
+    arr[i].setAttribute('data-wow-iteration', '1');
+  }</script><script async="async">var arr = document.getElementsByClassName('card-widget');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__zoomIn');
+    arr[i].setAttribute('data-wow-duration', '');
+    arr[i].setAttribute('data-wow-delay', '200ms');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('flink-list-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('article-sort-item');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__slideInRight');
+    arr[i].setAttribute('data-wow-duration', '1.5s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__flipInY');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script><script async="async">var arr = document.getElementsByClassName('site-card');
+for(var i = 0;i<arr.length;i++){
+    arr[i].classList.add('wow');
+    arr[i].classList.add('animate__animated');
+    arr[i].setAttribute('data-wow-duration', '3s');
+    arr[i].setAttribute('data-wow-delay', '');
+    arr[i].setAttribute('data-wow-offset', '');
+    arr[i].setAttribute('data-wow-iteration', '');
+  }</script></div><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow.min.js"></script><script defer src="https://cdn.cbd.int/hexo-butterfly-wowjs/lib/wow_init.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
